@@ -1,8 +1,9 @@
-package app.player.API;
+package app.player.apii;
 
-import app.card.API.Buildable;
-import app.card.API.Buyable;
 import java.util.*;
+
+import app.card.apii.Buildable;
+import app.card.apii.Buyable;
 
 public interface Player {
     int getCurrentPosition();

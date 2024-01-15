@@ -1,0 +1,21 @@
+[
+
+    {
+        "id": "0",
+        "tipology": "static",
+        "name": "GO",
+        "price": 0,
+        "housePrice": 0,
+        "fees": 0,
+        "action": "finishRound"
+    },
+    {
+        "id": "1",
+        "tipology": "property",
+        "name": "PROVA1",
+        "price": 10,
+        "housePrice": 5,
+        "fees": 3,
+        "action": ""
+    }
+]
