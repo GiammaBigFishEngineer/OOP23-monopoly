@@ -9,15 +9,17 @@ public final class StaticActions {
     /**
      * @param player who have to go to prison
      */
-    public void goToPrison(final Player player) {
+    public static void goToPrison(final Player player) {
         /* salta un turno e va in prigione */
+        player.setPosition(10);
     }
 
     /**
      * @param player who have to get 200 money
      */
-    public void finishRound(final Player player) {
+    public static void finishRound(final Player player) {
         /* ritira 200 euro */
+        player.getBankAccount().receivePayment(200);
     }
 
 }

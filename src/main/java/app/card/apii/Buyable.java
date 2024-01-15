@@ -35,4 +35,10 @@ public interface Buyable extends Card {
 	 * @return price to pay to the owner
 	 */
     int getTransitFees();
+
+
+    /**
+	 * @param player who buy property
+	 */
+    void setOwner(Player player);
 }

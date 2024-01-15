@@ -5,19 +5,29 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+
 import app.card.apii.Buildable;
 import app.card.apii.Buyable;
 import app.card.apii.Card;
 import app.card.apii.CardFactory;
 import app.card.apii.Unbuyable;
 import app.card.utils.JsonReader;
+import app.card.utils.StaticActions;
 import app.player.apii.Player;
 
 public class CardFactoryImpl implements CardFactory {
-
-    public List<Card> cardsInitializer() {
-        var allCards = new ArrayList<Card>();
-        var jsonList = JsonReader.readJson("cardList.json");
+    @Override
+    public List<Card> cardsInitializer() throws IOException {
+        final var allCards = new ArrayList<Card>();
+        final String SEP = File.separator;
+        final String FILE_NAME = System.getProperty("user.dir") + SEP + "src" + SEP + "main" 
+            + SEP + "java" + SEP + "app" + SEP + "card" + SEP + "utils" + SEP + "cardList.json";
+        final var jsonList = JsonReader.readJson(FILE_NAME);
         jsonList.forEach(i -> {
             var type = i.getString("tipology");
             switch (type) {
@@ -49,7 +59,7 @@ public class CardFactoryImpl implements CardFactory {
                     break;
             }
         });
-        return new ArrayList<Card>();
+        return allCards;
     }
 
     @Override
@@ -97,6 +107,11 @@ public class CardFactoryImpl implements CardFactory {
             public int getHousePrice() {
                 return price;
             }
+
+            @Override
+            public void setOwner(Player player) {
+                this.owner = Optional.of(player);
+            }
             
         };
     }
@@ -121,15 +136,13 @@ public class CardFactoryImpl implements CardFactory {
             }
 
             @Override
-            public void makeAction(Player player) {
+            public void makeAction(final Player player) {
                 try {
-                    
-                    final String className = "app.card.impl.StaticActions"; 
-                    final String methodName = "goToPrison";
-                    final Class<?> clazz = Class.forName(className);
-                    final Method method = clazz.getMethod(methodName);
-
-                    method.invoke(null);  // Passa null come oggetto in quanto il metodo è statico
+                    final String methodName = func;
+                    final Class<?> clazz = StaticActions.class;
+                    System.out.println(clazz);
+                    final Method method = clazz.getMethod(methodName, Player.class);
+                    method.invoke(null,player);  // Passa null come oggetto in quanto il metodo è statico
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

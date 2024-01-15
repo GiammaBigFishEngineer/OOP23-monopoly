@@ -1,5 +1,6 @@
 package app.card.apii;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -10,8 +11,9 @@ public interface CardFactory {
     /**
      * 
      * @return list of all cards in table
+     * @throws IOException 
      */
-    List<Card> cardsInitializer();
+    List<Card> cardsInitializer() throws IOException;
 
     /**
      * @param id id of box

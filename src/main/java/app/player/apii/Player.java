@@ -16,4 +16,5 @@ public interface Player {
     List<Buyable> getBuildableOwned();
     void sellBuyable(Buyable box);
     int getHouseBuilt(Buildable built);
+    void setPosition(int position);
 }
