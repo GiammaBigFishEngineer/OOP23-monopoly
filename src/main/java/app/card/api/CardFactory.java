@@ -1,4 +1,4 @@
-package app.card.apii;
+package app.card.api;
 
 import java.io.IOException;
 import java.util.List;
@@ -39,7 +39,8 @@ public interface CardFactory {
      * @param id id of box
      * @param name of box
      * @param func of method to be called
+     * @param amount is the positive num for the action like giveMoney or movePlayer
 	 * @return the static card like Go and Prison
 	 */
-    Unbuyable createStaticCard(int id, String name, String func);
+    Unbuyable createStaticCard(int id, String name, String func, int amount);
 }

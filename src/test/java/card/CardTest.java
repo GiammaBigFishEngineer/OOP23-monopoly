@@ -2,27 +2,24 @@ package card;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
-import app.card.apii.Buildable;
-import app.card.apii.Buyable;
-import app.card.apii.CardFactory;
-import app.card.apii.Unbuyable;
+import app.card.api.Buildable;
+import app.card.api.Buyable;
+import app.card.api.CardFactory;
+import app.card.api.Unbuyable;
 import app.card.impl.CardFactoryImpl;
-import app.player.apii.BankAccount;
-import app.player.apii.Player;
-import app.player.impl.PlayerImpl;
+import app.player.api.BankAccount;
+import app.player.api.Player;
 
 public class CardTest {
 
-    private class testLazyPlayer implements Player{
+    private class TestLazyPlayer implements Player{
 
         private int position = 0;
         private BankAccount bankAccount = new BankAccount() {
@@ -145,17 +142,17 @@ public class CardTest {
     }
 
     @Test
-    public void testaStaticCardGo(){
-        Unbuyable staticCard = this.factory.createStaticCard(0, "Go", "finishRound");
-        var newPlayer = new testLazyPlayer();
+    public void testStaticCardGo(){
+        Unbuyable staticCard = this.factory.createStaticCard(0, "Go", "giveMoneyPlayer",200);
+        var newPlayer = new TestLazyPlayer();
         staticCard.makeAction(newPlayer);
         assertEquals(200, newPlayer.getBankAccount().getBalance()); 
     }
 
     @Test
-    public void testaStaticCardPrison(){
-        Unbuyable staticCard = this.factory.createStaticCard(10, "prison", "goToPrison");
-        var newPlayer = new testLazyPlayer();
+    public void testStaticCardPrison(){
+        Unbuyable staticCard = this.factory.createStaticCard(10, "prison", "movePlayer",10);
+        var newPlayer = new TestLazyPlayer();
         staticCard.makeAction(newPlayer);
         assertEquals(staticCard.getId(), newPlayer.getCurrentPosition()); 
     }

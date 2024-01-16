@@ -7,7 +7,8 @@
         "price": "0",
         "housePrice": "0",
         "fees": "0",
-        "action": "finishRound"
+        "action": "finishRound",
+        "actionAmount": "200"
     },
     {
         "id": "1",
@@ -16,7 +17,8 @@
         "price": "10",
         "housePrice": "5",
         "fees": "3",
-        "action": ""
+        "action": "",
+        "actionAmount": ""
     },
     {
         "id": "2",
@@ -25,7 +27,8 @@
         "price": "0",
         "housePrice": "0",
         "fees": "0",
-        "action": "finishRound"
+        "action": "finishRound",
+        "actionAmount": "100"
     },
     {
         "id": "3",
@@ -34,6 +37,7 @@
         "price": "10",
         "housePrice": "5",
         "fees": "3",
-        "action": ""
+        "action": "",
+        "actionAmount": ""
     }
 ]

@@ -1,26 +1,25 @@
 package app.card.impl;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.json.JSONObject;
-
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 
-import app.card.apii.Buildable;
-import app.card.apii.Buyable;
-import app.card.apii.Card;
-import app.card.apii.CardFactory;
-import app.card.apii.Unbuyable;
+import app.card.api.Buildable;
+import app.card.api.Buyable;
+import app.card.api.Card;
+import app.card.api.CardFactory;
+import app.card.api.Unbuyable;
 import app.card.utils.JsonReader;
 import app.card.utils.StaticActions;
-import app.player.apii.Player;
+import app.player.api.Player;
 
 public class CardFactoryImpl implements CardFactory {
+    
     @Override
     public List<Card> cardsInitializer() throws IOException {
         final var allCards = new ArrayList<Card>();
@@ -35,7 +34,9 @@ public class CardFactoryImpl implements CardFactory {
                     allCards.add(createStaticCard(
                         Integer.valueOf(i.getString("id")),
                         i.getString("name"),
-                        i.getString("action")));
+                        i.getString("action"),
+                        Integer.valueOf(i.getString("actionAmount"))
+                    ));
                     break;
                 case "property":
                     allCards.add(createProperty(
@@ -122,7 +123,7 @@ public class CardFactoryImpl implements CardFactory {
     }
 
     @Override
-    public Unbuyable createStaticCard(final int id, final String name, final String func) {
+    public Unbuyable createStaticCard(final int id, final String name, final String func, final int amount) {
         return new Unbuyable() {
 
             @Override
@@ -140,10 +141,9 @@ public class CardFactoryImpl implements CardFactory {
                 try {
                     final String methodName = func;
                     final Class<?> clazz = StaticActions.class;
-                    System.out.println(clazz);
-                    final Method method = clazz.getMethod(methodName, Player.class);
-                    method.invoke(null,player);  // Passa null come oggetto in quanto il metodo è statico
-                } catch (Exception e) {
+                    final Method method = clazz.getMethod(methodName, Player.class, int.class);
+                    method.invoke(null,player,amount);
+                } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
                     e.printStackTrace();
                 }
             }
