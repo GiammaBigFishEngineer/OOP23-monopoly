@@ -15,4 +15,16 @@ public interface Card {
 	 * @return id of card on table
 	 */
     int getId();
+
+	default boolean isBuildable(){
+		return this instanceof Buildable;
+	}
+
+	default boolean isBuyable(){
+		return this instanceof Buyable;
+	}
+
+	default boolean isUnbuyable(){
+		return this instanceof Unbuyable;
+	}
 }

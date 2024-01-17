@@ -137,12 +137,23 @@ public class CardFactoryImpl implements CardFactory {
             }
 
             @Override
+            public String getAction() {
+                return func;
+            }
+
+            @Override
             public void makeAction(final Player player) {
                 try {
                     final String methodName = func;
                     final Class<?> clazz = StaticActions.class;
-                    final Method method = clazz.getMethod(methodName, Player.class, int.class);
-                    method.invoke(null,player,amount);
+                    if(func.equals("unforseen")){
+                        final Method method = clazz.getMethod(methodName, Player.class);
+                        Unforseen unforseen = (Unforseen)method.invoke(Unforseen.class,player);
+                        System.out.println(unforseen.getDescription());
+                    }else{
+                        final Method method = clazz.getMethod(methodName, Player.class, int.class);
+                        method.invoke(null,player,amount);
+                    }
                 } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
                     e.printStackTrace();
                 }

@@ -1,22 +1,27 @@
 package card;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
 import app.card.api.Buildable;
 import app.card.api.Buyable;
+import app.card.api.Unbuyable;
+import app.card.impl.CardFactoryImpl;
 import app.card.impl.Unforseen;
+import app.card.utils.StaticActions;
 import app.player.api.BankAccount;
 import app.player.api.Player;
 
 public class UnforseenTest {
 
-    private class TestLazyPlayer implements Player{
+    private class TestLazyPlayer implements Player {
 
-        private int position = 0;
+        private int position = -1;
         private BankAccount bankAccount = new BankAccount() {
                 
                 private int balance = 0;
@@ -91,23 +96,50 @@ public class UnforseenTest {
         }
 
         @Override
-        public void setPosition(int position){
+        public void setPosition(int position) {
             this.position = position;
         }
         
     }
 
     @Test
-    public void testU1Action(){
+    public void testU1Action() {
         var player = new TestLazyPlayer();
-        Unforseen.U1.getCard().makeAction(player);
+        Unforseen.U0.getCard().makeAction(player);
         assertEquals(player.getBankAccount().getBalance(), 100);
     }
 
     @Test
-    public void testU2Action(){
+    public void testU2Action() {
         var player = new TestLazyPlayer();
-        Unforseen.U2.getCard().makeAction(player);
+        Unforseen.U1.getCard().makeAction(player);
         assertEquals(player.getCurrentPosition(), 15);
+    }
+
+    private boolean checkChanges(TestLazyPlayer player) {
+        return player.getCurrentPosition() != 0 || player.getBankAccount().getBalance() != -1;
+    }
+
+    @Test
+    public void testUseUnforseen() throws IOException {
+        var player = new TestLazyPlayer();
+        var list = new CardFactoryImpl().cardsInitializer();
+        Unbuyable card = (Unbuyable)list.get(2);
+        card.makeAction(player);
+        assertTrue(checkChanges(player));
+    } 
+
+    @Test
+    public void testExtractUnforseen() {
+        /* eseguo il test per più volte in modo da aumentare la probabilità di trovare errori
+         * in quanto unforseen() usa una generazione randomica.
+         */
+        for(int i=0; i<100; i++) {
+            var player = new TestLazyPlayer();
+            Unforseen unforseen = StaticActions.unforseen(player);
+            unforseen.getCard().makeAction(player);
+            assertTrue(checkChanges(player));
+        }
+        
     }
 }
