@@ -113,6 +113,23 @@ public class CardFactoryImpl implements CardFactory {
             public void setOwner(Player player) {
                 this.owner = Optional.of(player);
             }
+
+            @Override
+            public String toString() {
+                return this.getName();
+            }
+
+            @Override
+            public boolean equals(Object card){
+                if (card == this) {
+                    return true;
+                }
+                if (!(card instanceof Card)) {
+                    return false;
+                }
+                Card c = (Card) card;
+                return this.getId() == c.getId();
+            }
             
         };
     }
@@ -142,21 +159,41 @@ public class CardFactoryImpl implements CardFactory {
             }
 
             @Override
-            public void makeAction(final Player player) {
+            public Optional<Unforseen> makeAction(final Player player) {
                 try {
                     final String methodName = func;
                     final Class<?> clazz = StaticActions.class;
-                    if(func.equals("unforseen")){
+                    if(func.equals("unforseen")) {
                         final Method method = clazz.getMethod(methodName, Player.class);
-                        Unforseen unforseen = (Unforseen)method.invoke(Unforseen.class,player);
+                        final Unforseen unforseen = (Unforseen)method.invoke(Unforseen.class,player);
                         System.out.println(unforseen.getDescription());
-                    }else{
+                        return Optional.of(unforseen);
+                    } else {
                         final Method method = clazz.getMethod(methodName, Player.class, int.class);
                         method.invoke(null,player,amount);
+                        return Optional.empty();
                     }
                 } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
                     e.printStackTrace();
+                    return Optional.empty();
                 }
+            }
+
+            @Override
+            public String toString() {
+                return this.getName();
+            }
+
+            @Override
+            public boolean equals(Object card){
+                if (card == this) {
+                    return true;
+                }
+                if (!(card instanceof Card)) {
+                    return false;
+                }
+                Card c = (Card) card;
+                return this.getId() == c.getId();
             }
             
         };

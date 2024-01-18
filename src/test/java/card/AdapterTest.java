@@ -17,7 +17,7 @@ import app.card.api.Card;
 import java.io.IOException;
 import java.util.*;
 
-public class TestAdapter {
+public class AdapterTest {
 
     private CardFactory factory;
     private List<Card> list;
