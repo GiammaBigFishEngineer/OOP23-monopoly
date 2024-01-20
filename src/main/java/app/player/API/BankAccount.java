@@ -1,4 +1,4 @@
-package app.player.API;
+package app.player.api;
 
 public interface BankAccount {
     int getBalance();

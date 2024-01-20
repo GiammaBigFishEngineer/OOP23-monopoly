@@ -1,4 +1,4 @@
-package app.card.API;
+package app.card.api;
 
 public interface Buildable {
     int getHousePrice();

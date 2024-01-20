@@ -1,6 +1,6 @@
-package app.card.API;
+package app.card.api;
 
-import app.player.API.Player;
+import app.player.api.Player;
 
 public interface Buyable {
     int getPrice();
