@@ -5,19 +5,20 @@ import java.util.Random;
 import app.card.impl.Unforseen;
 import app.player.api.Player;
 
+/**
+ * Utility class for make the static action to be called on players.
+ */
 public final class StaticActions {
 
-    private StaticActions(){ };
+    private StaticActions() {};
 
     /**
      * @param player who has to get money
      * @param money is the amount to give to player
      */
     public static void giveMoneyPlayer(final Player player, final int money) {
-        try {
+        if (player != null) {
             player.getBankAccount().receivePayment(money);
-        } catch(NullPointerException e) {
-            System.out.println(e);
         }
     }
 
@@ -26,10 +27,8 @@ public final class StaticActions {
      * @param money is the amount player has to pay
      */
     public static void playerPay(final Player player, final int money) {
-        try {
+        if (player != null) {
             player.getBankAccount().payPlayer(null, money);
-        } catch(NullPointerException e) {
-            System.out.println(e);
         }
     }
 
@@ -38,10 +37,8 @@ public final class StaticActions {
      * @param position is the new position of player
      */
     public static void movePlayer(final Player player, final int position) {
-        try {
+        if (player != null) {
             player.setPosition(position);
-        } catch(NullPointerException e) {
-            System.out.println(e);
         }
     }
 
@@ -51,12 +48,10 @@ public final class StaticActions {
      */
     public static Unforseen unforseen(final Player player) {
         final int unforseenSize = 14;
-        var extraction = new Random().nextInt(unforseenSize);
-        var myUnforseen = Unforseen.valueOf((String)"U"+extraction);
-        try {
-            myUnforseen.getCard().makeAction(player);   
-        } catch(NullPointerException e) {
-            System.out.println(e);
+        final var extraction = new Random().nextInt(unforseenSize);
+        final var myUnforseen = Unforseen.valueOf((String) "U" + extraction);
+        if (myUnforseen != null) {
+            myUnforseen.getCard().makeAction(player); 
         }
         return myUnforseen;
     }

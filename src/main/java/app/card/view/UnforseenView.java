@@ -5,9 +5,17 @@ import javax.swing.JPanel;
 
 import app.card.impl.Unforseen;
 
-public class UnforseenView extends JPanel{
+/**
+ * The view as popup for the unforseen extraction.
+ */
+public class UnforseenView extends JPanel {
 
-    public UnforseenView(Unforseen card) {
+    private static final long serialVersionUID = 2298666777798069846L;
+
+    /**
+    * @param card is the unforseen extracted
+    */
+    public UnforseenView(final Unforseen card) {
         JOptionPane.showMessageDialog(null, card.getDescription());
     }
 }

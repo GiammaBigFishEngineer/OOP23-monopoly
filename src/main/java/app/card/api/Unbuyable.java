@@ -10,12 +10,13 @@ import app.player.api.Player;
  */
 public interface Unbuyable extends Card {
     /**
-	 * @param player on who make an action
-	 */
+     * @param player on who make an action
+     * @return Optional empty if makeAction is not for ad Unforseen but for static card in table
+     */
     Optional<Unforseen> makeAction(Player player);
 
     /**
-     * @param action is the name of method to call by reflection in app.card.utils.StaticActions
+     * @return the name of the method called by reflection
      */
     String getAction();
 }

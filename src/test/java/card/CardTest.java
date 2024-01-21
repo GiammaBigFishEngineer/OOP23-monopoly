@@ -17,13 +17,16 @@ import app.card.impl.CardFactoryImpl;
 import app.player.api.BankAccount;
 import app.player.api.Player;
 
+/**
+ * Test for all cards.
+ */
 public class CardTest {
 
-    private class TestLazyPlayer implements Player{
+    private final class TestLazyPlayer implements Player {
 
         private int position = 0;
         private BankAccount bankAccount = new BankAccount() {
-                
+
                 private int balance = 0;
 
                 @Override
@@ -32,12 +35,11 @@ public class CardTest {
                 }
 
                 @Override
-                public void payPlayer(Player player, int amount) {
-                    
+                public void payPlayer(final Player player, final int amount) {
                 }
 
                 @Override
-                public void receivePayment(int amount) {
+                public void receivePayment(final int amount) {
                     this.balance = this.balance + amount;
                     System.out.println(this.getBalance());
                 }
@@ -52,115 +54,145 @@ public class CardTest {
         public int getCurrentPosition() {
             return this.position;
         }
-    
+
         @Override
         public String getName() {
             return "test";
         }
-    
+
         @Override
         public int getId() {
             return 0;
         }
-    
+
         @Override
-        public void buyBox(Buyable box) {
+        public void buyBox(final Buyable box) {
         }
-    
+
         @Override
-        public void buildHouse(Buildable box) {
+        public void buildHouse(final Buildable box) {
         }
-    
+
         @Override
         public int getNumberStationOwned() {
             return 0;
         }
-    
+
         @Override
         public BankAccount getBankAccount() {
             return this.bankAccount;
         }
-    
+
         @Override
         public List<Buyable> getBuildableOwned() {
             return null;
         }
-    
+
         @Override
-        public void sellBuyable(Buyable box) {
+        public void sellBuyable(final Buyable box) {
         }
-    
+
         @Override
-        public int getHouseBuilt(Buildable built) {
+        public int getHouseBuilt(final Buildable built) {
             return 0;
         }
 
         @Override
-        public void setPosition(int position){
+        public void setPosition(final int position) {
             this.position = position;
         }
-        
+
     }
 
     private CardFactory factory;
+    private final int idTest = 5;
+    private final int idTestGoToPrison = 18;
+    private final int idTestPrison = 6;
+    private final int idTestGo = 0;
+    private final int amountTestMoney = 200;
+    private final int amountTestPrice = 10;
 
-	@BeforeEach
-	public void init() {
-		this.factory = new CardFactoryImpl();
-	}
+    /**
+    * inizitalize factory.
+    */
+    @BeforeEach
+    public void init() {
+        this.factory = new CardFactoryImpl();
+    }
 
+    /**
+    * test empty property.
+    */
     @Test
-    public void testEmptyProperty(){
-        Buildable buildable = this.factory.createProperty(0, null, 0, 0, 0);
+    public void testEmptyProperty() {
+        final Buildable buildable = this.factory.createProperty(idTestGo, null, 0, 0, 0);
         assertEquals(buildable.getHousePrice(), 0);
         assertEquals(buildable.getId(), 0);
         assertEquals(buildable.getName(), null);
         assertEquals(buildable.getPrice(), 0);
     }
 
+    /**
+    * test normal property.
+    */
     @Test
-    public void testProperty(){
-        Buildable buildable = this.factory.createProperty(5, "prova", 10, 10, 0);
-        assertEquals(buildable.getHousePrice(), 10);
-        assertEquals(buildable.getId(), 5);
+    public void testProperty() {
+        final Buildable buildable = this.factory.createProperty(idTest, "prova", amountTestPrice, amountTestPrice, 0);
+        assertEquals(buildable.getHousePrice(), amountTestPrice);
+        assertEquals(buildable.getId(), idTest);
         assertEquals(buildable.getName(), "prova");
         assertEquals(buildable.getPrice(), 10);
     }
 
+    /**
+    * test normal property with no owner.
+    */
     @Test
-    public void testPropertyEmptyOwner(){
-        Buildable buildable = this.factory.createProperty(5, "prova", 10, 10, 0);
+    public void testPropertyEmptyOwner() {
+        final Buildable buildable = this.factory.createProperty(idTest, "prova", amountTestPrice, amountTestPrice, 0);
         assertFalse(buildable.isOwned());
     }
 
+    /**
+    * test normal station.
+    */
     @Test
-    public void testStation(){
-        Buyable station = this.factory.createStation(5, "North", 10, 10);
-        assertEquals(station.getId(), 5);
+    public void testStation() {
+        final Buyable station = this.factory.createStation(idTest, "North", amountTestPrice, amountTestPrice);
+        assertEquals(station.getId(), idTest);
         assertEquals(station.getName(), "North");
-        assertEquals(station.getPrice(), 10);
+        assertEquals(station.getPrice(), amountTestPrice);
     }
 
+    /**
+    * test the first card "GO".
+    */
     @Test
-    public void testStaticCardGo(){
-        Unbuyable staticCard = this.factory.createStaticCard(0, "Go", "giveMoneyPlayer",200);
-        var newPlayer = new TestLazyPlayer();
+    public void testStaticCardGo() {
+        final Unbuyable staticCard = this.factory.createStaticCard(idTestGo, "Go", "giveMoneyPlayer", amountTestMoney);
+        final var newPlayer = new TestLazyPlayer();
         staticCard.makeAction(newPlayer);
-        assertEquals(200, newPlayer.getBankAccount().getBalance()); 
+        assertEquals(amountTestMoney, newPlayer.getBankAccount().getBalance()); 
     }
 
+    /**
+    * test the card "Prison".
+    */
     @Test
-    public void testStaticCardPrison(){
-        Unbuyable staticCard = this.factory.createStaticCard(10, "prison", "movePlayer",10);
-        var newPlayer = new TestLazyPlayer();
+    public void testStaticCardPrison() {
+        final Unbuyable staticCard = this.factory.createStaticCard(idTestGoToPrison, "prison", "movePlayer", idTestGoToPrison);
+        final var newPlayer = new TestLazyPlayer();
         staticCard.makeAction(newPlayer);
         assertEquals(staticCard.getId(), newPlayer.getCurrentPosition()); 
     }
 
+    /**
+    * test the inizialitation of table.
+    */
     @Test
-    public void testInitializer() throws IOException{
-        var list = this.factory.cardsInitializer();
-        for(int i=0; i<list.size(); i++){
+    public void testInitializer() throws IOException {
+        final var list = this.factory.cardsInitializer();
+        for (int i = 0; i < list.size(); i++) {
             /* controllo che ogni indice sia giusto e crescente */
             assertEquals(list.get(i).getId(), i);
         }

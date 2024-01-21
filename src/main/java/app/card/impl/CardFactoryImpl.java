@@ -18,17 +18,23 @@ import app.card.utils.JsonReader;
 import app.card.utils.StaticActions;
 import app.player.api.Player;
 
+/**
+ * Implementation of CardFactory, every method create a subinstance of Card.
+ */
 public class CardFactoryImpl implements CardFactory {
-    
+
+    /**
+    * @return the list of all cards in table
+    */
     @Override
     public List<Card> cardsInitializer() throws IOException {
         final var allCards = new ArrayList<Card>();
-        final String SEP = File.separator;
-        final String FILE_NAME = System.getProperty("user.dir") + SEP + "src" + SEP + "main" 
-            + SEP + "java" + SEP + "app" + SEP + "card" + SEP + "utils" + SEP + "cardList.json";
-        final var jsonList = JsonReader.readJson(FILE_NAME);
+        final String sep = File.separator;
+        final String fileName = System.getProperty("user.dir") + sep + "src" + sep + "main" 
+            + sep + "java" + sep + "app" + sep + "card" + sep + "utils" + sep + "cardList.json";
+        final var jsonList = JsonReader.readJson(fileName);
         jsonList.forEach(i -> {
-            var type = i.getString("tipology");
+            final var type = i.getString("tipology");
             switch (type) {
                 case "static":
                     allCards.add(createStaticCard(
@@ -55,7 +61,7 @@ public class CardFactoryImpl implements CardFactory {
                         Integer.valueOf(i.getString("fees"))
                     ));
                     break;
-            
+
                 default:
                     break;
             }
@@ -63,6 +69,9 @@ public class CardFactoryImpl implements CardFactory {
         return allCards;
     }
 
+    /**
+    * @return a Card buyable, with more property like price, housePrice
+    */
     @Override
     public Buildable createProperty(final int id, final String name, final int price, final int housePrice, final int fees) {
         return new Buildable() {
@@ -75,12 +84,12 @@ public class CardFactoryImpl implements CardFactory {
             }
 
             @Override
-            public Boolean isOwned() {
+            public boolean isOwned() {
                 return this.owner.isPresent();
             }
 
             @Override
-            public Boolean isOwnedByPlayer(final Player player) {
+            public boolean isOwnedByPlayer(final Player player) {
                 return isOwned() && owner.get().equals(player);
             }
 
@@ -110,7 +119,7 @@ public class CardFactoryImpl implements CardFactory {
             }
 
             @Override
-            public void setOwner(Player player) {
+            public void setOwner(final Player player) {
                 this.owner = Optional.of(player);
             }
 
@@ -120,25 +129,36 @@ public class CardFactoryImpl implements CardFactory {
             }
 
             @Override
-            public boolean equals(Object card){
+            public boolean equals(final Object card) {
                 if (card == this) {
                     return true;
                 }
                 if (!(card instanceof Card)) {
                     return false;
                 }
-                Card c = (Card) card;
+                final Card c = (Card) card;
                 return this.getId() == c.getId();
             }
-            
+
+            @Override
+            public int hashCode() {
+                return this.getId() * this.getName().hashCode();
+            }
+
         };
     }
 
+    /**
+    * @return a Card buyable but with no housePrice
+    */
     @Override
     public Buyable createStation(final int id, final String name, final int price, final int fees) {
         return createProperty(id, name, price, 0, fees);
     }
 
+    /**
+    * @return a Card unbuyable with no price but a with optional static action to call on players
+    */
     @Override
     public Unbuyable createStaticCard(final int id, final String name, final String func, final int amount) {
         return new Unbuyable() {
@@ -163,18 +183,16 @@ public class CardFactoryImpl implements CardFactory {
                 try {
                     final String methodName = func;
                     final Class<?> clazz = StaticActions.class;
-                    if(func.equals("unforseen")) {
+                    if ("unforseen".equals(func)) {
                         final Method method = clazz.getMethod(methodName, Player.class);
-                        final Unforseen unforseen = (Unforseen)method.invoke(Unforseen.class,player);
-                        System.out.println(unforseen.getDescription());
+                        final Unforseen unforseen = (Unforseen) method.invoke(Unforseen.class, player);
                         return Optional.of(unforseen);
                     } else {
                         final Method method = clazz.getMethod(methodName, Player.class, int.class);
-                        method.invoke(null,player,amount);
+                        method.invoke(null, player, amount);
                         return Optional.empty();
                     }
                 } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-                    e.printStackTrace();
                     return Optional.empty();
                 }
             }
@@ -185,17 +203,22 @@ public class CardFactoryImpl implements CardFactory {
             }
 
             @Override
-            public boolean equals(Object card){
+            public boolean equals(final Object card) {
                 if (card == this) {
                     return true;
                 }
                 if (!(card instanceof Card)) {
                     return false;
                 }
-                Card c = (Card) card;
+                final Card c = (Card) card;
                 return this.getId() == c.getId();
             }
-            
+
+            @Override
+            public int hashCode() {
+                return this.getId() * this.getName().hashCode();
+            }
+
         };
     }
 

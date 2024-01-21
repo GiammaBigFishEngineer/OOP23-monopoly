@@ -17,14 +17,17 @@ import app.card.utils.StaticActions;
 import app.player.api.BankAccount;
 import app.player.api.Player;
 
+/**
+ * Test all unforseens.
+ */
 public class UnforseenTest {
 
-    private class TestLazyPlayer implements Player {
+    private final class TestLazyPlayer implements Player {
 
         private int position = -1;
         private BankAccount bankAccount = new BankAccount() {
-                
-                private int balance = 0;
+
+                private int balance = -1;
 
                 @Override
                 public int getBalance() {
@@ -32,12 +35,11 @@ public class UnforseenTest {
                 }
 
                 @Override
-                public void payPlayer(Player player, int amount) {
-                    
+                public void payPlayer(final Player player, final int amount) {
                 }
 
                 @Override
-                public void receivePayment(int amount) {
+                public void receivePayment(final int amount) {
                     this.balance = this.balance + amount;
                     System.out.println(this.getBalance());
                 }
@@ -52,94 +54,114 @@ public class UnforseenTest {
         public int getCurrentPosition() {
             return this.position;
         }
-    
+
         @Override
         public String getName() {
             return "test";
         }
-    
+
         @Override
         public int getId() {
             return 0;
         }
-    
+
         @Override
-        public void buyBox(Buyable box) {
+        public void buyBox(final Buyable box) {
         }
-    
+
         @Override
-        public void buildHouse(Buildable box) {
+        public void buildHouse(final Buildable box) {
         }
-    
+
         @Override
         public int getNumberStationOwned() {
             return 0;
         }
-    
+
         @Override
         public BankAccount getBankAccount() {
             return this.bankAccount;
         }
-    
+
         @Override
         public List<Buyable> getBuildableOwned() {
             return null;
         }
-    
+
         @Override
-        public void sellBuyable(Buyable box) {
+        public void sellBuyable(final Buyable box) {
         }
-    
+
         @Override
-        public int getHouseBuilt(Buildable built) {
+        public int getHouseBuilt(final Buildable built) {
             return 0;
         }
 
         @Override
-        public void setPosition(int position) {
+        public void setPosition(final int position) {
             this.position = position;
         }
-        
+
     }
 
+    /**
+    * Test first unforseen.
+    */
     @Test
     public void testU1Action() {
-        var player = new TestLazyPlayer();
+        final var player = new TestLazyPlayer();
+        final int actual = 100;
         Unforseen.U0.getCard().makeAction(player);
-        assertEquals(player.getBankAccount().getBalance(), 100);
+        assertEquals(player.getBankAccount().getBalance(), actual-1);
     }
 
+    /**
+    * Test second unforseen.
+    */
     @Test
     public void testU2Action() {
-        var player = new TestLazyPlayer();
+        final int actual = 15;
+        final var player = new TestLazyPlayer();
         Unforseen.U1.getCard().makeAction(player);
-        assertEquals(player.getCurrentPosition(), 15);
+        assertEquals(player.getCurrentPosition(), actual);
     }
 
-    private boolean checkChanges(TestLazyPlayer player) {
-        return player.getCurrentPosition() != 0 || player.getBankAccount().getBalance() != -1;
+    /**
+    * @param player who's got action
+    * @return true if changes are checked
+    */
+    private boolean checkChanges(final TestLazyPlayer player) {
+        /* position and balance start from -1, i check the changes */
+        return player.getCurrentPosition() != 1 || player.getBankAccount().getBalance() != -1;
     }
 
+    /**
+    * test the first unforseen in table.
+    * @throws IOException
+    */
     @Test
     public void testUseUnforseen() throws IOException {
-        var player = new TestLazyPlayer();
-        var list = new CardFactoryImpl().cardsInitializer();
-        Unbuyable card = (Unbuyable)list.get(2);
+        final var player = new TestLazyPlayer();
+        final var list = new CardFactoryImpl().cardsInitializer();
+        final Unbuyable card = (Unbuyable) list.get(2);
         card.makeAction(player);
         assertTrue(checkChanges(player));
     } 
 
+    /**
+    * test the extraction of one unforseen.
+    * @throws IOException
+    */
     @Test
     public void testExtractUnforseen() {
         /* eseguo il test per più volte in modo da aumentare la probabilità di trovare errori
          * in quanto unforseen() usa una generazione randomica.
          */
-        for(int i=0; i<100; i++) {
-            var player = new TestLazyPlayer();
-            Unforseen unforseen = StaticActions.unforseen(player);
+        for (int i = 0; i < 100; i++) {
+            final var player = new TestLazyPlayer();
+            final Unforseen unforseen = StaticActions.unforseen(player);
             unforseen.getCard().makeAction(player);
             assertTrue(checkChanges(player));
         }
-        
     }
 }
