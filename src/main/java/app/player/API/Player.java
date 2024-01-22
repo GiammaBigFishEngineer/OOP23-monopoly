@@ -1,4 +1,4 @@
-package app.player.API;
+package app.player.api;
 
 import app.card.API.Buildable;
 import app.card.API.Buyable;
