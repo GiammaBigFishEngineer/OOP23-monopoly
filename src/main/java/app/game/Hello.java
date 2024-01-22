@@ -1,9 +1,9 @@
 package app.game;
 
-import game.view.GameView;
+import app.game.view.MenuView;
 
 public class Hello {
     public static void main(String[] args) {
-        new GameView();
+        new MenuView();
     }
 }
