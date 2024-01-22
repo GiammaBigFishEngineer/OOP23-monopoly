@@ -1,4 +1,4 @@
-package app.card.API;
+package app.card.api;
 
 import app.player.api.Player;
 

@@ -1,9 +1,12 @@
 package app.player.api;
 
-import app.card.API.Buildable;
-import app.card.API.Buyable;
+import app.card.api.Buildable;
+import app.card.api.Buyable;
 import java.util.List;
 
+/*
+ * Interface which models a Player. 
+ */
 public interface Player {
 
     /**

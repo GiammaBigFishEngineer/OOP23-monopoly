@@ -1,7 +1,7 @@
 package app.player.api;
 
 /* 
- * Interface whose methods define a player's BankAccount.
+ * Interface which models a player's BankAccount.
  */
 public interface BankAccount {
     /**

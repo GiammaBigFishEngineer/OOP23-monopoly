@@ -1,4 +1,4 @@
-package app.game.API;
+package app.game.api;
 
 import java.util.*;
 
