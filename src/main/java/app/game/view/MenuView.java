@@ -10,6 +10,7 @@ public class MenuView extends JFrame {
     private JButton quitButton;
     private JButton optionButton;
     private JLabel titleLabel;
+    private JLabel subtitleLabel;
 
     final Dimension screen;
     final int screenWidth;
@@ -30,26 +31,40 @@ public class MenuView extends JFrame {
         startButton = new JButton("Start");
         startButton.setFont(boldFont);
 
+        startButton.addActionListener(e -> {
+            throw new UnsupportedOperationException("Unimplemented method");
+        });
+
         buttonPanel.add(startButton);
-
-        quitButton = new JButton("Quit");
-        quitButton.setFont(boldFont);
-
-        buttonPanel.add(quitButton);
 
         optionButton = new JButton("Options");
         optionButton.setFont(boldFont);
 
+        optionButton.addActionListener(e -> {
+            throw new UnsupportedOperationException("Unimplemented method");
+        });
+
         buttonPanel.add(optionButton);
 
+        quitButton = new JButton("Quit");
+        quitButton.setFont(boldFont);
+
+        quitButton.addActionListener(e -> {
+            System.exit(1);
+        });
+
+        buttonPanel.add(quitButton);
+
         setLayout(new GridBagLayout());
+
         GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
         gbc.gridx = 0;
-        gbc.gridy = 1;
+        gbc.gridy = 2;
 
         this.add(buttonPanel, gbc);
 
-        titleLabel = new JLabel("MONOPOLY");
+        titleLabel = new JLabel("<html> MONOPOLY <html>");
         titleLabel.setFont(new Font("", Font.BOLD, 100));
         titleLabel.setForeground(Color.red);
 
@@ -57,6 +72,15 @@ public class MenuView extends JFrame {
         gbc.gridy = 0;
 
         this.add(titleLabel, gbc);
+
+        subtitleLabel = new JLabel("<html> 'Rimini Edition' <html>");
+        subtitleLabel.setFont(new Font("", Font.BOLD, 30));
+        subtitleLabel.setForeground(Color.red);
+
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+
+        this.add(subtitleLabel, gbc);
 
         screen = Toolkit.getDefaultToolkit().getScreenSize();
         screenHeight = (int) screen.getHeight();
