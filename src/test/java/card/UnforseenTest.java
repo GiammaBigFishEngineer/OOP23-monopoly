@@ -112,7 +112,7 @@ public class UnforseenTest {
         final var player = new TestLazyPlayer();
         final int actual = 100;
         Unforseen.U0.getCard().makeAction(player);
-        assertEquals(player.getBankAccount().getBalance(), actual-1);
+        assertEquals(player.getBankAccount().getBalance(), actual - 1);
     }
 
     /**

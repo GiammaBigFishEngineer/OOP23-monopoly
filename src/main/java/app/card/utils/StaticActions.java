@@ -10,7 +10,8 @@ import app.player.api.Player;
  */
 public final class StaticActions {
 
-    private StaticActions() {};
+    private StaticActions() {}; //NOPMD
+    //PMD suppressed because private constructor has no unecessary semilcolon
 
     /**
      * @param player who has to get money

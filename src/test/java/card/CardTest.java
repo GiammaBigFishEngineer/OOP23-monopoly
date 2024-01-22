@@ -107,7 +107,6 @@ public class CardTest {
     private CardFactory factory;
     private final int idTest = 5;
     private final int idTestGoToPrison = 18;
-    private final int idTestPrison = 6;
     private final int idTestGo = 0;
     private final int amountTestMoney = 200;
     private final int amountTestPrice = 10;

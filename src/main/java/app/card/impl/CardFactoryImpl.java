@@ -70,6 +70,11 @@ public class CardFactoryImpl implements CardFactory {
     }
 
     /**
+    * @param id is the id in table of cards
+    * @param name is the name of property
+    * @param price is the money price for buy property
+    * @param housePrice is the money for build an house on property
+    * @param fees is the city tax 
     * @return a Card buyable, with more property like price, housePrice
     */
     @Override
@@ -149,6 +154,10 @@ public class CardFactoryImpl implements CardFactory {
     }
 
     /**
+    * @param id is the id in table of cards
+    * @param name is the name of property
+    * @param price is the money price for buy property
+    * @param fees is the city tax 
     * @return a Card buyable but with no housePrice
     */
     @Override
@@ -157,6 +166,10 @@ public class CardFactoryImpl implements CardFactory {
     }
 
     /**
+    * @param id is the id in table of cards
+    * @param name is the name of property
+    * @param func is the name of function to call
+    * @param amount is the argument passed to function called by reflection
     * @return a Card unbuyable with no price but a with optional static action to call on players
     */
     @Override
