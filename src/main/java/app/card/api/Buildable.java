@@ -5,8 +5,8 @@ package app.card.api;
  */
 public interface Buildable extends Buyable {
     /**
-    * @param
-    * @return price for build one house
-    */
+     * @param
+     * @return price for build one house
+     */
     int getHousePrice();
 }

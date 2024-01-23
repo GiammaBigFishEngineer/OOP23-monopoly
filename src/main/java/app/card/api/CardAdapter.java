@@ -6,9 +6,9 @@ package app.card.api;
 public interface CardAdapter {
 
     /**
-    * @param card is the card to adapt
-    * @return buildable type card
-    */
+     * @param card is the card to adapt
+     * @return buildable type card
+     */
     static Buildable buildableAdapter(Card card) {
         if (!(card instanceof Buildable)) {
             throw new IllegalArgumentException("Card passed is not Buildable");
@@ -17,9 +17,9 @@ public interface CardAdapter {
     }
 
     /**
-    * @param card is the card to adapt
-    * @return Buyable type card
-    */
+     * @param card is the card to adapt
+     * @return Buyable type card
+     */
     static Buyable buyableAdapter(Card card) {
         if (!(card instanceof Buyable)) {
             throw new IllegalArgumentException("Card passed is not Buyable");
@@ -28,9 +28,9 @@ public interface CardAdapter {
     }
 
     /**
-    * @param card is the card to adapt
-    * @return Unbuyable type card
-    */
+     * @param card is the card to adapt
+     * @return Unbuyable type card
+     */
     static Unbuyable unbuyableAdapter(Card card) {
         if (!(card instanceof Unbuyable)) {
             throw new IllegalArgumentException("Card passed is not Unbuyable");

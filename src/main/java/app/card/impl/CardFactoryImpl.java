@@ -24,8 +24,8 @@ import app.player.api.Player;
 public class CardFactoryImpl implements CardFactory {
 
     /**
-    * @return the list of all cards in table
-    */
+     * @return the list of all cards in table
+     */
     @Override
     public List<Card> cardsInitializer() throws IOException {
         final var allCards = new ArrayList<Card>();
@@ -70,13 +70,13 @@ public class CardFactoryImpl implements CardFactory {
     }
 
     /**
-    * @param id is the id in table of cards
-    * @param name is the name of property
-    * @param price is the money price for buy property
-    * @param housePrice is the money for build an house on property
-    * @param fees is the city tax 
-    * @return a Card buyable, with more property like price, housePrice
-    */
+     * @param id is the id in table of cards
+     * @param name is the name of property
+     * @param price is the money price for buy property
+     * @param housePrice is the money for build an house on property
+     * @param fees is the city tax 
+     * @return a Card buyable, with more property like price, housePrice
+     */
     @Override
     public Buildable createProperty(final int id, final String name, final int price, final int housePrice, final int fees) {
         return new Buildable() {
@@ -154,24 +154,24 @@ public class CardFactoryImpl implements CardFactory {
     }
 
     /**
-    * @param id is the id in table of cards
-    * @param name is the name of property
-    * @param price is the money price for buy property
-    * @param fees is the city tax 
-    * @return a Card buyable but with no housePrice
-    */
+     * @param id is the id in table of cards
+     * @param name is the name of property
+     * @param price is the money price for buy property
+     * @param fees is the city tax 
+     * @return a Card buyable but with no housePrice
+     */
     @Override
     public Buyable createStation(final int id, final String name, final int price, final int fees) {
         return createProperty(id, name, price, 0, fees);
     }
 
     /**
-    * @param id is the id in table of cards
-    * @param name is the name of property
-    * @param func is the name of function to call
-    * @param amount is the argument passed to function called by reflection
-    * @return a Card unbuyable with no price but a with optional static action to call on players
-    */
+     * @param id is the id in table of cards
+     * @param name is the name of property
+     * @param func is the name of function to call
+     * @param amount is the argument passed to function called by reflection
+     * @return a Card unbuyable with no price but a with optional static action to call on players
+     */
     @Override
     public Unbuyable createStaticCard(final int id, final String name, final String func, final int amount) {
         return new Unbuyable() {

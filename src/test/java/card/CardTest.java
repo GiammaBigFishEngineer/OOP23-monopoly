@@ -20,14 +20,20 @@ import app.player.api.Player;
 /**
  * Test for all cards.
  */
-public class CardTest {
+class CardTest {
 
+    private CardFactory factory;
+    private static final int ID_TEST = 5;
+    private static final int ID_TEST_PRISON = 18;
+    private static final int ID_TEST_GO = 0;
+    private static final int AMOUNT_TEST_MONEY = 200;
+    private static final int AMOUNT_TEST_PRICE = 10;
     private final class TestLazyPlayer implements Player {
 
-        private int position = 0;
-        private BankAccount bankAccount = new BankAccount() {
+        private int position;
+        private final BankAccount bankAccount = new BankAccount() {
 
-                private int balance = 0;
+                private int balance;
 
                 @Override
                 public int getBalance() {
@@ -41,7 +47,6 @@ public class CardTest {
                 @Override
                 public void receivePayment(final int amount) {
                     this.balance = this.balance + amount;
-                    System.out.println(this.getBalance());
                 }
 
                 @Override
@@ -85,7 +90,7 @@ public class CardTest {
 
         @Override
         public List<Buyable> getBuildableOwned() {
-            return null;
+            return List.of();
         }
 
         @Override
@@ -104,27 +109,20 @@ public class CardTest {
 
     }
 
-    private CardFactory factory;
-    private final int idTest = 5;
-    private final int idTestGoToPrison = 18;
-    private final int idTestGo = 0;
-    private final int amountTestMoney = 200;
-    private final int amountTestPrice = 10;
-
     /**
-    * inizitalize factory.
-    */
+     * inizitalize factory.
+     */
     @BeforeEach
-    public void init() {
+    void init() {
         this.factory = new CardFactoryImpl();
     }
 
     /**
-    * test empty property.
-    */
+     * test empty property.
+     */
     @Test
-    public void testEmptyProperty() {
-        final Buildable buildable = this.factory.createProperty(idTestGo, null, 0, 0, 0);
+    void testEmptyProperty() {
+        final Buildable buildable = this.factory.createProperty(ID_TEST_GO, null, 0, 0, 0);
         assertEquals(buildable.getHousePrice(), 0);
         assertEquals(buildable.getId(), 0);
         assertEquals(buildable.getName(), null);
@@ -132,64 +130,64 @@ public class CardTest {
     }
 
     /**
-    * test normal property.
-    */
+     * test normal property.
+     */
     @Test
-    public void testProperty() {
-        final Buildable buildable = this.factory.createProperty(idTest, "prova", amountTestPrice, amountTestPrice, 0);
-        assertEquals(buildable.getHousePrice(), amountTestPrice);
-        assertEquals(buildable.getId(), idTest);
+    void testProperty() {
+        final Buildable buildable = this.factory.createProperty(ID_TEST, "prova", AMOUNT_TEST_PRICE, AMOUNT_TEST_PRICE, 0);
+        assertEquals(buildable.getHousePrice(), AMOUNT_TEST_PRICE);
+        assertEquals(buildable.getId(), ID_TEST);
         assertEquals(buildable.getName(), "prova");
         assertEquals(buildable.getPrice(), 10);
     }
 
     /**
-    * test normal property with no owner.
-    */
+     * test normal property with no owner.
+     */
     @Test
-    public void testPropertyEmptyOwner() {
-        final Buildable buildable = this.factory.createProperty(idTest, "prova", amountTestPrice, amountTestPrice, 0);
+    void testPropertyEmptyOwner() {
+        final Buildable buildable = this.factory.createProperty(ID_TEST, "prova", AMOUNT_TEST_PRICE, AMOUNT_TEST_PRICE, 0);
         assertFalse(buildable.isOwned());
     }
 
     /**
-    * test normal station.
-    */
+     * test normal station.
+     */
     @Test
-    public void testStation() {
-        final Buyable station = this.factory.createStation(idTest, "North", amountTestPrice, amountTestPrice);
-        assertEquals(station.getId(), idTest);
+    void testStation() {
+        final Buyable station = this.factory.createStation(ID_TEST, "North", AMOUNT_TEST_PRICE, AMOUNT_TEST_PRICE);
+        assertEquals(station.getId(), ID_TEST);
         assertEquals(station.getName(), "North");
-        assertEquals(station.getPrice(), amountTestPrice);
+        assertEquals(station.getPrice(), AMOUNT_TEST_PRICE);
     }
 
     /**
-    * test the first card "GO".
-    */
+     * test the first card "GO".
+     */
     @Test
-    public void testStaticCardGo() {
-        final Unbuyable staticCard = this.factory.createStaticCard(idTestGo, "Go", "giveMoneyPlayer", amountTestMoney);
+    void testStaticCardGo() {
+        final Unbuyable staticCard = this.factory.createStaticCard(ID_TEST_GO, "Go", "giveMoneyPlayer", AMOUNT_TEST_MONEY);
         final var newPlayer = new TestLazyPlayer();
         staticCard.makeAction(newPlayer);
-        assertEquals(amountTestMoney, newPlayer.getBankAccount().getBalance()); 
+        assertEquals(AMOUNT_TEST_MONEY, newPlayer.getBankAccount().getBalance()); 
     }
 
     /**
-    * test the card "Prison".
-    */
+     * test the card "Prison".
+     */
     @Test
-    public void testStaticCardPrison() {
-        final Unbuyable staticCard = this.factory.createStaticCard(idTestGoToPrison, "prison", "movePlayer", idTestGoToPrison);
+    void testStaticCardPrison() {
+        final Unbuyable staticCard = this.factory.createStaticCard(ID_TEST_PRISON, "prison", "movePlayer", ID_TEST_PRISON);
         final var newPlayer = new TestLazyPlayer();
         staticCard.makeAction(newPlayer);
         assertEquals(staticCard.getId(), newPlayer.getCurrentPosition()); 
     }
 
     /**
-    * test the inizialitation of table.
-    */
+     * test the inizialitation of table.
+     */
     @Test
-    public void testInitializer() throws IOException {
+    void testInitializer() throws IOException {
         final var list = this.factory.cardsInitializer();
         for (int i = 0; i < list.size(); i++) {
             /* controllo che ogni indice sia giusto e crescente */

@@ -4,7 +4,7 @@ import javax.swing.BorderFactory;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
+import javax.swing.ImageIcon;
 import app.card.api.Card;
 import app.card.api.CardAdapter;
 import app.card.api.CardFactory;
@@ -14,9 +14,12 @@ import java.awt.GridLayout;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
 import java.io.IOException;
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+
 /**
  * View of table in the game.
  */
@@ -35,6 +38,7 @@ public class TableView extends JPanel {
 
         final var cardList = cardFactory.cardsInitializer();
         this.setLayout(new GridLayout(size, size));
+        this.setBackground(Color.decode("#7FFFD4"));
 
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
@@ -57,11 +61,33 @@ public class TableView extends JPanel {
                     price = new JLabel();
                 }
                 this.cells.put(card, jp);
-                final JLabel name = new JLabel(card.getName());
 
+                final JLabel name = new JLabel(card.getName());
+                final String sep = File.separator;
+                final String fileName = System.getProperty("user.dir") + sep + "src" + sep + "main" 
+                                + sep + "java" + sep + "app" + sep + "card" + sep + "view" + sep + "resources" + sep;
+                if (card.isUnbuyable()) {
+                    switch (card.getName()) {
+                        case "Imprevisti":
+                            Image icon = new ImageIcon(fileName + "unforseen.png").getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
+                            JLabel image = new JLabel();
+                            image.setIcon(new ImageIcon(icon));
+                            jp.add(image, BorderLayout.CENTER);
+                        break;
+                        case "Vai in Prigione":
+                            icon = new ImageIcon(fileName + "unforseen.png").getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
+                            image = new JLabel();
+                            image.setIcon(new ImageIcon(icon));
+                            jp.add(image, BorderLayout.CENTER);
+                        break;
+                    }
+                }
+               
                 name.setFont(new Font("Verdana", 1, FONTSIZE));
                 jp.add(name, BorderLayout.NORTH);
                 jp.add(price, BorderLayout.SOUTH);
+                
+                jp.setBackground(Color.decode("#7FFFD4"));
                 this.add(jp);
             }
         }
@@ -69,9 +95,9 @@ public class TableView extends JPanel {
     }
 
     /**
-    * @return a JPnale that's rappresented by a specific card
-    */
+     * @return a map of Cards, every card is rappresented by specific JPanel
+     */
     public Map<Card, JPanel> getCells() {
-        return this.cells;
+        return new HashMap<>(this.cells);
     }
 }

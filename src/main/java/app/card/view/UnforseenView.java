@@ -13,8 +13,8 @@ public class UnforseenView extends JPanel {
     private static final long serialVersionUID = 2298666777798069846L;
 
     /**
-    * @param card is the unforseen extracted
-    */
+     * @param card is the unforseen extracted
+     */
     public UnforseenView(final Unforseen card) {
         JOptionPane.showMessageDialog(null, card.getDescription());
     }

@@ -20,12 +20,12 @@ import app.player.api.Player;
 /**
  * Test all unforseens.
  */
-public class UnforseenTest {
+class UnforseenTest {
 
     private final class TestLazyPlayer implements Player {
 
         private int position = -1;
-        private BankAccount bankAccount = new BankAccount() {
+        private final BankAccount bankAccount = new BankAccount() {
 
                 private int balance = -1;
 
@@ -41,7 +41,6 @@ public class UnforseenTest {
                 @Override
                 public void receivePayment(final int amount) {
                     this.balance = this.balance + amount;
-                    System.out.println(this.getBalance());
                 }
 
                 @Override
@@ -85,7 +84,7 @@ public class UnforseenTest {
 
         @Override
         public List<Buyable> getBuildableOwned() {
-            return null;
+            return List.of();
         }
 
         @Override
@@ -108,7 +107,7 @@ public class UnforseenTest {
     * Test first unforseen.
     */
     @Test
-    public void testU1Action() {
+    void testU1Action() {
         final var player = new TestLazyPlayer();
         final int actual = 100;
         Unforseen.U0.getCard().makeAction(player);
@@ -119,7 +118,7 @@ public class UnforseenTest {
     * Test second unforseen.
     */
     @Test
-    public void testU2Action() {
+    void testU2Action() {
         final int actual = 15;
         final var player = new TestLazyPlayer();
         Unforseen.U1.getCard().makeAction(player);
@@ -140,7 +139,7 @@ public class UnforseenTest {
     * @throws IOException
     */
     @Test
-    public void testUseUnforseen() throws IOException {
+    void testUseUnforseen() throws IOException {
         final var player = new TestLazyPlayer();
         final var list = new CardFactoryImpl().cardsInitializer();
         final Unbuyable card = (Unbuyable) list.get(2);
@@ -153,7 +152,7 @@ public class UnforseenTest {
     * @throws IOException
     */
     @Test
-    public void testExtractUnforseen() {
+    void testExtractUnforseen() {
         /* eseguo il test per più volte in modo da aumentare la probabilità di trovare errori
          * in quanto unforseen() usa una generazione randomica.
          */

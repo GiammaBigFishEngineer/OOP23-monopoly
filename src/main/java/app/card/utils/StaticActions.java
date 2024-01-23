@@ -10,8 +10,7 @@ import app.player.api.Player;
  */
 public final class StaticActions {
 
-    private StaticActions() {}; //NOPMD
-    //PMD suppressed because private constructor has no unecessary semilcolon
+    private StaticActions() { }
 
     /**
      * @param player who has to get money
@@ -51,9 +50,7 @@ public final class StaticActions {
         final int unforseenSize = 14;
         final var extraction = new Random().nextInt(unforseenSize);
         final var myUnforseen = Unforseen.valueOf((String) "U" + extraction);
-        if (myUnforseen != null) {
-            myUnforseen.getCard().makeAction(player); 
-        }
+        myUnforseen.getCard().makeAction(player);
         return myUnforseen;
     }
 
