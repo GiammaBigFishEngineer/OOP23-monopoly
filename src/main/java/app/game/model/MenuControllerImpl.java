@@ -5,8 +5,8 @@ import app.player.api.Player;
 import app.player.impl.PlayerImpl;
 
 import java.io.*;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,11 +37,17 @@ public class MenuControllerImpl implements MenuController {
     }
 
     @Override
-    public List<Player> insertPlayers(List<String> playerNames) {
+    public List<Player> insertPlayers(List<String> currentPlayerNames) {
         List<Player> currentPlayers = new ArrayList<>();
 
-        for (int i = 0; i < playerNames.size(); i++) {
-            Player player = new PlayerImpl(i + 1, playerNames.get(i));
+        for (int i = 0; i < currentPlayerNames.size(); i++) {
+            String playerName = currentPlayerNames.get(i);
+            if (playerName == null || playerName.isEmpty()) {
+                System.out.println("Errore: il nome del giocatore " + (i + 1) + " non e' valido.");
+                return new ArrayList<>();
+            }
+
+            Player player = new PlayerImpl(i + 1, playerName);
             currentPlayers.add(player);
         }
 
@@ -50,30 +56,44 @@ public class MenuControllerImpl implements MenuController {
 
     @Override
     public void saveGame() {
-        LocalDateTime dateTime = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy 'alle' HH.mm.ss");
-        String timestamp = dateTime.format(formatter);
-
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME, true))) {
-            writer.write("--- Partita del: " + timestamp + " ---");
-            writer.newLine();
-
-            for (Player player : players) {
-                final String playerData = player.getName() + "," + player.getId() + "," + player.getMoney() + "," + player.getCurrentPosition();
-                writer.write(playerData);
-                writer.newLine();
+        try {
+            if (players != null && !players.isEmpty()) {
+                saveGameToFile(players);
+                System.out.println("Partita salvata con successo!");
+            } else {
+                throw new Exception("Impossibile salvare la partita. Inizia una partita prima di salvare.");
             }
+        } catch (Exception e) {
+            System.out.println("Errore durante il salvataggio del gioco: " + e.getMessage());
+        }
+    }
 
-            System.out.println("Partita salvata con successo!");
+    private void saveGameToFile(List<Player> players) throws IOException {
+        try (PrintWriter writer = new PrintWriter(new FileWriter("saved_games.txt", true))) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy  HH:mm:ss");
+            String timestamp = dateFormat.format(new Date());
+            writer.println("*** Partita del: " + timestamp + " ***");
+
+            for (Player currentPlayer : players) {
+                writer.println("Player: " + currentPlayer.getName() + ", Id: " + currentPlayer.getId() + ", Posizione: " + currentPlayer.getCurrentPosition() + ", Denaro: " + currentPlayer.getMoney());
+            }
+            writer.println("\n");
+            
         } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Errore durante il salvataggio della partita.");
+            System.out.println("Errore durante il salvataggio del gioco: " + e.getMessage());
         }
     }
 
     @Override
     public List<String> viewSavedGames() {
         List<String> savedGames = new ArrayList<>();
+
+        File file = new File(FILE_NAME);
+        if (!file.exists()) {
+            System.out.println("Nessuna partita salvata.");
+            return savedGames;
+        }
+
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
             String line;
             while ((line = reader.readLine()) != null) {
