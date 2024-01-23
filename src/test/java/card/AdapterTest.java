@@ -7,10 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import app.card.api.CardAdapter;
-import app.card.api.Unbuyable;
 import app.card.impl.CardFactoryImpl;
-import app.card.api.Buildable;
-import app.card.api.Buyable;
 import app.card.api.Card;
 
 import java.io.IOException;

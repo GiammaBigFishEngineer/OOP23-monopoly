@@ -2,8 +2,6 @@ package card;
 
 import javax.swing.JFrame;
 
-import org.junit.jupiter.api.Test;
-
 import app.card.api.Unbuyable;
 import app.card.impl.CardFactoryImpl;
 import app.card.view.TableView;

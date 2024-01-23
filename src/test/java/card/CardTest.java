@@ -2,6 +2,7 @@ package card;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,6 +12,7 @@ import java.util.List;
 
 import app.card.api.Buildable;
 import app.card.api.Buyable;
+import app.card.api.Card;
 import app.card.api.CardFactory;
 import app.card.api.Unbuyable;
 import app.card.impl.CardFactoryImpl;
@@ -185,13 +187,24 @@ class CardTest {
 
     /**
      * test the inizialitation of table.
+     * the list is not sorted by ascending id, therefore I check that each id is 
+     * contained between 0 and 24.
      */
     @Test
     void testInitializer() throws IOException {
-        final var list = this.factory.cardsInitializer();
-        for (int i = 0; i < list.size(); i++) {
-            /* controllo che ogni indice sia giusto e crescente */
-            assertEquals(list.get(i).getId(), i);
+        final List<Card> list = this.factory.cardsInitializer();
+        final int finalSize = 24;
+        for (int i = 0; i < finalSize; i++) {
+            assertTrue(listContains(i, list));
         }
+    }
+
+    private Boolean listContains(final int i, final List<Card> list) throws IOException {
+        for (final var l: list) {
+            if (l.getId() == i) {
+                return true;
+            }
+        }
+        return false;
     }
 }
