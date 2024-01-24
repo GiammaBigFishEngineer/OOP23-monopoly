@@ -1,22 +1,21 @@
 package app.card.impl;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
+import java.util.Random;
 import java.io.File;
 import java.io.IOException;
 
-import app.card.api.Buildable;
-import app.card.api.Buyable;
-import app.card.api.Card;
-import app.card.api.CardFactory;
-import app.card.api.Unbuyable;
+import app.card.apii.Buildable;
+import app.card.apii.Buyable;
+import app.card.apii.Card;
+import app.card.apii.CardFactory;
+import app.card.apii.StaticAction;
+import app.card.apii.Unbuyable;
 import app.card.utils.JsonReader;
-import app.card.utils.StaticActions;
-import app.player.api.Player;
+import app.player.apii.NotEnoughMoneyException;
+import app.player.apii.Player;
 
 /**
  * Implementation of CardFactory, every method create a subinstance of Card.
@@ -35,19 +34,18 @@ public class CardFactoryImpl implements CardFactory {
         final var jsonList = JsonReader.readJson(fileName);
         jsonList.forEach(i -> {
             final var type = i.getString("tipology");
+            final var card = createCard(Integer.valueOf(i.getString("id")), i.getString("name"));
             switch (type) {
                 case "static":
                     allCards.add(createStaticCard(
-                        Integer.valueOf(i.getString("id")),
-                        i.getString("name"),
+                        card,
                         i.getString("action"),
                         Integer.valueOf(i.getString("actionAmount"))
                     ));
                     break;
                 case "property":
                     allCards.add(createProperty(
-                        Integer.valueOf(i.getString("id")),
-                        i.getString("name"),
+                        card,
                         Integer.valueOf(i.getString("price")),
                         Integer.valueOf(i.getString("housePrice")),
                         Integer.valueOf(i.getString("fees"))
@@ -55,8 +53,7 @@ public class CardFactoryImpl implements CardFactory {
                     break;
                 case "station":
                     allCards.add(createStation(
-                        Integer.valueOf(i.getString("id")),
-                        i.getString("name"),
+                        card,
                         Integer.valueOf(i.getString("price")),
                         Integer.valueOf(i.getString("fees"))
                     ));
@@ -70,6 +67,50 @@ public class CardFactoryImpl implements CardFactory {
     }
 
     /**
+     * @param id is the id of card
+     * @param name is the name of card
+     * @return the card as object
+     */
+    @Override
+    public Card createCard(final int id, final String name) {
+        return new Card() {
+
+            @Override
+            public String getName() {
+                return name;
+            }
+
+            @Override
+            public int getId() {
+                return id;
+            }
+
+            @Override
+            public boolean equals(final Object card) {
+                if (card == this) {
+                    return true;
+                }
+                if (!(card instanceof Card)) {
+                    return false;
+                }
+                final Card c = (Card) card;
+                return this.getId() == c.getId();
+            }
+
+            @Override
+            public int hashCode() {
+                return this.getId() * this.getName().hashCode();
+            }
+
+            @Override
+            public String toString() {
+                return this.getName();
+            }
+            
+        };
+    }
+
+    /**
      * @param id is the id in table of cards
      * @param name is the name of property
      * @param price is the money price for buy property
@@ -78,7 +119,7 @@ public class CardFactoryImpl implements CardFactory {
      * @return a Card buyable, with more property like price, housePrice
      */
     @Override
-    public Buildable createProperty(final int id, final String name, final int price, final int housePrice, final int fees) {
+    public Buildable createProperty(final Card card, final int price, final int housePrice, final int fees) {
         return new Buildable() {
 
             private Optional<Player> owner = Optional.empty();
@@ -110,12 +151,12 @@ public class CardFactoryImpl implements CardFactory {
 
             @Override
             public String getName() {
-                return name;
+                return card.getName();
             }
 
             @Override
             public int getId() {
-                return id;
+                return card.getId();
             }
 
             @Override
@@ -135,19 +176,12 @@ public class CardFactoryImpl implements CardFactory {
 
             @Override
             public boolean equals(final Object card) {
-                if (card == this) {
-                    return true;
-                }
-                if (!(card instanceof Card)) {
-                    return false;
-                }
-                final Card c = (Card) card;
-                return this.getId() == c.getId();
+                return card.equals(card);
             }
 
             @Override
             public int hashCode() {
-                return this.getId() * this.getName().hashCode();
+                return card.hashCode();
             }
 
         };
@@ -161,8 +195,8 @@ public class CardFactoryImpl implements CardFactory {
      * @return a Card buyable but with no housePrice
      */
     @Override
-    public Buyable createStation(final int id, final String name, final int price, final int fees) {
-        return createProperty(id, name, price, 0, fees);
+    public Buyable createStation(final Card card, final int price, final int fees) {
+        return createProperty(card, price, 0, fees);
     }
 
     /**
@@ -173,63 +207,83 @@ public class CardFactoryImpl implements CardFactory {
      * @return a Card unbuyable with no price but a with optional static action to call on players
      */
     @Override
-    public Unbuyable createStaticCard(final int id, final String name, final String func, final int amount) {
+    public Unbuyable createStaticCard(final Card card, final String action, final int myAmount) {
         return new Unbuyable() {
 
             @Override
             public String getName() {
-                return name;
+                return card.getName();
             }
 
             @Override
             public int getId() {
-                return id;
+                return card.getId();
             }
 
             @Override
-            public String getAction() {
-                return func;
-            }
-
-            @Override
-            public Optional<Unforseen> makeAction(final Player player) {
-                try {
-                    final String methodName = func;
-                    final Class<?> clazz = StaticActions.class;
-                    if ("unforseen".equals(func)) {
-                        final Method method = clazz.getMethod(methodName, Player.class);
-                        final Unforseen unforseen = (Unforseen) method.invoke(Unforseen.class, player);
-                        return Optional.of(unforseen);
-                    } else {
-                        final Method method = clazz.getMethod(methodName, Player.class, int.class);
-                        method.invoke(null, player, amount);
-                        return Optional.empty();
-                    }
-                } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-                    return Optional.empty();
+            public Optional<Unforseen> makeAction(final Player myPlayer) {
+                final StaticAction staticAction;
+                final Optional<Unforseen> unforseen = Optional.empty();
+                switch (action) {
+                    case "giveMoneyPlayer":
+                        staticAction = (player,amount) -> {
+                            if (player != null) {
+                                player.getBankAccount().receivePayment(amount);
+                            }
+                            return Optional.empty();
+                        };
+                        break;
+                    case "payPlayer":
+                        staticAction = (player, amount) -> {
+                            if (player != null) {
+                                try {
+                                    player.getBankAccount().payPlayer(null, amount);
+                                } catch (NotEnoughMoneyException e) {
+                                    /* inserire log.error() */
+                                    e.printStackTrace();
+                                }
+                            }
+                            return Optional.empty();
+                        };
+                        break;
+                    case "movePlayer":
+                        staticAction = (player, amount) -> {
+                            if (player != null) {
+                                player.setPosition(amount);
+                            }
+                            return Optional.empty();
+                        };
+                    break;
+                    case "unforseen":
+                        staticAction = (player, amount) -> {
+                            final int unforseenSize = 14;
+                            final var extraction = new Random().nextInt(unforseenSize);
+                            final var myUnforseen = Unforseen.valueOf((String) "U" + extraction);
+                            myUnforseen.getCard().makeAction(player);
+                            return Optional.of(myUnforseen);
+                        };
+                    break;
+                    default:
+                        staticAction = (player, amount) -> Optional.empty();
+                        break;
                 }
+                staticAction.myAction(myPlayer, myAmount);
+                return unforseen;
             }
 
             @Override
             public String toString() {
-                return this.getName();
+                return card.getName();
             }
 
             @Override
-            public boolean equals(final Object card) {
-                if (card == this) {
-                    return true;
-                }
-                if (!(card instanceof Card)) {
-                    return false;
-                }
-                final Card c = (Card) card;
-                return this.getId() == c.getId();
+            public boolean equals(final Object newCard) {
+                return card.equals(newCard);
             }
 
             @Override
             public int hashCode() {
-                return this.getId() * this.getName().hashCode();
+                return card.hashCode();
             }
 
         };

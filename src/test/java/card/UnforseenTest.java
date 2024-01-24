@@ -8,14 +8,13 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import app.card.api.Buildable;
-import app.card.api.Buyable;
-import app.card.api.Unbuyable;
+import app.card.apii.Buildable;
+import app.card.apii.Buyable;
+import app.card.apii.Unbuyable;
 import app.card.impl.CardFactoryImpl;
 import app.card.impl.Unforseen;
-import app.card.utils.StaticActions;
-import app.player.api.BankAccount;
-import app.player.api.Player;
+import app.player.apii.BankAccount;
+import app.player.apii.Player;
 
 /**
  * Test all unforseens.
@@ -158,8 +157,11 @@ class UnforseenTest {
          */
         for (int i = 0; i < 100; i++) {
             final var player = new TestLazyPlayer();
-            final Unforseen unforseen = StaticActions.unforseen(player);
-            unforseen.getCard().makeAction(player);
+            var factory = new CardFactoryImpl();
+            factory.createStaticCard(factory.createCard(i, "prova"),
+                "unforseen",
+                0)
+                .makeAction(player);
             assertTrue(checkChanges(player));
         }
     }

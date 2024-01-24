@@ -1,4 +1,4 @@
-package app.card.api;
+package app.card.apii;
 
 import java.io.IOException;
 import java.util.List;
@@ -16,6 +16,11 @@ public interface CardFactory {
     List<Card> cardsInitializer() throws IOException;
 
     /**
+     * @return a new card with id and name
+     */
+    Card createCard(int id, String name);
+
+    /**
      * @param id id of box
      * @param name of box
      * @param price of box
@@ -23,8 +28,7 @@ public interface CardFactory {
      * @param fees of box
      * @return a normal property where can build
      */
-    Buildable createProperty(int id, String name, int price, 
-        int housePrice, int fees);
+    Buildable createProperty(Card card, int price, int housePrice, int fees);
 
     /**
      * @param id id of box
@@ -33,7 +37,7 @@ public interface CardFactory {
      * @param fees of box
      * @return a station with particular transit fees
      */
-    Buyable createStation(int id, String name, int price, int fees);
+    Buyable createStation(Card card, int price, int fees);
 
     /**
      * @param id id of box
@@ -42,5 +46,5 @@ public interface CardFactory {
      * @param amount is the positive num for the action like giveMoney or movePlayer
      * @return the static card like Go and Prison
      */
-    Unbuyable createStaticCard(int id, String name, String func, int amount);
+    Unbuyable createStaticCard(Card card, String func, int amount);
 }

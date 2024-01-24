@@ -5,8 +5,9 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.ImageIcon;
-import app.card.api.Card;
-import app.card.api.CardAdapter;
+
+import app.card.apii.Card;
+import app.card.apii.CardAdapter;
 import app.card.impl.CardFactoryImpl;
 
 import java.awt.GridLayout;

@@ -2,7 +2,7 @@ package card;
 
 import javax.swing.JFrame;
 
-import app.card.api.Unbuyable;
+import app.card.apii.Unbuyable;
 import app.card.impl.CardFactoryImpl;
 import app.card.view.TableView;
 import app.card.view.UnforseenView;
@@ -22,7 +22,8 @@ final class TestView {
         final int size = 250;
         final int side = 7;
         final int buildable = 7;
-        final Unbuyable cardUnforseen = new CardFactoryImpl().createStaticCard(buildable, "UnforseenTest", "unforseen", 0);
+        var factory = new CardFactoryImpl();
+        final Unbuyable cardUnforseen = factory.createStaticCard(factory.createCard(buildable, "UnforseenTest"), "unforseen", 0);
         final var table = new TableView(side);
         final var unforseenAllert = new UnforseenView(cardUnforseen.makeAction(null).get());
         final var frame = new JFrame();

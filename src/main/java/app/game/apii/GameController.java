@@ -1,7 +1,7 @@
-package app.game.api;
+package app.game.apii;
 
-import app.card.api.Card;
-import app.player.api.Player;
+import app.card.apii.Card;
+import app.player.apii.Player;
 
 
 public interface GameController {
