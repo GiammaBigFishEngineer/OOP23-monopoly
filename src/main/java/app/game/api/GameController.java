@@ -3,6 +3,7 @@ package app.game.api;
 import app.card.api.Card;
 import app.player.api.Player;
 
+
 public interface GameController {
     void rollDice();
     void buyPropriety(Player currentPlayer);

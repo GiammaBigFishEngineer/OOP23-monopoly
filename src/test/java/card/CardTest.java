@@ -52,7 +52,7 @@ class CardTest {
                 }
 
                 @Override
-                public Boolean isPaymentAllowed() {
+                public boolean isPaymentAllowed(final int amount) {
                     return true;
                 }
         };

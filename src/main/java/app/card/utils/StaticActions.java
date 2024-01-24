@@ -3,6 +3,7 @@ package app.card.utils;
 import java.util.Random;
 
 import app.card.impl.Unforseen;
+import app.player.api.NotEnoughMoneyException;
 import app.player.api.Player;
 
 /**
@@ -25,8 +26,9 @@ public final class StaticActions {
     /**
      * @param player who have to pay money
      * @param money is the amount player has to pay
+     * @throws NotEnoughMoneyException 
      */
-    public static void playerPay(final Player player, final int money) {
+    public static void playerPay(final Player player, final int money) throws NotEnoughMoneyException {
         if (player != null) {
             player.getBankAccount().payPlayer(null, money);
         }
