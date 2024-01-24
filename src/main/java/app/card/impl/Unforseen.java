@@ -1,7 +1,7 @@
 package app.card.impl;
 
-import app.card.api.CardFactory;
-import app.card.api.Unbuyable;
+import app.card.apii.CardFactory;
+import app.card.apii.Unbuyable;
 
 /**
  * every Ui is the i card unforseen to extract.

@@ -2,7 +2,7 @@ package card;
 
 import javax.swing.JFrame;
 
-import app.card.api.Unbuyable;
+import app.card.apii.Unbuyable;
 import app.card.impl.CardFactoryImpl;
 import app.card.view.TableView;
 import app.card.view.UnforseenView;

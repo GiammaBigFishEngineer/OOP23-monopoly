@@ -1,7 +1,7 @@
-package app.player.api;
+package app.player.apii;
 
-import app.card.api.Buildable;
-import app.card.api.Buyable;
+import app.card.apii.Buildable;
+import app.card.apii.Buyable;
 import java.util.List;
 
 /**

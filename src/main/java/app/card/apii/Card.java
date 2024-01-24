@@ -1,4 +1,4 @@
-package app.card.api;
+package app.card.apii;
 
 /**
  * An interface that represents each individual box.

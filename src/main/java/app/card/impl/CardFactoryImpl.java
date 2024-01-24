@@ -9,14 +9,14 @@ import java.util.Optional;
 import java.io.File;
 import java.io.IOException;
 
-import app.card.api.Buildable;
-import app.card.api.Buyable;
-import app.card.api.Card;
-import app.card.api.CardFactory;
-import app.card.api.Unbuyable;
+import app.card.apii.Buildable;
+import app.card.apii.Buyable;
+import app.card.apii.Card;
+import app.card.apii.CardFactory;
+import app.card.apii.Unbuyable;
 import app.card.utils.JsonReader;
 import app.card.utils.StaticActions;
-import app.player.api.Player;
+import app.player.apii.Player;
 
 /**
  * Implementation of CardFactory, every method create a subinstance of Card.

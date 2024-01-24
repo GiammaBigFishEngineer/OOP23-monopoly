@@ -1,4 +1,4 @@
-package app.player.api;
+package app.player.apii;
 
 /**
  * Exception thrown if a player doesn't have enough money 

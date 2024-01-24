@@ -3,8 +3,8 @@ package app.card.utils;
 import java.util.Random;
 
 import app.card.impl.Unforseen;
-import app.player.api.NotEnoughMoneyException;
-import app.player.api.Player;
+import app.player.apii.NotEnoughMoneyException;
+import app.player.apii.Player;
 
 /**
  * Utility class for make the static action to be called on players.

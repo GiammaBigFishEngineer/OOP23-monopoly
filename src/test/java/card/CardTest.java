@@ -10,14 +10,14 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.util.List;
 
-import app.card.api.Buildable;
-import app.card.api.Buyable;
-import app.card.api.Card;
-import app.card.api.CardFactory;
-import app.card.api.Unbuyable;
+import app.card.apii.Buildable;
+import app.card.apii.Buyable;
+import app.card.apii.Card;
+import app.card.apii.CardFactory;
+import app.card.apii.Unbuyable;
 import app.card.impl.CardFactoryImpl;
-import app.player.api.BankAccount;
-import app.player.api.Player;
+import app.player.apii.BankAccount;
+import app.player.apii.Player;
 
 /**
  * Test for all cards.

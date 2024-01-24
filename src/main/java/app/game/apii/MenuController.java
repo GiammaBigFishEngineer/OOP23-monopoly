@@ -1,6 +1,6 @@
-package app.game.api;
+package app.game.apii;
 
-import app.player.api.Player; 
+import app.player.apii.Player; 
 
 import java.util.List;
 
