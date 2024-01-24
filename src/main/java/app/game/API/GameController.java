@@ -1,7 +1,8 @@
-package app.game.API;
+package app.game.api;
 
-import app.card.API.Card;
-import app.player.API.Player;
+import app.card.api.Card;
+import app.player.api.Player;
+
 
 public interface GameController {
     void rollDice();
