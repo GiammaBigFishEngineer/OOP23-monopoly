@@ -2,7 +2,7 @@ package app.game.api;
 
 import app.player.api.Player; 
 
-import java.util.*;
+import java.util.List;
 
 /**
  * An interface that defines operations that can be performed to manage the menu.
@@ -18,7 +18,7 @@ public interface MenuController {
     boolean startGame(List<Player> players);
 
     /**
-     * Quits the current game
+     * Quits the current game.
      */
     void quitGame();
 
@@ -26,7 +26,7 @@ public interface MenuController {
      * Inserts new players.
      *
      * @param playerNames the list of player names to be inserted
-     * @return a list of player objects representing the inserted players
+     * @return a list of player objects representing the inserted players for the current game
      */
     List<Player> insertPlayers(List<String> playerNames);
 

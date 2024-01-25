@@ -21,7 +21,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
 
+/**
+ * View of dice in the game.
+ */
 public class DiceView extends JFrame {
+
+    private static final long serialVersionUID = 1L;
 
     private static final int DICE_SIZE = 175;
     private static final int TIMER_DELAY = 100;
@@ -32,11 +37,20 @@ public class DiceView extends JFrame {
     private static final int SPACING = 40;
     private static final int MIN_NUMBER = 1;
     private static final int MAX_NUMBER = 6;
+    private static final int ONE_DOT = 1;
+    private static final int TWO_DOT = 2;
+    private static final int THREE_DOT = 3;
+    private static final int FOUR_DOT = 4;
+    private static final int FIVE_DOT = 5;
+    private static final int SIX_DOT = 6;
 
-    private JLabel resultLabel;
-    private DicePanel dicePanel1;
-    private DicePanel dicePanel2;
+    private final JLabel resultLabel;
+    private final DicePanel dicePanel1;
+    private final DicePanel dicePanel2;
 
+    /**
+     * @param size is the size of the view
+     */
     public DiceView(final int size) {
         this.setTitle("Lancio dei 2 dadi");
 
@@ -93,6 +107,9 @@ public class DiceView extends JFrame {
         this.setVisible(true);
     }
 
+    /**
+     * Rolls the dice, generating random numbers for each die and updating the result label.
+     */
     public void roll() {
         dicePanel1.numberGeneration();
         dicePanel2.numberGeneration();
@@ -100,22 +117,30 @@ public class DiceView extends JFrame {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                int res = getDiceResult();
+                final int res = getDiceResult();
                 resultLabel.setText("Risultato: " + res);
             }
         });
     }
 
+    /**
+     * Gets the result of the dice roll.
+     * 
+     * @return the sum of the results from both dice
+     */
     public int getDiceResult() {
         return dicePanel1.getResult() + dicePanel2.getResult();
     }
 
     private class DicePanel extends JPanel {
+
+        private static final long serialVersionUID = 1L;
+
         private int result;
-        private Timer timer;
+        private final Timer timer;
         private final Random randomNumber = new Random();
 
-        public DicePanel() {
+        DicePanel() {
             this.result = 1; 
             this.setBackground(Color.WHITE);
             this.setPreferredSize(new Dimension(DICE_SIZE, DICE_SIZE));
@@ -153,32 +178,32 @@ public class DiceView extends JFrame {
             final int centerY = getHeight() / 2;
 
             switch (result) {
-                case 1:
+                case ONE_DOT:
                     drawDot(g, centerX, centerY);
                     break;
-                case 2:
+                case TWO_DOT:
                     drawDot(g, centerX - SPACING, centerY - SPACING);
                     drawDot(g, centerX + SPACING, centerY + SPACING);
                     break;
-                case 3:
+                case THREE_DOT:
                     drawDot(g, centerX, centerY);
                     drawDot(g, centerX - SPACING, centerY - SPACING);
                     drawDot(g, centerX + SPACING, centerY + SPACING);
                     break;
-                case 4:
+                case FOUR_DOT:
                     drawDot(g, centerX - SPACING, centerY - SPACING);
                     drawDot(g, centerX + SPACING, centerY + SPACING);
                     drawDot(g, centerX - SPACING, centerY + SPACING);
                     drawDot(g, centerX + SPACING, centerY - SPACING);
                     break;
-                case 5:
+                case FIVE_DOT:
                     drawDot(g, centerX, centerY);
                     drawDot(g, centerX - SPACING, centerY - SPACING);
                     drawDot(g, centerX + SPACING, centerY + SPACING);
                     drawDot(g, centerX - SPACING, centerY + SPACING);
                     drawDot(g, centerX + SPACING, centerY - SPACING);
                     break;
-                case 6:
+                case SIX_DOT:
                     drawDot(g, centerX - SPACING, centerY - SPACING);
                     drawDot(g, centerX + SPACING, centerY + SPACING);
                     drawDot(g, centerX - SPACING, centerY + SPACING);
