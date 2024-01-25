@@ -17,7 +17,6 @@ public final class JsonReader {
     private JsonReader() { }
 
     /**
-     * 
      * @param json is the path file .json
      * @return a list of all json object readed
      * @throws IOException

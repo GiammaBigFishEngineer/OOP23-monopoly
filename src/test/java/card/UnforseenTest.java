@@ -157,7 +157,7 @@ class UnforseenTest {
          */
         for (int i = 0; i < 100; i++) {
             final var player = new TestLazyPlayer();
-            var factory = new CardFactoryImpl();
+            final var factory = new CardFactoryImpl();
             factory.createStaticCard(factory.createCard(i, "prova"),
                 "unforseen",
                 0)
