@@ -1,12 +1,12 @@
 package app.card.view;
 
+import app.game.utils.Dice;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.Timer;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -19,7 +19,6 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Random;
 
 /**
  * View of dice in the game.
@@ -29,21 +28,21 @@ public class DiceView extends JFrame {
     private static final long serialVersionUID = 1L;
 
     private static final int DICE_SIZE = 175;
-    private static final int TIMER_DELAY = 100;
     private static final int FONT_SIZE = 16;
     private static final int TOP_PADDING = 10;
     private static final int BOTTOM_PADDING = 10;
     private static final int DOT_SIZE = 20;
     private static final int SPACING = 40;
-    private static final int MIN_NUMBER = 1;
-    private static final int MAX_NUMBER = 6;
     private static final int ONE_DOT = 1;
     private static final int TWO_DOT = 2;
     private static final int THREE_DOT = 3;
     private static final int FOUR_DOT = 4;
     private static final int FIVE_DOT = 5;
     private static final int SIX_DOT = 6;
+    private static final String TITLE = "Lancio dei 2 dadi";
 
+    private final Dice dice;
+    private final JButton rollButton;
     private final JLabel resultLabel;
     private final DicePanel dicePanel1;
     private final DicePanel dicePanel2;
@@ -52,12 +51,13 @@ public class DiceView extends JFrame {
      * @param size is the size of the view
      */
     public DiceView(final int size) {
-        this.setTitle("Lancio dei 2 dadi");
+        dice = new Dice();
+        this.setTitle(TITLE);
 
         final JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
 
-        final JButton rollButton = new JButton("Lancia i dadi");
+        rollButton = new JButton("Lancia i dadi");
         final Font buttonFont = new Font("Verdana", Font.BOLD, FONT_SIZE);
         rollButton.setFont(buttonFont);
 
@@ -83,7 +83,7 @@ public class DiceView extends JFrame {
         centerPanel.add(dicePanel2, gbc);
         panel.add(centerPanel, BorderLayout.CENTER);
 
-        resultLabel = new JLabel("Risultato: ___");
+        resultLabel = new JLabel("Risultato: __ ");
         final Font resultFont = new Font("Verdana", Font.PLAIN, FONT_SIZE);
         resultLabel.setFont(resultFont);
 
@@ -111,63 +111,28 @@ public class DiceView extends JFrame {
      * Rolls the dice, generating random numbers for each die and updating the result label.
      */
     public void roll() {
-        dicePanel1.numberGeneration();
-        dicePanel2.numberGeneration();
+        dice.roll();
 
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                final int res = getDiceResult();
-                resultLabel.setText("Risultato: " + res);
-            }
-        });
-    }
-
-    /**
-     * Gets the result of the dice roll.
-     * 
-     * @return the sum of the results from both dice
-     */
-    public int getDiceResult() {
-        return dicePanel1.getResult() + dicePanel2.getResult();
+        dicePanel1.setResult(dice.getDie1Result());
+        dicePanel2.setResult(dice.getDie2Result());
+        resultLabel.setText("Risultato: " + dice.getDiceResult());
+        rollButton.setEnabled(false);
     }
 
     private class DicePanel extends JPanel {
 
         private static final long serialVersionUID = 1L;
-
         private int result;
-        private final Timer timer;
-        private final Random randomNumber = new Random();
 
         DicePanel() {
             this.result = 1; 
             this.setBackground(Color.WHITE);
             this.setPreferredSize(new Dimension(DICE_SIZE, DICE_SIZE));
-
-            this.timer = new Timer(TIMER_DELAY, new ActionListener() {
-                @Override
-                public void actionPerformed(final ActionEvent e) {
-                    rollAnimation();
-                }
-            });
         }
 
-        private void numberGeneration() {
-            result = randomNumber.nextInt(MAX_NUMBER) + 1;
-            if (result < MIN_NUMBER || result > MAX_NUMBER) {
-                throw new IllegalStateException("Risultato non valido.");
-            }
-            timer.start();
-        }
-
-        private void rollAnimation() {
-            SwingUtilities.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    repaint();
-                }
-            });
+        public void setResult(final int result) {
+            this.result = result;
+            repaint();
         }
 
         @Override
@@ -219,10 +184,6 @@ public class DiceView extends JFrame {
         private void drawDot(final Graphics g, final int x, final int y) {
             g.setColor(Color.BLACK);
             g.fillOval(x - DOT_SIZE / 2, y - DOT_SIZE / 2, DOT_SIZE, DOT_SIZE);
-        }
-
-        private int getResult() {
-            return result;
         }
     }
 }
