@@ -46,7 +46,6 @@ public class MenuControllerImpl implements MenuController {
         }
 
         this.players = players;
-        System.out.println("Start game...");
         return true;
     }
 
@@ -55,7 +54,6 @@ public class MenuControllerImpl implements MenuController {
      */
     @Override
     public void quitGame() {
-        System.out.println("...Exit game");
         System.exit(0);
     }
 
@@ -90,12 +88,11 @@ public class MenuControllerImpl implements MenuController {
         try {
             if (players != null && !players.isEmpty()) {
                 saveGameToFile(players);
-                System.out.println("Partita salvata con successo!");
             } else {
-                throw new Exception("Impossibile salvare la partita. Inizia una partita prima di salvare.");
+                throw new IllegalStateException("Impossibile salvare la partita. Inizia una partita prima di salvare.");
             }
-        } catch (Exception e) {
-            System.out.println("Errore durante il salvataggio del gioco: " + e.getMessage());
+        } catch (IOException e) {
+            writeErrorToLogFile("Errore di I/O durante il salvataggio del gioco.", e);
         }
     }
 
@@ -109,11 +106,11 @@ public class MenuControllerImpl implements MenuController {
                 writer.println("Player: " + currentPlayer.getName()
                                + ", Id: " + currentPlayer.getId()
                                + ", Posizione: " + currentPlayer.getCurrentPosition()
-                               + ", Denaro: " + currentPlayer.getMoney());
+                               + ", Denaro: " + currentPlayer.getBankAccount().getBalance());
             }
             writer.println("\n");
         } catch (IOException e) {
-            System.out.println("Errore durante il salvataggio del gioco: " + e.getMessage());
+            writeErrorToLogFile("Errore di I/O durante il salvataggio del gioco.", e);
         }
     }
 
@@ -133,15 +130,25 @@ public class MenuControllerImpl implements MenuController {
 
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
             String line;
-            while ((line = reader.readLine()) != null) {
-                savedGames.add(line);
-            }
-            System.out.println("Caricamento partite salvate...");
+            do {
+                line = reader.readLine();
+                if (line != null) {
+                    savedGames.add(line);
+                }
+            } while (line != null);
         } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Errore durante il caricamento delle partite salvate.");
+            writeErrorToLogFile("Errore di I/O durante il salvataggio del gioco.", e);
         }
 
         return savedGames;
+    }
+
+    private void writeErrorToLogFile(final String message, final Exception exception) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter("error.log", true))) {
+            writer.println(message);
+            exception.printStackTrace(writer);
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
     }
 }
