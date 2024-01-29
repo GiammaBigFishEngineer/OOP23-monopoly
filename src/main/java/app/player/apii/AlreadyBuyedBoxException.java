@@ -5,5 +5,5 @@ package app.player.apii;
  * which is already owned by someone else. 
  */
 public class AlreadyBuyedBoxException extends Exception {
-
+    
 }
