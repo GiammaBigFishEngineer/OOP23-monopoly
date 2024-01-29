@@ -5,4 +5,4 @@ bin/
 *.DS_Store
 *.log
 *.pdf
-.vscode/*
+.vscode
