@@ -2,7 +2,6 @@ package app.card.view;
 
 import app.game.utils.Dice;
 
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.BorderFactory;
@@ -23,7 +22,7 @@ import java.awt.event.ActionListener;
 /**
  * View of dice in the game.
  */
-public class DiceView extends JFrame {
+public class DiceView extends JPanel {
 
     private static final long serialVersionUID = 1L;
 
@@ -39,7 +38,6 @@ public class DiceView extends JFrame {
     private static final int FOUR_DOT = 4;
     private static final int FIVE_DOT = 5;
     private static final int SIX_DOT = 6;
-    private static final String TITLE = "Lancio dei 2 dadi";
 
     private final Dice dice;
     private final JButton rollButton;
@@ -52,10 +50,7 @@ public class DiceView extends JFrame {
      */
     public DiceView(final int size) {
         dice = new Dice();
-        this.setTitle(TITLE);
-
-        final JPanel panel = new JPanel();
-        panel.setLayout(new BorderLayout());
+        this.setLayout(new BorderLayout());
 
         rollButton = new JButton("Lancia i dadi");
         final Font buttonFont = new Font("Verdana", Font.BOLD, FONT_SIZE);
@@ -65,7 +60,7 @@ public class DiceView extends JFrame {
         topPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         topPanel.setBorder(BorderFactory.createEmptyBorder(TOP_PADDING, 0, 0, 0));
         topPanel.add(rollButton);
-        panel.add(topPanel, BorderLayout.NORTH);
+        this.add(topPanel, BorderLayout.NORTH);
 
         dicePanel1 = new DicePanel();
         dicePanel2 = new DicePanel();
@@ -81,7 +76,7 @@ public class DiceView extends JFrame {
         gbc.gridy = 0;
         gbc.insets = new Insets(0, 10, 0, 0);
         centerPanel.add(dicePanel2, gbc);
-        panel.add(centerPanel, BorderLayout.CENTER);
+        this.add(centerPanel, BorderLayout.CENTER);
 
         resultLabel = new JLabel("Risultato: __ ");
         final Font resultFont = new Font("Verdana", Font.PLAIN, FONT_SIZE);
@@ -91,7 +86,7 @@ public class DiceView extends JFrame {
         bottomPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         bottomPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, BOTTOM_PADDING, 0));
         bottomPanel.add(resultLabel);
-        panel.add(bottomPanel, BorderLayout.SOUTH);
+        this.add(bottomPanel, BorderLayout.SOUTH);
 
         rollButton.addActionListener(new ActionListener() {
             @Override
@@ -100,10 +95,7 @@ public class DiceView extends JFrame {
             }
         });
 
-        this.setContentPane(panel);
         this.setSize(size, size);
-        this.setResizable(false);
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setVisible(true);
     }
 
@@ -119,6 +111,9 @@ public class DiceView extends JFrame {
         rollButton.setEnabled(false);
     }
 
+    /**
+     * @return the JPanel that's rappresent a Die
+     */
     private class DicePanel extends JPanel {
 
         private static final long serialVersionUID = 1L;
