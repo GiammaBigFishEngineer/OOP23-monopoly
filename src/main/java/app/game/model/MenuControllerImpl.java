@@ -12,9 +12,11 @@ import java.io.PrintWriter;
 import java.io.BufferedReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 /**
  * Implementation of MenuController with its logic.
@@ -66,9 +68,15 @@ public class MenuControllerImpl implements MenuController {
     @Override
     public List<Player> insertPlayers(final List<String> currentPlayerNames) {
         final List<Player> currentPlayers = new ArrayList<>();
+        final Set<String> uniqueNames = new HashSet<>();
 
         for (int i = 0; i < currentPlayerNames.size(); i++) {
             final String playerName = currentPlayerNames.get(i);
+
+            if (!uniqueNames.add(playerName)) {
+                return new ArrayList<>();
+            }
+
             if (playerName == null || playerName.isEmpty()) {
                 return new ArrayList<>();
             }

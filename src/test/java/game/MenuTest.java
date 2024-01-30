@@ -17,7 +17,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Tests for menu logic.
@@ -120,6 +122,7 @@ class MenuTest {
 
     /**
      * Test that verifies for incorrect insertion of players' names due to a null value.
+     * Then it checks that the game cannot start.
      */
     @Test
     void invalidInsertPlayersCaseNull() {
@@ -128,10 +131,12 @@ class MenuTest {
         currentPlayerNames.add(null);
         final List<Player> insertedPlayers = menuController.insertPlayers(currentPlayerNames);
         assertTrue(insertedPlayers.isEmpty());
+        assertFalse(menuController.startGame(insertedPlayers));
     }
 
     /**
      * Test that verifies for incorrect insertion of players' names due to a empty value.
+     * Then it checks that the game cannot start.
      */
     @Test
     void invalidInsertPlayersCaseEmpty() {
@@ -140,6 +145,24 @@ class MenuTest {
         currentPlayerNames.add("");
         final List<Player> insertedPlayers = menuController.insertPlayers(currentPlayerNames);
         assertEquals(0, insertedPlayers.size());
+        assertFalse(menuController.startGame(insertedPlayers));
+    }
+
+    /**
+     * Test that verifies that is impossible to insert players with the same name.
+     * Then it checks that the game cannot start.
+     */
+    @Test
+    void invalidInsertPlayersWithSameNames() {
+        final List<String> currentPlayerNames = new ArrayList<>();
+        currentPlayerNames.add(DUMMY_PLAYER);
+        currentPlayerNames.add(DUMMY_PLAYER);
+        currentPlayerNames.add(DUMMY_PLAYER);
+        final Set<String> uniqueNames = new HashSet<>(currentPlayerNames);
+        assertEquals(1, uniqueNames.size());
+        final List<Player> insertedPlayers = menuController.insertPlayers(currentPlayerNames);
+        assertEquals(0, insertedPlayers.size());
+        assertFalse(menuController.startGame(insertedPlayers));
     }
 
     /**
