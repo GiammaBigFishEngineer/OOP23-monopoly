@@ -8,7 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * Test for rolling two dice.
+ * Tests for rolling two dice.
  */
 class DiceTest {
 

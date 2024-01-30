@@ -30,6 +30,8 @@ public class DiceView extends JPanel {
     private static final int FONT_SIZE = 16;
     private static final int TOP_PADDING = 10;
     private static final int BOTTOM_PADDING = 10;
+    private static final int RIGHT_INSETS = 10;
+    private static final int LEFT_INSETS = 10;
     private static final int DOT_SIZE = 20;
     private static final int SPACING = 40;
     private static final int ONE_DOT = 1;
@@ -46,9 +48,9 @@ public class DiceView extends JPanel {
     private final DicePanel dicePanel2;
 
     /**
-     * @param size is the size of the view
+     * Constructor of DiceView.
      */
-    public DiceView(final int size) {
+    public DiceView() {
         dice = new Dice();
         this.setLayout(new BorderLayout());
 
@@ -69,12 +71,12 @@ public class DiceView extends JPanel {
         final GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.insets = new Insets(0, 0, 0, 10);
+        gbc.insets = new Insets(0, 0, 0, RIGHT_INSETS);
         centerPanel.add(dicePanel1, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 0;
-        gbc.insets = new Insets(0, 10, 0, 0);
+        gbc.insets = new Insets(0, LEFT_INSETS, 0, 0);
         centerPanel.add(dicePanel2, gbc);
         this.add(centerPanel, BorderLayout.CENTER);
 
@@ -95,7 +97,6 @@ public class DiceView extends JPanel {
             }
         });
 
-        this.setSize(size, size);
         this.setVisible(true);
     }
 
