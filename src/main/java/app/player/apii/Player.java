@@ -2,12 +2,14 @@ package app.player.apii;
 
 import app.card.apii.Buildable;
 import app.card.apii.Buyable;
+
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Interface which models a Player. 
  */
-public interface Player {
+public interface Player extends Serializable {
 
     /**
      * @return currentPosition of the Player
@@ -26,16 +28,13 @@ public interface Player {
 
     /**
      * @param box
-     * @throws AlreadyBuyedBoxException current box is already owned by someone else
-     * @throws NotEnoughMoneyException player doesn't have enough money for buying a box
      */
-    void buyBox(Buyable box) throws AlreadyBuyedBoxException, NotEnoughMoneyException;
+    void buyBox(Buyable box);
 
     /**
      * @param box
-     * @throws IllegalArgumentException
      */
-    void buildHouse(Buildable box) throws IllegalArgumentException;
+    void buildHouse(Buildable box);
 
     /**
      * @return number of Stations owned by the current player

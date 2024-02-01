@@ -26,7 +26,7 @@ public interface MenuController {
      * Inserts new players.
      *
      * @param playerNames the list of player names to be inserted
-     * @return a list of player objects representing the inserted players
+     * @return a list of player objects representing the inserted players for the current game
      */
     List<Player> insertPlayers(List<String> playerNames);
 

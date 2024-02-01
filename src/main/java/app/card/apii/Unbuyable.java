@@ -14,9 +14,4 @@ public interface Unbuyable extends Card {
      * @return Optional empty if makeAction is not for ad Unforseen but for static card in table
      */
     Optional<Unforseen> makeAction(Player player);
-
-    /**
-     * @return the name of the method called by reflection
-     */
-    String getAction();
 }

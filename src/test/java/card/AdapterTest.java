@@ -6,9 +6,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import app.card.apii.Card;
 import app.card.apii.CardAdapter;
 import app.card.impl.CardFactoryImpl;
-import app.card.apii.Card;
 
 import java.io.IOException;
 import java.util.List;
