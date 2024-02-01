@@ -32,7 +32,7 @@ public class TableView extends ObservableImpl<Player> {
     private final int size;
 
     /**
-     * @param size is the n card for a side in table
+     * @param size is the number of cards for a side in table
      * @throws IOException
      */
     public TableView(final int size) throws IOException {
@@ -58,6 +58,7 @@ public class TableView extends ObservableImpl<Player> {
 
     /**
      * Redraw a player on the position passed.
+     * this method takes advantage of the fact that each player has a unique color.
      * @param color
      * @param position
      */
@@ -70,7 +71,23 @@ public class TableView extends ObservableImpl<Player> {
                 this.getCells().get(i).drawCircle(color);
             }
         }
+    }
 
+     /**
+     * Remove a player on the position passed.
+     * this method takes advantage of the fact that each player has a unique color.
+     * @param color
+     * @param position
+     */
+    public void removePlayer(final String color, final int position) {
+        if (position > (this.size * 4) - 1 || position < 0) {
+            throw new IllegalArgumentException("Position passed is not a position in table size");
+        }
+        for (final var i: this.cells.keySet()) {
+            if (i.getId() == position) {
+                this.getCells().get(i).removeCircle(color);
+            }
+        }
     }
 
     /**

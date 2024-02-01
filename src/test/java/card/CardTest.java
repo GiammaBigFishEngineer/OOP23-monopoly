@@ -116,13 +116,13 @@ class CardTest {
     /**
      * test the inizialitation of table.
      * the list is not sorted by ascending id, therefore I check that each id is 
-     * contained between 0 and 24.
+     * contained between 0 and 23.
      */
     @Test
     void testInitializer() throws IOException {
         final List<Card> list = this.factory.cardsInitializer();
-        final int finalSize = 24;
-        for (int i = 0; i < finalSize; i++) {
+        final int finalSize = 23;
+        for (int i = 0; i <= finalSize; i++) {
             assertTrue(listContains(i, list));
         }
     }

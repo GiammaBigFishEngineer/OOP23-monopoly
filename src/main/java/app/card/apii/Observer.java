@@ -1,7 +1,7 @@
 package app.card.apii;
 
 /**
- * Observer interface rappresent the obj to be observed
+ * Observer interface rappresent the obj to be observed.
  */
 @FunctionalInterface
 public interface Observer<T> {

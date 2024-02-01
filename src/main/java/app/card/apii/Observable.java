@@ -2,8 +2,7 @@ package app.card.apii;
 
 /**
  * An observable of a generic parameter T.
- * Observervable is an abstract class for be extended with implementation.
- * @param <T> is the generic type of observable
+ * @param <T> is the generic type of observer
  */
 public interface Observable<T> {
 

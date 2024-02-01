@@ -34,6 +34,7 @@ final class TestView {
         table.redrawPlayer("#52ff", buildable);
         table.redrawPlayer("#000", buildable);
         table.redrawPlayer("#ff000", buildable);
+        table.removePlayer("#000", buildable);
         frame.setVisible(true);
     }
 }

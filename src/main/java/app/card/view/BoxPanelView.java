@@ -14,7 +14,7 @@ import java.util.ArrayList;
  * Class who rappreset a Box in table.
  * Use the concept every player has a unique color.
  */
-public class BoxPanelView extends JPanel{
+public class BoxPanelView extends JPanel {
 
     private JLabel name;
     private JLabel price;
@@ -25,7 +25,7 @@ public class BoxPanelView extends JPanel{
     private static final String PLAYER_SYMBOL = "◉";
     private static final long serialVersionUID = 2298666777798069846L;
 
-public BoxPanelView() { /* Empty constructor for initializing normal JPanel. */ }
+    public BoxPanelView() { /* Empty constructor for initializing normal JPanel. */ }
 
     public BoxPanelView(final JLabel name, final JLabel price, final int index) {
         this.name = name;
@@ -60,7 +60,7 @@ public BoxPanelView() { /* Empty constructor for initializing normal JPanel. */ 
      */
     public void removeCircle(final String color) {
         for (Component component : this.players.getComponents()) {
-            if (((JLabel) component).getBackground().equals(Color.BLACK)) {
+            if (((JLabel) component).getForeground().equals(Color.decode(color))) {
                 this.players.remove(component);
             }
         }

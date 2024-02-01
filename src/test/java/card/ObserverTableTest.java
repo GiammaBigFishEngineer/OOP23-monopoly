@@ -13,7 +13,7 @@ import app.card.view.TableView;
 import app.player.apii.Player;
 
 /**
- * Test for ObserverImpl extended by TableView
+ * Test for ObserverImpl extended by TableView.
  */
 public class ObserverTableTest {
 
