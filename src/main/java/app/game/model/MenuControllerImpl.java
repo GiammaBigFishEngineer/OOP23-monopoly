@@ -23,6 +23,8 @@ import java.util.Set;
  */
 public class MenuControllerImpl implements MenuController {
     private List<Player> players;
+    private boolean isFirstSave;
+
     private static final String FILE_NAME = "saved_games.txt";
     private static final int MIN_NUM_PLAYER = 2;
     private static final int MAX_NUM_PLAYER = 5;
@@ -48,6 +50,7 @@ public class MenuControllerImpl implements MenuController {
         }
 
         this.players = players;
+        this.isFirstSave = true;
         return true;
     }
 
@@ -85,6 +88,7 @@ public class MenuControllerImpl implements MenuController {
             currentPlayers.add(player);
         }
 
+        this.players = currentPlayers;
         return currentPlayers;
     }
 
@@ -94,14 +98,42 @@ public class MenuControllerImpl implements MenuController {
     @Override
     public void saveGame() {
         try {
-            if (players != null && !players.isEmpty()) {
+            if (players != null && !players.isEmpty() && shouldSaveGame()) {
                 saveGameToFile(players);
+                isFirstSave = false;
             } else {
                 throw new IllegalStateException("Impossibile salvare la partita. Inizia una partita prima di salvare.");
             }
         } catch (IOException e) {
             writeErrorToLogFile("Errore di I/O durante il salvataggio del gioco.", e);
         }
+    }
+
+    /**
+     * Determines whether the game should be saved. 
+     * This method is designed for extension. So the subclass should provide additional logic for
+     * deciding when the game should be saved.
+     * 
+     * @return {@code true} if the game should be saved, otherwise {@code false}
+     */
+    @Override
+    public boolean shouldSaveGame() {
+        return isFirstSave || checkForChanges(players);
+    }
+
+    /**
+     * Checks for changes in the provided list of players.
+     * 
+     * @param players is the list of players to check
+     * @return {@code true} if there are changes in the player, otherwhise {@code false}
+     */
+    private boolean checkForChanges(final List<Player> players) {
+        for (final Player currentPlayer : players) {
+            if (currentPlayer.hasPositionChanged() || currentPlayer.getBankAccount().hasBalanceChanged()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void saveGameToFile(final List<Player> players) throws IOException {

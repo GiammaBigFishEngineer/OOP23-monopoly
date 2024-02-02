@@ -41,4 +41,13 @@ public interface MenuController {
      * @return a list of strings representing the data of the saved games
      */
     List<String> viewSavedGames();
+
+    /**
+     * Determines whether the game should be saved.
+     * The game should be saved if it is the first save or if there are changes in player positions or balances.
+     * It is used to know when to save game data and, consequently, to create a summary of all game sessions.
+     * 
+     * @return true if the game should be saved, false otherwise.
+     */
+    boolean shouldSaveGame();
 }
