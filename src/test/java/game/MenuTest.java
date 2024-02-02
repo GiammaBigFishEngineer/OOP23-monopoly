@@ -33,6 +33,8 @@ class MenuTest {
     private static final int FOUR_PLAYERS = 4;
     private static final int FIVE_PLAYERS = 5;
     private static final int SIX_PLAYERS = 6;
+    private static final int DUMMY_BALANCE = 1000;
+    private static final int DUMMY_POSITION = 22;
 
     /**
      * The initialization: a new istance of the menu controller is created.
@@ -191,6 +193,27 @@ class MenuTest {
         };
 
         assertThrows(IllegalStateException.class, executable);
+    }
+
+    /**
+     * Test that verifies if the game should be saved or not.
+     */
+    @Test
+    void testShouldSaveGame() {
+        final List<Player> players = createDummyPlayers(TWO_PLAYERS);
+        assertTrue(menuController.startGame(players));
+        assertTrue(menuController.shouldSaveGame());
+
+        menuController.saveGame();
+        assertFalse(menuController.shouldSaveGame());
+
+        players.get(0).setPosition(DUMMY_POSITION);
+        assertTrue(menuController.shouldSaveGame());
+        menuController.saveGame();
+
+        players.get(0).getBankAccount().setBalance(DUMMY_BALANCE);
+        assertTrue(menuController.shouldSaveGame());
+        menuController.saveGame();
     }
 
     /**
