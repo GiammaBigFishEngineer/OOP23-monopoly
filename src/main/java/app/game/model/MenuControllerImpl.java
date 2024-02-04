@@ -10,6 +10,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.BufferedReader;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
@@ -26,6 +27,7 @@ public class MenuControllerImpl implements MenuController {
     private boolean isFirstSave;
 
     private static final String FILE_NAME = "saved_games.txt";
+    private static final String ERROR_LOG_FILE = "error.log";
     private static final int MIN_NUM_PLAYER = 2;
     private static final int MAX_NUM_PLAYER = 5;
 
@@ -49,7 +51,7 @@ public class MenuControllerImpl implements MenuController {
             return false;
         }
 
-        this.players = players;
+        this.players = new ArrayList<>(players);
         this.isFirstSave = true;
         return true;
     }
@@ -88,7 +90,7 @@ public class MenuControllerImpl implements MenuController {
             currentPlayers.add(player);
         }
 
-        this.players = currentPlayers;
+        this.players = new ArrayList<>(currentPlayers);
         return currentPlayers;
     }
 
@@ -137,7 +139,17 @@ public class MenuControllerImpl implements MenuController {
     }
 
     private void saveGameToFile(final List<Player> players) throws IOException {
-        try (PrintWriter writer = new PrintWriter(new FileWriter("saved_games.txt", true))) {
+        final File file = new File(FILE_NAME);
+        if (!file.exists()) {
+            try {
+                if (!file.createNewFile()) {
+                    throw new IOException("Impossibile creare un nuovo file.");
+                }
+            } catch (IOException e) {
+                writeErrorToLogFile("Errore nella creazione del file.", e);
+            }
+        }
+        try (PrintWriter writer = new PrintWriter(new FileWriter(FILE_NAME, StandardCharsets.UTF_8, true))) {
             final SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy  HH:mm:ss", Locale.ITALY);
             final String timestamp = dateFormat.format(new Date());
             writer.println("*** Partita del: " + timestamp + " ***");
@@ -149,6 +161,10 @@ public class MenuControllerImpl implements MenuController {
                                + ", Denaro: " + currentPlayer.getBankAccount().getBalance());
             }
             writer.println("\n");
+
+            if (writer.checkError()) {
+                writeErrorToLogFile("Errore durante la scrittura nel file", new IOException("Errore di scrittura nel file"));
+            }
         } catch (IOException e) {
             writeErrorToLogFile("Errore di I/O durante il salvataggio del gioco.", e);
         }
@@ -168,7 +184,7 @@ public class MenuControllerImpl implements MenuController {
             return savedGames;
         }
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME, StandardCharsets.UTF_8))) {
             String line;
             do {
                 line = reader.readLine();
@@ -184,7 +200,7 @@ public class MenuControllerImpl implements MenuController {
     }
 
     private void writeErrorToLogFile(final String message, final Exception exception) {
-        try (PrintWriter writer = new PrintWriter(new FileWriter("error.log", true))) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(ERROR_LOG_FILE, StandardCharsets.UTF_8, true))) {
             writer.println(message);
             exception.printStackTrace(writer);
         } catch (IOException ioException) {
