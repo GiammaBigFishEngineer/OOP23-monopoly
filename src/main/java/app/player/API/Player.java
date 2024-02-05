@@ -2,9 +2,12 @@ package app.player.api;
 
 import app.card.api.Buildable;
 import app.card.api.Buyable;
-import java.util.List;
+import app.card.api.Card;
 
-/*
+import java.util.List;
+import java.util.Optional;
+
+/**
  * Interface which models a Player. 
  */
 public interface Player {
@@ -13,58 +16,55 @@ public interface Player {
      * @return currentPosition of the Player
      */
     int getCurrentPosition();
-
     /**
      * @return name of the Player
      */
     String getName();
-
     /**
      * @return Id of the player
      */
     int getId();
-
     /**
      * @param box
-     * @throws AlreadyBuyedBoxException current box is already owned by someone else
-     * @throws NotEnoughMoneyException player doesn't have enough money for buying a box
      */
-    void buyBox(Buyable box) throws AlreadyBuyedBoxException, NotEnoughMoneyException;
-
+    void buyBox(Buyable box);
     /**
      * @param box
      * @throws IllegalArgumentException
      */
     void buildHouse(Buildable box) throws IllegalArgumentException;
-
     /**
      * @return number of Stations owned by the current player
      */
     int getNumberStationOwned();
-
     /**
      * @return information about the player's bankAccount
      */
     BankAccount getBankAccount();
-
+    /**
+     * @return buyable boxes owned by the current Player
+     */
+    List<Buyable> getBuyableOwned();
     /**
      * @return buildable boxes owned by the current Player
      */
-    List<Buyable> getBuildableOwned();
-
+    List<Buildable> getBuildableOwned();
     /**
      * @param box 
      */
     void sellBuyable(Buyable box); 
-     
     /**
      * @param built
-     * @return number of houses built by the current Player
+     * @return Optional<Integer> defining the number of houses built on the current box.
      */
-    int getHouseBuilt(Buildable built); 
-
+    Optional<Integer> getHouseBuilt(Buildable built);
     /**
-     * @param position of the Player on the TABELLONE CONTROLLA COME CHIAMARLO
+     * @param position of the Player on the table.
      */
-    void setPosition(int position);  
+    void setPosition(int position);
+    /**
+     * @param box
+     * @return a boolean which indicates if a player is in jail
+     */
+    boolean isInJail(Card box);
 }

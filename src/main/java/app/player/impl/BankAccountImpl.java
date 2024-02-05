@@ -35,7 +35,7 @@ public class BankAccountImpl implements BankAccount {
     @Override
     public void payPlayer(final Player player, final int amount) {
         if (!isPaymentAllowed(amount)) {
-            return ;
+            return;
         }
         this.balance -= amount; 
         if (player != null) {
