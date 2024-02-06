@@ -17,7 +17,6 @@ public final class UnbuyableImpl implements Unbuyable {
     private final String action;
     private final int myAmount;
     private static final Random RANDOM = new Random();
-    private static final long serialVersionUID = 2298666777798069846L;
 
     /**
      * protected for be used only in factory.

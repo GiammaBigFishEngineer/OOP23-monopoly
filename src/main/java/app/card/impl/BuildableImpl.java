@@ -15,7 +15,6 @@ public final class BuildableImpl implements Buildable {
     private final int price;
     private final int housePrice;
     private final int fees;
-    private static final long serialVersionUID = 2298666777798069846L;
 
     /**
      * protected for be used only in factory.

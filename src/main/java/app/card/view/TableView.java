@@ -17,7 +17,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import java.io.ObjectInputStream;
 /**
  * View of table in the game.
  * TableView extend the abstract class Observable who extende JPanel,
@@ -26,10 +26,16 @@ import java.util.Map;
 public class TableView extends ObservableImpl<Player> {
 
     private static final long serialVersionUID = 2298666777798069846L;
-    private final List<Card> cardList = new CardFactoryImpl().cardsInitializer();
-    private final Map<Card, BoxPanelView> cells = new HashMap<>();
+    private transient List<Card> cardList = new CardFactoryImpl().cardsInitializer();
+    private transient Map<Card, BoxPanelView> cells = new HashMap<>();
     private static final int IMAGESIZE = 70;
     private final int size;
+
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        this.cells = new HashMap<>();
+        this.cardList = new CardFactoryImpl().cardsInitializer();
+    }
 
     /**
      * @param size is the number of cards for a side in table
@@ -98,11 +104,18 @@ public class TableView extends ObservableImpl<Player> {
     }
 
     /**
+     * @return a list of all Cards in table.
+     */
+    public List<Card> getCardList() {
+        return List.of(this.cardList.stream().toArray(Card[]::new));
+    }
+
+    /**
      * @param index is the index of card in list
      * @return the JPanel that's rappresent a Card
      */
     private BoxPanelView renderJPanel(final int index) {
-        final Card card = cardList.get(index);
+        final Card card = this.cardList.get(index);
         String price = "";
         if (card.isBuildable()) {
             final var buildable = CardAdapter.buildableAdapter(card);

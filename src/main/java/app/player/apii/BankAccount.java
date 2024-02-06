@@ -1,11 +1,9 @@
 package app.player.apii;
 
-import java.io.Serializable;
-
 /**
  * Interface which models a player's BankAccount.
  */
-public interface BankAccount extends Serializable {
+public interface BankAccount {
     /**
      * @return amount of money owned by the player
      */

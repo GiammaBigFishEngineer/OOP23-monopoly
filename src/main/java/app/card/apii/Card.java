@@ -1,11 +1,9 @@
 package app.card.apii;
 
-import java.io.Serializable;
-
 /**
  * An interface that represents each individual box.
  */
-public interface Card extends Serializable {
+public interface Card {
     /**
      * @param 
      * @return name of card

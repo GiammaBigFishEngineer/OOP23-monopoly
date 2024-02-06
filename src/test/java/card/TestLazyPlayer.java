@@ -12,7 +12,6 @@ import java.util.List;
 final class TestLazyPlayer implements Player {
 
     private int position = -1;
-    private static final long serialVersionUID = 2298666777798069846L;
 
     private final BankAccount bankAccount = new BankAccount() {
 

@@ -2,14 +2,12 @@ package app.player.apii;
 
 import app.card.apii.Buildable;
 import app.card.apii.Buyable;
-
-import java.io.Serializable;
 import java.util.List;
 
 /**
  * Interface which models a Player. 
  */
-public interface Player extends Serializable {
+public interface Player {
 
     /**
      * @return currentPosition of the Player

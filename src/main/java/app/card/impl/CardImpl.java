@@ -9,7 +9,6 @@ public final class CardImpl implements Card {
 
     private final int id;
     private final String name;
-    private static final long serialVersionUID = 2298666777798069846L;
 
     /**
      * protected for be used only in factory.
