@@ -11,7 +11,7 @@ import app.player.apii.Player;
 public final class BuildableImpl implements Buildable {
 
     private final Card card;
-    private transient Optional<Player> owner = Optional.empty();
+    private Optional<Player> owner = Optional.empty();
     private final int price;
     private final int housePrice;
     private final int fees;
