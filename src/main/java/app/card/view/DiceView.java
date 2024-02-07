@@ -41,7 +41,7 @@ public class DiceView extends JPanel {
     private static final int FIVE_DOT = 5;
     private static final int SIX_DOT = 6;
 
-    private final Dice dice;
+    private final transient Dice dice;
     private final JButton rollButton;
     private final JLabel resultLabel;
     private final DicePanel dicePanel1;
@@ -115,7 +115,7 @@ public class DiceView extends JPanel {
     /**
      * @return the JPanel that's rappresent a Die
      */
-    private class DicePanel extends JPanel {
+    private static class DicePanel extends JPanel {
 
         private static final long serialVersionUID = 1L;
         private int result;

@@ -1,8 +1,8 @@
-package app.game.api;
-
-import app.player.api.Player; 
+package app.game.apii;
 
 import java.util.List;
+
+import app.player.apii.Player;
 
 /**
  * An interface that defines operations that can be performed to manage the menu.

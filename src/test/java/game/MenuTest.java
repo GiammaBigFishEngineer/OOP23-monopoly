@@ -1,8 +1,8 @@
 package game;
 
+import app.game.apii.MenuController;
 import app.game.model.MenuControllerImpl;
-import app.game.api.MenuController;
-import app.player.api.Player;
+import app.player.apii.Player;
 import app.player.impl.PlayerImpl;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -117,9 +117,9 @@ class MenuTest {
         final List<Player> insertedPlayers = menuController.insertPlayers(currentPlayerNames);
         assertEquals(currentPlayerNames.size(), insertedPlayers.size());
         assertEquals("Player1", insertedPlayers.get(0).getName());
-        assertEquals(1, insertedPlayers.get(0).getId());
+        assertEquals(1, insertedPlayers.get(0).getID());
         assertEquals("Player2", insertedPlayers.get(1).getName());
-        assertEquals(2, insertedPlayers.get(1).getId());
+        assertEquals(2, insertedPlayers.get(1).getID());
     }
 
     /**

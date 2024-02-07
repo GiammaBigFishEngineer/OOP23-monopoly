@@ -1,8 +1,12 @@
 package app.game.model;
 
-import app.game.api.MenuController;
-import app.player.api.Player;
+import app.game.apii.MenuController;
+import app.player.apii.Player;
 import app.player.impl.PlayerImpl;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.awt.Window;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -19,6 +23,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
+
 /**
  * Implementation of MenuController with its logic.
  */
@@ -30,6 +35,7 @@ public class MenuControllerImpl implements MenuController {
     private static final String ERROR_LOG_FILE = "error.log";
     private static final int MIN_NUM_PLAYER = 2;
     private static final int MAX_NUM_PLAYER = 5;
+    private static final Logger LOGGER = Logger.getLogger(MenuControllerImpl.class.getName());
 
     /**
      * Constructs a new MenuControllerImpl.
@@ -61,7 +67,11 @@ public class MenuControllerImpl implements MenuController {
      */
     @Override
     public void quitGame() {
-        System.exit(0);
+        //System.exit(0); not used to resolve spotbug error
+        final Window[] windows = Window.getWindows();
+        for (final Window window : windows) {
+            window.dispose();
+        }
     }
 
     /**
@@ -156,7 +166,7 @@ public class MenuControllerImpl implements MenuController {
 
             for (final Player currentPlayer : players) {
                 writer.println("Player: " + currentPlayer.getName()
-                               + ", Id: " + currentPlayer.getId()
+                               + ", Id: " + currentPlayer.getID()
                                + ", Posizione: " + currentPlayer.getCurrentPosition()
                                + ", Denaro: " + currentPlayer.getBankAccount().getBalance());
             }
@@ -201,10 +211,10 @@ public class MenuControllerImpl implements MenuController {
 
     private void writeErrorToLogFile(final String message, final Exception exception) {
         try (PrintWriter writer = new PrintWriter(new FileWriter(ERROR_LOG_FILE, StandardCharsets.UTF_8, true))) {
-            writer.println(message);
+            LOGGER.severe(message);
             exception.printStackTrace(writer);
         } catch (IOException ioException) {
-            ioException.printStackTrace();
+            LOGGER.log(Level.SEVERE, message, ioException);
         }
     }
 }

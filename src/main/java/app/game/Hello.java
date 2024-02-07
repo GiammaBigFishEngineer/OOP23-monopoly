@@ -19,6 +19,6 @@ public final class Hello {
      * @param args command-line arguments (not used in this application)
      */
     public static void main(final String[] args) {
-        new GameView();
+        //new GameView(); to do: launch the Gameview
     }
 }
