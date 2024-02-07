@@ -6,7 +6,7 @@ import app.player.api.Player;
 /**
  * Class which implements a player's BankAccount.
  */
-public class BankAccountImpl implements BankAccount {
+public final class BankAccountImpl implements BankAccount {
 
     /**
      * amount of money each player has in his BankAccount.

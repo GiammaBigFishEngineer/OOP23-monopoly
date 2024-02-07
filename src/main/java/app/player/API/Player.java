@@ -2,7 +2,6 @@ package app.player.api;
 
 import app.card.api.Buildable;
 import app.card.api.Buyable;
-import app.card.api.Card;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,9 +20,9 @@ public interface Player {
      */
     String getName();
     /**
-     * @return Id of the player
+     * @return ID of the player
      */
-    int getId();
+    int getID();
     /**
      * @param box
      */
@@ -52,7 +51,7 @@ public interface Player {
     /**
      * @param box 
      */
-    void sellBuyable(Buyable box); 
+    void sellBuyable(Buyable box);
     /**
      * @param built
      * @return Optional<Integer> defining the number of houses built on the current box.
@@ -63,8 +62,11 @@ public interface Player {
      */
     void setPosition(int position);
     /**
-     * @param box
      * @return a boolean which indicates if a player is in jail
      */
-    boolean isInJail(Card box);
+    boolean isInJail();
+    /**
+     * @param isInJail
+     */
+    void setInJail(boolean isInJail);
 }
