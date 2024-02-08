@@ -11,6 +11,7 @@ public class MenuView extends JFrame {
     private JButton optionButton;
     private JLabel titleLabel;
     private JLabel subtitleLabel;
+    private JTextField textField;
 
     final Dimension screen;
     final int screenWidth;
@@ -23,10 +24,18 @@ public class MenuView extends JFrame {
         this.getContentPane().setBackground(Color.white);
         this.setResizable(false);
 
+        /*
+         * Creating a panel with all the buttons
+         */
+
         buttonPanel = new JPanel(new GridLayout(3, 1));
         buttonPanel.setBackground(Color.white);
 
         Font boldFont = new Font("Arial", Font.BOLD, 25);
+
+        /*
+         * Start Button
+         */
 
         startButton = new JButton("Start");
         startButton.setFont(boldFont);
@@ -37,6 +46,10 @@ public class MenuView extends JFrame {
 
         buttonPanel.add(startButton);
 
+        /*
+         * Options button
+         */
+
         optionButton = new JButton("Options");
         optionButton.setFont(boldFont);
 
@@ -46,6 +59,10 @@ public class MenuView extends JFrame {
 
         buttonPanel.add(optionButton);
 
+        /*
+         * Quit button
+         */
+
         quitButton = new JButton("Quit");
         quitButton.setFont(boldFont);
 
@@ -54,6 +71,10 @@ public class MenuView extends JFrame {
         });
 
         buttonPanel.add(quitButton);
+
+        /*
+         * adding every component to the frame
+         */
 
         setLayout(new GridBagLayout());
 
@@ -81,6 +102,17 @@ public class MenuView extends JFrame {
         gbc.gridy = 1;
 
         this.add(subtitleLabel, gbc);
+
+        textField = new JTextField("Insert Player Name");
+
+        gbc.gridx = 2;
+        gbc.gridy = 1;
+
+        this.add(textField, gbc);
+
+        /*
+         * Setting the timension of the frame
+         */
 
         screen = Toolkit.getDefaultToolkit().getScreenSize();
         screenHeight = (int) screen.getHeight();
