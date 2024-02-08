@@ -9,6 +9,15 @@ public interface BankAccount {
      */
     int getBalance();
     /**
+     * This methods sets the balance, considering the change after some operation (e.g. turn of money)
+     * @param balance
+     */
+    void setBalance(int balance);
+    /**
+     * @return true if there are changes in balance, false otherwise
+     */
+    boolean hasBalanceChanged(); 
+    /**
      * @param player if null, payment for the Bank (and not for another player)
      * @param amount money which has to be given to another player
      */
@@ -21,5 +30,5 @@ public interface BankAccount {
      * @param amount 
      * @return true if payment is allowed, otherwise false 
      */
-    boolean isPaymentAllowed(int amount); 
+    boolean isPaymentAllowed(int amount);
 }

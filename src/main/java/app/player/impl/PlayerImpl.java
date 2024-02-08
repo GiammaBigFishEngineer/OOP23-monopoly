@@ -30,7 +30,8 @@ public final class PlayerImpl implements Player {
     private String name;
     private int id;
     private BankAccount account; 
-    private boolean isInJail; 
+    private boolean isInJail;
+    private boolean positionChanged;
 
     /**
      * @param name
@@ -44,47 +45,78 @@ public final class PlayerImpl implements Player {
         this.name = name; 
         this.id = id;
         this.map = new HashMap<>();
+        this.currentPosition = 0;
         for (Card box : cards) {
             this.map.put(box, Optional.empty());
         }
         this.account = new BankAccountImpl(initialAmount);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getCurrentPosition() {
         return this.currentPosition;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setPosition(final int position) {
-       this.currentPosition = position; 
+        this.currentPosition = position;
+        positionChanged = true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean hasPositionChanged() {
+        return positionChanged;
+    }
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getName() {
         return this.name;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getID() {
         return this.id;
     }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public int getNumberStationOwned() {
-        int cont = 0;
-        for (Card box : map.keySet()) {
-            if (map.get(box).isPresent() && (box.isBuyable() && !box.isBuildable())) {
-                cont += 1; 
-            }
-        }
-        return cont;
+    public boolean isInJail() {
+        return false;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setInJail(final boolean isInJail) {
+        this.isInJail = isInJail; 
+    }
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public BankAccount getBankAccount() {
         return this.account;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Buyable> getBuyableOwned() {
         List<Buyable> buyableOwned = new LinkedList<>(); 
@@ -96,7 +128,9 @@ public final class PlayerImpl implements Player {
         }
         return buyableOwned;
     }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Buildable> getBuildableOwned() {
         List<Buildable> buildableOwned = new LinkedList<>(); 
@@ -109,13 +143,31 @@ public final class PlayerImpl implements Player {
         return buildableOwned;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Optional<Integer> getHouseBuilt(final Buildable built) {
         // chi usa questo metodo, si dovrà preoccupare di verificare che il player possieda la casella 
         // cast a Card fattibile perché Card è superclasse
         return map.get((Card) built); 
     }
-
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getNumberStationOwned() {
+        int cont = 0;
+        for (Card box : map.keySet()) {
+            if (map.get(box).isPresent() && (box.isBuyable() && !box.isBuildable())) {
+                cont += 1; 
+            }
+        }
+        return cont;
+    }
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void buyBox(final Buyable box) {
         Card castBuyable = (Card) box; 
@@ -126,6 +178,9 @@ public final class PlayerImpl implements Player {
         map.put(castBuyable, Optional.of(0)); // 0 è diverso da Empty, quindi possiedo la casella con 0 case costruite
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void buildHouse(final Buildable box) throws IllegalArgumentException {
         Card castBuildable = (Card) box; 
@@ -160,6 +215,9 @@ public final class PlayerImpl implements Player {
         return newBox.getPrice() + numberHouses.get() * newBox.getHousePrice();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void sellBuyable(final Buyable box) {
         this.account.receivePayment(boxValue(box));
@@ -167,13 +225,4 @@ public final class PlayerImpl implements Player {
         map.put((Card) box, Optional.empty());
     }
 
-    @Override
-    public boolean isInJail() {
-        return false;
-    }
-
-    @Override
-    public void setInJail(final boolean isInJail) {
-        this.isInJail = isInJail; 
-    }
 }

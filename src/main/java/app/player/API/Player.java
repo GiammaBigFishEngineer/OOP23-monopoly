@@ -16,6 +16,14 @@ public interface Player {
      */
     int getCurrentPosition();
     /**
+     * @param position of the Player on the table.
+     */
+    void setPosition(int position);
+    /**
+     * @return true if there are changes in position, false otherwise
+     */
+    boolean hasPositionChanged();
+    /**
      * @return name of the Player
      */
     String getName();
@@ -24,18 +32,13 @@ public interface Player {
      */
     int getID();
     /**
-     * @param box
+     * @return a boolean which indicates if a player is in jail
      */
-    void buyBox(Buyable box);
+    boolean isInJail();
     /**
-     * @param box
-     * @throws IllegalArgumentException
+     * @param isInJail
      */
-    void buildHouse(Buildable box) throws IllegalArgumentException;
-    /**
-     * @return number of Stations owned by the current player
-     */
-    int getNumberStationOwned();
+    void setInJail(boolean isInJail);
     /**
      * @return information about the player's bankAccount
      */
@@ -49,24 +52,25 @@ public interface Player {
      */
     List<Buildable> getBuildableOwned();
     /**
-     * @param box 
-     */
-    void sellBuyable(Buyable box);
-    /**
      * @param built
      * @return Optional<Integer> defining the number of houses built on the current box.
      */
     Optional<Integer> getHouseBuilt(Buildable built);
     /**
-     * @param position of the Player on the table.
+     * @return number of Stations owned by the current player
      */
-    void setPosition(int position);
+    int getNumberStationOwned();
     /**
-     * @return a boolean which indicates if a player is in jail
+     * @param box
      */
-    boolean isInJail();
+    void buyBox(Buyable box);
     /**
-     * @param isInJail
+     * @param box
+     * @throws IllegalArgumentException
      */
-    void setInJail(boolean isInJail);
+    void buildHouse(Buildable box) throws IllegalArgumentException;
+    /**
+     * @param box 
+     */
+    void sellBuyable(Buyable box);
 }
