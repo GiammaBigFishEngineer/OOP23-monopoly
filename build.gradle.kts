@@ -14,6 +14,8 @@ repositories {
 }
 
 dependencies {
+    implementation("org.json:json:20171018")
+    
     // Use JUnit Jupiter API for testing.
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.1")
 

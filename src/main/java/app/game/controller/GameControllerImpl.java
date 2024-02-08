@@ -1,7 +1,14 @@
 package app.game.controller;
 
+<<<<<<< HEAD
 import java.util.LinkedList;
 import java.util.List;
+=======
+/**
+ * Gamecontroller class impl.
+ */
+public class GameControllerImpl {
+>>>>>>> origin/DiFronzo
 
 import app.card.API.Card;
 import app.game.utils.Dice;

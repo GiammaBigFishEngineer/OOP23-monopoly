@@ -1,7 +1,14 @@
 package app.game.view;
 
+<<<<<<< HEAD
 import javax.swing.*;
 import java.awt.*;
+=======
+/**
+ * MenuView.
+ */
+public class MenuView {
+>>>>>>> origin/DiFronzo
 
 public class MenuView extends JFrame {
 

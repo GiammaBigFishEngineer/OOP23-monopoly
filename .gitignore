@@ -1,2 +1,9 @@
-build
+build/
 .gradle
+bin/
+*.class
+*.DS_Store
+*.log
+*.pdf
+.vscode/*
+.vscode/
