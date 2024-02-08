@@ -6,14 +6,38 @@ import java.util.List;
 import app.card.API.Card;
 import app.game.utils.Dice;
 import app.player.API.Player;
+import app.player.impl.PlayerImpl;
 
 public class GameControllerImpl {
-    private List<Player> players = new LinkedList<>();
-    private Player currentPlayer;
+    private List<PlayerImpl> players = new LinkedList<>();
+    private PlayerImpl currentPlayer;
+    private int currentPlayerIndex = -1;
+
     private Card currentCard;
     private Dice currentDice;
 
+    GameControllerImpl(List<String> playersName) {
+        for (String string : playersName) {
+            players.add(new PlayerImpl());
+        }
+    }
+
+    /*
+     * run method will be called at the start of the game and at the end of every
+     * turn
+     */
+
     public void run() {
+
+        this.nextPlayer();
+        this.turn();
+
+    }
+
+    public void nextPlayer() {
+
+        currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
+        currentPlayer = players.get(currentPlayerIndex);
 
     }
 
@@ -23,9 +47,9 @@ public class GameControllerImpl {
 
     public void printState() {
 
-        for (Player player : players) {
+        for (PlayerImpl player : players) {
             System.out.println("Player position : ");
-            System.out.println(String.valueOf(player.getCurrentPosition()));
+            // System.out.println(String.valueOf(player.getCurrentPosition()));
         }
 
     }
