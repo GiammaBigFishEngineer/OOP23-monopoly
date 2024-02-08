@@ -9,16 +9,16 @@ import app.player.apii.Player;
 import app.player.impl.PlayerImpl;
 
 public class GameControllerImpl {
-    private List<PlayerImpl> players = new LinkedList<>();
-    private PlayerImpl currentPlayer;
+    private List<Player> players = new LinkedList<>();
+    private Player currentPlayer;
     private int currentPlayerIndex = -1;
 
     private Card currentCard;
-    private Dice currentDice;
+    private Dice currentDice = new Dice();
 
     GameControllerImpl(List<String> playersName) {
         for (String string : playersName) {
-            players.add(new PlayerImpl());
+            players.add(new Player());
         }
     }
 
@@ -43,11 +43,15 @@ public class GameControllerImpl {
 
     public void turn() {
 
+        if (currentPlayer.isInJail()) {
+
+        }
+
     }
 
     public void printState() {
 
-        for (PlayerImpl player : players) {
+        for (Player player : players) {
             System.out.println("Player position : ");
             // System.out.println(String.valueOf(player.getCurrentPosition()));
         }
