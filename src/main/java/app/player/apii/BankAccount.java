@@ -12,7 +12,8 @@ public interface BankAccount {
      * @param player if null, payment for the Bank (and not for another player)
      * @param amount money which has to be given to another player
      */
-    void payPlayer(Player player, int amount); 
+    void payPlayer(Player player, int amount);
+
     /**
      * @param amount money received by someone else
      */
@@ -22,4 +23,14 @@ public interface BankAccount {
      * @return true if payment is allowed, otherwise false 
      */
     boolean isPaymentAllowed(int amount); 
+
+    /**
+     * @param balance is the balance setted after some operation that includes turn of money
+     */
+    void setBalance(int balance);
+
+    /**
+     * @return true if there are changes in balance, false otherwise
+     */
+    boolean hasBalanceChanged();
 }

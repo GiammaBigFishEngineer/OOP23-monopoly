@@ -1,14 +1,15 @@
 package app.player.apii;
 
+import java.util.List;
+import java.util.Optional;
+
 import app.card.apii.Buildable;
 import app.card.apii.Buyable;
-import java.util.List;
 
 /**
  * Interface which models a Player. 
  */
 public interface Player {
-
     /**
      * @return currentPosition of the Player
      */
@@ -22,7 +23,7 @@ public interface Player {
     /**
      * @return Id of the player
      */
-    int getId();
+    int getID();
 
     /**
      * @param box
@@ -45,9 +46,14 @@ public interface Player {
     BankAccount getBankAccount();
 
     /**
+     * @return buyable boxes owned by the current Player
+     */
+    List<Buyable> getBuyableOwned();
+
+    /**
      * @return buildable boxes owned by the current Player
      */
-    List<Buyable> getBuildableOwned();
+    List<Buildable> getBuildableOwned();
 
     /**
      * @param box 
@@ -58,10 +64,14 @@ public interface Player {
      * @param built
      * @return number of houses built by the current Player
      */
-    int getHouseBuilt(Buildable built); 
-
+    Optional<Integer> getHouseBuilt(Buildable built);
     /**
-     * @param position of the Player on the TABELLONE CONTROLLA COME CHIAMARLO
+     * @param position of the Player on the table
      */
     void setPosition(int position);
+
+    /**
+     * @return true if there are changes in position, false otherwise
+     */
+    boolean hasPositionChanged();
 }

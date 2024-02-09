@@ -1,7 +1,7 @@
 package app.game.controller;
 
 /**
- * Gamecontroller class impl.
+ * Gamecontroller class implementation.
  */
 public class GameControllerImpl {
 
