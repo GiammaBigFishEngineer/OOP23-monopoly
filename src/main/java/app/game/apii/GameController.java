@@ -12,7 +12,7 @@ public interface GameController {
     /**
      * Roll dice.
      */
-    void rollDice();
+    void rollDice(Boolean b);
 
     /**
      * @param currentPlayer that want to buy the propriety.

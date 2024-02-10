@@ -26,6 +26,8 @@ public class GameControllerImpl implements GameController {
     private int res2;
     private int totalResult;
 
+    private List<JButton> btnList = new LinkedList();
+
     private Observer observer;
 
     private int prova;
@@ -44,10 +46,14 @@ public class GameControllerImpl implements GameController {
 
     public void newTurn() {
 
+        this.disableAllBtn();
         this.nextPlayer();
         this.checkPlayerState();
 
     }
+
+    // prima di iniziare il turno se il player è in prigione può decidere se pagare
+    // o provare ad uscire con un doppio dado
 
     public void checkPlayerState() {
 
@@ -59,18 +65,18 @@ public class GameControllerImpl implements GameController {
                 int balance = currentPlayer.getBankAccount().getBalance();
                 currentPlayer.getBankAccount().setBalance(balance - 50);
                 currentPlayer.setInJail(false);
-                startTurn();
+                enableRollDiceBtn();
 
             } else {
 
-                rollDice();
+                rollDice(false);
 
                 if (doubleDice) {
 
                     // inizia il turno del player corrente
                     System.out.println("You get the same result");
                     currentPlayer.setInJail(false);
-                    startTurn();
+                    enableRollDiceBtn();
 
                 } else {
 
@@ -81,12 +87,16 @@ public class GameControllerImpl implements GameController {
                 }
             }
 
+        } else {
+            // inizia il turno normalmente (il turno inizia semplicemente rendendo
+            // clickabile solo il bottone dei dadi)
+            enableRollDiceBtn();
         }
 
     }
 
     @Override
-    public void rollDice() {
+    public void rollDice(Boolean b) {
 
         currentDice.roll();
 
@@ -100,7 +110,10 @@ public class GameControllerImpl implements GameController {
             doubleDice = false;
         }
 
-        startTurn();
+        if (b) {
+            startTurn();
+        }
+
     }
 
     public void startTurn() {
@@ -168,6 +181,18 @@ public class GameControllerImpl implements GameController {
     public Card currentBox(Player currentPlayer) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'currentBox'");
+    }
+
+    public void enableRollDiceBtn() {
+
+    }
+
+    public void disableAllBtn() {
+
+        for (JButton jButton : btnList) {
+            jButton.setEnabled(false);
+        }
+
     }
 
     public void registerObserver(Observer obs) {
