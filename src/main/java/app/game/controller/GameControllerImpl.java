@@ -58,8 +58,10 @@ public class GameControllerImpl implements GameController {
     public void checkPlayerState() {
 
         if (currentPlayer.isInJail()) {
-            observer.update();
-            if (prova == 0) {
+
+            boolean result = observer.update();
+
+            if (result) {
 
                 // paga per uscire e inizia il turno
                 int balance = currentPlayer.getBankAccount().getBalance();

@@ -35,8 +35,22 @@ public class GameView extends JFrame implements Observer {
     }
 
     @Override
-    public void update() {
-        JOptionPane.showMessageDialog(null, "prova");
+    public boolean update() {
+
+        int result = JOptionPane.showOptionDialog(this,
+                "You are in prison, do you want to pay bail?",
+                "Bail option",
+                JOptionPane.NO_OPTION,
+                JOptionPane.OK_OPTION,
+                null,
+                null,
+                null);
+
+        if (result == JOptionPane.OK_OPTION) {
+            return true;
+        } else {
+            return false;
+        }
 
     }
 
