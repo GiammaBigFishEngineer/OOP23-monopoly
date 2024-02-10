@@ -2,6 +2,7 @@ package app.game.apii;
 
 import app.card.apii.Card;
 import app.player.apii.Player;
+import game.view.Observer;
 
 /**
  * An interface that rapresent the logic of the player actions.
@@ -35,7 +36,7 @@ public interface GameController {
 
     /**
      * @param currentPlayer that need to pay the fees
-     * @param box of the player who is to receive the money
+     * @param box           of the player who is to receive the money
      */
     void payFees(Player currentPlayer, Card box);
 
@@ -50,4 +51,6 @@ public interface GameController {
      * @return the card the player is on.
      */
     Card currentBox(Player currentPlayer);
+
+    void registerObserver(Observer obs);
 }
