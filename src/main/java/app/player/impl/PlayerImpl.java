@@ -46,6 +46,7 @@ public final class PlayerImpl implements Player {
         this.id = id;
         this.map = new HashMap<>();
         this.currentPosition = 0;
+        this.isInJail = false;
         for (Card box : cards) {
             this.map.put(box, Optional.empty());
         }
@@ -95,8 +96,15 @@ public final class PlayerImpl implements Player {
      * {@inheritDoc}
      */
     @Override
+    public Map<Card, Optional<Integer>> getMap() {
+        return this.map;
+    }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public boolean isInJail() {
-        return false;
+        return this.isInJail;
     }
 
     /**

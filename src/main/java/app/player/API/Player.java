@@ -1,10 +1,12 @@
 package app.player.api;
 
+import app.card.api.Card;
 import app.card.api.Buildable;
 import app.card.api.Buyable;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Map;
 
 /**
  * Interface which models a Player. 
@@ -31,6 +33,11 @@ public interface Player {
      * @return ID of the player
      */
     int getID();
+    /**
+     * @return player's map which indicates the proprieties he owns
+     * and the number of houses built on a Card. 
+     */
+    Map<Card, Optional<Integer>> getMap();
     /**
      * @return a boolean which indicates if a player is in jail
      */
