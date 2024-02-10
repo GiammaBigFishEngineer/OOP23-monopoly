@@ -10,7 +10,7 @@ import app.player.api.Player;
 public final class BailLogicImpl implements BailLogic {
 
     /**
-     * Constant vlaue of a default payment.
+     * Constant value for a default payment.
      */
     public static final int DEFAULT_PAYMENT = 100;
 

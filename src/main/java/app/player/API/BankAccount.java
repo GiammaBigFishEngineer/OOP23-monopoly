@@ -20,8 +20,9 @@ public interface BankAccount {
     /**
      * @param player if null, payment for the Bank (and not for another player)
      * @param amount money which has to be given to another player
+     * @return true if the payment happened successfully.
      */
-    void payPlayer(Player player, int amount); 
+    boolean payPlayer(Player player, int amount); 
     /**
      * @param amount money received by someone else
      */

@@ -46,21 +46,22 @@ public final class BankAccountImpl implements BankAccount {
      */
     @Override
     public boolean hasBalanceChanged() {
-        return balanceChanged;
+        return this.balanceChanged;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void payPlayer(final Player player, final int amount) {
+    public boolean payPlayer(final Player player, final int amount) {
         if (!isPaymentAllowed(amount)) {
-            return;
+            return false;
         }
         this.balance -= amount; 
         if (player != null) {
             player.getBankAccount().receivePayment(amount);
         } // if (player == null) pago la banca, quindi non accade nulla
+        return true;
     }
 
     /**
