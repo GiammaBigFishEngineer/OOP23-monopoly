@@ -1,8 +1,8 @@
 package game.view;
 
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
+import java.util.*;
+
+import javax.swing.*;
 
 import app.game.apii.GameController;
 import app.game.controller.GameControllerImpl;
@@ -14,21 +14,30 @@ import app.player.view.PlayerPanelView;
  */
 public class GameView extends JFrame implements Observer {
 
-    ButtonPanelView btnView;
     JPanel playerView;
+
+    GameController logic;
+
+    List<JButton> btnList;
 
     public GameView() {
 
-        btnView = new ButtonPanelView();
-        btnView.getLogic().registerObserver(this);
+        this.logic = new GameControllerImpl(null);
+
+        logic.registerObserver(this);
 
         playerView = new PlayerPanelView();
 
     }
 
+    public List<JButton> getBtnList() {
+        return this.btnList;
+    }
+
     @Override
     public void update() {
         JOptionPane.showMessageDialog(null, "prova");
+
     }
 
 }

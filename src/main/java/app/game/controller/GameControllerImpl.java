@@ -1,7 +1,8 @@
 package app.game.controller;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
+
+import javax.swing.*;
 
 import app.card.apii.Card;
 import app.game.apii.GameController;
@@ -15,15 +16,25 @@ public class GameControllerImpl implements GameController {
     private Player currentPlayer;
     private int currentPlayerIndex = -1;
 
+    private List<Card> cards = new LinkedList<>();
     private Card currentCard;
+    private int currentCardIndex;
+
     private Dice currentDice = new Dice();
+    private boolean doubleDice;
+    private int res1;
+    private int res2;
+    private int totalResult;
 
     private Observer observer;
+
+    private int prova;
 
     public GameControllerImpl(List<String> playersName) {
         for (String string : playersName) {
             players.add(new PlayerImpl(string, 0, null, 0));
         }
+
     }
 
     /*
@@ -31,10 +42,76 @@ public class GameControllerImpl implements GameController {
      * turn
      */
 
-    public void run() {
+    public void newTurn() {
 
         this.nextPlayer();
-        this.turn();
+        this.checkPlayerState();
+
+    }
+
+    public void checkPlayerState() {
+
+        if (currentPlayer.isInJail()) {
+            observer.update();
+            if (prova == 0) {
+
+                // paga per uscire e inizia il turno
+                int balance = currentPlayer.getBankAccount().getBalance();
+                currentPlayer.getBankAccount().setBalance(balance - 50);
+                currentPlayer.setInJail(false);
+                startTurn();
+
+            } else {
+
+                rollDice();
+
+                if (doubleDice) {
+
+                    // inizia il turno del player corrente
+                    System.out.println("You get the same result");
+                    currentPlayer.setInJail(false);
+                    startTurn();
+
+                } else {
+
+                    // finisce qui il suo turno
+                    System.out.println("You didn't get the same result");
+                    endTurn();
+
+                }
+            }
+
+        }
+
+    }
+
+    @Override
+    public void rollDice() {
+
+        currentDice.roll();
+
+        res1 = currentDice.getDie1Result();
+        res2 = currentDice.getDie2Result();
+        totalResult = currentDice.getDiceResult();
+
+        if (res1 == res2) {
+            doubleDice = true;
+        } else {
+            doubleDice = false;
+        }
+
+        startTurn();
+    }
+
+    public void startTurn() {
+
+        currentPlayer.setPosition(currentPlayer.getCurrentPosition() + totalResult);
+
+        currentCardIndex = currentPlayer.getCurrentPosition();
+
+        currentCard = cards.get(currentCardIndex);
+
+        handleCard();
 
     }
 
@@ -45,27 +122,11 @@ public class GameControllerImpl implements GameController {
 
     }
 
-    public void turn() {
+    // serve per attivare/disattivare certi bottoni in base alla carta su cui si è
+    // finiti
 
-        if (currentPlayer.isInJail()) {
-            observer.update();
-        }
+    public void handleCard() {
 
-    }
-
-    public void printState() {
-
-        for (Player player : players) {
-            System.out.println("Player position : ");
-            System.out.println(String.valueOf(player.getCurrentPosition()));
-        }
-
-    }
-
-    @Override
-    public void rollDice() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'rollDice'");
     }
 
     @Override
@@ -88,8 +149,7 @@ public class GameControllerImpl implements GameController {
 
     @Override
     public void endTurn() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'endTurn'");
+        newTurn();
     }
 
     @Override
