@@ -5,6 +5,7 @@ import java.util.*;
 import javax.swing.*;
 
 import app.card.apii.Card;
+import app.card.apii.CardAdapter;
 import app.game.apii.GameController;
 import app.game.utils.Dice;
 import app.player.apii.Player;
@@ -141,6 +142,43 @@ public class GameControllerImpl implements GameController {
     // finiti
 
     public void handleCard() {
+
+        // carte statiche
+
+        if (currentCard.isUnbuyable()) {
+
+            CardAdapter.unbuyableAdapter(currentCard).makeAction(currentPlayer);
+
+            // attivi endTurnBtn e sellHouseBtn
+
+        }
+
+        // proprietà
+
+        if (currentCard.isBuildable()) {
+
+            Player owner = CardAdapter.buildableAdapter(currentCard).getOwner();
+
+            if (currentPlayer.equals(owner)) {
+                // puoi costruire casa
+            } else {
+
+                // devi pagare la tassa
+            }
+
+        }
+
+        // stazione
+
+        if (currentCard.isBuyable() && !currentCard.isBuildable()) {
+
+            Player owner = CardAdapter.buildableAdapter(currentCard).getOwner();
+
+            if (!currentPlayer.equals(owner)) {
+                // devi pagare la tassa
+            }
+
+        }
 
     }
 
