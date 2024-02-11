@@ -36,8 +36,8 @@ public final class UnbuyableImpl implements Unbuyable {
     }
 
     @Override
-    public int getId() {
-        return card.getId();
+    public int getCardId() {
+        return card.getCardId();
     }
 
     @Override

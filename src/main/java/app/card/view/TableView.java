@@ -73,7 +73,7 @@ public class TableView extends ObservableImpl<Player> {
             throw new IllegalArgumentException("Position passed is not a position in table size");
         }
         for (final var i: this.cells.keySet()) {
-            if (i.getId() == position) {
+            if (i.getCardId() == position) {
                 this.getCells().get(i).drawCircle(color);
             }
         }
@@ -90,7 +90,7 @@ public class TableView extends ObservableImpl<Player> {
             throw new IllegalArgumentException("Position passed is not a position in table size");
         }
         for (final var i: this.cells.keySet()) {
-            if (i.getId() == position) {
+            if (i.getCardId() == position) {
                 this.getCells().get(i).removeCircle(color);
             }
         }
@@ -126,7 +126,7 @@ public class TableView extends ObservableImpl<Player> {
         } else if (card.isUnbuyable()) {
             price = "";
         }
-        final BoxPanelView jp = new BoxPanelView(card.getName(), price, card.getId());
+        final BoxPanelView jp = new BoxPanelView(card.getName(), price, card.getCardId());
 
         final String sep = File.separator;
         final String fileName = System.getProperty("user.dir") + sep + "src" + sep + "main" 

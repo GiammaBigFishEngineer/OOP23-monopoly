@@ -62,8 +62,8 @@ public final class BuildableImpl implements Buildable {
     }
 
     @Override
-    public int getId() {
-        return this.card.getId();
+    public int getCardId() {
+        return this.card.getCardId();
     }
 
     @Override

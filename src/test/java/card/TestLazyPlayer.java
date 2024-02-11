@@ -106,7 +106,7 @@ final class TestLazyPlayer implements Player {
     }
 
     @Override
-    public Optional<Integer> getHouseBuilt(Buildable built) {
+    public Optional<Integer> getHouseBuilt(final Buildable built) {
         return Optional.empty();
     }
 

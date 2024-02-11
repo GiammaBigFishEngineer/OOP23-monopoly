@@ -26,7 +26,7 @@ public final class CardImpl implements Card {
     }
 
     @Override
-    public int getId() {
+    public int getCardId() {
         return id;
     }
 
@@ -39,12 +39,12 @@ public final class CardImpl implements Card {
             return false;
         }
         final Card c = (Card) card;
-        return this.getId() == c.getId();
+        return this.getCardId() == c.getCardId();
     }
 
     @Override
     public int hashCode() {
-        return this.getId() * this.getName().hashCode();
+        return this.getCardId() * this.getName().hashCode();
     }
 
     @Override
