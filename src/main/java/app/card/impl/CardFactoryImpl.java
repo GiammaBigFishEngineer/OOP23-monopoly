@@ -8,10 +8,10 @@ import java.io.IOException;
 import app.card.apii.Buildable;
 import app.card.apii.Buyable;
 import app.card.apii.Card;
-import app.card.apii.CardAdapter;
 import app.card.apii.CardFactory;
 import app.card.apii.Unbuyable;
 import app.card.utils.JsonReader;
+import app.player.apii.Player;
 
 /**
  * Implementation of CardFactory, every method create a subinstance of Card.
@@ -74,7 +74,56 @@ public final class CardFactoryImpl implements CardFactory {
      */
     @Override
     public Buildable createProperty(final Card card, final int price, final int housePrice, final int fees) {
-        return new BuildableImpl(card, price, housePrice, fees);
+        return new Buildable() {
+
+            private final Buyable buyable = new BuyableImpl(card, price, fees);
+
+            @Override
+            public int getPrice() {
+                return this.buyable.getPrice();
+            }
+
+            @Override
+            public boolean isOwned() {
+                return this.buyable.isOwned();
+            }
+
+            @Override
+            public boolean isOwnedByPlayer(final Player player) {
+                return this.buyable.isOwnedByPlayer(player);
+            }
+
+            @Override
+            public Player getOwner() {
+                return this.buyable.getOwner();
+            }
+
+            @Override
+            public int getTransitFees() {
+                return this.buyable.getTransitFees();
+            }
+
+            @Override
+            public void setOwner(final Player player) {
+                this.buyable.setOwner(player);
+            }
+
+            @Override
+            public String getName() {
+                return this.buyable.getName();
+            }
+
+            @Override
+            public int getId() {
+                return this.buyable.getId();
+            }
+
+            @Override
+            public int getHousePrice() {
+                return housePrice;
+            }
+
+        };
     }
 
     /**
@@ -85,7 +134,7 @@ public final class CardFactoryImpl implements CardFactory {
      */
     @Override
     public Buyable createStation(final Card card, final int price, final int fees) {
-        return CardAdapter.buyableAdapter(createProperty(card, price, 0, fees));
+        return new BuyableImpl(card, price, fees);
     }
 
     /**
