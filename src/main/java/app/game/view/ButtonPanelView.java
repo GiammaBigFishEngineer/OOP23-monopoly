@@ -4,6 +4,7 @@ import javax.swing.*;
 
 import app.game.apii.GameController;
 import app.game.controller.GameControllerImpl;
+import app.player.apii.Player;
 import game.view.Observer;
 import java.util.*;
 
@@ -22,30 +23,30 @@ public class ButtonPanelView extends JPanel {
     private JButton buyHouse;
     private JButton endTurn;
 
-    public ButtonPanelView(Observer obs) {
+    public ButtonPanelView(List<Player> playersList, Observer obs) {
 
         logic = new GameControllerImpl(null);
         logic.registerObserver(obs);
 
         rollDice = new JButton("Roll Dice");
         this.add(rollDice);
-        btnList.put(rollDice, btnCode.rollDice.code);
+        btnList.put(rollDice, BtnCodeEnum.rollDice.code);
 
         buyPropriety = new JButton("Buy Propriety");
         this.add(buyPropriety);
-        btnList.put(buyPropriety, btnCode.buyPropriety.code);
+        btnList.put(buyPropriety, BtnCodeEnum.buyPropriety.code);
 
         sellPropriety = new JButton("Sell Propriety");
         this.add(sellPropriety);
-        btnList.put(sellPropriety, btnCode.sellPropriety.code);
+        btnList.put(sellPropriety, BtnCodeEnum.sellPropriety.code);
 
         buyHouse = new JButton("Buy House");
         this.add(buyHouse);
-        btnList.put(buyHouse, btnCode.buyHouse.code);
+        btnList.put(buyHouse, BtnCodeEnum.buyHouse.code);
 
         endTurn = new JButton("End Turn");
         this.add(endTurn);
-        btnList.put(endTurn, btnCode.endTurn.code);
+        btnList.put(endTurn, BtnCodeEnum.endTurn.code);
 
     }
 

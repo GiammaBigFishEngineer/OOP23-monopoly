@@ -5,6 +5,7 @@ import javax.swing.*;
 import app.game.apii.MenuController;
 import app.game.model.MenuControllerImpl;
 import app.player.apii.Player;
+import game.view.GameView;
 
 import java.awt.*;
 import java.awt.List;
@@ -25,8 +26,6 @@ public class MenuView extends JFrame {
     final int screenHeight;
     private final int PROPORTION = 2;
 
-    private ArrayList<String> playersList;
-    private ArrayList<String> playerNames;
     private MenuController controller;
 
     public MenuView() {
@@ -34,8 +33,6 @@ public class MenuView extends JFrame {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.getContentPane().setBackground(Color.white);
         this.setResizable(false);
-
-        this.playersList = new ArrayList<>();
 
         controller = new MenuControllerImpl();
 
@@ -72,12 +69,21 @@ public class MenuView extends JFrame {
 
                 int numPlayers = (int) numPlayerSpinner.getValue();
 
+                List<String> playerNames = new List();
+
                 for (int i = 0; i < numPlayers; i++) {
                     String playerName = JOptionPane.showInputDialog("Insert player Name : ");
                     playerNames.add(playerName);
                 }
 
-                playersList = controller.insertPlayers(playerNames);
+                List<Player> playersList = controller.insertPlayers(playerNames);
+
+                if (controller.startGame(playersList)) {
+                    JOptionPane.showMessageDialog(this, "Game loading success");
+                    new GameView(playersList);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Game loading error");
+                }
 
             }
 

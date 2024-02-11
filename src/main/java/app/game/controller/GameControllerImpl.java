@@ -15,7 +15,7 @@ import game.view.Observer;
 import app.game.view.BtnCodeEnum;
 
 public class GameControllerImpl implements GameController {
-    private List<Player> players = new LinkedList<>();
+    private List<Player> players;
     private Player currentPlayer;
     private int currentPlayerIndex = -1;
 
@@ -33,11 +33,8 @@ public class GameControllerImpl implements GameController {
 
     private Observer observer;
 
-    public GameControllerImpl(List<String> playersName) {
-        for (String string : playersName) {
-            players.add(new PlayerImpl(string, 0, null, 0));
-        }
-
+    public GameControllerImpl(List<Player> playersList) {
+        this.players = playersList;
     }
 
     /*

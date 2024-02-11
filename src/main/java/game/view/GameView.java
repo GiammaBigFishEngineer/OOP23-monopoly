@@ -21,10 +21,10 @@ public class GameView extends JFrame implements Observer {
 
     GameController logic;
 
-    public GameView() {
+    public GameView(List<Player> playersList) {
 
         playerView = new PlayerPanelView();
-        btnPanel = new ButtonPanelView(this);
+        btnPanel = new ButtonPanelView(playersList, this);
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
