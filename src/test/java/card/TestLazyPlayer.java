@@ -2,9 +2,12 @@ package card;
 
 import app.card.apii.Buildable;
 import app.card.apii.Buyable;
+import app.card.apii.Card;
 import app.player.apii.BankAccount;
 import app.player.apii.Player;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 /**
  * this is a LazyPlayer only for test.
@@ -23,7 +26,8 @@ final class TestLazyPlayer implements Player {
             }
 
             @Override
-            public void payPlayer(final Player player, final int amount) {
+            public boolean payPlayer(final Player player, final int amount) {
+                return true;
             }
 
             @Override
@@ -33,6 +37,16 @@ final class TestLazyPlayer implements Player {
 
             @Override
             public boolean isPaymentAllowed(final int amount) {
+                return true;
+            }
+
+            @Override
+            public void setBalance(final int balance) {
+                this.balance = balance;
+            }
+
+            @Override
+            public boolean hasBalanceChanged() {
                 return true;
             }
     };
@@ -48,11 +62,6 @@ final class TestLazyPlayer implements Player {
     }
 
     @Override
-    public int getId() {
-        return 0;
-    }
-
-    @Override
     public int getNumberStationOwned() {
         return 0;
     }
@@ -60,11 +69,6 @@ final class TestLazyPlayer implements Player {
     @Override
     public BankAccount getBankAccount() {
         return this.bankAccount;
-    }
-
-    @Override
-    public List<Buyable> getBuildableOwned() {
-        return List.of();
     }
 
     @Override
@@ -85,8 +89,46 @@ final class TestLazyPlayer implements Player {
     }
 
     @Override
-    public int getHouseBuilt(final Buildable built) {
+    public int getID() {
         return 0;
+    }
+
+    @Override
+    public List<Buyable> getBuyableOwned() {
+        return List.of();
+    }
+
+    @Override
+    public boolean hasPositionChanged() {
+        return true;
+    }
+
+    @Override
+    public List<Buildable> getBuildableOwned() {
+        return List.of();
+    }
+
+    @Override
+    public Optional<Integer> getHouseBuilt(Buildable built) {
+        return Optional.empty();
+    }
+
+    @Override
+    public Map<Card, Optional<Integer>> getMap() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getMap'");
+    }
+
+    @Override
+    public boolean isInJail() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'isInJail'");
+    }
+
+    @Override
+    public void setInJail(boolean isInJail) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setInJail'");
     }
 
 }
