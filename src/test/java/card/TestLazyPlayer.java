@@ -5,6 +5,7 @@ import app.card.apii.Buyable;
 import app.player.apii.BankAccount;
 import app.player.apii.Player;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * this is a LazyPlayer only for test.
@@ -35,6 +36,16 @@ final class TestLazyPlayer implements Player {
             public boolean isPaymentAllowed(final int amount) {
                 return true;
             }
+
+            @Override
+            public void setBalance(final int balance) {
+                this.balance = balance;
+            }
+
+            @Override
+            public boolean hasBalanceChanged() {
+                return true;
+            }
     };
 
     @Override
@@ -48,11 +59,6 @@ final class TestLazyPlayer implements Player {
     }
 
     @Override
-    public int getId() {
-        return 0;
-    }
-
-    @Override
     public int getNumberStationOwned() {
         return 0;
     }
@@ -60,11 +66,6 @@ final class TestLazyPlayer implements Player {
     @Override
     public BankAccount getBankAccount() {
         return this.bankAccount;
-    }
-
-    @Override
-    public List<Buyable> getBuildableOwned() {
-        return List.of();
     }
 
     @Override
@@ -85,8 +86,28 @@ final class TestLazyPlayer implements Player {
     }
 
     @Override
-    public int getHouseBuilt(final Buildable built) {
+    public int getID() {
         return 0;
+    }
+
+    @Override
+    public List<Buyable> getBuyableOwned() {
+        return List.of();
+    }
+
+    @Override
+    public boolean hasPositionChanged() {
+        return true;
+    }
+
+    @Override
+    public List<Buildable> getBuildableOwned() {
+        return List.of();
+    }
+
+    @Override
+    public Optional<Integer> getHouseBuilt(Buildable built) {
+        return Optional.empty();
     }
 
 }
