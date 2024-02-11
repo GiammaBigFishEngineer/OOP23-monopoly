@@ -6,7 +6,7 @@ import javax.swing.*;
 
 import app.game.apii.GameController;
 import app.game.controller.GameControllerImpl;
-import app.player.view.ButtonPanelView;
+import app.game.view.ButtonPanelView;
 import app.player.view.PlayerPanelView;
 
 /**
@@ -15,23 +15,18 @@ import app.player.view.PlayerPanelView;
 public class GameView extends JFrame implements Observer {
 
     JPanel playerView;
+    JPanel btnPanel;
 
     GameController logic;
 
-    List<JButton> btnList;
-
     public GameView() {
 
-        this.logic = new GameControllerImpl(null);
-
-        logic.registerObserver(this);
-
         playerView = new PlayerPanelView();
+        btnPanel = new ButtonPanelView(this);
 
-    }
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setVisible(true);
 
-    public List<JButton> getBtnList() {
-        return this.btnList;
     }
 
     @Override

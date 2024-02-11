@@ -8,9 +8,11 @@ import app.card.apii.Card;
 import app.card.apii.CardAdapter;
 import app.game.apii.GameController;
 import app.game.utils.Dice;
+import app.game.view.ButtonPanelView;
 import app.player.apii.Player;
 import app.player.impl.PlayerImpl;
 import game.view.Observer;
+import app.game.view.BtnCodeEnum;
 
 public class GameControllerImpl implements GameController {
     private List<Player> players = new LinkedList<>();
@@ -27,11 +29,9 @@ public class GameControllerImpl implements GameController {
     private int res2;
     private int totalResult;
 
-    private List<JButton> btnList = new LinkedList();
+    private Map<JButton, Integer> btnList = new HashMap<>();
 
     private Observer observer;
-
-    private int prova;
 
     public GameControllerImpl(List<String> playersName) {
         for (String string : playersName) {
@@ -93,7 +93,7 @@ public class GameControllerImpl implements GameController {
         } else {
             // inizia il turno normalmente (il turno inizia semplicemente rendendo
             // clickabile solo il bottone dei dadi)
-            enableRollDiceBtn();
+            enableBtn();
         }
 
     }
@@ -223,14 +223,14 @@ public class GameControllerImpl implements GameController {
         throw new UnsupportedOperationException("Unimplemented method 'currentBox'");
     }
 
-    public void enableRollDiceBtn() {
+    public void enableSingleButton(BtnCodeEnum code) {
 
     }
 
     public void disableAllBtn() {
 
-        for (JButton jButton : btnList) {
-            jButton.setEnabled(false);
+        for (var btn : btnList.keySet()) {
+            btn.setEnabled(false);
         }
 
     }

@@ -15,7 +15,7 @@ import app.player.view.PlayerPanelView;
 public final class PlayerPanelLogicImpl implements PlayerPanelLogic {
 
     private Player currentPlayer;
-    private Card currentBox = new CardImpl();
+    private Card currentBox = new CardImpl(0, "prova");
     private PlayerPanelView panel;
 
     /**
