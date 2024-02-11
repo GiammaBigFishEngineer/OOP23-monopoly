@@ -7,6 +7,8 @@ import javax.swing.*;
 import app.game.apii.GameController;
 import app.game.controller.GameControllerImpl;
 import app.game.view.ButtonPanelView;
+import app.player.apii.Player;
+import app.player.view.BailView;
 import app.player.view.PlayerPanelView;
 
 /**
@@ -30,22 +32,10 @@ public class GameView extends JFrame implements Observer {
     }
 
     @Override
-    public boolean update() {
+    public boolean update(Player currentPlayer) {
 
-        int result = JOptionPane.showOptionDialog(this,
-                "You are in prison, do you want to pay bail?",
-                "Bail option",
-                JOptionPane.NO_OPTION,
-                JOptionPane.OK_OPTION,
-                null,
-                null,
-                null);
-
-        if (result == JOptionPane.OK_OPTION) {
-            return true;
-        } else {
-            return false;
-        }
+        BailView bailMessage = new BailView();
+        return bailMessage.showMenuBail(currentPlayer);
 
     }
 

@@ -60,17 +60,16 @@ public class GameControllerImpl implements GameController {
 
         if (currentPlayer.isInJail()) {
 
-            boolean result = observer.update();
+            boolean result = observer.update(currentPlayer);
 
             if (result) {
 
-                // paga per uscire e inizia il turno
-                int balance = currentPlayer.getBankAccount().getBalance();
-                currentPlayer.getBankAccount().setBalance(balance - 50);
-                currentPlayer.setInJail(false);
-                enableRollDiceBtn();
+                // ha pagato ed è uscito di prigione
+                enableSingleButton(BtnCodeEnum.rollDice);
 
             } else {
+
+                // se non paga la cauzione prova a tirare il dado
 
                 rollDice(false);
 
@@ -93,7 +92,7 @@ public class GameControllerImpl implements GameController {
         } else {
             // inizia il turno normalmente (il turno inizia semplicemente rendendo
             // clickabile solo il bottone dei dadi)
-            enableBtn();
+            enableSingleButton(BtnCodeEnum.rollDice);
         }
 
     }
