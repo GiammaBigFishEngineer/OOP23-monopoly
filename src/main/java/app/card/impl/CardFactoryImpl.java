@@ -8,6 +8,7 @@ import java.io.IOException;
 import app.card.apii.Buildable;
 import app.card.apii.Buyable;
 import app.card.apii.Card;
+import app.card.apii.CardAdapter;
 import app.card.apii.CardFactory;
 import app.card.apii.Unbuyable;
 import app.card.utils.JsonReader;
@@ -32,30 +33,23 @@ public final class CardFactoryImpl implements CardFactory {
             final var id = Integer.valueOf(i.getString("id"));
             final var card = createCard(id, i.getString("name"));
             switch (type) {
-                case "static":
-                    allCards.add(createStaticCard(
-                        card,
-                        i.getString("action"),
-                        Integer.parseInt(i.getString("actionAmount"))
-                    ));
-                    break;
-                case "property":
-                    allCards.add(createProperty(
-                        card,
-                        Integer.parseInt(i.getString("price")),
-                        Integer.parseInt(i.getString("housePrice")),
-                        Integer.parseInt(i.getString("fees"))
-                    ));
-                    break;
-                case "station":
-                    allCards.add(createStation(
-                        card,
-                        Integer.parseInt(i.getString("price")),
-                        Integer.parseInt(i.getString("fees"))
-                    ));
-                    break;
-                default:
-                    throw new IllegalArgumentException("the type read isn't a type card of the game");
+                case "static" -> allCards.add(createStaticCard(
+                    card,
+                    i.getString("action"),
+                    Integer.parseInt(i.getString("actionAmount"))
+                ));
+                case "property" -> allCards.add(createProperty(
+                    card,
+                    Integer.parseInt(i.getString("price")),
+                    Integer.parseInt(i.getString("housePrice")),
+                    Integer.parseInt(i.getString("fees"))
+                ));
+                case "station" -> allCards.add(createStation(
+                    card,
+                    Integer.parseInt(i.getString("price")),
+                    Integer.parseInt(i.getString("fees"))
+                ));
+                default -> throw new IllegalArgumentException("the type read isn't a type card of the game");
             }
         });
         return allCards;
@@ -91,7 +85,7 @@ public final class CardFactoryImpl implements CardFactory {
      */
     @Override
     public Buyable createStation(final Card card, final int price, final int fees) {
-        return createProperty(card, price, 0, fees);
+        return CardAdapter.buyableAdapter(createProperty(card, price, 0, fees));
     }
 
     /**
