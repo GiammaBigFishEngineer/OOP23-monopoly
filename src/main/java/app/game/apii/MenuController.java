@@ -1,11 +1,12 @@
 package app.game.apii;
 
-import app.player.apii.Player; 
-
 import java.util.List;
 
+import app.player.apii.Player;
+
 /**
- * An interface that defines operations that can be performed to manage the menu.
+ * An interface that defines operations that can be performed to manage the
+ * menu.
  */
 public interface MenuController {
 
@@ -26,7 +27,8 @@ public interface MenuController {
      * Inserts new players.
      *
      * @param playerNames the list of player names to be inserted
-     * @return a list of player objects representing the inserted players for the current game
+     * @return a list of player objects representing the inserted players for the
+     *         current game
      */
     List<Player> insertPlayers(List<String> playerNames);
 
@@ -41,4 +43,15 @@ public interface MenuController {
      * @return a list of strings representing the data of the saved games
      */
     List<String> viewSavedGames();
+
+    /**
+     * Determines whether the game should be saved.
+     * The game should be saved if it is the first save or if there are changes in
+     * player positions or balances.
+     * It is used to know when to save game data and, consequently, to create a
+     * summary of all game sessions.
+     * 
+     * @return true if the game should be saved, false otherwise.
+     */
+    boolean shouldSaveGame();
 }

@@ -1,7 +1,14 @@
 package app.game.view;
 
 import javax.swing.*;
+
+import app.game.apii.MenuController;
+import app.game.model.MenuControllerImpl;
+import app.player.apii.Player;
+
 import java.awt.*;
+import java.awt.List;
+import java.util.*;
 
 public class MenuView extends JFrame {
 
@@ -18,11 +25,19 @@ public class MenuView extends JFrame {
     final int screenHeight;
     private final int PROPORTION = 2;
 
+    private ArrayList<String> playersList;
+    private ArrayList<String> playerNames;
+    private MenuController controller;
+
     public MenuView() {
         super("GameMenu");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.getContentPane().setBackground(Color.white);
         this.setResizable(false);
+
+        this.playersList = new ArrayList<>();
+
+        controller = new MenuControllerImpl();
 
         /*
          * Creating a panel with all the buttons
@@ -41,7 +56,31 @@ public class MenuView extends JFrame {
         startButton.setFont(boldFont);
 
         startButton.addActionListener(e -> {
-            throw new UnsupportedOperationException("Unimplemented method");
+
+            SpinnerNumberModel spinnerModel = new SpinnerNumberModel(3, 2, 5, 1);
+            JSpinner numPlayerSpinner = new JSpinner(spinnerModel);
+
+            int choice = JOptionPane.showOptionDialog(this,
+                    numPlayerSpinner,
+                    "Select player number",
+                    JOptionPane.OK_OPTION, JOptionPane.NO_OPTION,
+                    null,
+                    null,
+                    null);
+
+            if (choice == JOptionPane.OK_OPTION) {
+
+                int numPlayers = (int) numPlayerSpinner.getValue();
+
+                for (int i = 0; i < numPlayers; i++) {
+                    String playerName = JOptionPane.showInputDialog("Insert player Name : ");
+                    playerNames.add(playerName);
+                }
+
+                playersList = controller.insertPlayers(playerNames);
+
+            }
+
         });
 
         buttonPanel.add(startButton);
