@@ -79,7 +79,7 @@ public class GameControllerImpl implements GameController {
                     // inizia il turno del player corrente
                     System.out.println("You get the same result");
                     currentPlayer.setInJail(false);
-                    enableRollDiceBtn();
+                    enableSingleButton(BtnCodeEnum.rollDice);
 
                 } else {
 
