@@ -1,4 +1,4 @@
-package game.view;
+package app.game.apii;
 
 import app.player.apii.Player;
 

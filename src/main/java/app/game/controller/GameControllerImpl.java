@@ -7,11 +7,11 @@ import javax.swing.*;
 import app.card.apii.Card;
 import app.card.apii.CardAdapter;
 import app.game.apii.GameController;
+import app.game.apii.Observer;
 import app.game.utils.Dice;
 import app.game.view.ButtonPanelView;
 import app.player.apii.Player;
 import app.player.impl.PlayerImpl;
-import game.view.Observer;
 import app.game.view.BtnCodeEnum;
 
 public class GameControllerImpl implements GameController {

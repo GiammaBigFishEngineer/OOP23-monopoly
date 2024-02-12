@@ -2,7 +2,6 @@ package app.game.apii;
 
 import app.card.apii.Card;
 import app.player.apii.Player;
-import game.view.Observer;
 
 /**
  * An interface that rapresent the logic of the player actions.

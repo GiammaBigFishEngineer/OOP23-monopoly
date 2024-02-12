@@ -1,12 +1,12 @@
-package game.view;
+package app.game.view;
 
 import java.util.*;
 
 import javax.swing.*;
 
 import app.game.apii.GameController;
+import app.game.apii.Observer;
 import app.game.controller.GameControllerImpl;
-import app.game.view.ButtonPanelView;
 import app.player.apii.Player;
 import app.player.view.BailView;
 import app.player.view.PlayerPanelView;

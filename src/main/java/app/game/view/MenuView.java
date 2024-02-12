@@ -5,11 +5,11 @@ import javax.swing.*;
 import app.game.apii.MenuController;
 import app.game.model.MenuControllerImpl;
 import app.player.apii.Player;
-import game.view.GameView;
 
 import java.awt.*;
-import java.awt.List;
-import java.util.*;
+
+import java.util.List;
+import java.util.ArrayList;
 
 public class MenuView extends JFrame {
 
@@ -69,7 +69,7 @@ public class MenuView extends JFrame {
 
                 int numPlayers = (int) numPlayerSpinner.getValue();
 
-                List<String> playerNames = new List();
+                List<String> playerNames = new ArrayList<>();
 
                 for (int i = 0; i < numPlayers; i++) {
                     String playerName = JOptionPane.showInputDialog("Insert player Name : ");

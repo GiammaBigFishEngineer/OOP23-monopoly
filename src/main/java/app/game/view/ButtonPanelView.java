@@ -3,9 +3,10 @@ package app.game.view;
 import javax.swing.*;
 
 import app.game.apii.GameController;
+import app.game.apii.Observer;
 import app.game.controller.GameControllerImpl;
 import app.player.apii.Player;
-import game.view.Observer;
+
 import java.util.*;
 
 /**
