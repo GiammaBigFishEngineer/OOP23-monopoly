@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.List;
 
 import app.card.apii.Buildable;
@@ -16,6 +17,8 @@ import app.card.apii.Card;
 import app.card.apii.CardFactory;
 import app.card.apii.Unbuyable;
 import app.card.impl.CardFactoryImpl;
+import app.player.apii.Player;
+import app.player.impl.PlayerImpl;
 
 /**
  * Test for all cards.
@@ -28,6 +31,8 @@ class CardTest {
     private static final int ID_TEST_GO = 0;
     private static final int AMOUNT_TEST_MONEY = 200;
     private static final int AMOUNT_TEST_PRICE = 10;
+    private final List<Card> cards = new LinkedList<>();
+    private final Player newPlayer = new PlayerImpl("Player", ID_TEST, cards, 0);
 
     /**
      * inizitalize factory.
@@ -95,9 +100,8 @@ class CardTest {
         final Unbuyable staticCard = this.factory.createStaticCard(
             this.factory.createCard(ID_TEST_GO, "Go"),
             "giveMoneyPlayer", AMOUNT_TEST_MONEY);
-        final var newPlayer = new TestLazyPlayer();
         staticCard.makeAction(newPlayer);
-        assertEquals(AMOUNT_TEST_MONEY - 1, newPlayer.getBankAccount().getBalance()); 
+        assertEquals(AMOUNT_TEST_MONEY, newPlayer.getBankAccount().getBalance()); 
     }
 
     /**
@@ -108,7 +112,6 @@ class CardTest {
         final Unbuyable staticCard = this.factory.createStaticCard(
             this.factory.createCard(ID_TEST_PRISON, "prison"),
             "movePlayer", ID_TEST_PRISON);
-        final var newPlayer = new TestLazyPlayer();
         staticCard.makeAction(newPlayer);
         assertEquals(staticCard.getId(), newPlayer.getCurrentPosition()); 
     }
