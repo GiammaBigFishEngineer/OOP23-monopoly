@@ -6,12 +6,14 @@ import javax.swing.ImageIcon;
 import app.card.apii.Card;
 import app.card.apii.CardAdapter;
 import app.card.impl.CardFactoryImpl;
+import app.card.utils.UseGetResource;
 import app.player.apii.Player;
 
 import java.awt.GridLayout;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Image;
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -29,6 +31,7 @@ public class TableView extends ObservableImpl<Player> {
     private transient List<Card> cardList = new CardFactoryImpl().cardsInitializer();
     private transient Map<Card, BoxPanelView> cells = new HashMap<>();
     private static final int IMAGESIZE = 70;
+    private static final String SEP = File.separator;
     private final int size;
 
     /**
@@ -122,7 +125,9 @@ public class TableView extends ObservableImpl<Player> {
      * @return the image loaded
      */
     private JLabel renderImage(final String fileName) {
-        final Image icon = new ImageIcon(Objects.requireNonNull(UseGetResource.loadResource(fileName))).getImage()
+        final Image icon = new ImageIcon(Objects.requireNonNull(
+            UseGetResource.loadResource("view" + SEP + "image" + SEP + fileName)))
+            .getImage()
             .getScaledInstance(IMAGESIZE, IMAGESIZE, Image.SCALE_SMOOTH);
         final JLabel image = new JLabel();
         image.setIcon(new ImageIcon(icon));

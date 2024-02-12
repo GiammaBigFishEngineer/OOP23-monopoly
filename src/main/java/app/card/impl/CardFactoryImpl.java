@@ -2,8 +2,10 @@ package app.card.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 
 import app.card.apii.Buildable;
 import app.card.apii.Buyable;
@@ -11,6 +13,7 @@ import app.card.apii.Card;
 import app.card.apii.CardFactory;
 import app.card.apii.Unbuyable;
 import app.card.utils.JsonReader;
+import app.card.utils.UseGetResource;
 import app.player.apii.Player;
 
 /**
@@ -25,9 +28,8 @@ public final class CardFactoryImpl implements CardFactory {
     public List<Card> cardsInitializer() throws IOException {
         final var allCards = new ArrayList<Card>();
         final String sep = File.separator;
-        final String fileName = System.getProperty("user.dir") + sep + "src" + sep + "main" 
-            + sep + "java" + sep + "app" + sep + "card" + sep + "utils" + sep + "cardList.json";
-        final var jsonList = JsonReader.readJson(fileName);
+        final URL url = Objects.requireNonNull(UseGetResource.loadResource("list" + sep + "cardList.json"));
+        final var jsonList = JsonReader.readJson(url);
         jsonList.forEach(i -> {
             final var type = i.getString("tipology");
             final var id = Integer.valueOf(i.getString("id"));
