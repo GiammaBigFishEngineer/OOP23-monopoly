@@ -4,12 +4,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -23,7 +23,7 @@ import app.player.impl.PlayerImpl;
 /**
  * Simple test for {@link app.player.impl.PlayerImpl} class. 
  */
-public class TestPlayerImpl { 
+class TestPlayerImpl { 
 
     private static final int DEFAULT_ID = 1;
     private static final int DEFAULT_FEES = 10;
@@ -31,7 +31,6 @@ public class TestPlayerImpl {
     private static final int DEFAULT_PAYMENT = 100;
 
     private Player player;
-    private List<Card> cards;
     private List<Buyable> buyables;
     private List<Buildable> buildables;
 
@@ -49,14 +48,14 @@ public class TestPlayerImpl {
      * Configuration step: this is performed before each test. 
      */
     @BeforeEach 
-    public void setUp() {
-        this.cards = new LinkedList<>();
+    void init() {
+        final List<Card> cards = new LinkedList<>();
         this.buyables = new LinkedList<>(); 
         this.buildables = new LinkedList<>();
-        this.cards.add(buyable);
-        this.cards.add(buildable);
-        this.cards.add(eastStation);
-        this.cards.add(westStation);
+        cards.add(buyable);
+        cards.add(buildable);
+        cards.add(eastStation);
+        cards.add(westStation);
         this.player = new PlayerImpl("Player", DEFAULT_ID, cards, DEFAULT_PAYMENT * 1000);
     }
 
@@ -67,9 +66,9 @@ public class TestPlayerImpl {
     void testBuyBox() {
         this.buyables.add(buyable);
         this.player.buyBox(buyable);
-        List<Buyable> buyableOwned = this.player.getBuyableOwned();
-        Assertions.assertEquals(buyables.size(), buyableOwned.size());
-        Assertions.assertTrue(this.player.getMap().get(buyable).isPresent());
+        final List<Buyable> buyableOwned = this.player.getBuyableOwned();
+        assertEquals(buyables.size(), buyableOwned.size());
+        assertTrue(this.player.getMap().get(buyable).isPresent());
     }
 
     /**
@@ -77,7 +76,7 @@ public class TestPlayerImpl {
      */
     @Test 
     void testBuildHouse() {
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+        final IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
             this.player.buildHouse(buildable);
         });
         assertEquals("You're trying to build a house on a box you don't own", exception.getMessage()); 
@@ -92,7 +91,7 @@ public class TestPlayerImpl {
     void testNumberStationOwned() {
         this.player.buyBox(eastStation);
         this.player.buyBox(westStation);
-        Assertions.assertEquals(2, this.player.getNumberStationOwned());
+        assertEquals(2, this.player.getNumberStationOwned());
     }
 
     /**
@@ -102,8 +101,8 @@ public class TestPlayerImpl {
     void testBuyableOwned() {
         this.player.buyBox(buyable);
         this.buyables.add(buyable);
-        Assertions.assertEquals(buyables, this.player.getBuyableOwned());
-        Assertions.assertNotNull(buyables);
+        assertEquals(buyables, this.player.getBuyableOwned());
+        assertNotNull(buyables);
     }
 
     /**
@@ -114,7 +113,7 @@ public class TestPlayerImpl {
         this.player.buyBox(buildable);
         this.player.buildHouse(buildable);
         this.buildables.add(buildable); 
-        Assertions.assertEquals(buildables, this.player.getBuildableOwned());
+        assertEquals(buildables, this.player.getBuildableOwned());
     }
     /**
      * Check the method sellBuyable().
@@ -123,8 +122,8 @@ public class TestPlayerImpl {
     void testSellBuyable() {
         this.player.buyBox(buyable);
         this.player.sellBuyable(buyable);
-        List<Buyable> buyableOwned = this.player.getBuyableOwned();
-        Assertions.assertTrue(buyableOwned.isEmpty());
+        final List<Buyable> buyableOwned = this.player.getBuyableOwned();
+        assertTrue(buyableOwned.isEmpty());
     }
 
     /**
@@ -134,8 +133,8 @@ public class TestPlayerImpl {
     void testHouseBuilt() {
         this.player.buyBox(buildable);
         this.player.buildHouse(buildable);
-        Optional<Integer> numberHouseBuilt = this.player.getHouseBuilt(buildable); 
-        Assertions.assertTrue(numberHouseBuilt.isPresent());
-        Assertions.assertEquals(Optional.of(1), numberHouseBuilt);
+        final Optional<Integer> numberHouseBuilt = this.player.getHouseBuilt(buildable); 
+        assertTrue(numberHouseBuilt.isPresent());
+        assertEquals(Optional.of(1), numberHouseBuilt);
     }
 }

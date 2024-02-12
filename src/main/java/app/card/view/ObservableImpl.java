@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public abstract class ObservableImpl<T> extends JPanel implements Observable<T> {
 
     private final List<Observer<T>> observers = new ArrayList<>();
-    private static final long serialVersionUID = 2298666777798069846L;
+    private static final long serialVersionUID = 2L;
 
     /**
      * add an observer to list.

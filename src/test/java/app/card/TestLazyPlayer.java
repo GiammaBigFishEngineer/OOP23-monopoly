@@ -1,4 +1,4 @@
-package card;
+package app.card;
 
 import app.card.apii.Buildable;
 import app.card.apii.Buyable;
@@ -109,7 +109,7 @@ final class TestLazyPlayer implements Player {
     }
 
     @Override
-    public Optional<Integer> getHouseBuilt(Buildable built) {
+    public Optional<Integer> getHouseBuilt(final Buildable built) {
         return Optional.empty();
     }
 
@@ -126,7 +126,7 @@ final class TestLazyPlayer implements Player {
     }
 
     @Override
-    public void setInJail(boolean isInJail) {
+    public void setInJail(final boolean isInJail) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'setInJail'");
     }

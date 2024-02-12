@@ -25,7 +25,7 @@ public class BoxPanelView extends JPanel {
     private List<String> playerList;
     private static final int FONTSIZE = 15;
     private static final String PLAYER_SYMBOL = "◉";
-    private static final long serialVersionUID = 2298666777798069846L;
+    private static final long serialVersionUID = 1L;
 
     /**
      * Empty constructor for initializing normal JPanel. 

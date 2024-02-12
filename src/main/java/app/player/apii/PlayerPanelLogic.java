@@ -22,4 +22,3 @@ public interface PlayerPanelLogic {
      */
     void refresh();
 }
-

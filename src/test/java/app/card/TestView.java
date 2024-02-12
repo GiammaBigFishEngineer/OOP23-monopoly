@@ -1,4 +1,4 @@
-package card;
+package app.card;
 
 import javax.swing.JFrame;
 

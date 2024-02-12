@@ -47,7 +47,7 @@ public interface Player {
      */
     void setInJail(boolean isInJail);
     /**
-     * @return information about the player's bankAccount
+     * @return player's bankAccount
      */
     BankAccount getBankAccount();
     /**
@@ -68,16 +68,15 @@ public interface Player {
      */
     int getNumberStationOwned();
     /**
-     * @param box
+     * @param box whose type is Buyable
      */
     void buyBox(Buyable box);
     /**
-     * @param box
-     * @throws IllegalArgumentException
+     * @param box whose type is Buildable
      */
-    void buildHouse(Buildable box) throws IllegalArgumentException;
+    void buildHouse(Buildable box);
     /**
-     * @param box 
+     * @param box whose type is Buyable
      */
     void sellBuyable(Buyable box);
 }
