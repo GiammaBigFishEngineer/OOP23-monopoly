@@ -16,7 +16,8 @@ public class ButtonPanelView extends JPanel {
 
     private GameController logic;
 
-    private Map<JButton, Integer> btnList = new HashMap<>();
+    private Map<BtnCodeEnum, Boolean> btnCodeList;
+    private Map<BtnCodeEnum, JButton> btnList = new HashMap<>();
 
     private JButton rollDice;
     private JButton buyPropriety;
@@ -29,30 +30,53 @@ public class ButtonPanelView extends JPanel {
         logic = new GameControllerImpl(null);
         logic.registerObserver(obs);
 
+        btnCodeList = logic.newTurn();
+
+        changeButtonVisibility();
+
         rollDice = new JButton("Roll Dice");
         this.add(rollDice);
-        btnList.put(rollDice, BtnCodeEnum.rollDice.code);
+        btnList.put(BtnCodeEnum.rollDice, rollDice);
+
+        rollDice.addActionListener(e -> {
+            logic.rollDice(true);
+        });
 
         buyPropriety = new JButton("Buy Propriety");
         this.add(buyPropriety);
-        btnList.put(buyPropriety, BtnCodeEnum.buyPropriety.code);
+        btnList.put(BtnCodeEnum.buyPropriety, buyPropriety);
 
         sellPropriety = new JButton("Sell Propriety");
         this.add(sellPropriety);
-        btnList.put(sellPropriety, BtnCodeEnum.sellPropriety.code);
+        btnList.put(BtnCodeEnum.sellPropriety, sellPropriety);
 
         buyHouse = new JButton("Buy House");
         this.add(buyHouse);
-        btnList.put(buyHouse, BtnCodeEnum.buyHouse.code);
+        btnList.put(BtnCodeEnum.buyHouse, buyHouse);
 
         endTurn = new JButton("End Turn");
         this.add(endTurn);
-        btnList.put(endTurn, BtnCodeEnum.endTurn.code);
+        btnList.put(BtnCodeEnum.endTurn, endTurn);
+
+        endTurn.addActionListener(e -> {
+
+            btnCodeList = logic.newTurn();
+
+            changeButtonVisibility();
+
+        });
 
     }
 
-    protected Map<JButton, Integer> getBtnList() {
-        return this.btnList;
+    public void changeButtonVisibility() {
+        for (var entry : btnCodeList.entrySet()) {
+
+            var code = entry.getKey();
+            var bool = entry.getValue();
+
+            btnList.get(code).setEnabled(bool);
+
+        }
     }
 
 }

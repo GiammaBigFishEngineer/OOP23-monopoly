@@ -29,7 +29,7 @@ public class GameControllerImpl implements GameController {
     private int res2;
     private int totalResult;
 
-    private Map<JButton, Integer> btnList = new HashMap<>();
+    private Map<BtnCodeEnum, Boolean> btnList = new HashMap<>();
 
     private Observer observer;
 
@@ -42,11 +42,13 @@ public class GameControllerImpl implements GameController {
      * turn
      */
 
-    public void newTurn() {
+    public Map<BtnCodeEnum, Boolean> newTurn() {
 
         this.disableAllBtn();
         this.nextPlayer();
         this.checkPlayerState();
+
+        return btnList;
 
     }
 
@@ -221,12 +223,14 @@ public class GameControllerImpl implements GameController {
 
     public void enableSingleButton(BtnCodeEnum code) {
 
+        btnList.put(code, false);
+
     }
 
     public void disableAllBtn() {
 
-        for (var btn : btnList.keySet()) {
-            btn.setEnabled(false);
+        for (var entry : btnList.entrySet()) {
+            entry.setValue(false);
         }
 
     }

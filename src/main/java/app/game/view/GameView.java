@@ -1,9 +1,11 @@
 package app.game.view;
 
+import java.io.IOException;
 import java.util.*;
 
 import javax.swing.*;
 
+import app.card.view.TableView;
 import app.game.apii.GameController;
 import app.game.apii.Observer;
 import app.game.controller.GameControllerImpl;
@@ -16,15 +18,15 @@ import app.player.view.PlayerPanelView;
  */
 public class GameView extends JFrame implements Observer {
 
-    JPanel playerView;
+    JPanel playerPanel;
     JPanel btnPanel;
+    JPanel tablePanel;
 
-    GameController logic;
+    public GameView(List<Player> playersList) throws IOException {
 
-    public GameView(List<Player> playersList) {
-
-        playerView = new PlayerPanelView();
+        playerPanel = new PlayerPanelView();
         btnPanel = new ButtonPanelView(playersList, this);
+        tablePanel = new TableView(10);
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);

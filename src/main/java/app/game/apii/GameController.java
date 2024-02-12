@@ -1,6 +1,9 @@
 package app.game.apii;
 
+import java.util.Map;
+
 import app.card.apii.Card;
+import app.game.view.BtnCodeEnum;
 import app.player.apii.Player;
 
 /**
@@ -52,4 +55,6 @@ public interface GameController {
     Card currentBox(Player currentPlayer);
 
     void registerObserver(Observer obs);
+
+    Map<BtnCodeEnum, Boolean> newTurn();
 }
