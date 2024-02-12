@@ -12,9 +12,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
-import app.card.api.Card;
-import app.player.api.Player;
-import app.player.api.PlayerPanelLogic;
+import app.card.apii.Card;
+import app.player.apii.Player;
+import app.player.apii.PlayerPanelLogic;
 import app.player.impl.PlayerPanelLogicImpl;
 
 /**

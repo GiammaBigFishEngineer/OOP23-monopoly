@@ -2,10 +2,10 @@ package app.player.impl;
 
 import java.util.Optional;
 
-import app.card.api.Card;
-import app.card.api.CardAdapter;
-import app.player.api.Player;
-import app.player.api.PlayerPanelLogic;
+import app.card.apii.Card;
+import app.card.apii.CardAdapter;
+import app.player.apii.Player;
+import app.player.apii.PlayerPanelLogic;
 import app.player.view.PlayerPanelView;
 
 /**

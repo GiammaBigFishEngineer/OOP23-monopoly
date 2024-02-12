@@ -2,8 +2,8 @@ package app.player.view;
 
 import javax.swing.JOptionPane;
 
-import app.player.api.BailLogic;
-import app.player.api.Player;
+import app.player.apii.BailLogic;
+import app.player.apii.Player;
 import app.player.impl.BailLogicImpl;
 
 /**

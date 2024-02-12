@@ -1,7 +1,7 @@
 package app.player.impl;
 
-import app.player.api.BailLogic;
-import app.player.api.Player;
+import app.player.apii.BailLogic;
+import app.player.apii.Player;
 
 /**
  * Class which implements the methods used for

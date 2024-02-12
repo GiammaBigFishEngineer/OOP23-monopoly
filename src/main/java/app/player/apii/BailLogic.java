@@ -1,4 +1,4 @@
-package app.player.api;
+package app.player.apii;
 
 /**
  * Interface whose methods are used to manage the mechanism of bail.

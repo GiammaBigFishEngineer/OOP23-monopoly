@@ -1,7 +1,7 @@
 package app.player.impl;
 
-import app.player.api.BankAccount;
-import app.player.api.Player;
+import app.player.apii.BankAccount;
+import app.player.apii.Player;
 
 /**
  * Class which implements a player's BankAccount.

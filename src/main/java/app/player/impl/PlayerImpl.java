@@ -6,12 +6,12 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Optional;
 
-import app.card.api.Buildable;
-import app.card.api.Buyable;
-import app.card.api.Card;
-import app.card.api.CardAdapter;
-import app.player.api.BankAccount;
-import app.player.api.Player;
+import app.card.apii.Buildable;
+import app.card.apii.Buyable;
+import app.card.apii.Card;
+import app.card.apii.CardAdapter;
+import app.player.apii.BankAccount;
+import app.player.apii.Player;
 
 /**
  * Class which implements a Player.
@@ -157,7 +157,7 @@ public final class PlayerImpl implements Player {
     public Optional<Integer> getHouseBuilt(final Buildable built) {
         // chi usa questo metodo, si dovrà preoccupare di verificare che il player possieda la casella 
         // cast a Card fattibile perché Card è superclasse
-        return map.get((Card) built); 
+        return map.get((Card) built);
     }
     /**
      * {@inheritDoc}

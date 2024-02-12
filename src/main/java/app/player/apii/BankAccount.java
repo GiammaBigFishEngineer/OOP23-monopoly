@@ -1,4 +1,4 @@
-package app.player.api;
+package app.player.apii;
 
 /**
  * Interface which models a player's BankAccount.
