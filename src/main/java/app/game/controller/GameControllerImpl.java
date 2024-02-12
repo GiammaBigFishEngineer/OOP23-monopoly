@@ -19,11 +19,11 @@ public class GameControllerImpl implements GameController {
     private Player currentPlayer;
     private int currentPlayerIndex = -1;
 
-    private List<Card> cards = new LinkedList<>();
+    private List<Card> cards;
     private Card currentCard;
     private int currentCardIndex;
 
-    private Dice currentDice = new Dice();
+    private Dice currentDice;
     private boolean doubleDice;
     private int res1;
     private int res2;
@@ -33,8 +33,15 @@ public class GameControllerImpl implements GameController {
 
     private Observer observer;
 
-    public GameControllerImpl(List<Player> playersList) {
-        this.players = playersList;
+    public GameControllerImpl(List<Player> playersList, List<Card> cardList) {
+
+        players = new ArrayList<>();
+        this.players.addAll(playersList);
+
+        cards = new ArrayList<>();
+        this.cards.addAll(cardList);
+
+        currentDice = new Dice();
     }
 
     /*
@@ -122,9 +129,24 @@ public class GameControllerImpl implements GameController {
 
     }
 
+    /*
+     * 
+     */
+
     public void startTurn() {
 
-        currentPlayer.setPosition(currentPlayer.getCurrentPosition() + totalResult);
+        var position = currentPlayer.getCurrentPosition();
+
+        var finalPosition = position + totalResult;
+
+        if (finalPosition >= cards.size()) {
+
+            var new_position = finalPosition - cards.size();
+            currentPlayer.setPosition(new_position);
+
+        } else {
+            currentPlayer.setPosition(finalPosition);
+        }
 
         currentCardIndex = currentPlayer.getCurrentPosition();
 
@@ -155,10 +177,11 @@ public class GameControllerImpl implements GameController {
 
         } else if (currentCard.isBuildable()) {
 
-            Player owner = CardAdapter.buildableAdapter(currentCard).getOwner();
             Boolean owned = CardAdapter.buildableAdapter(currentCard).isOwned();
 
             if (owned) {
+
+                Player owner = CardAdapter.buildableAdapter(currentCard).getOwner();
 
                 if (currentPlayer.equals(owner)) {
 
@@ -177,10 +200,12 @@ public class GameControllerImpl implements GameController {
 
         } else if (currentCard.isBuyable() && !currentCard.isBuildable()) {
 
-            Player owner = CardAdapter.buyableAdapter(currentCard).getOwner();
             Boolean owned = CardAdapter.buyableAdapter(currentCard).isOwned();
 
             if (owned) {
+
+                Player owner = CardAdapter.buyableAdapter(currentCard).getOwner();
+
                 if (!currentPlayer.equals(owner)) {
                     // paga tassa
                 }

@@ -7,6 +7,8 @@ import app.game.apii.Observer;
 import app.game.controller.GameControllerImpl;
 import app.player.apii.Player;
 
+import app.card.apii.Card;
+
 import java.util.*;
 
 /**
@@ -25,9 +27,9 @@ public class ButtonPanelView extends JPanel {
     private JButton buyHouse;
     private JButton endTurn;
 
-    public ButtonPanelView(List<Player> playersList, Observer obs) {
+    public ButtonPanelView(List<Player> playersList, List<Card> cardList, Observer obs) {
 
-        logic = new GameControllerImpl(playersList);
+        logic = new GameControllerImpl(playersList, cardList);
         logic.registerObserver(obs);
 
         btnCodeList = logic.newTurn();
