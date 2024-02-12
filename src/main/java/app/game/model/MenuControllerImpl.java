@@ -140,12 +140,8 @@ public class MenuControllerImpl implements MenuController {
      * @return {@code true} if there are changes in the player, otherwhise {@code false}
      */
     private boolean checkForChanges(final List<Player> players) {
-        for (final Player currentPlayer : players) {
-            if (currentPlayer.hasPositionChanged() || currentPlayer.getBankAccount().hasBalanceChanged()) {
-                return true;
-            }
-        }
-        return false;
+        return players.stream().anyMatch(player -> 
+            player.hasPositionChanged() || player.getBankAccount().hasBalanceChanged());
     }
 
     private void saveGameToFile(final List<Player> players) throws IOException {
@@ -164,12 +160,12 @@ public class MenuControllerImpl implements MenuController {
             final String timestamp = dateFormat.format(new Date());
             writer.println("*** Partita del: " + timestamp + " ***");
 
-            for (final Player currentPlayer : players) {
+            players.forEach(currentPlayer -> {
                 writer.println("Player: " + currentPlayer.getName()
                                + ", Id: " + currentPlayer.getID()
                                + ", Posizione: " + currentPlayer.getCurrentPosition()
                                + ", Denaro: " + currentPlayer.getBankAccount().getBalance());
-            }
+            });
             writer.println("\n");
 
             if (writer.checkError()) {
