@@ -11,7 +11,7 @@ import app.player.impl.BailLogicImpl;
  */ 
 public final class BailView {
 
-    private BailLogic logic = new BailLogicImpl();
+    private final BailLogic logic = new BailLogicImpl();
     private boolean bailResult;
 
     /**
@@ -21,9 +21,9 @@ public final class BailView {
      * @return true if bail was successfully payed, otherwise false.
      */
     public boolean showMenuBail(final Player player) {
-        String message = "Would you like to pay " + BailLogicImpl.DEFAULT_PAYMENT 
+        final String message = "Would you like to pay " + BailLogicImpl.DEFAULT_PAYMENT 
             + "$ to go out of prison? You have " + player.getBankAccount().getBalance() + "$ on your BankAccount.";
-        int choice = JOptionPane.showConfirmDialog(null, message, "YOU ARE IN PRISON!", 
+        final int choice = JOptionPane.showConfirmDialog(null, message, "YOU ARE IN PRISON!", 
             JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (choice == JOptionPane.YES_OPTION) {
             if (logic.hasPayed(player)) {

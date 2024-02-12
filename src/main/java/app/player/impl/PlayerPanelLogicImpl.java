@@ -15,7 +15,7 @@ public final class PlayerPanelLogicImpl implements PlayerPanelLogic {
 
     private Player currentPlayer;
     private Card currentBox;
-    private PlayerPanelView panel;
+    private final PlayerPanelView panel;
     /**
      * Constructor.
      * @param currentPlayer
@@ -54,7 +54,7 @@ public final class PlayerPanelLogicImpl implements PlayerPanelLogic {
         panel.getPlayerID().setText(String.valueOf(this.currentPlayer.getID()));
         panel.getPlayerBoxes().setText(String.valueOf(this.currentPlayer.getBuyableOwned().size()));
         if (currentBox.isBuildable()) {
-            Optional<Integer> housesBuilt = this.currentPlayer.getHouseBuilt(CardAdapter.buildableAdapter(currentBox)); 
+            final Optional<Integer> housesBuilt = this.currentPlayer.getHouseBuilt(CardAdapter.buildableAdapter(currentBox)); 
             if (housesBuilt.isPresent()) {
                 panel.getPlayerHouses().setText(String.valueOf(housesBuilt.get()));
             } else {

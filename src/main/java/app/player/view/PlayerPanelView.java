@@ -24,6 +24,7 @@ import app.player.impl.PlayerPanelLogicImpl;
 public final class PlayerPanelView extends JPanel {
 
     private static final String TITLE = "PLAYER'S REPORT";
+    private static final long serialVersionUID = 1L;
     private static final int N_ROWS = 6;
     private static final int N_COLS = 2; 
     private static final int PROPORTION = 2; 

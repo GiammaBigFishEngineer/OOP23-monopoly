@@ -1,7 +1,7 @@
 package app.player.view;
 
 /**
- * ButtonsView.
+ * ButtonPanelView.
  */
 public class ButtonPanelView {
 
