@@ -17,6 +17,7 @@ public final class BailLogicImpl implements BailLogic {
     /**
      * {@inheritDoc}
      */
+    @Override
     public boolean hasPayed(final Player player) {
         if (!(player.getBankAccount().isPaymentAllowed(DEFAULT_PAYMENT))) {
             notPayed(player);
@@ -31,6 +32,7 @@ public final class BailLogicImpl implements BailLogic {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void notPayed(final Player player) {
         player.setInJail(true);
     }
