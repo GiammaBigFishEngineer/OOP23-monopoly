@@ -7,7 +7,7 @@ import app.game.model.MenuControllerImpl;
 import app.player.apii.Player;
 
 import java.awt.*;
-
+import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -80,7 +80,14 @@ public class MenuView extends JFrame {
 
                 if (controller.startGame(playersList)) {
                     JOptionPane.showMessageDialog(this, "Game loading success");
-                    new GameView(playersList);
+
+                    try {
+                        new GameView(playersList);
+                    } catch (IOException e1) {
+                        // TODO Auto-generated catch block
+                        e1.printStackTrace();
+                    }
+
                 } else {
                     JOptionPane.showMessageDialog(this, "Game loading error");
                 }

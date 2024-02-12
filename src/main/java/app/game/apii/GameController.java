@@ -14,7 +14,7 @@ public interface GameController {
     /**
      * Roll dice.
      */
-    void rollDice(Boolean b);
+    Map<BtnCodeEnum, Boolean> rollDice(Boolean b);
 
     /**
      * @param currentPlayer that want to buy the propriety.
@@ -30,11 +30,6 @@ public interface GameController {
      * @param currentPlayer that want to sell the propriety.
      */
     void sellPropriety(Player currentPlayer);
-
-    /**
-     * End turn.
-     */
-    void endTurn();
 
     /**
      * @param currentPlayer that need to pay the fees

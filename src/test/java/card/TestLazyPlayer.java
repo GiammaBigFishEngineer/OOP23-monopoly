@@ -15,26 +15,26 @@ final class TestLazyPlayer implements Player {
 
     private final BankAccount bankAccount = new BankAccount() {
 
-            private int balance = -1;
+        private int balance = -1;
 
-            @Override
-            public int getBalance() {
-                return this.balance;
-            }
+        @Override
+        public int getBalance() {
+            return this.balance;
+        }
 
-            @Override
-            public void payPlayer(final Player player, final int amount) {
-            }
+        @Override
+        public void payPlayer(final Player player, final int amount) {
+        }
 
-            @Override
-            public void receivePayment(final int amount) {
-                this.balance = this.balance + amount;
-            }
+        @Override
+        public void receivePayment(final int amount) {
+            this.balance = this.balance + amount;
+        }
 
-            @Override
-            public boolean isPaymentAllowed(final int amount) {
-                return true;
-            }
+        @Override
+        public boolean isPaymentAllowed(final int amount) {
+            return true;
+        }
     };
 
     @Override

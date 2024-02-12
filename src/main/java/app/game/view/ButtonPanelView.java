@@ -27,7 +27,7 @@ public class ButtonPanelView extends JPanel {
 
     public ButtonPanelView(List<Player> playersList, Observer obs) {
 
-        logic = new GameControllerImpl(null);
+        logic = new GameControllerImpl(playersList);
         logic.registerObserver(obs);
 
         btnCodeList = logic.newTurn();

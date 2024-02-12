@@ -83,7 +83,7 @@ public class GameControllerImpl implements GameController {
 
                     // finisce qui il suo turno
                     System.out.println("You didn't get the same result");
-                    endTurn();
+                    enableSingleButton(BtnCodeEnum.endTurn);
 
                 }
             }
@@ -92,12 +92,13 @@ public class GameControllerImpl implements GameController {
             // inizia il turno normalmente (il turno inizia semplicemente rendendo
             // clickabile solo il bottone dei dadi)
             enableSingleButton(BtnCodeEnum.rollDice);
+
         }
 
     }
 
     @Override
-    public void rollDice(Boolean b) {
+    public Map<BtnCodeEnum, Boolean> rollDice(Boolean b) {
 
         currentDice.roll();
 
@@ -112,8 +113,12 @@ public class GameControllerImpl implements GameController {
         }
 
         if (b) {
+            btnList.replace(BtnCodeEnum.rollDice, false);
             startTurn();
+
         }
+
+        return btnList;
 
     }
 
@@ -141,40 +146,50 @@ public class GameControllerImpl implements GameController {
 
     public void handleCard() {
 
-        // carte statiche
-
         if (currentCard.isUnbuyable()) {
 
             CardAdapter.unbuyableAdapter(currentCard).makeAction(currentPlayer);
 
-            // attivi endTurnBtn e sellHouseBtn
+            enableSingleButton(BtnCodeEnum.endTurn);
+            enableSingleButton(BtnCodeEnum.sellPropriety);
 
-        }
-
-        // proprietà
-
-        if (currentCard.isBuildable()) {
+        } else if (currentCard.isBuildable()) {
 
             Player owner = CardAdapter.buildableAdapter(currentCard).getOwner();
+            Boolean owned = CardAdapter.buildableAdapter(currentCard).isOwned();
 
-            if (currentPlayer.equals(owner)) {
-                // puoi costruire casa
+            if (owned) {
+
+                if (currentPlayer.equals(owner)) {
+
+                    enableSingleButton(BtnCodeEnum.buyHouse);
+
+                } else {
+                    // paga tassa
+                }
+
             } else {
+                enableSingleButton(BtnCodeEnum.buyPropriety);
 
-                // devi pagare la tassa
             }
 
-        }
+            enableSingleButton(BtnCodeEnum.endTurn);
 
-        // stazione
+        } else if (currentCard.isBuyable() && !currentCard.isBuildable()) {
 
-        if (currentCard.isBuyable() && !currentCard.isBuildable()) {
+            Player owner = CardAdapter.buyableAdapter(currentCard).getOwner();
+            Boolean owned = CardAdapter.buyableAdapter(currentCard).isOwned();
 
-            Player owner = CardAdapter.buildableAdapter(currentCard).getOwner();
+            if (owned) {
+                if (!currentPlayer.equals(owner)) {
+                    // paga tassa
+                }
+            } else {
+                enableSingleButton(BtnCodeEnum.buyPropriety);
 
-            if (!currentPlayer.equals(owner)) {
-                // devi pagare la tassa
             }
+
+            enableSingleButton(BtnCodeEnum.endTurn);
 
         }
 
@@ -199,11 +214,6 @@ public class GameControllerImpl implements GameController {
     }
 
     @Override
-    public void endTurn() {
-        newTurn();
-    }
-
-    @Override
     public void payFees(Player currentPlayer, Card box) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'payFees'");
@@ -223,7 +233,7 @@ public class GameControllerImpl implements GameController {
 
     public void enableSingleButton(BtnCodeEnum code) {
 
-        btnList.put(code, false);
+        btnList.replace(code, true);
 
     }
 
