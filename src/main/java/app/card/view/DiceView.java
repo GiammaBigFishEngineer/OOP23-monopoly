@@ -104,7 +104,7 @@ public class DiceView extends JPanel {
      * Rolls the dice, generating random numbers for each die and updating the result label.
      */
     public void roll() {
-        dice.roll();
+        dice.rollDice();
 
         dicePanel1.setResult(dice.getDie1Result());
         dicePanel2.setResult(dice.getDie2Result());

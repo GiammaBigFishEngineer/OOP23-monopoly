@@ -31,7 +31,7 @@ class DiceTest {
      */
     @Test
     void testResultDie1() {
-        dice.roll();
+        dice.rollDice();
         final int die1Result = dice.getDie1Result();
 
         assertTrue(die1Result >= MIN_NUMBER && die1Result <= MAX_NUMBER);
@@ -42,7 +42,7 @@ class DiceTest {
      */
     @Test
     void testResultDie2() {
-        dice.roll();
+        dice.rollDice();
         final int die2Result = dice.getDie2Result();
 
         assertTrue(die2Result >= MIN_NUMBER && die2Result <= MAX_NUMBER);
@@ -53,7 +53,7 @@ class DiceTest {
      */
     @Test
     void testDiceResult() {
-        dice.roll();
+        dice.rollDice();
         final int totalResult = dice.getDiceResult();
 
         assertTrue(totalResult >= MIN_RESULT && totalResult <= MAX_RESULT);
@@ -64,7 +64,7 @@ class DiceTest {
      */
     @Test
     void testRollAllResultWithCorrectValues() {
-        dice.roll();
+        dice.rollDice();
         final int die1Result = dice.getDie1Result();
         final int die2Result = dice.getDie2Result();
         final int totalResult = dice.getDiceResult();
@@ -82,7 +82,7 @@ class DiceTest {
     void testCorrectResultMultipleTimes() {
 
         for (int i = 0; i < 1000; i++) {
-            dice.roll();
+            dice.rollDice();
             final int totalResult = dice.getDiceResult();
 
             assertTrue(totalResult >= MIN_RESULT && totalResult <= MAX_RESULT);
@@ -96,7 +96,7 @@ class DiceTest {
      */
     @Test
     void testRollConsistency() {
-        dice.roll();
+        dice.rollDice();
         final int totalResult = dice.getDiceResult();
         final int sum = dice.getDie1Result() + dice.getDie2Result();
 

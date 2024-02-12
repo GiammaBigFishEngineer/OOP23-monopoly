@@ -28,7 +28,7 @@ public class Dice {
      * Simulates rolling the dice by generating random numbers for
      * each die and calculating the total result.
      */
-    public void roll() {
+    public void rollDice() {
         die1Result = randomNumber.nextInt(MAX_NUMBER) + 1;
         die2Result = randomNumber.nextInt(MAX_NUMBER) + 1;
         totalResult = die1Result + die2Result;
