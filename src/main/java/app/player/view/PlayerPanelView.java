@@ -30,7 +30,7 @@ public final class PlayerPanelView extends JPanel {
     private static final int PROPORTION = 2; 
     private static final int FONT_SIZE = 20;
 
-    private final PlayerPanelLogic logic;
+    private final transient PlayerPanelLogic logic;
 
     private final JLabel playerName = new JLabel(); 
     private final JLabel playerID = new JLabel(); 
