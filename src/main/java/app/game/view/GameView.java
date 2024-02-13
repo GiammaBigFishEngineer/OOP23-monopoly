@@ -43,6 +43,8 @@ public class GameView extends JFrame implements Observer {
 
         this.add(btnPanel, BorderLayout.SOUTH);
 
+        this.pack();
+
         setVisible(true);
 
     }

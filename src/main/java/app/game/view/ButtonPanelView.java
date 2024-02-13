@@ -9,6 +9,7 @@ import app.player.apii.Player;
 
 import app.card.apii.Card;
 
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.util.*;
 
@@ -34,13 +35,16 @@ public class ButtonPanelView extends JPanel {
         logic.registerObserver(obs);
 
         this.setLayout(new GridLayout(2, 3));
+        this.setBackground(Color.red);
 
         rollDice = new JButton("Roll Dice");
         this.add(rollDice);
         btnList.put(BtnCodeEnum.rollDice, rollDice);
 
         rollDice.addActionListener(e -> {
-            logic.rollDice(true);
+            btnCodeList.putAll(logic.rollDice(true));
+
+            changeButtonVisibility();
         });
 
         buyPropriety = new JButton("Buy Propriety");
@@ -67,7 +71,7 @@ public class ButtonPanelView extends JPanel {
 
         });
 
-        btnCodeList = logic.newTurn();
+        btnCodeList.putAll(logic.newTurn());
 
         changeButtonVisibility();
 

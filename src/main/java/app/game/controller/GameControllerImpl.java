@@ -29,7 +29,7 @@ public class GameControllerImpl implements GameController {
     private int res2;
     private int totalResult;
 
-    private Map<BtnCodeEnum, Boolean> btnList = new HashMap<>();
+    private Map<BtnCodeEnum, Boolean> btnList;
 
     private Observer observer;
 
@@ -42,6 +42,13 @@ public class GameControllerImpl implements GameController {
         this.cards.addAll(cardList);
 
         currentDice = new Dice();
+
+        btnList = new HashMap<>();
+        btnList.put(BtnCodeEnum.buyHouse, false);
+        btnList.put(BtnCodeEnum.buyPropriety, false);
+        btnList.put(BtnCodeEnum.endTurn, false);
+        btnList.put(BtnCodeEnum.rollDice, false);
+        btnList.put(BtnCodeEnum.sellPropriety, false);
     }
 
     /*
@@ -120,7 +127,7 @@ public class GameControllerImpl implements GameController {
         }
 
         if (b) {
-            btnList.replace(BtnCodeEnum.rollDice, false);
+            btnList.put(BtnCodeEnum.rollDice, false);
             startTurn();
 
         }
@@ -258,7 +265,7 @@ public class GameControllerImpl implements GameController {
 
     public void enableSingleButton(BtnCodeEnum code) {
 
-        btnList.replace(code, true);
+        btnList.put(code, true);
 
     }
 
