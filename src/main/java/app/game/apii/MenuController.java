@@ -13,7 +13,7 @@ public interface MenuController {
      * Starts a new game with the provided list of players.
      *
      * @param players the list of players participating in the game
-     * @return true if the game is successfully started, false otherwise
+     * @return {@code true} if the game is successfully started, {@code false} otherwise
      */
     boolean startGame(List<Player> players);
 
@@ -32,8 +32,10 @@ public interface MenuController {
 
     /**
      * Saves the current state of the game to a file.
+     * 
+     * @param gamePlayerList the list of player that needs to be saved
      */
-    void saveGame();
+    void saveGame(List<Player> gamePlayerList);
 
     /**
      * Displays the data of the saved games.
@@ -47,7 +49,8 @@ public interface MenuController {
      * The game should be saved if it is the first save or if there are changes in player positions or balances.
      * It is used to know when to save game data and, consequently, to create a summary of all game sessions.
      * 
-     * @return true if the game should be saved, false otherwise.
+     * @param gamePlayerList the list of players that must be saved if there are changes
+     * @return {@code true} if the game should be saved, {@code false} otherwise.
      */
-    boolean shouldSaveGame();
+    boolean shouldSaveGame(List<Player> gamePlayerList);
 }

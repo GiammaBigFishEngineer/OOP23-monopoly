@@ -174,7 +174,7 @@ class MenuTest {
     void testSaveGame() {
         final List<Player> players = createDummyPlayers(TWO_PLAYERS);
         assertTrue(menuController.startGame(players));
-        assertDoesNotThrow(() -> menuController.saveGame());
+        assertDoesNotThrow(() -> menuController.saveGame(players));
     }
 
     /**
@@ -188,7 +188,7 @@ class MenuTest {
         final Executable executable = new Executable() {
             @Override
             public void execute() throws Throwable {
-                menuController.saveGame();
+                menuController.saveGame(players);
             }
         };
 
@@ -202,18 +202,18 @@ class MenuTest {
     void testShouldSaveGame() {
         final List<Player> players = createDummyPlayers(TWO_PLAYERS);
         assertTrue(menuController.startGame(players));
-        assertTrue(menuController.shouldSaveGame());
+        assertTrue(menuController.shouldSaveGame(players));
 
-        menuController.saveGame();
-        assertFalse(menuController.shouldSaveGame());
+        menuController.saveGame(players);
+        assertFalse(menuController.shouldSaveGame(players));
 
         players.get(0).setPosition(DUMMY_POSITION);
-        assertTrue(menuController.shouldSaveGame());
-        menuController.saveGame();
+        assertTrue(menuController.shouldSaveGame(players));
+        menuController.saveGame(players);
 
         players.get(0).getBankAccount().setBalance(DUMMY_BALANCE);
-        assertTrue(menuController.shouldSaveGame());
-        menuController.saveGame();
+        assertTrue(menuController.shouldSaveGame(players));
+        menuController.saveGame(players);
     }
 
     /**
@@ -223,7 +223,7 @@ class MenuTest {
     void testViewSavedGames() {
         final List<Player> players = createDummyPlayers(THREE_PLAYERS);
         assertTrue(menuController.startGame(players));
-        menuController.saveGame();
+        menuController.saveGame(players);
         final List<String> savedGames = menuController.viewSavedGames();
         assertNotNull(savedGames);
         assertFalse(savedGames.isEmpty());

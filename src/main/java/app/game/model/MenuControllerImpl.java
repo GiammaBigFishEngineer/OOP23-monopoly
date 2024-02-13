@@ -28,7 +28,6 @@ import java.util.Set;
  * Implementation of MenuController with its logic.
  */
 public class MenuControllerImpl implements MenuController {
-    private List<Player> players;
     private boolean isFirstSave;
 
     private static final String FILE_NAME = "saved_games.txt";
@@ -38,18 +37,10 @@ public class MenuControllerImpl implements MenuController {
     private static final Logger LOGGER = Logger.getLogger(MenuControllerImpl.class.getName());
 
     /**
-     * Constructs a new MenuControllerImpl.
-     * This constructor is responsible for initializing the list of players for the game.
-     */
-    public MenuControllerImpl() {
-        this.players = new ArrayList<>();
-    }
-
-    /**
      * Start a new game with the provided list of players.
      * 
      * @param players the list of players participating in the game
-     * @return true if the game is successfully started, false otherwhise
+     * @return {@code true} if the game is successfully started, {@code false} otherwise
      */
     @Override
     public boolean startGame(final List<Player> players) {
@@ -57,7 +48,6 @@ public class MenuControllerImpl implements MenuController {
             return false;
         }
 
-        this.players = new ArrayList<>(players);
         this.isFirstSave = true;
         return true;
     }
@@ -82,7 +72,7 @@ public class MenuControllerImpl implements MenuController {
      */
     @Override
     public List<Player> insertPlayers(final List<String> currentPlayerNames) {
-        final List<Player> currentPlayers = new ArrayList<>();
+        final List<Player> playersList = new ArrayList<>();
         final Set<String> uniqueNames = new HashSet<>();
 
         for (int i = 0; i < currentPlayerNames.size(); i++) {
@@ -97,20 +87,25 @@ public class MenuControllerImpl implements MenuController {
             }
 
             final Player player = new PlayerImpl(i + 1, playerName);
-            currentPlayers.add(player);
+            playersList.add(player);
         }
 
-        this.players = new ArrayList<>(currentPlayers);
-        return currentPlayers;
+        return playersList;
     }
 
     /**
      * Saves the current state of the game to a file.
      */
     @Override
-    public void saveGame() {
+    public void saveGame(final List<Player> gamePlayerList) {
+        if (gamePlayerList == null 
+            || gamePlayerList.size() < MIN_NUM_PLAYER 
+            || gamePlayerList.size() > MAX_NUM_PLAYER) {
+                throw new IllegalStateException("Inserire un numero corretto di giocatori (da 2 a 5).");
+        }
+        final List<Player> players = new ArrayList<>(gamePlayerList);
         try {
-            if (players != null && !players.isEmpty() && shouldSaveGame()) {
+            if (!players.isEmpty() && shouldSaveGame(players)) {
                 saveGameToFile(players);
                 isFirstSave = false;
             } else {
@@ -126,22 +121,22 @@ public class MenuControllerImpl implements MenuController {
      * This method is designed for extension. So the subclass should provide additional logic for
      * deciding when the game should be saved.
      * 
-     * @return {@code true} if the game should be saved, otherwise {@code false}
+     * @return {@code true} if the game should be saved, {@code false} otherwise
      */
     @Override
-    public boolean shouldSaveGame() {
-        return isFirstSave || checkForChanges(players);
+    public boolean shouldSaveGame(final List<Player> playersList) {
+        return isFirstSave || checkForChanges(playersList);
     }
 
     /**
      * Checks for changes in the provided list of players.
      * 
      * @param players is the list of players to check
-     * @return {@code true} if there are changes in the player, otherwhise {@code false}
+     * @return {@code true} if there are changes in the player, {@code false} otherwise
      */
     private boolean checkForChanges(final List<Player> players) {
-        return players.stream().anyMatch(player -> 
-            player.hasPositionChanged() || player.getBankAccount().hasBalanceChanged());
+        return players.stream().anyMatch(player ->
+                player.hasPositionChanged() || player.getBankAccount().hasBalanceChanged());
     }
 
     private void saveGameToFile(final List<Player> players) throws IOException {
