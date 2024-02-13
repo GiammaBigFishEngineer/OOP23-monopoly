@@ -14,7 +14,7 @@ public interface GameController {
     /**
      * Roll dice.
      */
-    Map<BtnCodeEnum, Boolean> rollDice(Boolean b);
+    void rollDice(Boolean b);
 
     /**
      * @param currentPlayer that want to buy the propriety.
@@ -49,7 +49,15 @@ public interface GameController {
      */
     Card currentBox(Player currentPlayer);
 
-    void registerObserver(Observer obs);
+    Player newTurn();
 
-    Map<BtnCodeEnum, Boolean> newTurn();
+    Boolean isCurrentPlayerInJail();
+
+    void tryLuckyBail();
+
+    Map<BtnCodeEnum, Boolean> getBtnStatus();
+
+    void enableSingleButton(BtnCodeEnum code);
+
+    void disableSingleButton(BtnCodeEnum code);
 }

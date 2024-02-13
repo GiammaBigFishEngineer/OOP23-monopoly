@@ -20,7 +20,7 @@ import app.player.view.PlayerPanelView;
  */
 public class GameView extends JFrame implements Observer {
 
-    JPanel playerPanel;
+    PlayerPanelView playerPanel;
     JPanel btnPanel;
     TableView tablePanel;
 
@@ -50,10 +50,32 @@ public class GameView extends JFrame implements Observer {
     }
 
     @Override
-    public boolean update(Player currentPlayer) {
+    public boolean update(Player currentPlayer, String str) {
 
-        BailView bailMessage = new BailView();
-        return bailMessage.showMenuBail(currentPlayer);
+        Boolean bool = true;
+
+        switch (str) {
+            case "prison":
+                BailView bailMessage = new BailView();
+                bool = bailMessage.showMenuBail(currentPlayer);
+
+                break;
+
+            case "refreshPlayerPosition":
+
+                System.out.println("aggiorno posizione");
+
+                break;
+
+            case "refreshPlayerPanel":
+
+                System.out.println("aggiorno panel");
+
+                break;
+
+        }
+
+        return bool;
 
     }
 

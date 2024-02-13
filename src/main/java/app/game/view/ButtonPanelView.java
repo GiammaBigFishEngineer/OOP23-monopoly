@@ -29,10 +29,15 @@ public class ButtonPanelView extends JPanel {
     private JButton buyHouse;
     private JButton endTurn;
 
+    private Observer obs;
+
+    private Player currentPlayer;
+
     public ButtonPanelView(List<Player> playersList, List<Card> cardList, Observer obs) {
 
+        this.obs = obs;
+
         logic = new GameControllerImpl(playersList, cardList);
-        logic.registerObserver(obs);
 
         this.setLayout(new GridLayout(2, 3));
         this.setBackground(Color.lightGray);
@@ -42,9 +47,12 @@ public class ButtonPanelView extends JPanel {
         btnList.put(BtnCodeEnum.rollDice, rollDice);
 
         rollDice.addActionListener(e -> {
-            btnCodeList.putAll(logic.rollDice(true));
+            logic.rollDice(true);
+            btnCodeList.putAll(logic.getBtnStatus());
 
             changeButtonVisibility();
+
+            obs.update(currentPlayer, "refreshPlayerPosition");
         });
 
         buyPropriety = new JButton("Buy Propriety");
@@ -65,13 +73,35 @@ public class ButtonPanelView extends JPanel {
 
         endTurn.addActionListener(e -> {
 
-            btnCodeList = logic.newTurn();
-
-            changeButtonVisibility();
+            this.nextTurn();
 
         });
 
-        btnCodeList.putAll(logic.newTurn());
+        this.nextTurn();
+
+    }
+
+    public void nextTurn() {
+
+        currentPlayer = logic.newTurn();
+
+        obs.update(currentPlayer, "refreshPlayerPanel");
+
+        if (logic.isCurrentPlayerInJail()) {
+
+            if (obs.update(currentPlayer, "prison")) {
+
+                logic.enableSingleButton(BtnCodeEnum.rollDice);
+
+            } else {
+                logic.tryLuckyBail();
+            }
+
+        } else {
+            logic.enableSingleButton(BtnCodeEnum.rollDice);
+        }
+
+        btnCodeList.putAll(logic.getBtnStatus());
 
         changeButtonVisibility();
 

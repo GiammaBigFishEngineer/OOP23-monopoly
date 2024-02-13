@@ -31,8 +31,6 @@ public class GameControllerImpl implements GameController {
 
     private Map<BtnCodeEnum, Boolean> btnList;
 
-    private Observer observer;
-
     public GameControllerImpl(List<Player> playersList, List<Card> cardList) {
 
         players = new ArrayList<>();
@@ -56,63 +54,54 @@ public class GameControllerImpl implements GameController {
      * turn
      */
 
-    public Map<BtnCodeEnum, Boolean> newTurn() {
+    public Player newTurn() {
 
         this.disableAllBtn();
         this.nextPlayer();
-        this.checkPlayerState();
 
-        return btnList;
+        return currentPlayer;
 
+    }
+
+    public void nextPlayer() {
+
+        currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
+        currentPlayer = players.get(currentPlayerIndex);
+
+    }
+
+    public Boolean isCurrentPlayerInJail() {
+        return currentPlayer.isInJail();
     }
 
     // prima di iniziare il turno se il player è in prigione può decidere se pagare
     // o provare ad uscire con un doppio dado
 
-    public void checkPlayerState() {
+    public void tryLuckyBail() {
 
-        if (currentPlayer.isInJail()) {
+        // se non paga la cauzione prova a tirare il dado
 
-            boolean result = observer.update(currentPlayer);
+        rollDice(false);
 
-            if (result) {
+        if (doubleDice) {
 
-                // ha pagato ed è uscito di prigione
-                enableSingleButton(BtnCodeEnum.rollDice);
-
-            } else {
-
-                // se non paga la cauzione prova a tirare il dado
-
-                rollDice(false);
-
-                if (doubleDice) {
-
-                    // inizia il turno del player corrente
-                    System.out.println("You get the same result");
-                    currentPlayer.setInJail(false);
-                    enableSingleButton(BtnCodeEnum.rollDice);
-
-                } else {
-
-                    // finisce qui il suo turno
-                    System.out.println("You didn't get the same result");
-                    enableSingleButton(BtnCodeEnum.endTurn);
-
-                }
-            }
+            // inizia il turno del player corrente
+            System.out.println("You get the same result");
+            currentPlayer.setInJail(false);
+            enableSingleButton(BtnCodeEnum.rollDice);
 
         } else {
-            // inizia il turno normalmente (il turno inizia semplicemente rendendo
-            // clickabile solo il bottone dei dadi)
-            enableSingleButton(BtnCodeEnum.rollDice);
+
+            // finisce qui il suo turno
+            System.out.println("You didn't get the same result");
+            enableSingleButton(BtnCodeEnum.endTurn);
 
         }
 
     }
 
     @Override
-    public Map<BtnCodeEnum, Boolean> rollDice(Boolean b) {
+    public void rollDice(Boolean b) {
 
         currentDice.roll();
 
@@ -132,13 +121,7 @@ public class GameControllerImpl implements GameController {
 
         }
 
-        return btnList;
-
     }
-
-    /*
-     * 
-     */
 
     public void startTurn() {
 
@@ -160,13 +143,6 @@ public class GameControllerImpl implements GameController {
         currentCard = cards.get(currentCardIndex);
 
         handleCard();
-
-    }
-
-    public void nextPlayer() {
-
-        currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
-        currentPlayer = players.get(currentPlayerIndex);
 
     }
 
@@ -284,7 +260,8 @@ public class GameControllerImpl implements GameController {
 
     }
 
-    public void registerObserver(Observer obs) {
-        this.observer = obs;
+    public Map<BtnCodeEnum, Boolean> getBtnStatus() {
+        return btnList;
     }
+
 }
