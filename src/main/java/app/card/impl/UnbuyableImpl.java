@@ -19,7 +19,6 @@ public final class UnbuyableImpl implements Unbuyable {
      * protected for be used only in factory.
      * @param card
      * @param staticAction
-     * @param myAmount
      */
     protected UnbuyableImpl(final Card card, final StaticActionStrategy staticAction) {
         this.card = card;

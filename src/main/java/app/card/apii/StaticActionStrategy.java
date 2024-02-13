@@ -14,7 +14,6 @@ public interface StaticActionStrategy {
     /**
      * 
      * @param player who get the action
-     * @param amount is the amount of action
      * @return an empty optional if the action is not unforseen
      */
     Optional<Unforseen> myAction(Player player);

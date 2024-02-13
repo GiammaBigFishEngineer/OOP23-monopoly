@@ -4,7 +4,8 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * A box factory.
+ * Generate differents type of Card.
+ * This is a Factory Method Pattern
  */
 public interface CardFactory {
 

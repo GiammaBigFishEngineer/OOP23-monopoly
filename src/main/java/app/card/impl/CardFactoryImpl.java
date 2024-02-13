@@ -143,7 +143,7 @@ public final class CardFactoryImpl implements CardFactory {
     /**
      * @param card is the Card base
      * @param action is the name of action to call
-     * @param myAmount is the argument passed to function called
+     * @param amount is the amount passed to function called
      * @return a Card unbuyable with no price but a with optional static action to call on players
      */
     @Override
@@ -184,9 +184,10 @@ public final class CardFactoryImpl implements CardFactory {
                     return Optional.of(myUnforseen);
                 };
             }
-            case "" -> staticAction = (player) -> Optional.empty();
+            case "" -> { 
+                staticAction = (player) -> Optional.empty();
+            }
             default -> throw new IllegalArgumentException("The action read isn't an action of the game: " + action);
-                
         }
         return new UnbuyableImpl(card, staticAction);
     }

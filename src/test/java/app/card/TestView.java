@@ -18,7 +18,7 @@ final class TestView {
      * @param args
      * @throws java.io.IOException
      */
-    public static void main(final String[] args) throws java.io.IOException {
+    public static void run(final String[] args) throws java.io.IOException {
         final int size = 250;
         final int side = 7;
         final int buildable = 7;
