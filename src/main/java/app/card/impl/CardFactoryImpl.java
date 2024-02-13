@@ -3,6 +3,8 @@ package app.card.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.Random;
 import java.io.IOException;
 import java.net.URL;
 
@@ -10,6 +12,7 @@ import app.card.apii.Buildable;
 import app.card.apii.Buyable;
 import app.card.apii.Card;
 import app.card.apii.CardFactory;
+import app.card.apii.StaticActionStrategy;
 import app.card.apii.Unbuyable;
 import app.card.utils.JsonReader;
 import app.card.utils.UseGetResource;
@@ -144,8 +147,48 @@ public final class CardFactoryImpl implements CardFactory {
      * @return a Card unbuyable with no price but a with optional static action to call on players
      */
     @Override
-    public Unbuyable createStaticCard(final Card card, final String action, final int myAmount) {
-        return new UnbuyableImpl(card, action, myAmount);
+    public Unbuyable createStaticCard(final Card card, final String action, final int amount) {
+        final StaticActionStrategy staticAction;
+        switch (action) {
+            case "giveMoneyPlayer" -> {
+                staticAction = (player) -> {
+                    if (player != null) {
+                        player.getBankAccount().receivePayment(amount);
+                    }
+                    return Optional.empty();
+                };
+            }
+            case "payPlayer" -> {
+                staticAction = (player) -> {
+                    if (player != null) {
+                        player.getBankAccount().payPlayer(null, amount);
+                    }
+                    return Optional.empty();
+                };
+            }
+            case "movePlayer" -> {
+                staticAction = (player) -> {
+                    if (player != null) {
+                        player.setPosition(amount);
+                    }
+                    return Optional.empty();
+                };
+            }
+            case "unforseen" -> {
+                staticAction = (player) -> {
+                    final Random random = new Random();
+                    final int unforseenSize = 14;
+                    final var extraction = random.nextInt(unforseenSize);
+                    final var myUnforseen = Unforseen.valueOf((String) "U" + extraction);
+                    myUnforseen.getCard().makeAction(player);
+                    return Optional.of(myUnforseen);
+                };
+            }
+            case "" -> staticAction = (player) -> Optional.empty();
+            default -> throw new IllegalArgumentException("The action read isn't an action of the game: " + action);
+                
+        }
+        return new UnbuyableImpl(card, staticAction);
     }
 
 }
