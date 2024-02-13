@@ -142,6 +142,10 @@ public class GameControllerImpl implements GameController {
 
         currentCard = cards.get(currentCardIndex);
 
+        if (currentCard.getName().equals("vai in prigione")) {
+            System.out.println(currentPlayer.getName() + "You are in " + currentCard.getName());
+        }
+
         handleCard();
 
     }

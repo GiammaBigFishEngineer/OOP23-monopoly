@@ -53,6 +53,7 @@ public class ButtonPanelView extends JPanel {
 
             changeButtonVisibility();
 
+            obs.update(currentPlayer, "rollDice");
             obs.update(currentPlayer, "refreshPlayerPosition");
         });
 
@@ -93,7 +94,7 @@ public class ButtonPanelView extends JPanel {
 
         if (logic.isCurrentPlayerInJail()) {
 
-            if (obs.update(currentPlayer, "prison")) {
+            if (obs.update(currentPlayer, "bail")) {
 
                 logic.enableSingleButton(BtnCodeEnum.rollDice);
 

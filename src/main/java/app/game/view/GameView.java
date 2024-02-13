@@ -24,6 +24,8 @@ public class GameView extends JFrame implements Observer {
     JPanel btnPanel;
     TableView tablePanel;
 
+    GameMessage popUp;
+
     public GameView(List<Player> playersList) throws IOException {
 
         setLayout(new BorderLayout());
@@ -41,6 +43,8 @@ public class GameView extends JFrame implements Observer {
 
         btnPanel = new ButtonPanelView(playersList, cardList, this);
 
+        popUp = new GameMessage();
+
         this.add(btnPanel, BorderLayout.SOUTH);
 
         this.pack();
@@ -52,12 +56,12 @@ public class GameView extends JFrame implements Observer {
     @Override
     public boolean update(Player currentPlayer, String str) {
 
-        Boolean bool = true;
+        Boolean bool = false;
 
         switch (str) {
-            case "prison":
+            case "bail":
                 BailView bailMessage = new BailView();
-                bool = bailMessage.showMenuBail(currentPlayer);
+                bool = bailMessage.showMenuBail(currentPlayer, this);
 
                 break;
 
@@ -71,6 +75,11 @@ public class GameView extends JFrame implements Observer {
 
                 System.out.println("aggiorno panel");
 
+                break;
+
+            case "rollDice":
+
+                popUp.rollDice(this);
                 break;
 
         }
