@@ -28,6 +28,7 @@ public class ButtonPanelView extends JPanel {
     private JButton sellPropriety;
     private JButton buyHouse;
     private JButton endTurn;
+    private JButton saveGame;
 
     private Observer obs;
 
@@ -76,6 +77,9 @@ public class ButtonPanelView extends JPanel {
             this.nextTurn();
 
         });
+
+        saveGame = new JButton("Save Game");
+        this.add(saveGame);
 
         this.nextTurn();
 

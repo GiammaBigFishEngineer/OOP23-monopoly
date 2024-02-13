@@ -166,6 +166,7 @@ public class GameControllerImpl implements GameController {
                 if (currentPlayer.equals(owner)) {
 
                     enableSingleButton(BtnCodeEnum.buyHouse);
+                    enableSingleButton(BtnCodeEnum.sellPropriety);
 
                 } else {
                     payFees(owner);
@@ -186,7 +187,10 @@ public class GameControllerImpl implements GameController {
 
                 if (!currentPlayer.equals(owner)) {
                     payFees(owner);
+                } else {
+                    enableSingleButton(BtnCodeEnum.sellPropriety);
                 }
+
             } else {
                 enableSingleButton(BtnCodeEnum.buyPropriety);
 
@@ -216,8 +220,7 @@ public class GameControllerImpl implements GameController {
 
     @Override
     public void sellPropriety() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'sellPropriety'");
+        currentPlayer.sellBuyable(CardAdapter.buyableAdapter(currentCard));
     }
 
     @Override
