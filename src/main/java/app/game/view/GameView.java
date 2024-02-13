@@ -29,6 +29,7 @@ public class GameView extends JFrame implements Observer {
     public GameView(List<Player> playersList) throws IOException {
 
         setLayout(new BorderLayout());
+
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         playerPanel = new PlayerPanelView(null, null);
@@ -47,7 +48,16 @@ public class GameView extends JFrame implements Observer {
 
         this.add(btnPanel, BorderLayout.SOUTH);
 
+        JPanel bar1 = new JPanel();
+        bar1.setBackground(Color.lightGray);
+        this.add(bar1, BorderLayout.EAST);
+
+        JPanel bar2 = new JPanel();
+        bar2.setBackground(Color.lightGray);
+        this.add(bar2, BorderLayout.WEST);
+
         this.pack();
+        this.setMinimumSize(new Dimension(700, 700));
 
         setVisible(true);
 

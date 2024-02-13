@@ -19,7 +19,6 @@ public class MenuView extends JFrame {
     private JButton optionButton;
     private JLabel titleLabel;
     private JLabel subtitleLabel;
-    private JTextField textField;
 
     final Dimension screen;
     final int screenWidth;
@@ -154,13 +153,6 @@ public class MenuView extends JFrame {
         gbc.gridy = 1;
 
         this.add(subtitleLabel, gbc);
-
-        textField = new JTextField("Insert Player Name");
-
-        gbc.gridx = 2;
-        gbc.gridy = 1;
-
-        this.add(textField, gbc);
 
         /*
          * Setting the timension of the frame
