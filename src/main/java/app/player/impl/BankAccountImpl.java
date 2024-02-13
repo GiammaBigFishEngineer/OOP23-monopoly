@@ -79,5 +79,4 @@ public final class BankAccountImpl implements BankAccount {
     public boolean isPaymentAllowed(final int amount) {
         return this.balance >= amount;
     }
-
 }

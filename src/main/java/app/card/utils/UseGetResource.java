@@ -1,6 +1,5 @@
 package app.card.utils;
 
-import java.io.File;
 import java.net.URL;
 
 /**
@@ -8,8 +7,7 @@ import java.net.URL;
  */
 public final class UseGetResource {
 
-    private static final String SEP = File.separator;
-    private static final String ROOT = "app" + SEP + "card" + SEP;
+    private static final String ROOT = "app/card/";
 
     private UseGetResource() { }
 

@@ -3,7 +3,6 @@ package app.card.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
@@ -27,8 +26,7 @@ public final class CardFactoryImpl implements CardFactory {
     @Override
     public List<Card> cardsInitializer() throws IOException {
         final var allCards = new ArrayList<Card>();
-        final String sep = File.separator;
-        final URL url = Objects.requireNonNull(UseGetResource.loadResource("list" + sep + "cardList.json"));
+        final URL url = Objects.requireNonNull(UseGetResource.loadResource("list/cardList.json"));
         final var jsonList = JsonReader.readJson(url);
         jsonList.forEach(i -> {
             final var type = i.getString("tipology");
