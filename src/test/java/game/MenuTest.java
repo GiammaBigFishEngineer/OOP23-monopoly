@@ -34,6 +34,7 @@ class MenuTest {
     private static final int FIVE_PLAYERS = 5;
     private static final int SIX_PLAYERS = 6;
     private static final int DUMMY_BALANCE = 1000;
+    private static final int INITIAL_AMOUNT = 1500;
     private static final int DUMMY_POSITION = 22;
 
     /**
@@ -237,7 +238,7 @@ class MenuTest {
     private List<Player> createDummyPlayers(final int numPlayers) {
         final List<Player> players = new ArrayList<>();
         for (int i = 0; i < numPlayers; i++) {
-            players.add(new PlayerImpl(i + 1, DUMMY_PLAYER + i));
+            players.add(new PlayerImpl(DUMMY_PLAYER + i, i + 1, new ArrayList<>(), INITIAL_AMOUNT));
         }
         return players;
     }

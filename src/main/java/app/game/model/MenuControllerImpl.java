@@ -35,6 +35,7 @@ public class MenuControllerImpl implements MenuController {
     private static final int MIN_NUM_PLAYER = 2;
     private static final int MAX_NUM_PLAYER = 5;
     private static final Logger LOGGER = Logger.getLogger(MenuControllerImpl.class.getName());
+    private static final int INITIAL_AMOUNT = 1500;
 
     /**
      * Start a new game with the provided list of players.
@@ -86,7 +87,7 @@ public class MenuControllerImpl implements MenuController {
                 return new ArrayList<>();
             }
 
-            final Player player = new PlayerImpl(i + 1, playerName);
+            final Player player = new PlayerImpl(playerName, i + 1, new ArrayList<>(), INITIAL_AMOUNT);
             playersList.add(player);
         }
 
