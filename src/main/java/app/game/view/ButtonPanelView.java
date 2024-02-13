@@ -9,6 +9,7 @@ import app.player.apii.Player;
 
 import app.card.apii.Card;
 
+import java.awt.GridLayout;
 import java.util.*;
 
 /**
@@ -32,9 +33,7 @@ public class ButtonPanelView extends JPanel {
         logic = new GameControllerImpl(playersList, cardList);
         logic.registerObserver(obs);
 
-        btnCodeList = logic.newTurn();
-
-        changeButtonVisibility();
+        this.setLayout(new GridLayout(2, 3));
 
         rollDice = new JButton("Roll Dice");
         this.add(rollDice);
@@ -67,6 +66,10 @@ public class ButtonPanelView extends JPanel {
             changeButtonVisibility();
 
         });
+
+        btnCodeList = logic.newTurn();
+
+        changeButtonVisibility();
 
     }
 

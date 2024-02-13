@@ -1,7 +1,8 @@
 package app.game.view;
 
 import java.io.IOException;
-import java.util.*;
+import java.awt.*;
+import java.util.List;
 
 import app.card.apii.Card;
 import javax.swing.*;
@@ -25,15 +26,23 @@ public class GameView extends JFrame implements Observer {
 
     public GameView(List<Player> playersList) throws IOException {
 
+        setLayout(new BorderLayout());
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+
         playerPanel = new PlayerPanelView();
 
-        tablePanel = new TableView(10);
+        this.add(playerPanel, BorderLayout.NORTH);
+
+        tablePanel = new TableView(7);
+
+        this.add(tablePanel, BorderLayout.CENTER);
 
         List<Card> cardList = tablePanel.getCardList();
 
         btnPanel = new ButtonPanelView(playersList, cardList, this);
 
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.add(btnPanel, BorderLayout.SOUTH);
+
         setVisible(true);
 
     }
