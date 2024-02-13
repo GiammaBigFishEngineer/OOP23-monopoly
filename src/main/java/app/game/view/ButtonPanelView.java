@@ -20,7 +20,7 @@ public class ButtonPanelView extends JPanel {
 
     private GameController logic;
 
-    private Map<BtnCodeEnum, Boolean> btnCodeList;
+    private Map<BtnCodeEnum, Boolean> btnCodeList = new HashMap<>();
     private Map<BtnCodeEnum, JButton> btnList = new HashMap<>();
 
     private JButton rollDice;
@@ -35,7 +35,7 @@ public class ButtonPanelView extends JPanel {
         logic.registerObserver(obs);
 
         this.setLayout(new GridLayout(2, 3));
-        this.setBackground(Color.red);
+        this.setBackground(Color.lightGray);
 
         rollDice = new JButton("Roll Dice");
         this.add(rollDice);

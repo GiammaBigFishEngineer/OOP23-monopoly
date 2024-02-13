@@ -19,23 +19,23 @@ public interface GameController {
     /**
      * @param currentPlayer that want to buy the propriety.
      */
-    void buyPropriety(Player currentPlayer);
+    void buyPropriety();
 
     /**
      * @param currentPlayer that want to build an house.
      */
-    void buildHouse(Player currentPlayer);
+    void buildHouse();
 
     /**
      * @param currentPlayer that want to sell the propriety.
      */
-    void sellPropriety(Player currentPlayer);
+    void sellPropriety();
 
     /**
      * @param currentPlayer that need to pay the fees
      * @param box           of the player who is to receive the money
      */
-    void payFees(Player currentPlayer, Card box);
+    void payFees(Player owner);
 
     /**
      * @param currentPlayer

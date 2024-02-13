@@ -50,9 +50,13 @@ public final class PlayerImpl implements Player {
         this.map = new HashMap<>();
         this.currentPosition = 0;
         this.isInJail = false;
-        for (final Card box : cards) {
-            this.map.put(box, Optional.empty());
+        if (cards != null) {
+            for (final Card box : cards) {
+                this.map.put(box, Optional.empty());
+            }
+
         }
+
         this.account = new BankAccountImpl(initialAmount);
     }
 

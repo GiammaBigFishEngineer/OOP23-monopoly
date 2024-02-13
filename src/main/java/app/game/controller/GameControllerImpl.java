@@ -179,9 +179,6 @@ public class GameControllerImpl implements GameController {
 
             CardAdapter.unbuyableAdapter(currentCard).makeAction(currentPlayer);
 
-            enableSingleButton(BtnCodeEnum.endTurn);
-            enableSingleButton(BtnCodeEnum.sellPropriety);
-
         } else if (currentCard.isBuildable()) {
 
             Boolean owned = CardAdapter.buildableAdapter(currentCard).isOwned();
@@ -195,15 +192,13 @@ public class GameControllerImpl implements GameController {
                     enableSingleButton(BtnCodeEnum.buyHouse);
 
                 } else {
-                    // paga tassa
+                    payFees(owner);
                 }
 
             } else {
                 enableSingleButton(BtnCodeEnum.buyPropriety);
 
             }
-
-            enableSingleButton(BtnCodeEnum.endTurn);
 
         } else if (currentCard.isBuyable() && !currentCard.isBuildable()) {
 
@@ -214,41 +209,47 @@ public class GameControllerImpl implements GameController {
                 Player owner = CardAdapter.buyableAdapter(currentCard).getOwner();
 
                 if (!currentPlayer.equals(owner)) {
-                    // paga tassa
+                    payFees(owner);
                 }
             } else {
                 enableSingleButton(BtnCodeEnum.buyPropriety);
 
             }
 
-            enableSingleButton(BtnCodeEnum.endTurn);
-
         }
 
+        enableSingleButton(BtnCodeEnum.endTurn);
+
     }
 
     @Override
-    public void buyPropriety(Player currentPlayer) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'buyPropriety'");
+    public void buyPropriety() {
+
+        currentPlayer.buyBox(CardAdapter.buyableAdapter(currentCard));
+        disableSingleButton(BtnCodeEnum.buyPropriety);
+
     }
 
     @Override
-    public void buildHouse(Player currentPlayer) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'buildHouse'");
+    public void buildHouse() {
+
+        currentPlayer.buildHouse(CardAdapter.buildableAdapter(currentCard));
+        disableSingleButton(BtnCodeEnum.buyHouse);
+
     }
 
     @Override
-    public void sellPropriety(Player currentPlayer) {
+    public void sellPropriety() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'sellPropriety'");
     }
 
     @Override
-    public void payFees(Player currentPlayer, Card box) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'payFees'");
+    public void payFees(Player owner) {
+
+        int fees = CardAdapter.buyableAdapter(currentCard).getTransitFees();
+        currentPlayer.getBankAccount().payPlayer(owner, fees);
+
     }
 
     @Override
@@ -266,6 +267,12 @@ public class GameControllerImpl implements GameController {
     public void enableSingleButton(BtnCodeEnum code) {
 
         btnList.put(code, true);
+
+    }
+
+    public void disableSingleButton(BtnCodeEnum code) {
+
+        btnList.put(code, false);
 
     }
 

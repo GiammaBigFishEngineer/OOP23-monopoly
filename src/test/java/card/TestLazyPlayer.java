@@ -14,100 +14,28 @@ import java.util.Optional;
  */
 final class TestLazyPlayer implements Player {
 
-    private int position = -1;
-
-    private final BankAccount bankAccount = new BankAccount() {
-
-        private int balance = -1;
-
-        @Override
-        public int getBalance() {
-            return this.balance;
-        }
-
-        @Override
-        public void payPlayer(final Player player, final int amount) {
-        }
-
-        @Override
-        public void receivePayment(final int amount) {
-            this.balance = this.balance + amount;
-        }
-
-        @Override
-        public boolean isPaymentAllowed(final int amount) {
-            return true;
-        }
-
-        @Override
-        public void setBalance(int balance) {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'setBalance'");
-        }
-
-        @Override
-        public boolean hasBalanceChanged() {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'hasBalanceChanged'");
-        }
-    };
-
     @Override
     public int getCurrentPosition() {
-        return this.position;
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getCurrentPosition'");
     }
 
     @Override
-    public String getName() {
-        return "test";
-    }
-
-    @Override
-    public int getId() {
-        return 0;
-    }
-
-    @Override
-    public int getNumberStationOwned() {
-        return 0;
-    }
-
-    @Override
-    public BankAccount getBankAccount() {
-        return this.bankAccount;
-    }
-
-    @Override
-    public List<Buyable> getBuildableOwned() {
-        return List.of();
-    }
-
-    @Override
-    public void setPosition(final int position) {
-        this.position = position;
-    }
-
-    @Override
-    public void buyBox(final Buyable box) {
-    }
-
-    @Override
-    public void buildHouse(final Buildable box) {
-    }
-
-    @Override
-    public void sellBuyable(final Buyable box) {
-    }
-
-    @Override
-    public int getHouseBuilt(final Buildable built) {
-        return 0;
+    public void setPosition(int position) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setPosition'");
     }
 
     @Override
     public boolean hasPositionChanged() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'hasPositionChanged'");
+    }
+
+    @Override
+    public String getName() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getName'");
     }
 
     @Override
@@ -135,9 +63,51 @@ final class TestLazyPlayer implements Player {
     }
 
     @Override
+    public BankAccount getBankAccount() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getBankAccount'");
+    }
+
+    @Override
     public List<Buyable> getBuyableOwned() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getBuyableOwned'");
+    }
+
+    @Override
+    public List<Buildable> getBuildableOwned() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getBuildableOwned'");
+    }
+
+    @Override
+    public Optional<Integer> getHouseBuilt(Buildable built) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getHouseBuilt'");
+    }
+
+    @Override
+    public int getNumberStationOwned() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getNumberStationOwned'");
+    }
+
+    @Override
+    public void buyBox(Buyable box) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'buyBox'");
+    }
+
+    @Override
+    public void buildHouse(Buildable box) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'buildHouse'");
+    }
+
+    @Override
+    public void sellBuyable(Buyable box) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'sellBuyable'");
     }
 
 }
