@@ -29,7 +29,7 @@ public class GameView extends JFrame implements Observer {
         setLayout(new BorderLayout());
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        playerPanel = new PlayerPanelView();
+        playerPanel = new PlayerPanelView(null, null);
 
         this.add(playerPanel, BorderLayout.NORTH);
 

@@ -10,13 +10,14 @@ import app.player.apii.Player;
 public final class BailLogicImpl implements BailLogic {
 
     /**
-     * Constant vlaue of a default payment.
+     * Constant value for a default payment.
      */
     public static final int DEFAULT_PAYMENT = 100;
 
     /**
      * {@inheritDoc}
      */
+    @Override
     public boolean hasPayed(final Player player) {
         if (!(player.getBankAccount().isPaymentAllowed(DEFAULT_PAYMENT))) {
             notPayed(player);
@@ -31,6 +32,7 @@ public final class BailLogicImpl implements BailLogic {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void notPayed(final Player player) {
         player.setInJail(true);
     }

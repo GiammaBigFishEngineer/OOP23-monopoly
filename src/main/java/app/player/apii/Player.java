@@ -1,10 +1,13 @@
 package app.player.apii;
 
-import app.card.apii.Buildable;
-import app.card.apii.Buyable;
-
 import java.util.List;
 import java.util.Optional;
+
+import app.card.apii.Buildable;
+import app.card.apii.Buyable;
+import app.card.apii.Card;
+
+import java.util.Map;
 
 /**
  * Interface which models a Player.
@@ -37,6 +40,12 @@ public interface Player {
     int getID();
 
     /**
+     * @return player's map which indicates the proprieties he owns
+     *         and the number of houses built on a Card.
+     */
+    Map<Card, Optional<Integer>> getMap();
+
+    /**
      * @return a boolean which indicates if a player is in jail
      */
     boolean isInJail();
@@ -47,7 +56,7 @@ public interface Player {
     void setInJail(boolean isInJail);
 
     /**
-     * @return information about the player's bankAccount
+     * @return player's bankAccount
      */
     BankAccount getBankAccount();
 
@@ -69,23 +78,22 @@ public interface Player {
     Optional<Integer> getHouseBuilt(Buildable built);
 
     /**
-     * @return number of Stations owned by the current player
+     * @param box
      */
     int getNumberStationOwned();
 
     /**
-     * @param box
+     * @param box whose type is Buyable
      */
     void buyBox(Buyable box);
 
     /**
-     * @param box
-     * @throws IllegalArgumentException
+     * @param box whose type is Buildable
      */
-    void buildHouse(Buildable box) throws IllegalArgumentException;
+    void buildHouse(Buildable box);
 
     /**
-     * @param box
+     * @param box whose type is Buyable
      */
     void sellBuyable(Buyable box);
 }

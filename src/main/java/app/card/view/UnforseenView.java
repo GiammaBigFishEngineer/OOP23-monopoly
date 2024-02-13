@@ -10,7 +10,7 @@ import app.card.impl.Unforseen;
  */
 public class UnforseenView extends JPanel {
 
-    private static final long serialVersionUID = 2298666777798069846L;
+    private static final long serialVersionUID = 4L;
 
     /**
      * @param card is the unforseen extracted

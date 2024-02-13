@@ -9,6 +9,7 @@ import java.util.Optional;
 import app.card.apii.Buildable;
 import app.card.apii.Buyable;
 import app.card.apii.Card;
+import app.card.apii.CardAdapter;
 import app.player.apii.BankAccount;
 import app.player.apii.Player;
 
@@ -25,11 +26,11 @@ public final class PlayerImpl implements Player {
      * if that box is already owned by the current player
      * and the number of houses built on that box.
      */
-    private Map<Card, Optional<Integer>> map;
+    private final Map<Card, Optional<Integer>> map;
     private int currentPosition;
-    private String name;
-    private int id;
-    private BankAccount account;
+    private final String name;
+    private final int id;
+    private final BankAccount account;
     private boolean isInJail;
     private boolean positionChanged;
 
@@ -48,7 +49,8 @@ public final class PlayerImpl implements Player {
         this.id = id;
         this.map = new HashMap<>();
         this.currentPosition = 0;
-        for (Card box : cards) {
+        this.isInJail = false;
+        for (final Card box : cards) {
             this.map.put(box, Optional.empty());
         }
         this.account = new BankAccountImpl(initialAmount);
@@ -68,7 +70,7 @@ public final class PlayerImpl implements Player {
     @Override
     public void setPosition(final int position) {
         this.currentPosition = position;
-        positionChanged = true;
+        this.positionChanged = true;
     }
 
     /**
@@ -76,7 +78,7 @@ public final class PlayerImpl implements Player {
      */
     @Override
     public boolean hasPositionChanged() {
-        return positionChanged;
+        return this.positionChanged;
     }
 
     /**
@@ -99,8 +101,16 @@ public final class PlayerImpl implements Player {
      * {@inheritDoc}
      */
     @Override
+    public Map<Card, Optional<Integer>> getMap() {
+        return this.map;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public boolean isInJail() {
-        return false;
+        return this.isInJail;
     }
 
     /**
@@ -124,11 +134,10 @@ public final class PlayerImpl implements Player {
      */
     @Override
     public List<Buyable> getBuyableOwned() {
-        List<Buyable> buyableOwned = new LinkedList<>();
-        for (Card box : map.keySet()) {
+        final List<Buyable> buyableOwned = new LinkedList<>();
+        for (final Card box : map.keySet()) {
             if (map.get(box).isPresent() && box.isBuyable()) {
-                // cast eseguibile perché ho appena controllato che la Card sia di tipo Buyable
-                buyableOwned.add((Buyable) box);
+                buyableOwned.add(CardAdapter.buyableAdapter(box));
             }
         }
         return buyableOwned;
@@ -139,12 +148,10 @@ public final class PlayerImpl implements Player {
      */
     @Override
     public List<Buildable> getBuildableOwned() {
-        List<Buildable> buildableOwned = new LinkedList<>();
-        for (Card box : map.keySet()) {
+        final List<Buildable> buildableOwned = new LinkedList<>();
+        for (final Card box : map.keySet()) {
             if (map.get(box).isPresent() && box.isBuildable()) {
-                // cast eseguibile perché ho appena controllato che la Card sia di tipo
-                // Buildable
-                buildableOwned.add((Buildable) box);
+                buildableOwned.add(CardAdapter.buildableAdapter(box));
             }
         }
         return buildableOwned;
@@ -167,8 +174,8 @@ public final class PlayerImpl implements Player {
     @Override
     public int getNumberStationOwned() {
         int cont = 0;
-        for (Card box : map.keySet()) {
-            if (map.get(box).isPresent() && (box.isBuyable() && !box.isBuildable())) {
+        for (final Card box : map.keySet()) {
+            if (map.get(box).isPresent() && box.isBuyable() && !box.isBuildable()) {
                 cont += 1;
             }
         }
@@ -180,7 +187,7 @@ public final class PlayerImpl implements Player {
      */
     @Override
     public void buyBox(final Buyable box) {
-        Card castBuyable = (Card) box;
+        final Card castBuyable = (Card) box;
         if (map.get(castBuyable).isPresent()) {
             return;
         }
@@ -192,8 +199,8 @@ public final class PlayerImpl implements Player {
      * {@inheritDoc}
      */
     @Override
-    public void buildHouse(final Buildable box) throws IllegalArgumentException {
-        Card castBuildable = (Card) box;
+    public void buildHouse(final Buildable box) {
+        final Card castBuildable = (Card) box;
         if (map.get(castBuildable).isEmpty()) {
             throw new IllegalArgumentException("You're trying to build a house on a box you don't own");
         }
@@ -215,8 +222,8 @@ public final class PlayerImpl implements Player {
         if (!(box instanceof Buildable)) {
             return box.getPrice();
         }
-        Buildable newBox = (Buildable) box;
-        Optional<Integer> numberHouses = getHouseBuilt(newBox);
+        final Buildable newBox = (Buildable) box;
+        final Optional<Integer> numberHouses = getHouseBuilt(newBox);
         if (numberHouses.isEmpty()) {
             // lancia eccezione se il player non possiede la casella.
             // Infatti nella mappa si associa la casella a un opzionale che,
@@ -236,5 +243,4 @@ public final class PlayerImpl implements Player {
         // sopra
         map.put((Card) box, Optional.empty());
     }
-
 }

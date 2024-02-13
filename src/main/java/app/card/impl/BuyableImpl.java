@@ -2,32 +2,29 @@ package app.card.impl;
 
 import java.util.Optional;
 
-import app.card.apii.Buildable;
+import app.card.apii.Buyable;
 import app.card.apii.Card;
 import app.player.apii.Player;
 /**
  * The implementation of Buildable.
  */
-public final class BuildableImpl implements Buildable {
+public final class BuyableImpl implements Buyable {
 
     private final Card card;
     private Optional<Player> owner = Optional.empty();
     private final int price;
-    private final int housePrice;
     private final int fees;
 
     /**
      * protected for be used only in factory.
      * @param card
      * @param price
-     * @param housePrice
      * @param fees
      */
-    protected BuildableImpl(final Card card,
-     final int price, final int housePrice, final int fees) {
+    protected BuyableImpl(final Card card,
+     final int price, final int fees) {
         this.card = card;
         this.price = price;
-        this.housePrice = housePrice;
         this.fees = fees;
     }
 
@@ -64,11 +61,6 @@ public final class BuildableImpl implements Buildable {
     @Override
     public int getId() {
         return this.card.getId();
-    }
-
-    @Override
-    public int getHousePrice() {
-        return this.housePrice;
     }
 
     @Override

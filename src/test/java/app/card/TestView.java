@@ -1,4 +1,4 @@
-package card;
+package app.card;
 
 import javax.swing.JFrame;
 
@@ -30,7 +30,7 @@ final class TestView {
         frame.setSize(size * side, side * side);
         frame.add(unforseenAllert);
         frame.getContentPane().add(table);
-        table.redrawPlayer("#52ff", buildable);
+        table.redrawPlayer("#FF0000", buildable);
         table.redrawPlayer("#000", buildable);
         table.redrawPlayer("#ff000", buildable);
         table.removePlayer("#000", buildable);

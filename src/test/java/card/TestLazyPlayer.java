@@ -2,9 +2,12 @@ package card;
 
 import app.card.apii.Buildable;
 import app.card.apii.Buyable;
+import app.card.apii.Card;
 import app.player.apii.BankAccount;
 import app.player.apii.Player;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 /**
  * this is a LazyPlayer only for test.
@@ -34,6 +37,18 @@ final class TestLazyPlayer implements Player {
         @Override
         public boolean isPaymentAllowed(final int amount) {
             return true;
+        }
+
+        @Override
+        public void setBalance(int balance) {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'setBalance'");
+        }
+
+        @Override
+        public boolean hasBalanceChanged() {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'hasBalanceChanged'");
         }
     };
 
@@ -87,6 +102,42 @@ final class TestLazyPlayer implements Player {
     @Override
     public int getHouseBuilt(final Buildable built) {
         return 0;
+    }
+
+    @Override
+    public boolean hasPositionChanged() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'hasPositionChanged'");
+    }
+
+    @Override
+    public int getID() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getID'");
+    }
+
+    @Override
+    public Map<Card, Optional<Integer>> getMap() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getMap'");
+    }
+
+    @Override
+    public boolean isInJail() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'isInJail'");
+    }
+
+    @Override
+    public void setInJail(boolean isInJail) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setInJail'");
+    }
+
+    @Override
+    public List<Buyable> getBuyableOwned() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getBuyableOwned'");
     }
 
 }

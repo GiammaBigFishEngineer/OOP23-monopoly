@@ -2,9 +2,8 @@ package app.player.impl;
 
 import java.util.Optional;
 
-import app.card.apii.Buildable;
 import app.card.apii.Card;
-import app.card.impl.CardImpl;
+import app.card.apii.CardAdapter;
 import app.player.apii.Player;
 import app.player.apii.PlayerPanelLogic;
 import app.player.view.PlayerPanelView;
@@ -15,15 +14,19 @@ import app.player.view.PlayerPanelView;
 public final class PlayerPanelLogicImpl implements PlayerPanelLogic {
 
     private Player currentPlayer;
-    private Card currentBox = new CardImpl(0, "prova");
-    private PlayerPanelView panel;
+    private Card currentBox;
+    private final PlayerPanelView panel;
 
     /**
      * Constructor.
      * 
+     * @param currentPlayer
+     * @param currentBox
      * @param panel
      */
-    public PlayerPanelLogicImpl(final PlayerPanelView panel) {
+    public PlayerPanelLogicImpl(final Player currentPlayer, final Card currentBox, final PlayerPanelView panel) {
+        this.currentPlayer = currentPlayer;
+        this.currentBox = currentBox;
         this.panel = panel;
     }
 
@@ -54,7 +57,8 @@ public final class PlayerPanelLogicImpl implements PlayerPanelLogic {
         panel.getPlayerID().setText(String.valueOf(this.currentPlayer.getID()));
         panel.getPlayerBoxes().setText(String.valueOf(this.currentPlayer.getBuyableOwned().size()));
         if (currentBox.isBuildable()) {
-            Optional<Integer> housesBuilt = this.currentPlayer.getHouseBuilt((Buildable) currentBox);
+            final Optional<Integer> housesBuilt = this.currentPlayer
+                    .getHouseBuilt(CardAdapter.buildableAdapter(currentBox));
             if (housesBuilt.isPresent()) {
                 panel.getPlayerHouses().setText(String.valueOf(housesBuilt.get()));
             } else {
