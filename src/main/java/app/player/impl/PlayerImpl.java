@@ -1,10 +1,10 @@
 package app.player.impl;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import app.card.apii.Buildable;
 import app.card.apii.Buyable;
@@ -128,32 +128,20 @@ public final class PlayerImpl implements Player {
      */
     @Override
     public List<Buyable> getBuyableOwned() {
-        final List<Buyable> buyableOwned = new LinkedList<>(); 
-        for (final Map.Entry<Card, Optional<Integer>> boxEntry : map.entrySet()) {
-            final Card box = boxEntry.getKey();
-            final Optional<Integer> boxValue = boxEntry.getValue();
-            if (boxValue.isPresent() && box.isBuyable()) {
-                // cast eseguibile perché ho appena controllato che la Card sia di tipo Buyable
-                buyableOwned.add(CardAdapter.buyableAdapter(box));
-            }
-        }
-        return buyableOwned;
+        return map.keySet().stream()
+            .filter(box -> map.get(box).isPresent() && box.isBuyable())
+            .map(CardAdapter::buyableAdapter)
+            .collect(Collectors.toList());
     }
     /**
      * {@inheritDoc}
      */
     @Override
     public List<Buildable> getBuildableOwned() {
-        final List<Buildable> buildableOwned = new LinkedList<>(); 
-        for (final Map.Entry<Card, Optional<Integer>> boxEntry : map.entrySet()) {
-            final Card box = boxEntry.getKey();
-            final Optional<Integer> boxValue = boxEntry.getValue();
-            if (boxValue.isPresent() && box.isBuildable()) {
-                // cast eseguibile perché ho appena controllato che la Card sia di tipo Buildable
-                buildableOwned.add(CardAdapter.buildableAdapter(box));
-            }
-        }
-        return buildableOwned;
+        return map.keySet().stream()
+        .filter(box -> map.get(box).isPresent() && box.isBuildable())
+        .map(CardAdapter::buildableAdapter)
+        .collect(Collectors.toList());
     }
 
     /**
