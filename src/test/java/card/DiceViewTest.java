@@ -3,16 +3,14 @@ package card;
 import app.card.view.DiceView;
 
 import javax.swing.JFrame;
-import java.awt.Dimension;
 import javax.swing.SwingUtilities;
 
 /**
- * Test for dice gui.
+ * Test for dice gui with dice rolling.
  */
 final class DiceViewTest {
 
     private static final String TITLE = "Lancio dei due dadi";
-    private static final int MIN_DIM = 600;
 
     private DiceViewTest() { }
 
@@ -25,11 +23,13 @@ final class DiceViewTest {
             final var diceView = new DiceView();
             final var frame = new JFrame();
 
-            frame.setMinimumSize(new Dimension(MIN_DIM, MIN_DIM));
+            diceView.rollAction();
+
             frame.setContentPane(diceView);
             frame.setTitle(TITLE);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.pack();
+            frame.setResizable(false);
             frame.setVisible(true);
         });
     }

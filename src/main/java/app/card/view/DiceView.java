@@ -5,7 +5,6 @@ import app.game.utils.Dice;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.BorderFactory;
-import javax.swing.JButton;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -16,8 +15,6 @@ import java.awt.Dimension;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * View of dice in the game.
@@ -27,9 +24,9 @@ public class DiceView extends JPanel {
     private static final long serialVersionUID = 1L;
 
     private static final int DICE_SIZE = 175;
-    private static final int FONT_SIZE = 16;
-    private static final int TOP_PADDING = 10;
-    private static final int BOTTOM_PADDING = 10;
+    private static final int FONT_SIZE = 24;
+    private static final int TOP_PADDING = 50;
+    private static final int GENERAL_INSETS = 50;
     private static final int RIGHT_INSETS = 10;
     private static final int LEFT_INSETS = 10;
     private static final int DOT_SIZE = 20;
@@ -42,7 +39,6 @@ public class DiceView extends JPanel {
     private static final int SIX_DOT = 6;
 
     private final transient Dice dice;
-    private final JButton rollButton;
     private final JLabel resultLabel;
     private final DicePanel dicePanel1;
     private final DicePanel dicePanel2;
@@ -54,14 +50,14 @@ public class DiceView extends JPanel {
         dice = new Dice();
         this.setLayout(new BorderLayout());
 
-        rollButton = new JButton("Lancia i dadi");
-        final Font buttonFont = new Font("Verdana", Font.BOLD, FONT_SIZE);
-        rollButton.setFont(buttonFont);
+        resultLabel = new JLabel("Risultato:  ");
+        final Font resultFont = new Font("Verdana", Font.PLAIN, FONT_SIZE);
+        resultLabel.setFont(resultFont);
 
         final JPanel topPanel = new JPanel();
         topPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         topPanel.setBorder(BorderFactory.createEmptyBorder(TOP_PADDING, 0, 0, 0));
-        topPanel.add(rollButton);
+        topPanel.add(resultLabel);
         this.add(topPanel, BorderLayout.NORTH);
 
         dicePanel1 = new DicePanel();
@@ -71,31 +67,14 @@ public class DiceView extends JPanel {
         final GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.insets = new Insets(0, 0, 0, RIGHT_INSETS);
+        gbc.insets = new Insets(GENERAL_INSETS, GENERAL_INSETS, GENERAL_INSETS, RIGHT_INSETS);
         centerPanel.add(dicePanel1, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 0;
-        gbc.insets = new Insets(0, LEFT_INSETS, 0, 0);
+        gbc.insets = new Insets(GENERAL_INSETS, LEFT_INSETS, GENERAL_INSETS, GENERAL_INSETS);
         centerPanel.add(dicePanel2, gbc);
         this.add(centerPanel, BorderLayout.CENTER);
-
-        resultLabel = new JLabel("Risultato: __ ");
-        final Font resultFont = new Font("Verdana", Font.PLAIN, FONT_SIZE);
-        resultLabel.setFont(resultFont);
-
-        final JPanel bottomPanel = new JPanel();
-        bottomPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-        bottomPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, BOTTOM_PADDING, 0));
-        bottomPanel.add(resultLabel);
-        this.add(bottomPanel, BorderLayout.SOUTH);
-
-        rollButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(final ActionEvent e) {
-                roll();
-            }
-        });
 
         this.setVisible(true);
     }
@@ -103,13 +82,19 @@ public class DiceView extends JPanel {
     /**
      * Rolls the dice, generating random numbers for each die and updating the result label.
      */
-    public void roll() {
+    public void rollAction() {
         dice.rollDice();
 
         dicePanel1.setResult(dice.getDie1Result());
         dicePanel2.setResult(dice.getDie2Result());
         resultLabel.setText("Risultato: " + dice.getDiceResult());
-        rollButton.setEnabled(false);
+    }
+
+    /**
+     * @return the result of the roll
+     */
+    public int getLastDiceResult() {
+        return dice.getDiceResult();
     }
 
     /**
@@ -121,7 +106,6 @@ public class DiceView extends JPanel {
         private int result;
 
         DicePanel() {
-            this.result = 1; 
             this.setBackground(Color.WHITE);
             this.setPreferredSize(new Dimension(DICE_SIZE, DICE_SIZE));
         }
