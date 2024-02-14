@@ -2,35 +2,31 @@ package app.game.view;
 
 import java.io.IOException;
 import java.awt.*;
+
 import java.util.List;
 
 import app.card.apii.Card;
 import javax.swing.*;
 
 import app.card.view.TableView;
-import app.game.apii.GameController;
-import app.game.apii.Observer;
-import app.game.controller.GameControllerImpl;
+
+import app.game.controller.MyObserverImpl;
 import app.player.apii.Player;
-import app.player.view.BailView;
+
 import app.player.view.PlayerPanelView;
 
 /**
  * Gameview.
  */
-public class GameView extends JFrame implements Observer {
+public class GameView extends JFrame {
 
     PlayerPanelView playerPanel;
     JPanel btnPanel;
     TableView tablePanel;
 
-    GameMessage popUp;
-
     public GameView(List<Player> playersList) throws IOException {
 
         setLayout(new BorderLayout());
-
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         playerPanel = new PlayerPanelView(null, null);
 
@@ -42,9 +38,7 @@ public class GameView extends JFrame implements Observer {
 
         List<Card> cardList = tablePanel.getCardList();
 
-        btnPanel = new ButtonPanelView(playersList, cardList, this);
-
-        popUp = new GameMessage();
+        btnPanel = new ButtonPanelView(playersList, cardList, new MyObserverImpl(this));
 
         this.add(btnPanel, BorderLayout.SOUTH);
 
@@ -57,45 +51,18 @@ public class GameView extends JFrame implements Observer {
         this.add(bar2, BorderLayout.WEST);
 
         this.pack();
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setMinimumSize(new Dimension(700, 700));
-
-        setVisible(true);
+        this.setVisible(true);
 
     }
 
-    @Override
-    public boolean update(Player currentPlayer, String str) {
+    public PlayerPanelView getPlayerPanelView() {
+        return this.playerPanel;
+    }
 
-        Boolean bool = false;
-
-        switch (str) {
-            case "bail":
-                BailView bailMessage = new BailView();
-                bool = bailMessage.showMenuBail(currentPlayer, this);
-
-                break;
-
-            case "refreshPlayerPosition":
-
-                System.out.println("aggiorno posizione");
-
-                break;
-
-            case "refreshPlayerPanel":
-
-                System.out.println("aggiorno panel");
-
-                break;
-
-            case "rollDice":
-
-                popUp.rollDice(this);
-                break;
-
-        }
-
-        return bool;
-
+    public TableView getTableView() {
+        return this.tablePanel;
     }
 
 }

@@ -25,7 +25,7 @@ public final class BailView {
     public boolean showMenuBail(final Player player, GameView gameV) {
         final String message = "Would you like to pay " + BailLogicImpl.DEFAULT_PAYMENT
                 + "$ to go out of prison? You have " + player.getBankAccount().getBalance() + "$ on your BankAccount.";
-        final int choice = JOptionPane.showConfirmDialog(null, message, "YOU ARE IN PRISON!",
+        final int choice = JOptionPane.showConfirmDialog(gameV, message, "YOU ARE IN PRISON!",
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (choice == JOptionPane.YES_OPTION) {
             if (logic.hasPayed(player)) {
