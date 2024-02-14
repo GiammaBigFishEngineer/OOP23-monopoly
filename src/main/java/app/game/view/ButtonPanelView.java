@@ -3,7 +3,7 @@ package app.game.view;
 import javax.swing.*;
 
 import app.game.apii.GameController;
-import app.game.apii.Observer;
+import app.game.apii.GameObserver;
 import app.game.controller.GameControllerImpl;
 import app.player.apii.Player;
 
@@ -30,11 +30,11 @@ public class ButtonPanelView extends JPanel {
     private JButton endTurn;
     private JButton saveGame;
 
-    private Observer obs;
+    private GameObserver obs;
 
     private Player currentPlayer;
 
-    public ButtonPanelView(List<Player> playersList, List<Card> cardList, Observer obs) {
+    public ButtonPanelView(List<Player> playersList, List<Card> cardList, GameObserver obs) {
 
         this.obs = obs;
 
@@ -90,7 +90,7 @@ public class ButtonPanelView extends JPanel {
 
         currentPlayer = logic.newTurn();
 
-        obs.update(currentPlayer, "refreshPlayerPanel");
+        // obs.update(currentPlayer, "refreshPlayerPanel");
 
         if (logic.isCurrentPlayerInJail()) {
 

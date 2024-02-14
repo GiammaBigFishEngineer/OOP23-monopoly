@@ -1,12 +1,15 @@
 package app.game.controller;
 
-import app.game.apii.Observer;
+import java.awt.Color;
+
+import app.card.apii.Observer;
+import app.game.apii.GameObserver;
 import app.game.view.GameMessage;
 import app.game.view.GameView;
 import app.player.apii.Player;
 import app.player.view.BailView;
 
-public class MyObserverImpl implements Observer {
+public class MyObserverImpl implements GameObserver {
 
     GameView gameV;
     GameMessage popUp;
@@ -30,6 +33,11 @@ public class MyObserverImpl implements Observer {
             case "refreshPlayerPosition":
 
                 System.out.println("aggiorno posizione");
+                Observer<Player> tableObs = () -> gameV.getTableView().redrawPlayer("#fff",
+                        currentPlayer.getCurrentPosition());
+                gameV.getTableView().addObserver(tableObs);
+
+                gameV.getTableView().notifyObservers();
 
                 break;
 
