@@ -58,9 +58,10 @@ public class ButtonPanelView extends JPanel {
             changeButtonVisibility();
 
             currentPlayer = logic.getCurrentPlayer();
-            obs.update(currentPlayer, "rollDice");
-            obs.update(currentPlayer, "refreshPlayerPosition");
-            obs.update(currentPlayer, "refreshPlayerPanel");
+            var diceValue = logic.getDiceValue();
+            obs.update(diceValue, currentPlayer, "rollDice");
+            obs.update(-1, currentPlayer, "refreshPlayerPosition");
+            obs.update(-1, currentPlayer, "refreshPlayerPanel");
         });
 
         /*
@@ -78,7 +79,7 @@ public class ButtonPanelView extends JPanel {
             buyPropriety.setEnabled(false);
 
             currentPlayer = logic.getCurrentPlayer();
-            obs.update(currentPlayer, "refreshPlayerPanel");
+            obs.update(-1, currentPlayer, "refreshPlayerPanel");
 
         });
 
@@ -96,7 +97,7 @@ public class ButtonPanelView extends JPanel {
             sellPropriety.setEnabled(false);
 
             currentPlayer = logic.getCurrentPlayer();
-            obs.update(currentPlayer, "refreshPlayerPanel");
+            obs.update(-1, currentPlayer, "refreshPlayerPanel");
 
         });
 
@@ -114,7 +115,7 @@ public class ButtonPanelView extends JPanel {
             buyHouse.setEnabled(false);
 
             currentPlayer = logic.getCurrentPlayer();
-            obs.update(currentPlayer, "refreshPlayerPanel");
+            obs.update(-1, currentPlayer, "refreshPlayerPanel");
 
         });
 
@@ -149,11 +150,11 @@ public class ButtonPanelView extends JPanel {
 
         currentPlayer = logic.getCurrentPlayer();
 
-        obs.update(currentPlayer, "refreshPlayerPanel");
+        obs.update(-1, currentPlayer, "refreshPlayerPanel");
 
         if (logic.isCurrentPlayerInJail()) {
 
-            if (obs.update(currentPlayer, "bail")) {
+            if (obs.update(-1, currentPlayer, "bail")) {
 
                 logic.enableSingleButton(BtnCodeEnum.rollDice);
 

@@ -12,8 +12,8 @@ public class GameMessage {
         JOptionPane.showMessageDialog(gamePanel, "You didn' t roll the same numbers ,you are'nt free to go !");
     }
 
-    public void rollDice(GameView gamePanel) {
-        JOptionPane.showMessageDialog(gamePanel, "You roll !");
+    public void rollDice(Integer diceValue, GameView gamePanel) {
+        JOptionPane.showMessageDialog(gamePanel, "You roll " + diceValue + "!");
 
     }
 

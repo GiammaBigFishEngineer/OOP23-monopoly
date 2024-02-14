@@ -18,7 +18,7 @@ public class MyObserverImpl implements GameObserver {
     }
 
     @Override
-    public boolean update(Player currentPlayer, String str) {
+    public boolean update(Integer diceValue, Player currentPlayer, String str) {
         Boolean bool = false;
 
         switch (str) {
@@ -51,7 +51,7 @@ public class MyObserverImpl implements GameObserver {
 
             case "rollDice":
 
-                popUp.rollDice(gameV);
+                popUp.rollDice(diceValue, gameV);
                 break;
 
         }

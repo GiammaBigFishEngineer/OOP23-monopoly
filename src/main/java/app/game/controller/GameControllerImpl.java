@@ -267,4 +267,9 @@ public class GameControllerImpl implements GameController {
         return this.currentPlayer;
     }
 
+    @Override
+    public Integer getDiceValue() {
+        return totalResult;
+    }
+
 }

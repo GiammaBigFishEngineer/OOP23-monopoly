@@ -4,6 +4,6 @@ import app.player.apii.Player;
 
 public interface GameObserver {
 
-    public boolean update(Player currentPlayer, String str);
+    public boolean update(Integer dice, Player currentPlayer, String str);
 
 }

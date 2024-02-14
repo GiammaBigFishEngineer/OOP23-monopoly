@@ -62,4 +62,6 @@ public interface GameController {
     void disableSingleButton(BtnCodeEnum code);
 
     Player getCurrentPlayer();
+
+    Integer getDiceValue();
 }
