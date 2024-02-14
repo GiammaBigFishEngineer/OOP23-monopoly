@@ -43,6 +43,10 @@ public class ButtonPanelView extends JPanel {
         this.setLayout(new GridLayout(2, 3));
         this.setBackground(Color.lightGray);
 
+        /*
+         * RollDice button
+         */
+
         rollDice = new JButton("Roll Dice");
         this.add(rollDice);
         btnList.put(BtnCodeEnum.rollDice, rollDice);
@@ -53,21 +57,70 @@ public class ButtonPanelView extends JPanel {
 
             changeButtonVisibility();
 
+            currentPlayer = logic.getCurrentPlayer();
             obs.update(currentPlayer, "rollDice");
             obs.update(currentPlayer, "refreshPlayerPosition");
+            obs.update(currentPlayer, "refreshPlayerPanel");
         });
+
+        /*
+         * buyPropriety button
+         */
 
         buyPropriety = new JButton("Buy Propriety");
         this.add(buyPropriety);
         btnList.put(BtnCodeEnum.buyPropriety, buyPropriety);
 
+        buyPropriety.addActionListener(e -> {
+
+            logic.buyPropriety();
+
+            buyPropriety.setEnabled(false);
+
+            currentPlayer = logic.getCurrentPlayer();
+            obs.update(currentPlayer, "refreshPlayerPanel");
+
+        });
+
+        /*
+         * SellPropriety button
+         */
+
         sellPropriety = new JButton("Sell Propriety");
         this.add(sellPropriety);
         btnList.put(BtnCodeEnum.sellPropriety, sellPropriety);
 
+        sellPropriety.addActionListener(e -> {
+
+            logic.sellPropriety();
+            sellPropriety.setEnabled(false);
+
+            currentPlayer = logic.getCurrentPlayer();
+            obs.update(currentPlayer, "refreshPlayerPanel");
+
+        });
+
+        /*
+         * BuyHouse button
+         */
+
         buyHouse = new JButton("Buy House");
         this.add(buyHouse);
         btnList.put(BtnCodeEnum.buyHouse, buyHouse);
+
+        buyHouse.addActionListener(e -> {
+
+            logic.buildHouse();
+            buyHouse.setEnabled(false);
+
+            currentPlayer = logic.getCurrentPlayer();
+            obs.update(currentPlayer, "refreshPlayerPanel");
+
+        });
+
+        /*
+         * EndTurn button
+         */
 
         endTurn = new JButton("End Turn");
         this.add(endTurn);
@@ -79,6 +132,10 @@ public class ButtonPanelView extends JPanel {
 
         });
 
+        /*
+         * SaveGame button
+         */
+
         saveGame = new JButton("Save Game");
         this.add(saveGame);
 
@@ -88,9 +145,11 @@ public class ButtonPanelView extends JPanel {
 
     public void nextTurn() {
 
-        currentPlayer = logic.newTurn();
+        logic.newTurn();
 
-        // obs.update(currentPlayer, "refreshPlayerPanel");
+        currentPlayer = logic.getCurrentPlayer();
+
+        obs.update(currentPlayer, "refreshPlayerPanel");
 
         if (logic.isCurrentPlayerInJail()) {
 

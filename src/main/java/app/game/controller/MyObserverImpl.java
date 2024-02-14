@@ -1,7 +1,5 @@
 package app.game.controller;
 
-import java.awt.Color;
-
 import app.card.apii.Observer;
 import app.game.apii.GameObserver;
 import app.game.view.GameMessage;

@@ -52,12 +52,10 @@ public class GameControllerImpl implements GameController {
      * turn
      */
 
-    public Player newTurn() {
+    public void newTurn() {
 
         this.disableAllBtn();
         this.nextPlayer();
-
-        return currentPlayer;
 
     }
 
@@ -139,10 +137,6 @@ public class GameControllerImpl implements GameController {
         currentCardIndex = currentPlayer.getCurrentPosition();
 
         currentCard = cards.get(currentCardIndex);
-
-        if (currentCard.getName().equals("vai in prigione")) {
-            System.out.println(currentPlayer.getName() + "You are in " + currentCard.getName());
-        }
 
         handleCard();
 
@@ -267,6 +261,10 @@ public class GameControllerImpl implements GameController {
 
     public Map<BtnCodeEnum, Boolean> getBtnStatus() {
         return btnList;
+    }
+
+    public Player getCurrentPlayer() {
+        return this.currentPlayer;
     }
 
 }

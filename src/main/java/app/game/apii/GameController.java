@@ -49,7 +49,7 @@ public interface GameController {
      */
     Card currentBox(Player currentPlayer);
 
-    Player newTurn();
+    void newTurn();
 
     Boolean isCurrentPlayerInJail();
 
@@ -60,4 +60,6 @@ public interface GameController {
     void enableSingleButton(BtnCodeEnum code);
 
     void disableSingleButton(BtnCodeEnum code);
+
+    Player getCurrentPlayer();
 }
