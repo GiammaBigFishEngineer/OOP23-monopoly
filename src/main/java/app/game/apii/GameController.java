@@ -1,10 +1,10 @@
 package app.game.apii;
 
-import java.util.Map;
-
 import app.card.apii.Card;
 import app.game.view.BtnCodeEnum;
 import app.player.apii.Player;
+
+import java.util.*;
 
 /**
  * An interface that rapresent the logic of the player actions.
@@ -39,6 +39,10 @@ public interface GameController {
 
     void newTurn();
 
+    void startTurn();
+
+    void handleCard();
+
     Boolean isCurrentPlayerInJail();
 
     void tryLuckyBail();
@@ -51,5 +55,19 @@ public interface GameController {
 
     Player getCurrentPlayer();
 
+    Card getCurrentCard();
+
+    void defeatPlayer();
+
     Integer getDiceValue();
+
+    void initializePlayer();
+
+    List<Card> getCardList();
+
+    List<Player> getPlayerList();
+
+    List<Player> getDefeatedList();
+
+    void setDiceValue(int value);
 }

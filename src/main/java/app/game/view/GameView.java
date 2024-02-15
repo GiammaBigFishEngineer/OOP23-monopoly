@@ -49,9 +49,9 @@ public class GameView extends JFrame {
          * TableView
          */
 
-        tablePanel = new TableView(7, btnPanel.getLogic().getCardList());
+        // tablePanel = new TableView(7, btnPanel.getLogic().getCardList());
 
-        this.add(tablePanel, BorderLayout.CENTER);
+        // this.add(tablePanel, BorderLayout.CENTER);
 
         /*
          * Board Panels

@@ -20,6 +20,8 @@ public class GameControllerImpl implements GameController {
     private Player currentPlayer;
     private int currentPlayerIndex = -1;
 
+    private List<String> playersName;
+
     private List<Card> cards;
     private Card currentCard;
     private int currentCardIndex;
@@ -32,12 +34,17 @@ public class GameControllerImpl implements GameController {
 
     private Map<BtnCodeEnum, Boolean> btnList;
 
-    public GameControllerImpl(List<String> playersName) throws IOException {
+    public GameControllerImpl(List<String> names) throws IOException {
 
         this.cards = new CardFactoryImpl().cardsInitializer();
 
+        this.playersName = new ArrayList<>();
+        playersName.addAll(names);
+
         this.players = new ArrayList<>();
-        this.initializePlayer(playersName);
+        this.initializePlayer();
+
+        System.out.println(players);
 
         currentDice = new Dice();
 
@@ -127,9 +134,9 @@ public class GameControllerImpl implements GameController {
 
     public void startTurn() {
 
-        var position = currentPlayer.getCurrentPosition();
+        int position = currentPlayer.getCurrentPosition();
 
-        var finalPosition = position + totalResult;
+        int finalPosition = position + totalResult;
 
         if (finalPosition >= cards.size()) {
 
@@ -274,7 +281,6 @@ public class GameControllerImpl implements GameController {
         newIndex();
 
         if (isOver()) {
-            System.out.println("GameOver");
             this.endGame();
         }
     }
@@ -284,7 +290,7 @@ public class GameControllerImpl implements GameController {
     }
 
     public void endGame() {
-
+        System.out.println("EndGame");
     }
 
     public boolean isDefeated() {
@@ -328,9 +334,9 @@ public class GameControllerImpl implements GameController {
         return totalResult;
     }
 
-    public void initializePlayer(List<String> names) {
+    public void initializePlayer() {
         var id = 1;
-        for (String name : names) {
+        for (String name : playersName) {
 
             this.players.add(new PlayerImpl(name, id, cards, 500));
             id++;
@@ -340,6 +346,25 @@ public class GameControllerImpl implements GameController {
 
     public List<Card> getCardList() {
         return this.cards;
+    }
+
+    @Override
+    public List<Player> getPlayerList() {
+        return this.players;
+    }
+
+    public void setDiceValue(int value) {
+        this.totalResult = value;
+    }
+
+    @Override
+    public Card getCurrentCard() {
+        return currentCard;
+    }
+
+    @Override
+    public List<Player> getDefeatedList() {
+        return this.defeated;
     }
 
 }
