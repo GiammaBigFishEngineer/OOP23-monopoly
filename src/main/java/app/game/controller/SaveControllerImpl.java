@@ -61,6 +61,7 @@ public class SaveControllerImpl implements SaveController {
     @Override
     public boolean shouldSaveGame(final List<Player> playersList) {
         return isFirstSave || checkForChanges(playersList);
+        //return checkForChanges(playersList);
     }
 
     /**
