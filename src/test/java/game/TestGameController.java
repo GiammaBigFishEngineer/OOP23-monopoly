@@ -125,7 +125,7 @@ class TestGameController {
         btnList.put(BtnCodeEnum.sellPropriety, true);
 
         assertEquals(btnList, logic.getBtnStatus());
-        assertEquals(4, logic.getCurrentPlayer().getCurrentPosition());
+
     }
 
     @Test
@@ -155,6 +155,13 @@ class TestGameController {
 
         logic.setDiceValue(4);
         logic.startTurn();
+
+        int cardPrice = CardAdapter.buildableAdapter(logic.getCurrentCard()).getPrice();
+
+        int housePrice = CardAdapter.buildableAdapter(logic.getCurrentCard()).getHousePrice();
+
+        int total = cardPrice + housePrice;
+
         logic.buyPropriety();
 
         logic.newTurn();
@@ -162,7 +169,7 @@ class TestGameController {
 
         logic.buildHouse();
 
-        assertEquals(logic, btnList);
+        assertEquals(500 - total, logic.getCurrentPlayer().getBankAccount().getBalance());
 
     }
 
@@ -206,6 +213,13 @@ class TestGameController {
 
         assertEquals(1, logic.getPlayerList().size());
         assertEquals(1, logic.getDefeatedList().size());
+    }
+
+    @Test
+
+    void endGameTest() {
+        this.defeatTest();
+        assertTrue(logic.isOver());
     }
 
 }

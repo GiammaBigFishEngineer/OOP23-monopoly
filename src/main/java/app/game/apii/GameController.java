@@ -70,4 +70,6 @@ public interface GameController {
     List<Player> getDefeatedList();
 
     void setDiceValue(int value);
+
+    boolean isOver();
 }

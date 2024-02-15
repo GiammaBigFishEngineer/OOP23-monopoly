@@ -197,6 +197,7 @@ public final class PlayerImpl implements Player {
         }
         account.payPlayer(null, box.getPrice());
         map.put(castBuyable, Optional.of(0)); // 0 è diverso da Empty, quindi possiedo la casella con 0 case costruite
+        box.setOwner(this);
         return true;
     }
 

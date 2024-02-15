@@ -5,8 +5,6 @@ import javax.swing.*;
 import app.game.controller.GameControllerImpl;
 import app.player.apii.Player;
 
-import app.card.apii.Card;
-
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.io.IOException;
