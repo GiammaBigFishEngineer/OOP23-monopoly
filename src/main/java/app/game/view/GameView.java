@@ -11,6 +11,7 @@ import javax.swing.*;
 import app.card.view.TableView;
 
 import app.game.controller.MyObserverImpl;
+import app.game.model.ListConverter;
 import app.player.apii.Player;
 
 import app.player.view.PlayerPanelView;
@@ -29,23 +30,42 @@ public class GameView extends JFrame {
     private final int screenHeight;
     private final int PROPORTION = 2;
 
-    public GameView(List<Player> playersList) throws IOException {
+    public GameView(List<String> playerNames) throws IOException {
 
         setLayout(new BorderLayout());
+
+        /*
+         * PlayerPanelView
+         */
 
         playerPanel = new PlayerPanelView(null, null);
 
         this.add(playerPanel, BorderLayout.NORTH);
+
+        /*
+         * TableView
+         */
 
         tablePanel = new TableView(7);
 
         this.add(tablePanel, BorderLayout.CENTER);
 
         List<Card> cardList = tablePanel.getCardList();
+        List<Player> playersList;
+
+        playersList = ListConverter.convert(playerNames, cardList);
+
+        /*
+         * ButtonPanelView
+         */
 
         btnPanel = new ButtonPanelView(playersList, cardList, new MyObserverImpl(this));
 
         this.add(btnPanel, BorderLayout.SOUTH);
+
+        /*
+         * Board Panels
+         */
 
         JPanel bar1 = new JPanel();
         bar1.setBackground(Color.lightGray);
@@ -54,6 +74,10 @@ public class GameView extends JFrame {
         JPanel bar2 = new JPanel();
         bar2.setBackground(Color.lightGray);
         this.add(bar2, BorderLayout.WEST);
+
+        /*
+         * PlayerPanelView
+         */
 
         this.pack();
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);

@@ -74,13 +74,11 @@ public class MenuView extends JFrame {
                     playerNames.add(playerName);
                 }
 
-                List<Player> playersList = controller.insertPlayers(playerNames);
-
-                if (controller.startGame(playersList)) {
+                if (controller.startGame(playerNames)) {
                     JOptionPane.showMessageDialog(this, "Game loading success");
 
                     try {
-                        new GameView(playersList);
+                        new GameView(playerNames);
                     } catch (IOException e1) {
                         // TODO Auto-generated catch block
                         e1.printStackTrace();
