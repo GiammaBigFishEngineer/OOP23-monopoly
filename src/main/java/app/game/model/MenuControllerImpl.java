@@ -6,6 +6,7 @@ import java.awt.Window;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Implementation of MenuController with its logic.
@@ -26,12 +27,16 @@ public class MenuControllerImpl implements MenuController {
         if (playerNames.size() < MIN_NUM_PLAYER || playerNames.size() > MAX_NUM_PLAYER) {
             return false;
         }
-
         final Set<String> uniqueNames = new HashSet<>();
-        for (final String name : playerNames) {
+        uniqueNames.addAll(playerNames.stream()
+                            .map(String::trim)
+                            .map(String::toLowerCase)
+                            .collect(Collectors.toSet()));
+
+        /*for (final String name : playerNames) {
             final String normalizedName = name.trim(); //.toLowerCase;   es: 'Gio' e 'gio' sarebbero uguali
             uniqueNames.add(normalizedName);
-        }
+        }*/
 
         return !(uniqueNames.size() != playerNames.size() || playerNames.contains(null) || playerNames.contains(""));
     }
