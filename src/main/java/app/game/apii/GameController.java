@@ -44,10 +44,9 @@ public interface GameController {
      * @param box
      */
     void checkBox(Player currentPlayer, Card box);
-
-    /**
-     * @param currentPlayer we want to verify his position
-     * @return the card the player is on.
+    /** 
+     * @param currentPlayer
+     * @return card
      */
     Card currentBox(Player currentPlayer);
 }

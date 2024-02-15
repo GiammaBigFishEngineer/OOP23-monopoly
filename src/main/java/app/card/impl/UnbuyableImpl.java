@@ -1,8 +1,8 @@
 package app.card.impl;
 
 /**
- * Implementation for the enumeration of UnBuyable.
+ * Implementation of Unbuyable.
  */
-public enum UnbuyableImpl {
+public final class UnbuyableImpl {
 
 }

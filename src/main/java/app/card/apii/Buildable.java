@@ -6,7 +6,7 @@ package app.card.apii;
 public interface Buildable extends Buyable {
     /**
      * @param
-     * @return price for build one house
-     */
+     * @return house price
+     */ 
     int getHousePrice();
 }

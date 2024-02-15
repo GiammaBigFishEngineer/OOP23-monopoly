@@ -1,7 +1,5 @@
 package app.game;
 
-import game.view.GameView;
-
 /**
  * The main class for launching the game application.
  * This class contains the main method responsible for starting the game
