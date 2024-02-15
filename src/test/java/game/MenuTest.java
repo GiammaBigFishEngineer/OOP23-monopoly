@@ -237,7 +237,7 @@ class MenuTest {
     private List<Player> createDummyPlayers(final int numPlayers) {
         final List<Player> players = new ArrayList<>();
         for (int i = 0; i < numPlayers; i++) {
-            players.add(new PlayerImpl(i + 1, DUMMY_PLAYER + i));
+            players.add(new PlayerImpl(DUMMY_PLAYER + i, i + 1, List.of(), 0));
         }
         return players;
     }

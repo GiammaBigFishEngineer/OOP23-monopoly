@@ -96,7 +96,7 @@ public class MenuControllerImpl implements MenuController {
                 return new ArrayList<>();
             }
 
-            final Player player = new PlayerImpl(i + 1, playerName);
+            final Player player = new PlayerImpl(playerName, i + 1, List.of(), 0);
             currentPlayers.add(player);
         }
 
