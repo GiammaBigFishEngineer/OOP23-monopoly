@@ -70,14 +70,24 @@ public interface Player {
     int getNumberStationOwned();
     /**
      * @param box whose type is Buyable
+     * @return boolean which indicates if the player can buy the box.
      */
-    void buyBox(Buyable box);
+    boolean buyBox(Buyable box);
     /**
      * @param box whose type is Buildable
+     * @return boolean which indicates if the operation was concluded or not.
      */
-    void buildHouse(Buildable box);
+    boolean buildHouse(Buildable box);
     /**
      * @param box whose type is Buyable
      */
     void sellBuyable(Buyable box);
+    /**
+     * As the method getBankAccount() returns a defensive copy of the bankAccount of the player, 
+     * only the player can modify this object. 
+     * Who uses the method getBankAccount() would modify the copy of the account:
+     * as a result, I have created the following methods which effectively modify the player's account.
+     * @param amount
+     */
+    void receivePayment(int amount);
 }

@@ -4,26 +4,23 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import app.player.impl.PlayerImpl;
-
-import java.util.List;
+import app.player.apii.BankAccount;
+import app.player.impl.BankAccountImpl;
 
 /**
  * Simple test for {@link app.player.impl.BankAccountImpl} class.
  */
 class TestBankAccountImpl {
     private static final int DEFAULT_PAYMENT = 100;
-    private static final int DEFAULT_ID = 1; 
+    private BankAccount bankAccount1, bankAccount2;
 
-    private PlayerImpl player1;
-    private PlayerImpl player2;
     /**
      * Configuration step: this is performed before each test.
      */
     @BeforeEach
     void init() {
-        this.player1 = new PlayerImpl("First Player", DEFAULT_ID, List.of(), DEFAULT_PAYMENT * 2);
-        this.player2 = new PlayerImpl("Second Player", DEFAULT_ID * 2, List.of(), DEFAULT_PAYMENT * 4);
+        this.bankAccount1 = new BankAccountImpl(DEFAULT_PAYMENT);
+        this.bankAccount2 = new BankAccountImpl(DEFAULT_PAYMENT * 2);
     }
 
     /**
@@ -31,8 +28,19 @@ class TestBankAccountImpl {
      */
     @Test
     void testGetBalance() {
-        Assertions.assertEquals(DEFAULT_PAYMENT * 2, this.player1.getBankAccount().getBalance()); 
-        Assertions.assertEquals(DEFAULT_PAYMENT * 4, this.player2.getBankAccount().getBalance());
+        Assertions.assertEquals(DEFAULT_PAYMENT, bankAccount1.getBalance());
+        Assertions.assertEquals(DEFAULT_PAYMENT * 2, bankAccount2.getBalance());
+    }
+
+    /**
+     * Check that, if the balance changes, it is notified by the method hasBalanceChanged().
+     */
+    @Test
+    void testHasBalanceChanged() {
+        this.bankAccount1.receivePayment(DEFAULT_PAYMENT);
+        Assertions.assertEquals(bankAccount2.getBalance(), bankAccount1.getBalance());
+        this.bankAccount1.setBalance(DEFAULT_PAYMENT);
+        Assertions.assertTrue(bankAccount1.hasBalanceChanged());
     }
 
     /**
@@ -40,10 +48,9 @@ class TestBankAccountImpl {
      */
     @Test 
     void testPayPlayer() {
-        final int expectedPlayerPayed = this.player2.getBankAccount().getBalance() - DEFAULT_PAYMENT;
-        this.player2.getBankAccount().payPlayer(player1, DEFAULT_PAYMENT);
-        Assertions.assertEquals(3 * DEFAULT_PAYMENT, this.player1.getBankAccount().getBalance());
-        Assertions.assertEquals(expectedPlayerPayed, this.player2.getBankAccount().getBalance()); 
+        final int expectedPlayerPayed = this.bankAccount2.getBalance() - DEFAULT_PAYMENT;
+        this.bankAccount2.payPlayer(null, DEFAULT_PAYMENT);
+        Assertions.assertEquals(expectedPlayerPayed, bankAccount2.getBalance());
     }
 
     /**
@@ -51,21 +58,20 @@ class TestBankAccountImpl {
      */
     @Test 
     void testReceivePayment() {
-        final int expected = 3 * DEFAULT_PAYMENT; 
-        this.player1.getBankAccount().receivePayment(DEFAULT_PAYMENT); 
-        Assertions.assertEquals(expected, this.player1.getBankAccount().getBalance());
+        this.bankAccount1.receivePayment(DEFAULT_PAYMENT);
+        Assertions.assertEquals(DEFAULT_PAYMENT * 2, bankAccount1.getBalance());
+        this.bankAccount1.payPlayer(null, DEFAULT_PAYMENT * 2);
+        Assertions.assertEquals(0, bankAccount1.getBalance());
     }
 
     /**
-     * Check if a payment is allowed. If not, it throws an exception.
+     * Check if a payment is allowed.
     */ 
     @Test
     void testIsPaymentAllowed() {
-        final int amountToSpend = 10 * DEFAULT_PAYMENT; 
-        final boolean actualFirstResult = this.player1.getBankAccount().isPaymentAllowed(amountToSpend);
-        Assertions.assertFalse(actualFirstResult);
-        this.player1.getBankAccount().receivePayment(amountToSpend);
-        final boolean actualSecondResult = this.player1.getBankAccount().isPaymentAllowed(amountToSpend);
-        Assertions.assertTrue(actualSecondResult);
+        final int amountToSpend = 100 * DEFAULT_PAYMENT;
+        Assertions.assertFalse(bankAccount1.isPaymentAllowed(amountToSpend));
+        this.bankAccount1.receivePayment(amountToSpend);
+        Assertions.assertTrue(bankAccount1.isPaymentAllowed(amountToSpend));
     }
 }

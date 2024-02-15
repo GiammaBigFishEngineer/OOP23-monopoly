@@ -30,7 +30,7 @@ public final class PlayerPanelView extends JPanel {
     private static final int PROPORTION = 2; 
     private static final int FONT_SIZE = 20;
 
-    private final PlayerPanelLogic logic;
+    private final transient PlayerPanelLogic logic;
 
     private final JLabel playerName = new JLabel(); 
     private final JLabel playerID = new JLabel(); 
@@ -76,58 +76,66 @@ public final class PlayerPanelView extends JPanel {
     }
 
     /**
-     * Getter for PlayerPanelLogic.
-     * @return object PlayerPanelLogic
+     * @param text
      */
-    public PlayerPanelLogic getLogic() {
-        return this.logic;
+    public void setPlayerNameText(final String text) {
+        this.playerName.setText(text);
     }
 
     /**
-     * Getter for Player's name.
-     * @return JLabel
+     * @param text
      */
-    public JLabel getPlayerName() {
-        return this.playerName;
+    public void setPlayerMoneyText(final String text) {
+        this.playerMoney.setText(text);
     }
 
     /**
-     * Getter for Player's ID.
-     * @return JLabel
+     * @param text
      */
-    public JLabel getPlayerID() {
-        return this.playerID;
+    public void setPlayerIDText(final String text) {
+        this.playerID.setText(text);
     }
 
     /**
-     * Getter for Player's money.
-     * @return JLabel
+     * @param text
      */
-    public JLabel getPlayerMoney() {
-        return this.playerMoney;
+    public void setPlayerBoxesText(final String text) {
+        this.playerBoxes.setText(text);
+    }
+    /**
+     * @param text
+     */
+    public void setPlayerHousesText(final String text) {
+        this.playerHouses.setText(text);
     }
 
     /**
-     * Getter for Player's owned boxes. 
-     * @return object JLabel associated with Player's owned boxes.
+     * @param text
      */
-    public JLabel getPlayerBoxes() {
-        return this.playerBoxes;
+    public void setPlayerStationsText(final String text) {
+        this.playerStations.setText(text);
+    }
+
+    // il controller deve richiamare questi metodi e non getLogic.refresh()
+    /**
+     * @param player
+     * @param currentBox
+     */
+    public void setPlayer(final Player player, final Card currentBox) {
+        this.logic.setPlayer(player, currentBox);
     }
 
     /**
-     * Getter for Player's houses built on the current box.
-     * @return JLabel
+     * @param currentBox
      */
-    public JLabel getPlayerHouses() {
-        return this.playerHouses;
+    public void setCurrentBox(final Card currentBox) {
+        this.logic.setCurrentBox(currentBox);
     }
 
     /**
-     * Getter for Player's owned stations.
-     * @return JLabel
+     * 
      */
-    public JLabel getPlayerStations() {
-        return this.playerStations;
+    public void refresh() {
+        this.logic.refresh();
     }
 }

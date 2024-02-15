@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 import java.io.IOException;
 import java.net.URL;
 
@@ -117,8 +117,8 @@ public final class CardFactoryImpl implements CardFactory {
             }
 
             @Override
-            public int getId() {
-                return this.buyable.getId();
+            public int getCardId() {
+                return this.buyable.getCardId();
             }
 
             @Override
@@ -152,15 +152,19 @@ public final class CardFactoryImpl implements CardFactory {
         switch (action) {
             case "giveMoneyPlayer" -> {
                 staticAction = (player) -> {
-                    if (player != null) {
-                        player.getBankAccount().receivePayment(amount);
+                    if (player == null) {
+                        throw new IllegalArgumentException("Player passed can't be null");
                     }
+                    player.receivePayment(amount);
                     return Optional.empty();
                 };
             }
             case "payPlayer" -> {
                 staticAction = (player) -> {
-                    if (player != null) {
+                    if (player == null) {
+                        throw new IllegalArgumentException("Player passed can't be null");
+                    }
+                    if (player.getBankAccount().isPaymentAllowed(amount)) {
                         player.getBankAccount().payPlayer(null, amount);
                     }
                     return Optional.empty();
@@ -168,17 +172,17 @@ public final class CardFactoryImpl implements CardFactory {
             }
             case "movePlayer" -> {
                 staticAction = (player) -> {
-                    if (player != null) {
-                        player.setPosition(amount);
+                    if (player == null) {
+                        throw new IllegalArgumentException("Player passed can't be null");
                     }
+                    player.setPosition(amount);
                     return Optional.empty();
                 };
             }
             case "unforseen" -> {
                 staticAction = (player) -> {
-                    final Random random = new Random();
                     final int unforseenSize = 14;
-                    final var extraction = random.nextInt(unforseenSize);
+                    final var extraction = ThreadLocalRandom.current().nextInt(unforseenSize);
                     final var myUnforseen = Unforseen.valueOf((String) "U" + extraction);
                     myUnforseen.getCard().makeAction(player);
                     return Optional.of(myUnforseen);

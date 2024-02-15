@@ -14,7 +14,7 @@ public interface Card {
      * @param 
      * @return id of card on table
      */
-    int getId();
+    int getCardId();
 
     /**
      * @param 

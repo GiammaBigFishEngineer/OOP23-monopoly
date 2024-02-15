@@ -59,8 +59,8 @@ public final class BuyableImpl implements Buyable {
     }
 
     @Override
-    public int getId() {
-        return this.card.getId();
+    public int getCardId() {
+        return this.card.getCardId();
     }
 
     @Override
