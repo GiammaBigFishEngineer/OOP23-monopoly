@@ -4,7 +4,6 @@ import javax.swing.*;
 
 import app.game.apii.MenuController;
 import app.game.model.MenuControllerImpl;
-import app.player.apii.Player;
 
 import java.awt.*;
 import java.io.IOException;

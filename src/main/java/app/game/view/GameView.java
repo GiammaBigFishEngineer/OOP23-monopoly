@@ -4,13 +4,12 @@ import java.io.IOException;
 import java.awt.*;
 
 import java.util.List;
+import java.util.ArrayList;
 
 import app.card.apii.Card;
 import javax.swing.*;
 
 import app.card.view.TableView;
-
-import app.game.controller.MyObserverImpl;
 import app.game.model.ListConverter;
 import app.player.apii.Player;
 
@@ -50,7 +49,9 @@ public class GameView extends JFrame {
 
         this.add(tablePanel, BorderLayout.CENTER);
 
-        List<Card> cardList = tablePanel.getCardList();
+        List<Card> cardList = new ArrayList<>();
+        cardList.addAll(tablePanel.getCardList());
+
         List<Player> playersList;
 
         playersList = ListConverter.convert(playerNames, cardList);
@@ -59,7 +60,7 @@ public class GameView extends JFrame {
          * ButtonPanelView
          */
 
-        btnPanel = new ButtonPanelView(playersList, cardList, new MyObserverImpl(this));
+        btnPanel = new ButtonPanelView(playersList, cardList, new GameObserverImpl(this));
 
         this.add(btnPanel, BorderLayout.SOUTH);
 

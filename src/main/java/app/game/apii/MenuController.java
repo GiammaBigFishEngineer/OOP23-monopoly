@@ -16,7 +16,7 @@ public interface MenuController {
      * @param players the list of players participating in the game
      * @return true if the game is successfully started, false otherwise
      */
-    boolean startGame(List<Player> players);
+    boolean startGame(List<String> players);
 
     /**
      * Quits the current game.

@@ -2,8 +2,7 @@ package app.game.view;
 
 import javax.swing.*;
 
-import app.game.apii.GameObserver;
-import app.game.controller.ButtonControllerImpl;
+import app.game.controller.GameControllerImpl;
 import app.player.apii.Player;
 
 import app.card.apii.Card;
@@ -17,7 +16,7 @@ import java.util.*;
  */
 public class ButtonPanelView extends JPanel {
 
-    private ButtonControllerImpl logic;
+    private GameControllerImpl logic;
 
     private Map<BtnCodeEnum, Boolean> btnCodeList = new HashMap<>();
     private Map<BtnCodeEnum, JButton> btnList = new HashMap<>();
@@ -29,10 +28,12 @@ public class ButtonPanelView extends JPanel {
     private JButton endTurn;
     private JButton saveGame;
 
-    public ButtonPanelView(List<Player> playersList, List<Card> cardList, GameObserver obs) {
+    private GameObserverImpl observer;
 
-        logic = new ButtonControllerImpl(cardList, playersList);
-        logic.registerObserver(obs);
+    public ButtonPanelView(List<Player> playersList, List<Card> cardList, GameObserverImpl obs) {
+
+        this.logic = new GameControllerImpl(playersList, cardList);
+        this.observer = obs;
 
         this.setLayout(new GridLayout(2, 3));
         this.setBackground(Color.lightGray);
@@ -46,9 +47,30 @@ public class ButtonPanelView extends JPanel {
         btnList.put(BtnCodeEnum.rollDice, rollDice);
 
         rollDice.addActionListener(e -> {
-            logic.rollDice();
-            this.btnCodeList.putAll(logic.getBtnCodeList());
-            changeButtonVisibility();
+
+            Player currentPlayer = logic.getCurrentPlayer();
+
+            if (logic.rollDice(true)) {
+
+                int diceValue = logic.getDiceValue();
+
+                observer.update(diceValue, currentPlayer, "rollDice");
+                observer.update(-1, currentPlayer, "YouLoseMessage");
+                this.newTurn();
+
+            } else {
+
+                changeButtonVisibility();
+
+                currentPlayer = logic.getCurrentPlayer();
+                int diceValue = logic.getDiceValue();
+
+                observer.update(diceValue, currentPlayer, "rollDice");
+                observer.update(-1, currentPlayer, "refreshPlayerPanel");
+                observer.update(-1, currentPlayer, "refreshPlayerPosition");
+            }
+
+            rollDice.setEnabled(false);
         });
 
         /*
@@ -61,7 +83,14 @@ public class ButtonPanelView extends JPanel {
 
         buyPropriety.addActionListener(e -> {
 
-            logic.buyPropriety();
+            Player currentPlayer = logic.getCurrentPlayer();
+
+            if (!logic.buyPropriety()) {
+                obs.update(-1, currentPlayer, "NoBuyMessage");
+            }
+            currentPlayer = logic.getCurrentPlayer();
+            observer.update(-1, currentPlayer, "refreshPlayerPanel");
+
             buyPropriety.setEnabled(false);
 
         });
@@ -76,7 +105,12 @@ public class ButtonPanelView extends JPanel {
 
         sellPropriety.addActionListener(e -> {
 
+            Player currentPlayer = logic.getCurrentPlayer();
+
             logic.sellPropriety();
+            currentPlayer = logic.getCurrentPlayer();
+            observer.update(-1, currentPlayer, "refreshPlayerPanel");
+
             sellPropriety.setEnabled(false);
 
         });
@@ -91,7 +125,13 @@ public class ButtonPanelView extends JPanel {
 
         buyHouse.addActionListener(e -> {
 
-            logic.buildHouse();
+            Player currentPlayer = logic.getCurrentPlayer();
+
+            if (!logic.buildHouse()) {
+                observer.update(-1, currentPlayer, "NoBuyMessage");
+            }
+            currentPlayer = logic.getCurrentPlayer();
+            observer.update(-1, currentPlayer, "refreshPlayerPanel");
             buyHouse.setEnabled(false);
 
         });
@@ -118,7 +158,7 @@ public class ButtonPanelView extends JPanel {
         this.add(saveGame);
 
         saveGame.addActionListener(e -> {
-            logic.saveGame();
+
         });
 
         this.newTurn();
@@ -126,12 +166,36 @@ public class ButtonPanelView extends JPanel {
     }
 
     public void newTurn() {
-        logic.nextTurn();
-        this.btnCodeList.putAll(logic.getBtnCodeList());
+
+        logic.newTurn();
+
+        Player currentPlayer = logic.getCurrentPlayer();
+
+        currentPlayer = logic.getCurrentPlayer();
+
+        observer.update(-1, currentPlayer, "refreshPlayerPanel");
+
+        if (logic.isCurrentPlayerInJail()) {
+
+            if (observer.update(-1, currentPlayer, "bail")) {
+
+                logic.enableSingleButton(BtnCodeEnum.rollDice);
+
+            } else {
+                logic.tryLuckyBail();
+            }
+
+        } else {
+            logic.enableSingleButton(BtnCodeEnum.rollDice);
+        }
+
         changeButtonVisibility();
     }
 
     public void changeButtonVisibility() {
+
+        this.btnCodeList.putAll(logic.getBtnStatus());
+
         for (var entry : btnCodeList.entrySet()) {
 
             var code = entry.getKey();

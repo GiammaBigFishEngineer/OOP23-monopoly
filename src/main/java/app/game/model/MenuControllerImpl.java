@@ -52,8 +52,8 @@ public class MenuControllerImpl implements MenuController {
      * @return true if the game is successfully started, false otherwhise
      */
     @Override
-    public boolean startGame(final List<Player> players) {
-        if (players.size() < MIN_NUM_PLAYER || players.size() > MAX_NUM_PLAYER) {
+    public boolean startGame(final List<String> string) {
+        if (string.size() < MIN_NUM_PLAYER || string.size() > MAX_NUM_PLAYER) {
             return false;
         }
 
