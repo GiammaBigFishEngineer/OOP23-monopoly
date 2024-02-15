@@ -24,7 +24,7 @@ final class TestView {
         final int buildable = 7;
         final var factory = new CardFactoryImpl();
         final Unbuyable cardUnforseen = factory.createStaticCard(factory.createCard(buildable, "UnforseenTest"), "unforseen", 0);
-        final var table = new TableView(side);
+        final var table = new TableView(new CardFactoryImpl().cardsInitializer(), side);
         final var unforseenAllert = new UnforseenView(cardUnforseen.makeAction(null).get());
         final var frame = new JFrame();
         frame.setSize(size * side, side * side);

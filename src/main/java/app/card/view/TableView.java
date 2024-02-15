@@ -48,8 +48,9 @@ public class TableView extends ObservableImpl<Player> {
      * @param size is the number of cards for a side in table
      * @throws IOException
      */
-    public TableView(final List<Card> cardList, final int size) throws IOException {
+    public TableView(final List<Card> list, final int size) throws IOException {
         this.size = size;
+        this.cardList = list;
         this.setLayout(new GridLayout(size, size));
         this.setBackground(Color.decode("#7FFFD4"));
 
