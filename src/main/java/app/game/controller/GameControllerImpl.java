@@ -1,15 +1,17 @@
 package app.game.controller;
 
+import java.io.IOException;
 import java.util.*;
 
 import app.card.apii.Card;
 import app.card.apii.CardAdapter;
+import app.card.impl.CardFactoryImpl;
 import app.game.apii.GameController;
 
 import app.game.utils.Dice;
 
 import app.player.apii.Player;
-
+import app.player.impl.PlayerImpl;
 import app.game.view.BtnCodeEnum;
 
 public class GameControllerImpl implements GameController {
@@ -30,13 +32,12 @@ public class GameControllerImpl implements GameController {
 
     private Map<BtnCodeEnum, Boolean> btnList;
 
-    public GameControllerImpl(List<Player> playersList, List<Card> cardList) {
+    public GameControllerImpl(List<String> playersName) throws IOException {
 
-        players = new ArrayList<>();
-        this.players.addAll(playersList);
+        this.cards = new CardFactoryImpl().cardsInitializer();
 
-        cards = new ArrayList<>();
-        this.cards.addAll(cardList);
+        this.players = new ArrayList<>();
+        this.initializePlayer(playersName);
 
         currentDice = new Dice();
 
@@ -85,14 +86,14 @@ public class GameControllerImpl implements GameController {
         if (doubleDice) {
 
             // inizia il turno del player corrente
-            System.out.println("You get the same result");
+
             currentPlayer.setInJail(false);
             enableSingleButton(BtnCodeEnum.rollDice);
 
         } else {
 
             // finisce qui il suo turno
-            System.out.println("You didn't get the same result");
+
             enableSingleButton(BtnCodeEnum.endTurn);
 
         }
@@ -325,6 +326,20 @@ public class GameControllerImpl implements GameController {
     @Override
     public Integer getDiceValue() {
         return totalResult;
+    }
+
+    public void initializePlayer(List<String> names) {
+        var id = 1;
+        for (String name : names) {
+
+            this.players.add(new PlayerImpl(name, id, cards, 500));
+            id++;
+
+        }
+    }
+
+    public List<Card> getCardList() {
+        return this.cards;
     }
 
 }

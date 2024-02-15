@@ -17,20 +17,8 @@ public class GameMessage {
 
     }
 
-    public void buyPropriety(GameView gamePanel) {
-        JOptionPane.showMessageDialog(gamePanel, "buy propriety !");
-    }
-
-    public void sellPropriety(GameView gamePanel) {
-        JOptionPane.showMessageDialog(gamePanel, "sell propriety !");
-    }
-
     public void saveGame(GameView gamePanel) {
         JOptionPane.showMessageDialog(gamePanel, "You saved the game correctly!");
-    }
-
-    public void buyHouse(GameView gamePanel) {
-        JOptionPane.showMessageDialog(gamePanel, "buy house !");
     }
 
 }

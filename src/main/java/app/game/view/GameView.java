@@ -4,14 +4,10 @@ import java.io.IOException;
 import java.awt.*;
 
 import java.util.List;
-import java.util.ArrayList;
 
-import app.card.apii.Card;
 import javax.swing.*;
 
 import app.card.view.TableView;
-import app.game.model.ListConverter;
-import app.player.apii.Player;
 
 import app.player.view.PlayerPanelView;
 
@@ -21,7 +17,7 @@ import app.player.view.PlayerPanelView;
 public class GameView extends JFrame {
 
     private PlayerPanelView playerPanel;
-    private JPanel btnPanel;
+    private ButtonPanelView btnPanel;
     private TableView tablePanel;
 
     private final Dimension screen;
@@ -42,27 +38,20 @@ public class GameView extends JFrame {
         this.add(playerPanel, BorderLayout.NORTH);
 
         /*
-         * TableView
-         */
-
-        tablePanel = new TableView(7);
-
-        this.add(tablePanel, BorderLayout.CENTER);
-
-        List<Card> cardList = new ArrayList<>();
-        cardList.addAll(tablePanel.getCardList());
-
-        List<Player> playersList;
-
-        playersList = ListConverter.convert(playerNames, cardList);
-
-        /*
          * ButtonPanelView
          */
 
-        btnPanel = new ButtonPanelView(playersList, cardList, new GameObserverImpl(this));
+        btnPanel = new ButtonPanelView(playerNames, new GameObserverImpl(this));
 
         this.add(btnPanel, BorderLayout.SOUTH);
+
+        /*
+         * TableView
+         */
+
+        tablePanel = new TableView(7, btnPanel.getLogic().getCardList());
+
+        this.add(tablePanel, BorderLayout.CENTER);
 
         /*
          * Board Panels

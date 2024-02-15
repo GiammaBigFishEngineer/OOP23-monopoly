@@ -9,6 +9,7 @@ import app.card.apii.Card;
 
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -30,9 +31,9 @@ public class ButtonPanelView extends JPanel {
 
     private GameObserverImpl observer;
 
-    public ButtonPanelView(List<Player> playersList, List<Card> cardList, GameObserverImpl obs) {
+    public ButtonPanelView(List<String> playersNames, GameObserverImpl obs) throws IOException {
 
-        this.logic = new GameControllerImpl(playersList, cardList);
+        this.logic = new GameControllerImpl(playersNames);
         this.observer = obs;
 
         this.setLayout(new GridLayout(2, 3));
@@ -183,6 +184,12 @@ public class ButtonPanelView extends JPanel {
 
             } else {
                 logic.tryLuckyBail();
+                if (logic.isCurrentPlayerInJail()) {
+                    observer.update(-1, currentPlayer, "stillInPrison");
+                } else {
+                    observer.update(-1, currentPlayer, "freeToGo");
+                    logic.enableSingleButton(BtnCodeEnum.rollDice);
+                }
             }
 
         } else {
@@ -204,6 +211,10 @@ public class ButtonPanelView extends JPanel {
             btnList.get(code).setEnabled(bool);
 
         }
+    }
+
+    public GameControllerImpl getLogic() {
+        return this.logic;
     }
 
 }

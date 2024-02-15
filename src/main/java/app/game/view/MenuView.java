@@ -78,6 +78,7 @@ public class MenuView extends JFrame {
 
                     try {
                         new GameView(playerNames);
+                        dispose();
                     } catch (IOException e1) {
                         // TODO Auto-generated catch block
                         e1.printStackTrace();

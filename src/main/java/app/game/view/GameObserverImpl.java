@@ -2,6 +2,7 @@ package app.game.view;
 
 import app.card.apii.Observer;
 import app.card.view.TableView;
+import app.card.view.UnforseenView;
 import app.game.apii.GameObserver;
 import app.player.apii.Player;
 import app.player.view.BailView;
@@ -13,6 +14,10 @@ import java.util.HashMap;
 public class GameObserverImpl implements GameObserver {
 
     GameView gameV;
+
+    PlayerPanelView panelView;
+    TableView tablePanel;
+
     GameMessage popUp;
 
     Map<Player, Integer> map;
@@ -21,6 +26,9 @@ public class GameObserverImpl implements GameObserver {
         this.gameV = gameV;
         popUp = new GameMessage();
         map = new HashMap<>();
+
+        panelView = gameV.getPlayerPanelView();
+        tablePanel = gameV.getTableView();
     }
 
     @Override
@@ -33,7 +41,7 @@ public class GameObserverImpl implements GameObserver {
 
                 if (map.containsKey(currentPlayer)) {
 
-                    Observer<Player> removeObs = () -> gameV.getTableView().removePlayer("#fff",
+                    Observer<Player> removeObs = () -> tablePanel.removePlayer("#fff",
                             map.get(currentPlayer));
 
                     notifyObs(removeObs);
@@ -41,7 +49,7 @@ public class GameObserverImpl implements GameObserver {
                     map.remove(currentPlayer);
                 }
 
-                Observer<Player> addObs = () -> gameV.getTableView().redrawPlayer("#fff",
+                Observer<Player> addObs = () -> tablePanel.redrawPlayer("#fff",
                         currentPlayer.getCurrentPosition());
 
                 notifyObs(addObs);
@@ -52,14 +60,11 @@ public class GameObserverImpl implements GameObserver {
 
             case "refreshPlayerPanel":
 
-                PlayerPanelView panelView = gameV.getPlayerPanelView();
-                TableView tablePanel = gameV.getTableView();
-                tablePanel.getCardList().get(currentPlayer.getCurrentPosition());
+                var card = tablePanel.getCardList().get(currentPlayer.getCurrentPosition());
 
-                panelView.getLogic().setPlayer(currentPlayer,
-                        tablePanel.getCardList().get(currentPlayer.getCurrentPosition()));
+                panelView.getLogic().setPlayer(currentPlayer, card);
 
-                panelView.getLogic().setCurrentBox(tablePanel.getCardList().get(currentPlayer.getCurrentPosition()));
+                panelView.getLogic().setCurrentBox(card);
 
                 break;
 
@@ -71,6 +76,12 @@ public class GameObserverImpl implements GameObserver {
             case "bail":
                 BailView bailMessage = new BailView();
                 bool = bailMessage.showMenuBail(currentPlayer, gameV);
+
+                break;
+
+            case "Unforseen":
+
+                UnforseenView unforseenView;
 
                 break;
 
