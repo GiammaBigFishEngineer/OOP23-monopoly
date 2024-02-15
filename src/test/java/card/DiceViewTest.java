@@ -6,7 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 /**
- * Test for dice gui with dice rolling.
+ * Test for dice gui {@link app.card.view.DiceView} with dice rolling.
  */
 final class DiceViewTest {
 

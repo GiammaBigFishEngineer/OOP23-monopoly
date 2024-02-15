@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Tests for menu logic.
+ * Tests for menu logic: {@link app.game.model.MenuControllerImpl}.
  */
 class MenuTest {
     private MenuController menuController;
@@ -129,7 +129,7 @@ class MenuTest {
     }
 
     /**
-     * Utility method: it creates a list of dummy players with id and names.
+     * Utility method: it creates a list of dummy player names.
      * @param numPlayers the number of dummy names to create
      * @return a list of dummy player names
      */
