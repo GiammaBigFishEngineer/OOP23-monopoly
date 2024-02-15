@@ -1,4 +1,4 @@
-package card;
+package app.card;
 
 import app.card.view.DiceView;
 
@@ -20,7 +20,7 @@ final class DiceViewTest {
      * @param args
      * @throws java.io.IOException
      */
-    public static void main(final String[] args) throws java.io.IOException {
+    public static void run(final String[] args) throws java.io.IOException {
         SwingUtilities.invokeLater(() -> {
             final var diceView = new DiceView();
             final var frame = new JFrame();

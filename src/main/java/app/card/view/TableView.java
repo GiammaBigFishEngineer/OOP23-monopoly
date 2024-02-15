@@ -6,6 +6,7 @@ import javax.swing.ImageIcon;
 import app.card.apii.Card;
 import app.card.apii.CardAdapter;
 import app.card.impl.CardFactoryImpl;
+import app.card.utils.UseGetResource;
 import app.player.apii.Player;
 
 import java.awt.GridLayout;
@@ -13,10 +14,10 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Image;
 import java.io.IOException;
-import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.io.ObjectInputStream;
 /**
  * View of table in the game.
@@ -25,12 +26,18 @@ import java.io.ObjectInputStream;
  */
 public class TableView extends ObservableImpl<Player> {
 
-    private static final long serialVersionUID = 2298666777798069846L;
-    private transient List<Card> cardList = new CardFactoryImpl().cardsInitializer();
+    private static final long serialVersionUID = 3L;
+    private transient List<Card> cardList;
     private transient Map<Card, BoxPanelView> cells = new HashMap<>();
     private static final int IMAGESIZE = 70;
     private final int size;
 
+    /**
+     * Method of serialization.
+     * @param in
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         this.cells = new HashMap<>();
@@ -39,10 +46,12 @@ public class TableView extends ObservableImpl<Player> {
 
     /**
      * @param size is the number of cards for a side in table
+     * @param list is the list of card in table.
      * @throws IOException
      */
-    public TableView(final int size) throws IOException {
+    public TableView(final List<Card> list, final int size) throws IOException {
         this.size = size;
+        this.cardList = List.of(list.stream().toArray(Card[]::new));
         this.setLayout(new GridLayout(size, size));
         this.setBackground(Color.decode("#7FFFD4"));
 
@@ -79,7 +88,7 @@ public class TableView extends ObservableImpl<Player> {
         }
     }
 
-     /**
+    /**
      * Remove a player on the position passed.
      * this method takes advantage of the fact that each player has a unique color.
      * @param color
@@ -111,6 +120,21 @@ public class TableView extends ObservableImpl<Player> {
     }
 
     /**
+     * Return the image loaded from UseGetResource utility class.
+     * @param fileName is the name of image.
+     * @return the image loaded
+     */
+    private JLabel renderImage(final String fileName) {
+        final Image icon = new ImageIcon(Objects.requireNonNull(
+            UseGetResource.loadResource("view/image/" + fileName)))
+            .getImage()
+            .getScaledInstance(IMAGESIZE, IMAGESIZE, Image.SCALE_SMOOTH);
+        final JLabel image = new JLabel();
+        image.setIcon(new ImageIcon(icon));
+        return image;
+    }
+
+    /**
      * @param index is the index of card in list
      * @return the JPanel that's rappresent a Card
      */
@@ -127,49 +151,14 @@ public class TableView extends ObservableImpl<Player> {
             price = "";
         }
         final BoxPanelView jp = new BoxPanelView(card.getName(), price, card.getCardId());
-
-        final String sep = File.separator;
-        final String fileName = System.getProperty("user.dir") + sep + "src" + sep + "main" 
-            + sep + "java" + sep + "app" + sep + "card" + sep + "view" + sep + "resources" + sep;
         if (card.isUnbuyable()) {
             switch (card.getName()) {
-                case "Imprevisti":
-                    Image icon = new ImageIcon(fileName + "unforseen.png").getImage()
-                        .getScaledInstance(IMAGESIZE, IMAGESIZE, Image.SCALE_SMOOTH);
-                    JLabel image = new JLabel();
-                    image.setIcon(new ImageIcon(icon));
-                    jp.add(image, BorderLayout.CENTER);
-                break;
-                case "Vai in Prigione":
-                    icon = new ImageIcon(fileName + "goprison.png").getImage()
-                        .getScaledInstance(IMAGESIZE, IMAGESIZE, Image.SCALE_SMOOTH);
-                    image = new JLabel();
-                    image.setIcon(new ImageIcon(icon));
-                    jp.add(image, BorderLayout.CENTER);
-                break;
-                case "Transito":
-                    icon = new ImageIcon(fileName + "prison.png").getImage()
-                        .getScaledInstance(IMAGESIZE, IMAGESIZE, Image.SCALE_SMOOTH);
-                    image = new JLabel();
-                    image.setIcon(new ImageIcon(icon));
-                    jp.add(image, BorderLayout.CENTER);
-                break;
-                case "GO":
-                    icon = new ImageIcon(fileName + "go.png").getImage()
-                        .getScaledInstance(IMAGESIZE, IMAGESIZE, Image.SCALE_SMOOTH);
-                    image = new JLabel();
-                    image.setIcon(new ImageIcon(icon));
-                    jp.add(image, BorderLayout.CENTER);
-                break;
-                case "Parcheggio":
-                    icon = new ImageIcon(fileName + "parking.png").getImage()
-                        .getScaledInstance(IMAGESIZE, IMAGESIZE, Image.SCALE_SMOOTH);
-                    image = new JLabel();
-                    image.setIcon(new ImageIcon(icon));
-                    jp.add(image, BorderLayout.CENTER);
-                break;
-                default:
-                break;
+                case "Imprevisti" -> jp.add(renderImage("unforseen.png"), BorderLayout.CENTER);
+                case "Vai in Prigione" -> jp.add(renderImage("goprison.png"), BorderLayout.CENTER);
+                case "Transito" -> jp.add(renderImage("prison.png"), BorderLayout.CENTER);
+                case "GO" -> jp.add(renderImage("go.png"), BorderLayout.CENTER);
+                case "Parcheggio" -> jp.add(renderImage("parking.png"), BorderLayout.CENTER);
+                default -> throw new IllegalArgumentException("the name read isn't a static name card");
             }
         }
         this.cells.put(card, jp);

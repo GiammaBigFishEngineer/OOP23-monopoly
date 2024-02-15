@@ -7,14 +7,14 @@ import app.player.apii.Player;
 
 /**
  * A functional interface for design actions of static cards.
+ * This is a Strategy patterns with lamda expression
  */
 @FunctionalInterface
-public interface StaticAction {
+public interface StaticActionStrategy {
     /**
      * 
      * @param player who get the action
-     * @param amount is the amount of action
      * @return an empty optional if the action is not unforseen
      */
-    Optional<Unforseen> myAction(Player player, int amount);
+    Optional<Unforseen> myAction(Player player);
 }

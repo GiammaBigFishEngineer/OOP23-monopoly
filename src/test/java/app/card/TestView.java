@@ -1,4 +1,4 @@
-package card;
+package app.card;
 
 import javax.swing.JFrame;
 
@@ -24,13 +24,13 @@ final class TestView {
         final int buildable = 7;
         final var factory = new CardFactoryImpl();
         final Unbuyable cardUnforseen = factory.createStaticCard(factory.createCard(buildable, "UnforseenTest"), "unforseen", 0);
-        final var table = new TableView(side);
+        final var table = new TableView(new CardFactoryImpl().cardsInitializer(), side);
         final var unforseenAllert = new UnforseenView(cardUnforseen.makeAction(null).get());
         final var frame = new JFrame();
         frame.setSize(size * side, side * side);
         frame.add(unforseenAllert);
         frame.getContentPane().add(table);
-        table.redrawPlayer("#52ff", buildable);
+        table.redrawPlayer("#FF0000", buildable);
         table.redrawPlayer("#000", buildable);
         table.redrawPlayer("#ff000", buildable);
         table.removePlayer("#000", buildable);

@@ -37,5 +37,4 @@ public interface CardAdapter {
         }
         return (Unbuyable) card;
     }
-
 }
