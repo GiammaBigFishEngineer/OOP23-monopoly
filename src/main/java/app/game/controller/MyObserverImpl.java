@@ -30,22 +30,20 @@ public class MyObserverImpl implements GameObserver {
 
             case "refreshPlayerPosition":
 
-                System.out.println("aggiorno posizione");
-                Observer<Player> tableObs = () -> gameV.getTableView().redrawPlayer("#fff",
-                        currentPlayer.getCurrentPosition());
-                gameV.getTableView().addObserver(tableObs);
+                var tableView = gameV.getTableView();
 
-                gameV.getTableView().notifyObservers();
+                System.out.println("aggiorno posizione");
+                Observer<Player> tableObs = () -> tableView.redrawPlayer("#fff",
+                        currentPlayer.getCurrentPosition());
+                tableView.addObserver(tableObs);
+
+                tableView.notifyObservers();
 
                 break;
 
             case "refreshPlayerPanel":
 
-                var box = gameV.getTableView().getCardList().get(currentPlayer.getCurrentPosition());
-                gameV.getPlayerPanelView().getLogic().setPlayer(currentPlayer, box);
-                gameV.getPlayerPanelView().getLogic().setCurrentBox(box);
-
-                gameV.getPlayerPanelView().getLogic().refresh();
+                System.out.println("aggiorno panel");
 
                 break;
 

@@ -2,8 +2,10 @@ package app.game.view;
 
 import javax.swing.*;
 
+import app.game.apii.ButtonController;
 import app.game.apii.GameController;
 import app.game.apii.GameObserver;
+import app.game.controller.ButtonControllerImpl;
 import app.game.controller.GameControllerImpl;
 import app.player.apii.Player;
 
@@ -18,7 +20,7 @@ import java.util.*;
  */
 public class ButtonPanelView extends JPanel {
 
-    private GameController logic;
+    private ButtonControllerImpl logic;
 
     private Map<BtnCodeEnum, Boolean> btnCodeList = new HashMap<>();
     private Map<BtnCodeEnum, JButton> btnList = new HashMap<>();
@@ -30,15 +32,10 @@ public class ButtonPanelView extends JPanel {
     private JButton endTurn;
     private JButton saveGame;
 
-    private GameObserver obs;
-
-    private Player currentPlayer;
-
     public ButtonPanelView(List<Player> playersList, List<Card> cardList, GameObserver obs) {
 
-        this.obs = obs;
-
-        logic = new GameControllerImpl(playersList, cardList);
+        logic = new ButtonControllerImpl(cardList, playersList);
+        logic.registerObserver(obs);
 
         this.setLayout(new GridLayout(2, 3));
         this.setBackground(Color.lightGray);
@@ -52,16 +49,9 @@ public class ButtonPanelView extends JPanel {
         btnList.put(BtnCodeEnum.rollDice, rollDice);
 
         rollDice.addActionListener(e -> {
-            logic.rollDice(true);
-            btnCodeList.putAll(logic.getBtnStatus());
-
+            logic.rollDice();
+            this.btnCodeList.putAll(logic.getBtnCodeList());
             changeButtonVisibility();
-
-            currentPlayer = logic.getCurrentPlayer();
-            var diceValue = logic.getDiceValue();
-            obs.update(diceValue, currentPlayer, "rollDice");
-            obs.update(-1, currentPlayer, "refreshPlayerPosition");
-            obs.update(-1, currentPlayer, "refreshPlayerPanel");
         });
 
         /*
@@ -75,11 +65,7 @@ public class ButtonPanelView extends JPanel {
         buyPropriety.addActionListener(e -> {
 
             logic.buyPropriety();
-
             buyPropriety.setEnabled(false);
-
-            currentPlayer = logic.getCurrentPlayer();
-            obs.update(-1, currentPlayer, "refreshPlayerPanel");
 
         });
 
@@ -96,9 +82,6 @@ public class ButtonPanelView extends JPanel {
             logic.sellPropriety();
             sellPropriety.setEnabled(false);
 
-            currentPlayer = logic.getCurrentPlayer();
-            obs.update(-1, currentPlayer, "refreshPlayerPanel");
-
         });
 
         /*
@@ -114,9 +97,6 @@ public class ButtonPanelView extends JPanel {
             logic.buildHouse();
             buyHouse.setEnabled(false);
 
-            currentPlayer = logic.getCurrentPlayer();
-            obs.update(-1, currentPlayer, "refreshPlayerPanel");
-
         });
 
         /*
@@ -129,7 +109,7 @@ public class ButtonPanelView extends JPanel {
 
         endTurn.addActionListener(e -> {
 
-            this.nextTurn();
+            this.newTurn();
 
         });
 
@@ -140,36 +120,18 @@ public class ButtonPanelView extends JPanel {
         saveGame = new JButton("Save Game");
         this.add(saveGame);
 
-        this.nextTurn();
+        saveGame.addActionListener(e -> {
+            logic.saveGame();
+        });
+
+        this.newTurn();
 
     }
 
-    public void nextTurn() {
-
-        logic.newTurn();
-
-        currentPlayer = logic.getCurrentPlayer();
-
-        obs.update(-1, currentPlayer, "refreshPlayerPanel");
-
-        if (logic.isCurrentPlayerInJail()) {
-
-            if (obs.update(-1, currentPlayer, "bail")) {
-
-                logic.enableSingleButton(BtnCodeEnum.rollDice);
-
-            } else {
-                logic.tryLuckyBail();
-            }
-
-        } else {
-            logic.enableSingleButton(BtnCodeEnum.rollDice);
-        }
-
-        btnCodeList.putAll(logic.getBtnStatus());
-
+    public void newTurn() {
+        logic.nextTurn();
+        this.btnCodeList.putAll(logic.getBtnCodeList());
         changeButtonVisibility();
-
     }
 
     public void changeButtonVisibility() {
