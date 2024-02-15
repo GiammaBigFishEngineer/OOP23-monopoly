@@ -27,21 +27,11 @@ public class MenuControllerImpl implements MenuController {
             return false;
         }
 
-        /*Set<String> uniqueNames = new HashSet<>(playerNames);
-        if (uniqueNames.size() != playerNames.size() || playerNames.contains(null) || playerNames.contains("")) {
-            return false;
-        }*/
-
-        // Rimozione eventuali spazi
         final Set<String> uniqueNames = new HashSet<>();
         for (final String name : playerNames) {
-            final String normalizedName = name.trim(); //.toLowerCase;   es: Gio e gio sarebbero uguali
+            final String normalizedName = name.trim(); //.toLowerCase;   es: 'Gio' e 'gio' sarebbero uguali
             uniqueNames.add(normalizedName);
         }
-
-        /*if (uniqueNames.size() != playerNames.size() || playerNames.contains(null) || playerNames.contains("")) {
-            return false;
-        }*/
 
         return !(uniqueNames.size() != playerNames.size() || playerNames.contains(null) || playerNames.contains(""));
     }
