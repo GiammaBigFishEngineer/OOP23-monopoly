@@ -35,15 +35,15 @@ public class MenuControllerImpl implements MenuController {
         // Rimozione eventuali spazi
         final Set<String> uniqueNames = new HashSet<>();
         for (final String name : playerNames) {
-            String normalizedName = name.trim(); //.toLowerCase;   es: Gio e gio sarebbero uguali
+            final String normalizedName = name.trim(); //.toLowerCase;   es: Gio e gio sarebbero uguali
             uniqueNames.add(normalizedName);
         }
 
-        if (uniqueNames.size() != playerNames.size() || playerNames.contains(null) || playerNames.contains("")) {
+        /*if (uniqueNames.size() != playerNames.size() || playerNames.contains(null) || playerNames.contains("")) {
             return false;
-        }
+        }*/
 
-        return true;
+        return !(uniqueNames.size() != playerNames.size() || playerNames.contains(null) || playerNames.contains(""));
     }
 
     /**
