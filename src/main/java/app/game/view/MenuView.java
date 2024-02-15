@@ -20,9 +20,9 @@ public class MenuView extends JFrame {
     private JLabel titleLabel;
     private JLabel subtitleLabel;
 
-    final Dimension screen;
-    final int screenWidth;
-    final int screenHeight;
+    private final Dimension screen;
+    private final int screenWidth;
+    private final int screenHeight;
     private final int PROPORTION = 2;
 
     private MenuController controller;
@@ -31,7 +31,6 @@ public class MenuView extends JFrame {
         super("GameMenu");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.getContentPane().setBackground(Color.white);
-        this.setResizable(false);
 
         controller = new MenuControllerImpl();
 
@@ -130,7 +129,7 @@ public class MenuView extends JFrame {
         setLayout(new GridBagLayout());
 
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.insets = new Insets(40, 10, 10, 10);
         gbc.gridx = 0;
         gbc.gridy = 2;
 
@@ -162,7 +161,9 @@ public class MenuView extends JFrame {
         screenHeight = (int) screen.getHeight();
         screenWidth = (int) screen.getWidth();
 
-        setSize(screenWidth / PROPORTION, screenHeight / PROPORTION);
+        setSize(screen);
+
+        setMinimumSize(new Dimension(screenWidth / PROPORTION, screenHeight / PROPORTION));
 
         this.setVisible(true);
     }

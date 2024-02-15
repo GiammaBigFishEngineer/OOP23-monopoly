@@ -20,9 +20,14 @@ import app.player.view.PlayerPanelView;
  */
 public class GameView extends JFrame {
 
-    PlayerPanelView playerPanel;
-    JPanel btnPanel;
-    TableView tablePanel;
+    private PlayerPanelView playerPanel;
+    private JPanel btnPanel;
+    private TableView tablePanel;
+
+    private final Dimension screen;
+    private final int screenWidth;
+    private final int screenHeight;
+    private final int PROPORTION = 2;
 
     public GameView(List<Player> playersList) throws IOException {
 
@@ -52,7 +57,13 @@ public class GameView extends JFrame {
 
         this.pack();
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.setMinimumSize(new Dimension(700, 700));
+
+        screen = Toolkit.getDefaultToolkit().getScreenSize();
+        screenHeight = (int) screen.getHeight();
+        screenWidth = (int) screen.getWidth();
+
+        this.setSize(screen);
+        this.setMinimumSize(new Dimension(screenWidth / PROPORTION, screenHeight / PROPORTION));
         this.setVisible(true);
 
     }
