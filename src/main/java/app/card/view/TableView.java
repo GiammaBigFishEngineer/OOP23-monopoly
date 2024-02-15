@@ -27,7 +27,7 @@ import java.io.ObjectInputStream;
 public class TableView extends ObservableImpl<Player> {
 
     private static final long serialVersionUID = 3L;
-    private transient List<Card> cardList = new CardFactoryImpl().cardsInitializer();
+    private transient List<Card> cardList;
     private transient Map<Card, BoxPanelView> cells = new HashMap<>();
     private static final int IMAGESIZE = 70;
     private final int size;
@@ -48,7 +48,7 @@ public class TableView extends ObservableImpl<Player> {
      * @param size is the number of cards for a side in table
      * @throws IOException
      */
-    public TableView(final int size) throws IOException {
+    public TableView(final List<Card> cardList, final int size) throws IOException {
         this.size = size;
         this.setLayout(new GridLayout(size, size));
         this.setBackground(Color.decode("#7FFFD4"));
