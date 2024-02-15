@@ -190,20 +190,21 @@ public final class PlayerImpl implements Player {
      * {@inheritDoc}
      */
     @Override
-    public void buyBox(final Buyable box) {
+    public boolean buyBox(final Buyable box) {
         final Card castBuyable = (Card) box;
         if (map.get(castBuyable).isPresent()) {
-            return;
+            return false;
         }
         account.payPlayer(null, box.getPrice());
         map.put(castBuyable, Optional.of(0)); // 0 è diverso da Empty, quindi possiedo la casella con 0 case costruite
+        return true;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void buildHouse(final Buildable box) {
+    public boolean buildHouse(final Buildable box) {
         final Card castBuildable = (Card) box;
         if (map.get(castBuildable).isEmpty()) {
             throw new IllegalArgumentException("You're trying to build a house on a box you don't own");
@@ -213,6 +214,7 @@ public final class PlayerImpl implements Player {
         }
         // Aggiungo alla casella acquistata il numero di case incrementato di 1
         map.put(castBuildable, Optional.of(map.get(castBuildable).get() + 1));
+        return true;
     }
 
     /**

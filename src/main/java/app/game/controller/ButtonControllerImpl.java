@@ -1,6 +1,5 @@
 package app.game.controller;
 
-import app.game.apii.GameObservableImpl;
 import app.game.view.BtnCodeEnum;
 import app.player.apii.Player;
 import app.card.apii.Card;
@@ -36,22 +35,37 @@ public class ButtonControllerImpl extends GameObservableImpl implements ButtonCo
     @Override
     public void rollDice() {
 
-        logic.rollDice(true);
-        btnCodeList.putAll(logic.getBtnStatus());
+        /*
+         * Return true if player got defeated
+         */
 
-        currentPlayer = logic.getCurrentPlayer();
-        int diceValue = logic.getDiceValue();
+        if (logic.rollDice(true)) {
 
-        updateObserver(diceValue, currentPlayer, "rollDice");
-        updateObserver(-1, currentPlayer, "refreshPlayerPanel");
-        updateObserver(-1, currentPlayer, "refreshPlayerPosition");
+            int diceValue = logic.getDiceValue();
+
+            updateObserver(diceValue, currentPlayer, "rollDice");
+            updateObserver(-1, currentPlayer, "YouLoseMessage");
+            this.nextTurn();
+
+        } else {
+            btnCodeList.putAll(logic.getBtnStatus());
+
+            currentPlayer = logic.getCurrentPlayer();
+            int diceValue = logic.getDiceValue();
+
+            updateObserver(diceValue, currentPlayer, "rollDice");
+            updateObserver(-1, currentPlayer, "refreshPlayerPanel");
+            updateObserver(-1, currentPlayer, "refreshPlayerPosition");
+        }
 
     }
 
     @Override
     public void buyPropriety() {
 
-        logic.buyPropriety();
+        if (!logic.buyPropriety()) {
+            updateObserver(-1, currentPlayer, "NoBuyMessage");
+        }
         currentPlayer = logic.getCurrentPlayer();
         updateObserver(-1, currentPlayer, "refreshPlayerPanel");
 
@@ -60,7 +74,9 @@ public class ButtonControllerImpl extends GameObservableImpl implements ButtonCo
     @Override
     public void buildHouse() {
 
-        logic.buildHouse();
+        if (!logic.buildHouse()) {
+            updateObserver(-1, currentPlayer, "NoBuyMessage");
+        }
         currentPlayer = logic.getCurrentPlayer();
         updateObserver(-1, currentPlayer, "refreshPlayerPanel");
 

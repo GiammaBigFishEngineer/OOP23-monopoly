@@ -2,11 +2,8 @@ package app.game.view;
 
 import javax.swing.*;
 
-import app.game.apii.ButtonController;
-import app.game.apii.GameController;
 import app.game.apii.GameObserver;
 import app.game.controller.ButtonControllerImpl;
-import app.game.controller.GameControllerImpl;
 import app.player.apii.Player;
 
 import app.card.apii.Card;

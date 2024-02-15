@@ -14,6 +14,7 @@ import app.game.view.BtnCodeEnum;
 
 public class GameControllerImpl implements GameController {
     private List<Player> players;
+    private List<Player> defeated;
     private Player currentPlayer;
     private int currentPlayerIndex = -1;
 
@@ -38,6 +39,8 @@ public class GameControllerImpl implements GameController {
         this.cards.addAll(cardList);
 
         currentDice = new Dice();
+
+        defeated = new ArrayList<>();
 
         btnList = new HashMap<>();
         btnList.put(BtnCodeEnum.buyHouse, false);
@@ -97,7 +100,7 @@ public class GameControllerImpl implements GameController {
     }
 
     @Override
-    public void rollDice(Boolean b) {
+    public boolean rollDice(Boolean b) {
 
         currentDice.roll();
 
@@ -116,6 +119,8 @@ public class GameControllerImpl implements GameController {
             startTurn();
 
         }
+
+        return isDefeated();
 
     }
 
@@ -199,23 +204,37 @@ public class GameControllerImpl implements GameController {
     }
 
     @Override
-    public void buyPropriety() {
+    public boolean buyPropriety() {
 
-        currentPlayer.buyBox(CardAdapter.buyableAdapter(currentCard));
         disableSingleButton(BtnCodeEnum.buyPropriety);
+
+        if (!currentPlayer.buyBox(CardAdapter.buyableAdapter(currentCard))) {
+            System.out.println("you can't afford it");
+            return false;
+        }
+
+        return true;
 
     }
 
     @Override
-    public void buildHouse() {
+    public boolean buildHouse() {
 
-        currentPlayer.buildHouse(CardAdapter.buildableAdapter(currentCard));
         disableSingleButton(BtnCodeEnum.buyHouse);
+
+        if (!currentPlayer.buildHouse(CardAdapter.buildableAdapter(currentCard))) {
+            System.out.println("you can't afford it");
+            return false;
+        }
+
+        return true;
 
     }
 
     @Override
     public void sellPropriety() {
+
+        disableSingleButton(BtnCodeEnum.sellPropriety);
         currentPlayer.sellBuyable(CardAdapter.buyableAdapter(currentCard));
     }
 
@@ -223,20 +242,40 @@ public class GameControllerImpl implements GameController {
     public void payFees(Player owner) {
 
         int fees = CardAdapter.buyableAdapter(currentCard).getTransitFees();
-        currentPlayer.getBankAccount().payPlayer(owner, fees);
+
+        if (!currentPlayer.getBankAccount().payPlayer(owner, fees)) {
+            this.defeatPlayer();
+        }
 
     }
 
-    @Override
-    public void checkBox(Player currentPlayer, Card box) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'checkBox'");
+    public void defeatPlayer() {
+
+        defeated.add(currentPlayer);
+        players.remove(currentPlayer);
+
+        newIndex();
+
+        if (isOver()) {
+            System.out.println("GameOver");
+            this.endGame();
+        }
     }
 
-    @Override
-    public Card currentBox(Player currentPlayer) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'currentBox'");
+    public boolean isOver() {
+        return players.size() == 1;
+    }
+
+    public void endGame() {
+
+    }
+
+    public boolean isDefeated() {
+        return defeated.contains(currentPlayer);
+    }
+
+    public void newIndex() {
+        this.currentPlayerIndex--;
     }
 
     public void enableSingleButton(BtnCodeEnum code) {

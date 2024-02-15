@@ -93,13 +93,13 @@ final class TestLazyPlayer implements Player {
     }
 
     @Override
-    public void buyBox(Buyable box) {
+    public boolean buyBox(Buyable box) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'buyBox'");
     }
 
     @Override
-    public void buildHouse(Buildable box) {
+    public boolean buildHouse(Buildable box) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'buildHouse'");
     }

@@ -1,5 +1,7 @@
-package app.game.apii;
+package app.game.controller;
 
+import app.game.apii.GameObservable;
+import app.game.apii.GameObserver;
 import app.player.apii.Player;
 
 public class GameObservableImpl implements GameObservable {

@@ -85,12 +85,12 @@ public interface Player {
     /**
      * @param box whose type is Buyable
      */
-    void buyBox(Buyable box);
+    boolean buyBox(Buyable box);
 
     /**
      * @param box whose type is Buildable
      */
-    void buildHouse(Buildable box);
+    boolean buildHouse(Buildable box);
 
     /**
      * @param box whose type is Buyable
