@@ -1,14 +1,11 @@
 package app.player.impl;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import app.card.apii.Buildable;
 import app.card.apii.Buyable;
-import app.card.apii.Card;
 import app.player.apii.BankAccount;
 import app.player.apii.Player;
 
@@ -17,7 +14,6 @@ import app.player.apii.Player;
  */
 public class PlayerImpl implements Player {
 
-    private final Map<Card, Optional<Integer>> map;
     private int currentPosition;
     private final String name;
     private final int id;
@@ -29,18 +25,12 @@ public class PlayerImpl implements Player {
      * 
      * @param name the name of the player
      * @param id the id of the player
-     * @param cards
-     * @param initialAmount
      */
-    public PlayerImpl(final String name, final int id, final List<Card> cards, final int initialAmount) {
+    public PlayerImpl(final String name, final int id) {
         this.name = name;
         this.id = id;
-        this.map = new HashMap<>();
         this.currentPosition = 0;
-        for (final Card box : cards) {
-            this.map.put(box, Optional.empty());
-        }
-        this.bankAccount = new BankAccountImpl(initialAmount);
+        this.bankAccount = new BankAccountImpl();
     }
 
     /**
