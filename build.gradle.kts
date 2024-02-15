@@ -19,6 +19,9 @@ dependencies {
 
     // Use JUnit Jupiter Engine for testing.
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.1")
+
+    // Usato per sopprimere Spotbugs Warnings.
+    compileOnly("com.github.spotbugs:spotbugs-annotations:4.7.3") 
 }
 
 val mainClass: String by project

@@ -11,6 +11,7 @@ public final class BailLogicImpl implements BailLogic {
 
     /**
      * Constant value for a default payment.
+     * It is public as it has to be used in BailView.
      */
     public static final int DEFAULT_PAYMENT = 100;
 

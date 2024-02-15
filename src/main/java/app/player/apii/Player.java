@@ -70,12 +70,14 @@ public interface Player {
     int getNumberStationOwned();
     /**
      * @param box whose type is Buyable
+     * @return boolean which indicates if the player can buy the box.
      */
-    void buyBox(Buyable box);
+    boolean buyBox(Buyable box);
     /**
      * @param box whose type is Buildable
+     * @return boolean which indicates if the operation was concluded or not.
      */
-    void buildHouse(Buildable box);
+    boolean buildHouse(Buildable box);
     /**
      * @param box whose type is Buyable
      */

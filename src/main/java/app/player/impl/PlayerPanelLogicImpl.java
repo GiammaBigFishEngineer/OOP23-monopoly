@@ -1,12 +1,16 @@
 package app.player.impl;
 
 import java.util.Optional;
+import java.util.List;
+import java.util.LinkedList;
 
+import app.card.apii.Buyable;
 import app.card.apii.Card;
 import app.card.apii.CardAdapter;
 import app.player.apii.Player;
 import app.player.apii.PlayerPanelLogic;
 import app.player.view.PlayerPanelView;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Class which implements PlayerPanelLogic.
@@ -22,6 +26,10 @@ public final class PlayerPanelLogicImpl implements PlayerPanelLogic {
      * @param currentBox
      * @param panel
      */
+    @SuppressFBWarnings(
+        value = { "EI_EXPOSE_REP2" }, 
+        justification =  "Voglio che gli oggetti currentPlayer e currentBox siano modificabili."
+            + "Infatti, ho bisogno dell'oggetto proprio della classe e non di una copia.")
     public PlayerPanelLogicImpl(final Player currentPlayer, final Card currentBox, final PlayerPanelView panel) {
         this.currentPlayer = currentPlayer;
         this.currentBox = currentBox;
@@ -31,8 +39,15 @@ public final class PlayerPanelLogicImpl implements PlayerPanelLogic {
      * {@inheritDoc}
      */
     @Override
+    @SuppressFBWarnings(
+        value = { "EI_EXPOSE_REP2" }, 
+        justification =  "Voglio che l'oggetto Player sia modificabile da chi chiama questo metodo,"
+            + "perché è finalizzato ad aggiornare i valori relativi al giocatore stesso."
+            + "Infatti, se ritornassi una copia del Player, "
+            + "il metodo refresh() non andrebbe ad aggiornare effettivamente i valori,ma la copia." 
+            + "Per cui, non succederebbe quanto voluto.")
     public void setPlayer(final Player player, final Card currentBox) {
-        this.currentPlayer = player; 
+        this.currentPlayer = player;
         setCurrentBox(currentBox);
     }
 
@@ -50,20 +65,30 @@ public final class PlayerPanelLogicImpl implements PlayerPanelLogic {
      */
     @Override
     public void refresh() {
-        panel.getPlayerName().setText(this.currentPlayer.getName());
-        panel.getPlayerID().setText(String.valueOf(this.currentPlayer.getID()));
-        panel.getPlayerBoxes().setText(String.valueOf(this.currentPlayer.getBuyableOwned().size()));
+        panel.setPlayerNameText(this.currentPlayer.getName());
+        panel.setPlayerIDText(String.valueOf(this.currentPlayer.getID()));
+        final List<Buyable> buyableOwned = this.currentPlayer.getBuyableOwned();
+        final List<String> buyableNames = new LinkedList<>();
+        for (final Buyable buyable : buyableOwned) {
+            buyableNames.add(buyable.getName()); 
+        }
+        if (buyableNames.isEmpty()) {
+            panel.setPlayerBoxesText("Non possiedi alcuna proprieta'");
+        } else {
+            panel.setPlayerBoxesText(String.join(", ", buyableNames));
+        }
         if (currentBox.isBuildable()) {
             final Optional<Integer> housesBuilt = this.currentPlayer.getHouseBuilt(CardAdapter.buildableAdapter(currentBox)); 
             if (housesBuilt.isPresent()) {
-                panel.getPlayerHouses().setText(String.valueOf(housesBuilt.get()));
+                panel.setPlayerHousesText(String.valueOf(housesBuilt.get()));
             } else {
-                panel.getPlayerHouses().setText("0");
+                panel.setPlayerHousesText("Non possiedi questa casella");
             } 
         } else {
-            panel.getPlayerHouses().setText("0");
+            panel.setPlayerHousesText("Su questa casella non si possono costruire case");
         }
-        panel.getPlayerMoney().setText(String.valueOf(this.currentPlayer.getBankAccount().getBalance()));
-        panel.getPlayerStations().setText(String.valueOf(this.currentPlayer.getNumberStationOwned()));
+        panel.setPlayerMoneyText(String.valueOf(this.currentPlayer.getBankAccount().getBalance()));
+        // non ritorno il numero di stazioni possedute, ma il nome di quelle che possiede
+        panel.setPlayerStationsText(String.valueOf(this.currentPlayer.getNumberStationOwned()));
     }
 }

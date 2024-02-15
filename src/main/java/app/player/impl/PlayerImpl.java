@@ -1,12 +1,11 @@
 package app.player.impl;
 
+import java.awt.Color;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
-import java.awt.Color;
 
 import app.card.apii.Buildable;
 import app.card.apii.Buyable;
@@ -185,27 +184,36 @@ public final class PlayerImpl implements Player {
      * {@inheritDoc}
      */
     @Override
-    public void buyBox(final Buyable box) { 
+    public boolean buyBox(final Buyable box) { 
         if (map.get(box).isPresent()) {
-            return; 
+            return false; 
         }
-        account.payPlayer(null, box.getPrice());
-        map.put(box, Optional.of(0)); // 0 perché possiedo la casella con 0 case costruite
+        if (account.payPlayer(null, box.getPrice())) {
+            map.put(box, Optional.of(0)); // 0 perché possiedo la casella con 0 case costruite
+            return true; 
+        } else {
+            return false;
+        }
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void buildHouse(final Buildable box) {
+    public boolean buildHouse(final Buildable box) {
         if (map.get(box).isEmpty()) {
             throw new IllegalArgumentException("You're trying to build a house on a box you don't own"); 
         }
         if (map.get(box).get() >= MAX_NUMBER_HOUSES) {
-            throw new IllegalArgumentException("Already built maximum number of houses on this box");
+            return false; 
         }
-        // Aggiungo alla casella acquistata il numero di case incrementato di 1
-        map.put(box, Optional.of(map.get(box).get() + 1));
+        if (this.account.payPlayer(null, box.getHousePrice())) {
+            // Aggiungo alla casella acquistata il numero di case incrementato di 1
+            map.put(box, Optional.of(map.get(box).get() + 1));
+            return true; 
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -237,5 +245,24 @@ public final class PlayerImpl implements Player {
         this.account.receivePayment(boxValue(box));
         // lo eseguo dopo perché altrimenti rimuovo prima di contare quante case ho sopra
         map.put(box, Optional.empty());
+    }
+
+    /**
+     * As the method getBankAccount() returns a defensive copy of the bankAccount of the player, 
+     * only the player can modify this object. 
+     * Who uses the method getBankAccount() would modify the copy of the account:
+     * as a result, I have created the following methods which effectively modify the player's account.
+     * @param amount
+     */
+    public void receivePayment(final int amount) {
+        this.account.receivePayment(amount);
+    }
+    /**
+     * @param player
+     * @param amount
+     * @return boolean
+     */
+    public boolean payPlayer(final Player player, final int amount) {
+        return this.account.payPlayer(player, amount);
     }
 }

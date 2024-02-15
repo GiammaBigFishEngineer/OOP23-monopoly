@@ -12,7 +12,7 @@ import app.player.impl.BankAccountImpl;
  */
 class TestBankAccountImpl {
     private static final int DEFAULT_PAYMENT = 100;
-    private BankAccount bankAccount1, bankAccount2; 
+    private BankAccount bankAccount1, bankAccount2;
 
     /**
      * Configuration step: this is performed before each test.
@@ -37,7 +37,7 @@ class TestBankAccountImpl {
      */
     @Test
     void testHasBalanceChanged() {
-        this.bankAccount1.receivePayment(DEFAULT_PAYMENT); // 200
+        this.bankAccount1.receivePayment(DEFAULT_PAYMENT);
         Assertions.assertEquals(bankAccount2.getBalance(), bankAccount1.getBalance());
         this.bankAccount1.setBalance(DEFAULT_PAYMENT);
         Assertions.assertTrue(bankAccount1.hasBalanceChanged());
