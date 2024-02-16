@@ -154,8 +154,6 @@ public class GameControllerImpl implements GameController {
 
         currentCard = cardsList.get(currentCardIndex);
 
-        currentPlayer.setInJail(true);
-
         handleCard();
 
     }
@@ -274,7 +272,7 @@ public class GameControllerImpl implements GameController {
 
         int fees = CardAdapter.buyableAdapter(currentCard).getTransitFees();
 
-        if (!currentPlayer.getBankAccount().payPlayer(owner, fees)) {
+        if (!currentPlayer.payPlayer(owner, fees)) {
             this.defeatPlayer();
         }
 

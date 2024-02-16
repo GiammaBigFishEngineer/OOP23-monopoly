@@ -5,8 +5,11 @@ import java.awt.*;
 
 import java.util.List;
 
+import app.card.apii.Card;
+
 import javax.swing.*;
 
+import app.card.impl.CardFactoryImpl;
 import app.card.view.TableView;
 
 import app.player.view.PlayerPanelView;
@@ -38,20 +41,20 @@ public class GameView extends JFrame {
         this.add(playerPanel, BorderLayout.NORTH);
 
         /*
+         * TableView
+         */
+        List<Card> cardList = new CardFactoryImpl().cardsInitializer();
+        tablePanel = new TableView(cardList, 7);
+
+        this.add(tablePanel, BorderLayout.CENTER);
+
+        /*
          * ButtonPanelView
          */
 
         btnPanel = new ButtonPanelView(playerNames, new GameObserverImpl(this));
 
         this.add(btnPanel, BorderLayout.SOUTH);
-
-        /*
-         * TableView
-         */
-
-        tablePanel = new TableView(btnPanel.getLogic().getTableList(), 7);
-
-        this.add(tablePanel, BorderLayout.CENTER);
 
         /*
          * Board Panels

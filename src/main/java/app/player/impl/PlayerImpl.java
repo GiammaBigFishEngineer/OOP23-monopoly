@@ -56,13 +56,9 @@ public final class PlayerImpl implements Player {
         this.map = new HashMap<>();
         this.currentPosition = 0;
         this.isInJail = false;
-        if (cards != null) {
-            for (final Card box : cards) {
-                this.map.put(box, Optional.empty());
-            }
-
+        for (final Card box : cards) {
+            this.map.put(box, Optional.empty());
         }
-
         this.account = new BankAccountImpl(initialAmount);
         final int r = Math.abs((id * RED_MULTIPLICATIVE_CONSTANT) % RANGE_COLOR);
         final int g = Math.abs((id * BLUE_MULTIPLICATIVE_CONSTANT) % RANGE_COLOR);
@@ -204,6 +200,7 @@ public final class PlayerImpl implements Player {
         }
         if (account.payPlayer(null, box.getPrice())) {
             map.put(box, Optional.of(0)); // 0 perché possiedo la casella con 0 case costruite
+            box.setOwner(this);
             return true;
         } else {
             return false;
@@ -283,6 +280,7 @@ public final class PlayerImpl implements Player {
      * @param amount
      * @return boolean
      */
+    @Override
     public boolean payPlayer(final Player player, final int amount) {
         return this.account.payPlayer(player, amount);
     }

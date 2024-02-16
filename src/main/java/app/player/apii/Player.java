@@ -1,5 +1,6 @@
 package app.player.apii;
 
+import java.awt.Color;
 import java.util.List;
 import java.util.Optional;
 
@@ -110,4 +111,9 @@ public interface Player {
      * @param amount
      */
     void receivePayment(int amount);
+
+    boolean payPlayer(final Player player, final int amount);
+
+    Color getColor();
+
 }

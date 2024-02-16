@@ -5,6 +5,8 @@ import app.card.apii.Buyable;
 import app.card.apii.Card;
 import app.player.apii.BankAccount;
 import app.player.apii.Player;
+
+import java.awt.Color;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -114,6 +116,18 @@ final class TestLazyPlayer implements Player {
     public void receivePayment(int amount) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'receivePayment'");
+    }
+
+    @Override
+    public boolean payPlayer(Player player, int amount) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'payPlayer'");
+    }
+
+    @Override
+    public Color getColor() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getColor'");
     }
 
 }

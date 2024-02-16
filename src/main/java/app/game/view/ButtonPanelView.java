@@ -146,7 +146,6 @@ public class ButtonPanelView extends GameObservableImpl {
         endTurn.addActionListener(e -> {
 
             this.newTurn();
-            refreshPanelView();
 
         });
 
@@ -165,6 +164,7 @@ public class ButtonPanelView extends GameObservableImpl {
 
         });
 
+        this.initializePosition();
         this.newTurn();
 
     }
@@ -173,7 +173,7 @@ public class ButtonPanelView extends GameObservableImpl {
 
         logic.newTurn();
 
-        // refreshPanelView();
+        refreshPanelView();
 
         if (logic.isCurrentPlayerInJail()) {
 
@@ -213,6 +213,14 @@ public class ButtonPanelView extends GameObservableImpl {
 
             btnList.get(code).setEnabled(bool);
 
+        }
+    }
+
+    public void initializePosition() {
+        int nPlayers = logic.getPlayerList().size();
+        for (int i = 0; i < nPlayers; i++) {
+            logic.newTurn();
+            refreshPositionView();
         }
     }
 
