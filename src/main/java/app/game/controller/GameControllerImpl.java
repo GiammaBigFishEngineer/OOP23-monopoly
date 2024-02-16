@@ -2,10 +2,12 @@ package app.game.controller;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import app.card.apii.Card;
 import app.card.apii.CardAdapter;
 import app.card.impl.CardFactoryImpl;
+import app.card.impl.CardImpl;
 import app.game.apii.GameController;
 
 import app.game.utils.Dice;
@@ -39,8 +41,8 @@ public class GameControllerImpl implements GameController {
 
         this.tableList = new CardFactoryImpl().cardsInitializer();
         this.cardsList = tableList.stream()
-                .sorted(Comparator.comparingInt(tableList::get(1))
-                .toList();
+                .sorted(Comparator.comparingInt(Card::getId))
+                .collect(Collectors.toList());
 
         this.playersName = new ArrayList<>();
         playersName.addAll(names);
@@ -178,53 +180,69 @@ public class GameControllerImpl implements GameController {
 
         if (currentCard.isUnbuyable()) {
 
-            CardAdapter.unbuyableAdapter(currentCard).makeAction(currentPlayer);
+            handleUnbuyable();
 
         } else if (currentCard.isBuildable()) {
 
-            Boolean owned = CardAdapter.buildableAdapter(currentCard).isOwned();
-
-            if (owned) {
-
-                Player owner = CardAdapter.buildableAdapter(currentCard).getOwner();
-
-                if (currentPlayer.equals(owner)) {
-
-                    enableSingleButton(BtnCodeEnum.buyHouse);
-                    enableSingleButton(BtnCodeEnum.sellPropriety);
-
-                } else {
-                    payFees(owner);
-                }
-
-            } else {
-                enableSingleButton(BtnCodeEnum.buyPropriety);
-
-            }
+            handleBuildable();
 
         } else if (currentCard.isBuyable() && !currentCard.isBuildable()) {
 
-            Boolean owned = CardAdapter.buyableAdapter(currentCard).isOwned();
-
-            if (owned) {
-
-                Player owner = CardAdapter.buyableAdapter(currentCard).getOwner();
-
-                if (!currentPlayer.equals(owner)) {
-                    payFees(owner);
-                } else {
-                    enableSingleButton(BtnCodeEnum.sellPropriety);
-                }
-
-            } else {
-                enableSingleButton(BtnCodeEnum.buyPropriety);
-
-            }
+            handleBuyable();
 
         }
 
         enableSingleButton(BtnCodeEnum.endTurn);
 
+    }
+
+    public void handleUnbuyable() {
+
+        CardAdapter.unbuyableAdapter(currentCard).makeAction(currentPlayer);
+
+    }
+
+    public void handleBuildable() {
+
+        Boolean owned = CardAdapter.buildableAdapter(currentCard).isOwned();
+
+        if (owned) {
+
+            Player owner = CardAdapter.buildableAdapter(currentCard).getOwner();
+
+            if (currentPlayer.equals(owner)) {
+
+                enableSingleButton(BtnCodeEnum.buyHouse);
+                enableSingleButton(BtnCodeEnum.sellPropriety);
+
+            } else {
+                payFees(owner);
+            }
+
+        } else {
+            enableSingleButton(BtnCodeEnum.buyPropriety);
+
+        }
+
+    }
+
+    public void handleBuyable() {
+        Boolean owned = CardAdapter.buyableAdapter(currentCard).isOwned();
+
+        if (owned) {
+
+            Player owner = CardAdapter.buyableAdapter(currentCard).getOwner();
+
+            if (!currentPlayer.equals(owner)) {
+                payFees(owner);
+            } else {
+                enableSingleButton(BtnCodeEnum.sellPropriety);
+            }
+
+        } else {
+            enableSingleButton(BtnCodeEnum.buyPropriety);
+
+        }
     }
 
     @Override
@@ -321,6 +339,16 @@ public class GameControllerImpl implements GameController {
 
     }
 
+    public void initializePlayer() {
+        var id = 1;
+        for (String name : playersName) {
+
+            this.players.add(new PlayerImpl(name, id, cardsList, 500));
+            id++;
+
+        }
+    }
+
     public Map<BtnCodeEnum, Boolean> getBtnStatus() {
         return btnList;
     }
@@ -334,14 +362,9 @@ public class GameControllerImpl implements GameController {
         return totalResult;
     }
 
-    public void initializePlayer() {
-        var id = 1;
-        for (String name : playersName) {
-
-            this.players.add(new PlayerImpl(name, id, cardsList, 500));
-            id++;
-
-        }
+    @Override
+    public Card getCurrentCard() {
+        return currentCard;
     }
 
     public List<Card> getTableList() {
@@ -357,15 +380,6 @@ public class GameControllerImpl implements GameController {
         return this.players;
     }
 
-    public void setDiceValue(int value) {
-        this.totalResult = value;
-    }
-
-    @Override
-    public Card getCurrentCard() {
-        return currentCard;
-    }
-
     @Override
     public List<Player> getDefeatedList() {
         return this.defeated;
@@ -373,6 +387,10 @@ public class GameControllerImpl implements GameController {
 
     public Boolean isCurrentPlayerInJail() {
         return currentPlayer.isInJail();
+    }
+
+    public void setDiceValue(int value) {
+        this.totalResult = value;
     }
 
 }

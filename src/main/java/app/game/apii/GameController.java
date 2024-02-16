@@ -33,7 +33,6 @@ public interface GameController {
 
     /**
      * @param currentPlayer that need to pay the fees
-     * @param box           of the player who is to receive the money
      */
     void payFees(Player owner);
 
@@ -53,15 +52,21 @@ public interface GameController {
 
     void disableSingleButton(BtnCodeEnum code);
 
-    Player getCurrentPlayer();
-
-    Card getCurrentCard();
+    boolean isOver();
 
     void defeatPlayer();
 
+    void initializePlayer();
+
+    // get
+
+    Player getCurrentPlayer();
+
     Integer getDiceValue();
 
-    void initializePlayer();
+    Card getCurrentCard();
+
+    List<Card> getTableList();
 
     List<Card> getCardList();
 
@@ -69,7 +74,8 @@ public interface GameController {
 
     List<Player> getDefeatedList();
 
+    // set
+
     void setDiceValue(int value);
 
-    boolean isOver();
 }

@@ -46,6 +46,18 @@ class TestGameController {
 
     @Test
 
+    void sortedListTest() {
+        var sortedList = logic.getCardList();
+        var i = 0;
+
+        for (Card card : sortedList) {
+            assertEquals(i, card.getId());
+            i++;
+        }
+    }
+
+    @Test
+
     void testDice() {
 
         logic.newTurn();
@@ -64,11 +76,11 @@ class TestGameController {
 
         logic.newTurn();
 
-        logic.setDiceValue(30);
+        logic.setDiceValue(40);
         logic.startTurn();
 
-        assertEquals(6, logic.getCurrentPlayer().getCurrentPosition());
-        assertEquals("Transito", logic.getCurrentCard().getName());
+        assertEquals(16, logic.getCurrentPlayer().getCurrentPosition());
+        assertEquals("Stazione Nord", logic.getCurrentCard().getName());
 
     }
 
