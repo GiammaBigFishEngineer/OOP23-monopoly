@@ -28,54 +28,64 @@ public class GameObserverImpl implements GameObserver {
         popUp = new GameMessage();
         map = new HashMap<>();
 
-        panelView = gameV.getPlayerPanelView();
-        tablePanel = gameV.getTableView();
     }
 
     @Override
-    public boolean update(Integer diceValue, Optional<Player> currentPlayer, String str) {
+    public boolean update(Optional<Object> obj, String str) {
         Boolean bool = true;
+
+        panelView = gameV.getPlayerPanelView();
+        tablePanel = gameV.getTableView();
 
         switch (str) {
 
             case "refreshPlayerPosition":
 
-                if (map.containsKey(currentPlayer.get())) {
+                Player currentPlayer = (Player) obj.get();
+
+                if (map.containsKey(currentPlayer)) {
 
                     Observer<Player> removeObs = () -> tablePanel.removePlayer("#fff",
-                            map.get(currentPlayer.get()));
+                            map.get(currentPlayer));
 
-                    notifyObs(removeObs);
+                    useObs(removeObs);
 
-                    map.remove(currentPlayer.get());
+                    map.remove(currentPlayer);
                 }
 
                 Observer<Player> addObs = () -> tablePanel.redrawPlayer("#fff",
-                        currentPlayer.get().getCurrentPosition());
+                        currentPlayer.getCurrentPosition());
 
-                notifyObs(addObs);
+                useObs(addObs);
 
-                map.put(currentPlayer.get(), currentPlayer.get().getCurrentPosition());
+                map.put(currentPlayer, currentPlayer.getCurrentPosition());
 
                 break;
 
             case "refreshPlayerPanel":
 
-                var card = tablePanel.getCardList().get(currentPlayer.get().getCurrentPosition());
+                Player player = (Player) obj.get();
 
-                panelView.getLogic().setPlayer(currentPlayer.get(), card);
+                var card = tablePanel.getCardList().get(player.getCurrentPosition());
+
+                panelView.getLogic().setPlayer(player, card);
 
                 panelView.getLogic().setCurrentBox(card);
 
                 break;
 
             case "bail":
+
+                Player crntPlayer = (Player) obj.get();
+
                 BailView bailMessage = new BailView();
-                bool = bailMessage.showMenuBail(currentPlayer.get(), gameV);
+                bool = bailMessage.showMenuBail(crntPlayer, gameV);
 
                 break;
 
             case "RollDice":
+
+                int diceValue = (int) obj.get();
 
                 popUp.rollDice(gameV, diceValue);
                 break;
@@ -102,18 +112,22 @@ public class GameObserverImpl implements GameObserver {
 
             case "Eliminate":
 
-                popUp.eliminatePlayer(gameV, currentPlayer.get().getName());
+                String EliminatedName = (String) obj.get();
+
+                popUp.eliminatePlayer(gameV, EliminatedName);
                 break;
 
             case "Win":
 
-                popUp.winnerPlayer(gameV, currentPlayer.get().getName());
+                String WinnerName = (String) obj.get();
+
+                popUp.winnerPlayer(gameV, WinnerName);
                 break;
 
             case "Save":
 
                 popUp.saveGame(gameV);
-                ;
+
                 break;
 
             case "Unforseen":
@@ -127,7 +141,7 @@ public class GameObserverImpl implements GameObserver {
         return bool;
     }
 
-    public void notifyObs(Observer<Player> obs) {
+    public void useObs(Observer<Player> obs) {
 
         tablePanel.addObserver(obs);
 

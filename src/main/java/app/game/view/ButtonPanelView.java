@@ -45,18 +45,19 @@ public class ButtonPanelView extends GameObservableImpl {
 
         rollDice.addActionListener(e -> {
 
-            Player currentPlayer = logic.getCurrentPlayer();
-
             int diceValue = logic.rollDice(true);
 
-            updateObserver(diceValue, Optional.empty(), "RollDice");
+            updateObserver(Optional.of(diceValue), "RollDice");
 
             if (logic.isCurrentPlayerDefeated()) {
-                updateObserver(-1, Optional.of(currentPlayer), "Eliminate");
+
+                String currentPlayerName = logic.getCurrentPlayer().getName();
+
+                updateObserver(Optional.of(currentPlayerName), "Eliminate");
 
                 if (logic.isOver()) {
 
-                    updateObserver(-1, Optional.of(currentPlayer), "Win");
+                    updateObserver(Optional.of(currentPlayerName), "Win");
 
                     logic.endGame();
 
@@ -68,8 +69,8 @@ public class ButtonPanelView extends GameObservableImpl {
 
             } else {
 
-                refreshPanelView(currentPlayer);
-                refreshPositionView(currentPlayer);
+                refreshPanelView();
+                refreshPositionView();
                 changeButtonVisibility();
             }
 
@@ -87,13 +88,11 @@ public class ButtonPanelView extends GameObservableImpl {
 
         buyPropriety.addActionListener(e -> {
 
-            Player currentPlayer = logic.getCurrentPlayer();
-
             if (!logic.buyPropriety()) {
-                updateObserver(-1, Optional.empty(), "NoBuy");
+                updateObserver(Optional.empty(), "NoBuy");
             }
 
-            refreshPanelView(currentPlayer);
+            refreshPanelView();
 
             buyPropriety.setEnabled(false);
 
@@ -109,11 +108,9 @@ public class ButtonPanelView extends GameObservableImpl {
 
         sellPropriety.addActionListener(e -> {
 
-            Player currentPlayer = logic.getCurrentPlayer();
-
             logic.sellPropriety();
 
-            refreshPanelView(currentPlayer);
+            refreshPanelView();
 
             sellPropriety.setEnabled(false);
 
@@ -129,13 +126,11 @@ public class ButtonPanelView extends GameObservableImpl {
 
         buyHouse.addActionListener(e -> {
 
-            Player currentPlayer = logic.getCurrentPlayer();
-
             if (!logic.buildHouse()) {
-                updateObserver(-1, Optional.empty(), "NoBuild");
+                updateObserver(Optional.empty(), "NoBuild");
             }
 
-            refreshPanelView(currentPlayer);
+            refreshPanelView();
             buyHouse.setEnabled(false);
 
         });
@@ -163,7 +158,7 @@ public class ButtonPanelView extends GameObservableImpl {
 
         saveGame.addActionListener(e -> {
 
-            updateObserver(-1, Optional.empty(), "Save");
+            updateObserver(Optional.empty(), "Save");
 
             saveGame.setEnabled(false);
 
@@ -177,13 +172,13 @@ public class ButtonPanelView extends GameObservableImpl {
 
         logic.newTurn();
 
-        Player currentPlayer = logic.getCurrentPlayer();
-
-        refreshPanelView(currentPlayer);
+        refreshPanelView();
 
         if (logic.isCurrentPlayerInJail()) {
 
-            if (updateObserver(-1, Optional.of(currentPlayer), "bail")) {
+            Player currentPlayer = logic.getCurrentPlayer();
+
+            if (updateObserver(Optional.of(currentPlayer), "bail")) {
 
                 logic.enableSingleButton(BtnCodeEnum.rollDice);
 
@@ -192,9 +187,9 @@ public class ButtonPanelView extends GameObservableImpl {
                 logic.tryLuckyBail();
 
                 if (logic.isCurrentPlayerInJail()) {
-                    updateObserver(-1, Optional.empty(), "NotDoubleDice");
+                    updateObserver(Optional.empty(), "NotDoubleDice");
                 } else {
-                    updateObserver(-1, Optional.empty(), "DoubleDice");
+                    updateObserver(Optional.empty(), "DoubleDice");
                     logic.enableSingleButton(BtnCodeEnum.rollDice);
                 }
             }
@@ -220,12 +215,14 @@ public class ButtonPanelView extends GameObservableImpl {
         }
     }
 
-    public void refreshPanelView(Player currentPlayer) {
-        updateObserver(-1, Optional.of(currentPlayer), "refreshPlayerPanel");
+    public void refreshPanelView() {
+        Player currentPlayer = logic.getCurrentPlayer();
+        updateObserver(Optional.of(currentPlayer), "refreshPlayerPanel");
     }
 
-    public void refreshPositionView(Player currentPlayer) {
-        updateObserver(-1, Optional.of(currentPlayer), "refreshPlayerPosition");
+    public void refreshPositionView() {
+        Player currentPlayer = logic.getCurrentPlayer();
+        updateObserver(Optional.of(currentPlayer), "refreshPlayerPosition");
     }
 
     public GameControllerImpl getLogic() {

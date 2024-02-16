@@ -1,7 +1,6 @@
 package app.game.view;
 
 import app.game.apii.GameObservable;
-import app.player.apii.Player;
 
 import java.util.Optional;
 
@@ -12,8 +11,8 @@ public class GameObservableImpl extends JPanel implements GameObservable {
     private GameObserverImpl obs;
 
     @Override
-    public boolean updateObserver(Integer diceValue, Optional<Player> currentPlayer, String string) {
-        return this.obs.update(diceValue, currentPlayer, string);
+    public boolean updateObserver(Optional<Object> obj, String code) {
+        return this.obs.update(obj, code);
     }
 
     @Override
