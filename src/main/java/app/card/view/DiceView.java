@@ -5,6 +5,7 @@ import app.game.utils.Dice;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.BorderFactory;
+import javax.swing.JFrame;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -23,6 +24,7 @@ public class DiceView extends JPanel {
 
     private static final long serialVersionUID = 1L;
 
+    private static final String TITLE = "Lancio dei due dadi";
     private static final int DICE_SIZE = 175;
     private static final int FONT_SIZE = 24;
     private static final int TOP_PADDING = 50;
@@ -75,7 +77,6 @@ public class DiceView extends JPanel {
         gbc.insets = new Insets(GENERAL_INSETS, LEFT_INSETS, GENERAL_INSETS, GENERAL_INSETS);
         centerPanel.add(dicePanel2, gbc);
         this.add(centerPanel, BorderLayout.CENTER);
-
         this.setVisible(true);
     }
 
@@ -106,6 +107,7 @@ public class DiceView extends JPanel {
         private int result;
 
         DicePanel() {
+            this.result = 1;
             this.setBackground(Color.WHITE);
             this.setPreferredSize(new Dimension(DICE_SIZE, DICE_SIZE));
         }
@@ -165,5 +167,18 @@ public class DiceView extends JPanel {
             g.setColor(Color.BLACK);
             g.fillOval(x - DOT_SIZE / 2, y - DOT_SIZE / 2, DOT_SIZE, DOT_SIZE);
         }
+    }
+
+    /**
+     * Initializes and displays the window for the DiceView.
+     */
+    public void initAndShow() {
+        final JFrame frame = new JFrame();
+        frame.setResizable(false);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setContentPane(this);
+        frame.setTitle(TITLE);
+        frame.pack();
+        frame.setVisible(true);
     }
 }
