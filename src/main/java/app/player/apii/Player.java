@@ -1,5 +1,6 @@
 package app.player.apii;
 
+import java.awt.Color;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,6 +35,10 @@ public interface Player {
      * @return ID of the player
      */
     int getID();
+    /**
+     * @return the color associated with the Player.
+     */
+    Color getColor();
     /**
      * @return player's map which indicates the proprieties he owns
      * and the number of houses built on a Card. 

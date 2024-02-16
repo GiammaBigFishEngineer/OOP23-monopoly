@@ -108,6 +108,7 @@ public final class PlayerImpl implements Player {
      * Getter for player's color.
      * @return color
      */
+    @Override
     public Color getColor() {
         return this.color;
     }
