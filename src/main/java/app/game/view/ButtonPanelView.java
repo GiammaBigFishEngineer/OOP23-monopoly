@@ -49,6 +49,10 @@ public class ButtonPanelView extends GameObservableImpl {
 
             updateObserver(Optional.of(diceValue), "RollDice");
 
+            if (logic.isCurrentPlayerOnUnforseen()) {
+                updateObserver(Optional.of(logic.getUnforseenMessage()), "UnbuyableAction");
+            }
+
             if (logic.isCurrentPlayerDefeated()) {
 
                 String currentPlayerName = logic.getCurrentPlayer().getName();

@@ -130,9 +130,10 @@ public class GameObserverImpl implements GameObserver {
 
                 break;
 
-            case "Unforseen":
+            case "UnbuyableAction":
 
-                UnforseenView unforseenView;
+                String message = (String) obj.get();
+                new UnforseenView(message);
 
                 break;
 

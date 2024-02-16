@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import app.card.apii.Card;
 import app.card.apii.CardAdapter;
+import app.card.apii.StaticActionStrategy.TriggeredEvent;
 import app.card.impl.CardFactoryImpl;
 import app.card.impl.Unforseen;
 import app.game.apii.GameController;
@@ -28,6 +29,8 @@ public class GameControllerImpl implements GameController {
     private List<Card> cardsList;
     private Card currentCard;
     private int currentCardIndex;
+    private boolean landedOnUnforseen;
+    private String unforseenMessage;
 
     private Dice currentDice;
     private boolean doubleDice;
@@ -73,6 +76,7 @@ public class GameControllerImpl implements GameController {
 
         this.disableAllBtn();
         this.nextPlayer();
+        this.landedOnUnforseen = false;
 
     }
 
@@ -184,7 +188,21 @@ public class GameControllerImpl implements GameController {
     public void handleUnbuyable() {
 
         if (currentCard.getCardId() != 0) {
-            CardAdapter.unbuyableAdapter(currentCard).makeAction(currentPlayer);
+            TriggeredEvent e = CardAdapter.unbuyableAdapter(currentCard).makeAction(currentPlayer);
+            this.unforseenMessage = e.getMessage();
+            this.landedOnUnforseen = true;
+
+            /*
+             * if (e.equals(TriggeredEvent.PERFORMED)) {
+             * String s = e.getMessage();
+             * System.out.println(s);
+             * }
+             * currentCardIndex = currentPlayer.getCurrentPosition();
+             * 
+             * currentCard = cardsList.get(currentCardIndex);
+             * 
+             * handleCard();
+             */
         }
 
     }
@@ -375,6 +393,14 @@ public class GameControllerImpl implements GameController {
 
     public void setDiceValue(int value) {
         this.totalResult = value;
+    }
+
+    public boolean isCurrentPlayerOnUnforseen() {
+        return this.landedOnUnforseen;
+    }
+
+    public String getUnforseenMessage() {
+        return this.unforseenMessage;
     }
 
 }
