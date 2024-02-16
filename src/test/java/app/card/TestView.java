@@ -30,7 +30,7 @@ final class TestView {
         final var table = new TableView(new CardFactoryImpl().cardsInitializer(), side);
         final var unforseenAllert = new UnforseenView(cardUnforseen.makeAction(
             new PlayerImpl("pl", 0, List.of(), 0))
-            .showMessage().get());
+            .getMessage());
         final var frame = new JFrame();
         frame.setSize(size * side, side * side);
         frame.add(unforseenAllert);
