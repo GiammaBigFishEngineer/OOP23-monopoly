@@ -1,8 +1,5 @@
 package app.card.apii;
 
-import java.util.Optional;
-
-import app.card.impl.Unforseen;
 import app.player.apii.Player;
 
 /**
@@ -12,9 +9,8 @@ import app.player.apii.Player;
 @FunctionalInterface
 public interface StaticActionStrategy {
     /**
-     * 
      * @param player who get the action
-     * @return an empty optional if the action is not unforseen
+     * @return pass the event treggered doing the action to unbuyable
      */
-    Optional<Unforseen> myAction(Player player);
+    TriggeredEvent myAction(Player player);
 }
