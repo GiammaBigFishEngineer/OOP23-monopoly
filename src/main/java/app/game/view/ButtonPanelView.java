@@ -146,6 +146,7 @@ public class ButtonPanelView extends GameObservableImpl {
         endTurn.addActionListener(e -> {
 
             this.newTurn();
+            refreshPanelView();
 
         });
 
@@ -172,7 +173,7 @@ public class ButtonPanelView extends GameObservableImpl {
 
         logic.newTurn();
 
-        refreshPanelView();
+        // refreshPanelView();
 
         if (logic.isCurrentPlayerInJail()) {
 

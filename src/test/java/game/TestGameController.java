@@ -13,11 +13,10 @@ import app.game.apii.GameController;
 import app.game.controller.GameControllerImpl;
 import app.game.view.BtnCodeEnum;
 import app.player.apii.Player;
-import app.player.impl.PlayerImpl;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.ArrayList;
+
 import java.util.Map;
 import java.util.HashMap;
 
@@ -106,6 +105,7 @@ class TestGameController {
         logic.setDiceValue(18);
         logic.startTurn();
 
+        assertEquals(6, logic.getCurrentPlayer().getCurrentPosition());
         assertTrue(logic.isCurrentPlayerInJail());
 
     }

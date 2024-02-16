@@ -154,21 +154,7 @@ public class GameControllerImpl implements GameController {
 
         currentCard = cardsList.get(currentCardIndex);
 
-        System.out.println("Player :" + currentPlayer.getName());
-        System.out.println("Position :" + currentPlayer.getCurrentPosition());
-        System.out.println("Balance :" + currentPlayer.getBankAccount().getBalance());
-        System.out.println("Carta :" + currentCard.getName());
-        if (currentCard.isBuildable()) {
-            System.out.println("Casella , prezzo :" + CardAdapter.buildableAdapter(currentCard).getPrice());
-            System.out.println("Casella, tassa :" + CardAdapter.buildableAdapter(currentCard).getTransitFees());
-            System.out.println("Casella, prezzo casa :" + CardAdapter.buildableAdapter(currentCard).getHousePrice());
-        }
-        if (currentCard.isBuyable() && !currentCard.isBuildable()) {
-            System.out.println("Stazione , prezzo :" + CardAdapter.buyableAdapter(currentCard).getPrice());
-            System.out.println("Stazione , tassa :" + CardAdapter.buyableAdapter(currentCard).getTransitFees());
-        }
-
-        System.out.println("-----------------------------");
+        currentPlayer.setInJail(true);
 
         handleCard();
 
