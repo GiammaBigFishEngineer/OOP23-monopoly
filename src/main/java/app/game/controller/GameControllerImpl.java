@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import app.card.apii.Card;
 import app.card.apii.CardAdapter;
 import app.card.impl.CardFactoryImpl;
-import app.card.impl.CardImpl;
+import app.card.impl.Unforseen;
 import app.game.apii.GameController;
 
 import app.game.utils.Dice;
@@ -144,6 +144,7 @@ public class GameControllerImpl implements GameController {
 
             var new_position = finalPosition - cardsList.size();
             currentPlayer.setPosition(new_position);
+            Unforseen.U0.getCard().makeAction(currentPlayer);
 
         } else {
             currentPlayer.setPosition(finalPosition);
@@ -198,7 +199,9 @@ public class GameControllerImpl implements GameController {
 
     public void handleUnbuyable() {
 
-        CardAdapter.unbuyableAdapter(currentCard).makeAction(currentPlayer);
+        if (currentCard.getId() != 0) {
+            CardAdapter.unbuyableAdapter(currentCard).makeAction(currentPlayer);
+        }
 
     }
 
@@ -251,7 +254,7 @@ public class GameControllerImpl implements GameController {
         disableSingleButton(BtnCodeEnum.buyPropriety);
 
         if (!currentPlayer.buyBox(CardAdapter.buyableAdapter(currentCard))) {
-            System.out.println("you can't afford it");
+
             return false;
         }
 
@@ -265,7 +268,7 @@ public class GameControllerImpl implements GameController {
         disableSingleButton(BtnCodeEnum.buyHouse);
 
         if (!currentPlayer.buildHouse(CardAdapter.buildableAdapter(currentCard))) {
-            System.out.println("you can't afford it");
+
             return false;
         }
 
@@ -298,9 +301,6 @@ public class GameControllerImpl implements GameController {
 
         newIndex();
 
-        if (isOver()) {
-            this.endGame();
-        }
     }
 
     public boolean isOver() {

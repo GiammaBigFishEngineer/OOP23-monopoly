@@ -13,7 +13,7 @@ import java.util.*;
 /**
  * ButtonsView.
  */
-public class ButtonPanelView extends JPanel {
+public class ButtonPanelView extends GameObservableImpl {
 
     private GameControllerImpl logic;
 
@@ -27,12 +27,10 @@ public class ButtonPanelView extends JPanel {
     private JButton endTurn;
     private JButton saveGame;
 
-    private GameObserverImpl observer;
-
     public ButtonPanelView(List<String> playersNames, GameObserverImpl obs) throws IOException {
 
         this.logic = new GameControllerImpl(playersNames);
-        this.observer = obs;
+        this.registerObserver(obs);
 
         this.setLayout(new GridLayout(2, 3));
         this.setBackground(Color.lightGray);
@@ -51,15 +49,27 @@ public class ButtonPanelView extends JPanel {
 
             int diceValue = logic.rollDice(true);
 
-            observer.update(diceValue, currentPlayer, "rollDice");
+            updateObserver(diceValue, Optional.empty(), "RollDice");
 
             if (logic.isCurrentPlayerDefeated()) {
-                observer.update(-1, currentPlayer, "YouLoseMessage");
-                this.newTurn();
+                updateObserver(-1, Optional.of(currentPlayer), "Eliminate");
+
+                if (logic.isOver()) {
+
+                    updateObserver(-1, Optional.of(currentPlayer), "Win");
+
+                    logic.endGame();
+
+                } else {
+
+                    this.newTurn();
+
+                }
+
             } else {
 
-                observer.update(-1, currentPlayer, "refreshPlayerPanel");
-                observer.update(-1, currentPlayer, "refreshPlayerPosition");
+                refreshPanelView(currentPlayer);
+                refreshPositionView(currentPlayer);
                 changeButtonVisibility();
             }
 
@@ -80,10 +90,10 @@ public class ButtonPanelView extends JPanel {
             Player currentPlayer = logic.getCurrentPlayer();
 
             if (!logic.buyPropriety()) {
-                obs.update(-1, currentPlayer, "NoBuyMessage");
+                updateObserver(-1, Optional.empty(), "NoBuy");
             }
 
-            observer.update(-1, currentPlayer, "refreshPlayerPanel");
+            refreshPanelView(currentPlayer);
 
             buyPropriety.setEnabled(false);
 
@@ -103,7 +113,7 @@ public class ButtonPanelView extends JPanel {
 
             logic.sellPropriety();
 
-            observer.update(-1, currentPlayer, "refreshPlayerPanel");
+            refreshPanelView(currentPlayer);
 
             sellPropriety.setEnabled(false);
 
@@ -122,10 +132,10 @@ public class ButtonPanelView extends JPanel {
             Player currentPlayer = logic.getCurrentPlayer();
 
             if (!logic.buildHouse()) {
-                observer.update(-1, currentPlayer, "NoBuyMessage");
+                updateObserver(-1, Optional.empty(), "NoBuild");
             }
 
-            observer.update(-1, currentPlayer, "refreshPlayerPanel");
+            refreshPanelView(currentPlayer);
             buyHouse.setEnabled(false);
 
         });
@@ -153,6 +163,8 @@ public class ButtonPanelView extends JPanel {
 
         saveGame.addActionListener(e -> {
 
+            updateObserver(-1, Optional.empty(), "Save");
+
             saveGame.setEnabled(false);
 
         });
@@ -167,11 +179,11 @@ public class ButtonPanelView extends JPanel {
 
         Player currentPlayer = logic.getCurrentPlayer();
 
-        observer.update(-1, currentPlayer, "refreshPlayerPanel");
+        refreshPanelView(currentPlayer);
 
         if (logic.isCurrentPlayerInJail()) {
 
-            if (observer.update(-1, currentPlayer, "bail")) {
+            if (updateObserver(-1, Optional.of(currentPlayer), "bail")) {
 
                 logic.enableSingleButton(BtnCodeEnum.rollDice);
 
@@ -180,9 +192,9 @@ public class ButtonPanelView extends JPanel {
                 logic.tryLuckyBail();
 
                 if (logic.isCurrentPlayerInJail()) {
-                    observer.update(-1, currentPlayer, "stillInPrison");
+                    updateObserver(-1, Optional.empty(), "NotDoubleDice");
                 } else {
-                    observer.update(-1, currentPlayer, "freeToGo");
+                    updateObserver(-1, Optional.empty(), "DoubleDice");
                     logic.enableSingleButton(BtnCodeEnum.rollDice);
                 }
             }
@@ -206,6 +218,14 @@ public class ButtonPanelView extends JPanel {
             btnList.get(code).setEnabled(bool);
 
         }
+    }
+
+    public void refreshPanelView(Player currentPlayer) {
+        updateObserver(-1, Optional.of(currentPlayer), "refreshPlayerPanel");
+    }
+
+    public void refreshPositionView(Player currentPlayer) {
+        updateObserver(-1, Optional.of(currentPlayer), "refreshPlayerPosition");
     }
 
     public GameControllerImpl getLogic() {

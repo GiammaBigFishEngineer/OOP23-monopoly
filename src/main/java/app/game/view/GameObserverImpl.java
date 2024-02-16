@@ -9,6 +9,7 @@ import app.player.view.BailView;
 import app.player.view.PlayerPanelView;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.HashMap;
 
 public class GameObserverImpl implements GameObserver {
@@ -32,51 +33,87 @@ public class GameObserverImpl implements GameObserver {
     }
 
     @Override
-    public boolean update(Integer diceValue, Player currentPlayer, String str) {
+    public boolean update(Integer diceValue, Optional<Player> currentPlayer, String str) {
         Boolean bool = true;
 
         switch (str) {
 
             case "refreshPlayerPosition":
 
-                if (map.containsKey(currentPlayer)) {
+                if (map.containsKey(currentPlayer.get())) {
 
                     Observer<Player> removeObs = () -> tablePanel.removePlayer("#fff",
-                            map.get(currentPlayer));
+                            map.get(currentPlayer.get()));
 
                     notifyObs(removeObs);
 
-                    map.remove(currentPlayer);
+                    map.remove(currentPlayer.get());
                 }
 
                 Observer<Player> addObs = () -> tablePanel.redrawPlayer("#fff",
-                        currentPlayer.getCurrentPosition());
+                        currentPlayer.get().getCurrentPosition());
 
                 notifyObs(addObs);
 
-                map.put(currentPlayer, currentPlayer.getCurrentPosition());
+                map.put(currentPlayer.get(), currentPlayer.get().getCurrentPosition());
 
                 break;
 
             case "refreshPlayerPanel":
 
-                var card = tablePanel.getCardList().get(currentPlayer.getCurrentPosition());
+                var card = tablePanel.getCardList().get(currentPlayer.get().getCurrentPosition());
 
-                panelView.getLogic().setPlayer(currentPlayer, card);
+                panelView.getLogic().setPlayer(currentPlayer.get(), card);
 
                 panelView.getLogic().setCurrentBox(card);
 
                 break;
 
-            case "rollDice":
-
-                popUp.rollDice(diceValue, gameV);
-                break;
-
             case "bail":
                 BailView bailMessage = new BailView();
-                bool = bailMessage.showMenuBail(currentPlayer, gameV);
+                bool = bailMessage.showMenuBail(currentPlayer.get(), gameV);
 
+                break;
+
+            case "RollDice":
+
+                popUp.rollDice(gameV, diceValue);
+                break;
+
+            case "NotDoubleDice":
+
+                popUp.remainPrison(gameV);
+                break;
+
+            case "DoubleDice":
+
+                popUp.exitPrison(gameV);
+                break;
+
+            case "NoBuy":
+
+                popUp.noBuyPropriety(gameV);
+                break;
+
+            case "NoBuild":
+
+                popUp.noBuilHouse(gameV);
+                break;
+
+            case "Eliminate":
+
+                popUp.eliminatePlayer(gameV, currentPlayer.get().getName());
+                break;
+
+            case "Win":
+
+                popUp.winnerPlayer(gameV, currentPlayer.get().getName());
+                break;
+
+            case "Save":
+
+                popUp.saveGame(gameV);
+                ;
                 break;
 
             case "Unforseen":
@@ -92,11 +129,11 @@ public class GameObserverImpl implements GameObserver {
 
     public void notifyObs(Observer<Player> obs) {
 
-        gameV.getTableView().addObserver(obs);
+        tablePanel.addObserver(obs);
 
         obs.update();
 
-        gameV.getTableView().deleteObserver(obs);
+        tablePanel.deleteObserver(obs);
     }
 
 }

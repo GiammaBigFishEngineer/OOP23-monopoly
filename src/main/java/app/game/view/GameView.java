@@ -90,4 +90,8 @@ public class GameView extends JFrame {
         return this.tablePanel;
     }
 
+    public ButtonPanelView getButtonView() {
+        return this.btnPanel;
+    }
+
 }

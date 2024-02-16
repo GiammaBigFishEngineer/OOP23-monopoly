@@ -86,14 +86,27 @@ class TestGameController {
 
     @Test
 
-    void testJail() {
+    void unforseenTest() {
 
         logic.newTurn();
 
+        logic.setDiceValue(24);
+        logic.startTurn();
+
+        assertEquals(600, logic.getCurrentPlayer().getBankAccount().getBalance());
+
+        logic.newTurn();
+
+        logic.setDiceValue(25);
+        logic.startTurn();
+
+        assertEquals(600, logic.getCurrentPlayer().getBankAccount().getBalance());
+
+        logic.newTurn();
         logic.setDiceValue(18);
         logic.startTurn();
 
-        assertEquals(true, logic.isCurrentPlayerInJail());
+        assertTrue(logic.isCurrentPlayerInJail());
 
     }
 
@@ -203,16 +216,18 @@ class TestGameController {
 
         int fees = CardAdapter.buyableAdapter(logic.getCurrentCard()).getTransitFees();
 
-        logic.payFees(owner);
-
         assertEquals(500 - fees, logic.getCurrentPlayer().getBankAccount().getBalance());
-        assertEquals(400 + fees, logic.getCurrentPlayer().getBankAccount().getBalance());
+        assertEquals(400 + fees, owner.getBankAccount().getBalance());
 
     }
 
     @Test
 
     void defeatTest() {
+
+        assertEquals(2, logic.getPlayerList().size());
+        assertEquals(0, logic.getDefeatedList().size());
+
         logic.newTurn();
         logic.setDiceValue(4);
         logic.startTurn();

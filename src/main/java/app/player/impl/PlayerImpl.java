@@ -215,6 +215,7 @@ public final class PlayerImpl implements Player {
         }
         // Aggiungo alla casella acquistata il numero di case incrementato di 1
         map.put(castBuildable, Optional.of(map.get(castBuildable).get() + 1));
+        this.getBankAccount().payPlayer(null, box.getHousePrice());
         return true;
     }
 
