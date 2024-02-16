@@ -176,6 +176,9 @@ public final class CardFactoryImpl implements CardFactory {
                     if (player == null) {
                         throw new IllegalArgumentException("Player passed can't be null");
                     }
+                    if ("Vai in Prigione".equals(card.getName())) {
+                        player.setInJail(true);
+                    }
                     player.setPosition(amount);
                     return TriggeredEvent.PERFORMED.update(player + " si sposta");
                 };
