@@ -22,7 +22,8 @@ public class GameControllerImpl implements GameController {
 
     private List<String> playersName;
 
-    private List<Card> cards;
+    private List<Card> tableList;
+    private List<Card> cardsList;
     private Card currentCard;
     private int currentCardIndex;
 
@@ -36,7 +37,10 @@ public class GameControllerImpl implements GameController {
 
     public GameControllerImpl(List<String> names) throws IOException {
 
-        this.cards = new CardFactoryImpl().cardsInitializer();
+        this.tableList = new CardFactoryImpl().cardsInitializer();
+        this.cardsList = tableList.stream()
+                .sorted(Comparator.comparingInt(tableList::get(1))
+                .toList();
 
         this.playersName = new ArrayList<>();
         playersName.addAll(names);
@@ -77,10 +81,6 @@ public class GameControllerImpl implements GameController {
 
     }
 
-    public Boolean isCurrentPlayerInJail() {
-        return currentPlayer.isInJail();
-    }
-
     // prima di iniziare il turno se il player è in prigione può decidere se pagare
     // o provare ad uscire con un doppio dado
 
@@ -108,7 +108,7 @@ public class GameControllerImpl implements GameController {
     }
 
     @Override
-    public boolean rollDice(Boolean b) {
+    public Integer rollDice(Boolean b) {
 
         currentDice.roll();
 
@@ -128,7 +128,7 @@ public class GameControllerImpl implements GameController {
 
         }
 
-        return isDefeated();
+        return totalResult;
 
     }
 
@@ -138,9 +138,9 @@ public class GameControllerImpl implements GameController {
 
         int finalPosition = position + totalResult;
 
-        if (finalPosition >= cards.size()) {
+        if (finalPosition >= cardsList.size()) {
 
-            var new_position = finalPosition - cards.size();
+            var new_position = finalPosition - cardsList.size();
             currentPlayer.setPosition(new_position);
 
         } else {
@@ -149,7 +149,7 @@ public class GameControllerImpl implements GameController {
 
         currentCardIndex = currentPlayer.getCurrentPosition();
 
-        currentCard = cards.get(currentCardIndex);
+        currentCard = cardsList.get(currentCardIndex);
 
         System.out.println("Player :" + currentPlayer.getName());
         System.out.println("Position :" + currentPlayer.getCurrentPosition());
@@ -293,7 +293,7 @@ public class GameControllerImpl implements GameController {
         System.out.println("EndGame");
     }
 
-    public boolean isDefeated() {
+    public boolean isCurrentPlayerDefeated() {
         return defeated.contains(currentPlayer);
     }
 
@@ -338,14 +338,18 @@ public class GameControllerImpl implements GameController {
         var id = 1;
         for (String name : playersName) {
 
-            this.players.add(new PlayerImpl(name, id, cards, 500));
+            this.players.add(new PlayerImpl(name, id, cardsList, 500));
             id++;
 
         }
     }
 
+    public List<Card> getTableList() {
+        return this.tableList;
+    }
+
     public List<Card> getCardList() {
-        return this.cards;
+        return this.cardsList;
     }
 
     @Override
@@ -365,6 +369,10 @@ public class GameControllerImpl implements GameController {
     @Override
     public List<Player> getDefeatedList() {
         return this.defeated;
+    }
+
+    public Boolean isCurrentPlayerInJail() {
+        return currentPlayer.isInJail();
     }
 
 }

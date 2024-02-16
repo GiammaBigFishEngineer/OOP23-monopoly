@@ -49,27 +49,22 @@ public class ButtonPanelView extends JPanel {
 
             Player currentPlayer = logic.getCurrentPlayer();
 
-            if (logic.rollDice(true)) {
+            int diceValue = logic.rollDice(true);
 
-                int diceValue = logic.getDiceValue();
+            observer.update(diceValue, currentPlayer, "rollDice");
 
-                observer.update(diceValue, currentPlayer, "rollDice");
+            if (logic.isCurrentPlayerDefeated()) {
                 observer.update(-1, currentPlayer, "YouLoseMessage");
                 this.newTurn();
-
             } else {
 
-                changeButtonVisibility();
-
-                currentPlayer = logic.getCurrentPlayer();
-                int diceValue = logic.getDiceValue();
-
-                observer.update(diceValue, currentPlayer, "rollDice");
                 observer.update(-1, currentPlayer, "refreshPlayerPanel");
                 observer.update(-1, currentPlayer, "refreshPlayerPosition");
+                changeButtonVisibility();
             }
 
             rollDice.setEnabled(false);
+
         });
 
         /*
@@ -87,7 +82,7 @@ public class ButtonPanelView extends JPanel {
             if (!logic.buyPropriety()) {
                 obs.update(-1, currentPlayer, "NoBuyMessage");
             }
-            currentPlayer = logic.getCurrentPlayer();
+
             observer.update(-1, currentPlayer, "refreshPlayerPanel");
 
             buyPropriety.setEnabled(false);
@@ -107,7 +102,7 @@ public class ButtonPanelView extends JPanel {
             Player currentPlayer = logic.getCurrentPlayer();
 
             logic.sellPropriety();
-            currentPlayer = logic.getCurrentPlayer();
+
             observer.update(-1, currentPlayer, "refreshPlayerPanel");
 
             sellPropriety.setEnabled(false);
@@ -129,7 +124,7 @@ public class ButtonPanelView extends JPanel {
             if (!logic.buildHouse()) {
                 observer.update(-1, currentPlayer, "NoBuyMessage");
             }
-            currentPlayer = logic.getCurrentPlayer();
+
             observer.update(-1, currentPlayer, "refreshPlayerPanel");
             buyHouse.setEnabled(false);
 
@@ -158,6 +153,8 @@ public class ButtonPanelView extends JPanel {
 
         saveGame.addActionListener(e -> {
 
+            saveGame.setEnabled(false);
+
         });
 
         this.newTurn();
@@ -170,8 +167,6 @@ public class ButtonPanelView extends JPanel {
 
         Player currentPlayer = logic.getCurrentPlayer();
 
-        currentPlayer = logic.getCurrentPlayer();
-
         observer.update(-1, currentPlayer, "refreshPlayerPanel");
 
         if (logic.isCurrentPlayerInJail()) {
@@ -181,7 +176,9 @@ public class ButtonPanelView extends JPanel {
                 logic.enableSingleButton(BtnCodeEnum.rollDice);
 
             } else {
+
                 logic.tryLuckyBail();
+
                 if (logic.isCurrentPlayerInJail()) {
                     observer.update(-1, currentPlayer, "stillInPrison");
                 } else {
