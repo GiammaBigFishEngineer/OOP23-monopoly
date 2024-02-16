@@ -70,8 +70,15 @@ public final class PlayerPanelView extends JPanel {
         addLabelWithText(new JLabel("Owned boxes: "), this.playerBoxes);
     }
 
-    private void addLabelWithText(final JLabel jLabel, final JLabel text) {
-        this.add(jLabel);
+    /**
+     * This method has been created to avoid doing for each JLabel the operation 
+     * of adding to the JPanel the JLabel with the string "Player's info" and
+     * the JLabel with the effective values. 
+     * @param label
+     * @param text
+     */
+    private void addLabelWithText(final JLabel label, final JLabel text) {
+        this.add(label);
         this.add(text);
     }
 
@@ -116,8 +123,11 @@ public final class PlayerPanelView extends JPanel {
         this.playerStations.setText(text);
     }
 
-    // il controller deve richiamare questi metodi e non getLogic.refresh()
     /**
+     * In order to avoid returning a defensive copy of PlayerPanelLogic logic, 
+     * the following methods invoke the methods of the logic (which need to be done to update
+     * the playerPanelView) directly on the object logic,
+     * without doing playerPanelView.getLogic().setPlayer(player, currentBox).
      * @param player
      * @param currentBox
      */
@@ -133,7 +143,7 @@ public final class PlayerPanelView extends JPanel {
     }
 
     /**
-     * 
+     * Method which updates values on the panel.
      */
     public void refresh() {
         this.logic.refresh();

@@ -190,6 +190,7 @@ public final class PlayerImpl implements Player {
         }
         if (account.payPlayer(null, box.getPrice())) {
             map.put(box, Optional.of(0)); // 0 perché possiedo la casella con 0 case costruite
+            box.setOwner(this);
             return true; 
         } else {
             return false;
@@ -254,6 +255,7 @@ public final class PlayerImpl implements Player {
      * as a result, I have created the following methods which effectively modify the player's account.
      * @param amount
      */
+    @Override
     public void receivePayment(final int amount) {
         this.account.receivePayment(amount);
     }
@@ -262,6 +264,7 @@ public final class PlayerImpl implements Player {
      * @param amount
      * @return boolean
      */
+    @Override
     public boolean payPlayer(final Player player, final int amount) {
         return this.account.payPlayer(player, amount);
     }

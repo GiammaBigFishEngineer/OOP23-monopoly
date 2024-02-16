@@ -82,4 +82,14 @@ public interface Player {
      * @param box whose type is Buyable
      */
     void sellBuyable(Buyable box);
+    /**
+     * @param amount
+     */
+    void receivePayment(int amount);
+    /**
+     * @param player
+     * @param amount
+     * @return boolean
+     */
+    boolean payPlayer(Player player, int amount);
 }
