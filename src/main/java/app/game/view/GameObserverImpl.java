@@ -27,15 +27,14 @@ public class GameObserverImpl implements GameObserver {
         this.gameV = gameV;
         popUp = new GameMessage();
         map = new HashMap<>();
+        panelView = gameV.getPlayerPanelView();
+        tablePanel = gameV.getTableView();
 
     }
 
     @Override
     public boolean update(Optional<Object> obj, String str) {
         Boolean bool = true;
-
-        panelView = gameV.getPlayerPanelView();
-        tablePanel = gameV.getTableView();
 
         switch (str) {
 
@@ -87,46 +86,46 @@ public class GameObserverImpl implements GameObserver {
 
                 int diceValue = (int) obj.get();
 
-                popUp.rollDice(gameV, diceValue);
+                popUp.rollDice(diceValue);
                 break;
 
             case "NotDoubleDice":
 
-                popUp.remainPrison(gameV);
+                popUp.remainPrison();
                 break;
 
             case "DoubleDice":
 
-                popUp.exitPrison(gameV);
+                popUp.exitPrison();
                 break;
 
             case "NoBuy":
 
-                popUp.noBuyPropriety(gameV);
+                popUp.noBuyPropriety();
                 break;
 
             case "NoBuild":
 
-                popUp.noBuilHouse(gameV);
+                popUp.noBuilHouse();
                 break;
 
             case "Eliminate":
 
                 String EliminatedName = (String) obj.get();
 
-                popUp.eliminatePlayer(gameV, EliminatedName);
+                popUp.eliminatePlayer(EliminatedName);
                 break;
 
             case "Win":
 
                 String WinnerName = (String) obj.get();
 
-                popUp.winnerPlayer(gameV, WinnerName);
+                popUp.winnerPlayer(WinnerName);
                 break;
 
             case "Save":
 
-                popUp.saveGame(gameV);
+                popUp.saveGame();
 
                 break;
 

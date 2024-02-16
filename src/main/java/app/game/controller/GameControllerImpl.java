@@ -189,8 +189,10 @@ public class GameControllerImpl implements GameController {
 
         if (currentCard.getCardId() != 0) {
             TriggeredEvent e = CardAdapter.unbuyableAdapter(currentCard).makeAction(currentPlayer);
-            this.unforseenMessage = e.getMessage();
-            this.landedOnUnforseen = true;
+            if (e != null) {
+                this.unforseenMessage = e.getMessage();
+                this.landedOnUnforseen = true;
+            }
 
             /*
              * if (e.equals(TriggeredEvent.PERFORMED)) {
