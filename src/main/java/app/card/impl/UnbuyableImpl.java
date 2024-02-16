@@ -2,7 +2,7 @@ package app.card.impl;
 
 import app.card.apii.Card;
 import app.card.apii.StaticActionStrategy;
-import app.card.apii.TriggeredEvent;
+import app.card.apii.StaticActionStrategy.TriggeredEvent;
 import app.card.apii.Unbuyable;
 import app.player.apii.Player;
 

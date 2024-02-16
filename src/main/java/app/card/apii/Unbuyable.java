@@ -1,5 +1,6 @@
 package app.card.apii;
 
+import app.card.apii.StaticActionStrategy.TriggeredEvent;
 import app.player.apii.Player;
 
 /**
