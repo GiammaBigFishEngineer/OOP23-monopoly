@@ -1,8 +1,5 @@
 package app.card.apii;
 
-import java.util.Optional;
-
-import app.card.impl.Unforseen;
 import app.player.apii.Player;
 
 /**
@@ -11,7 +8,7 @@ import app.player.apii.Player;
 public interface Unbuyable extends Card {
     /**
      * @param player on who make an action
-     * @return Optional empty if makeAction is not for ad Unforseen but for static card in table
+     * @return the event treggered doing the action
      */
-    Optional<Unforseen> makeAction(Player player);
+    TriggeredEvent makeAction(Player player);
 }

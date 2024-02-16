@@ -156,7 +156,7 @@ public final class CardFactoryImpl implements CardFactory {
                         throw new IllegalArgumentException("Player passed can't be null");
                     }
                     player.receivePayment(amount);
-                    return Optional.empty();
+                    return () -> Optional.of("Player get money");
                 };
             }
             case "payPlayer" -> {
@@ -164,10 +164,11 @@ public final class CardFactoryImpl implements CardFactory {
                     if (player == null) {
                         throw new IllegalArgumentException("Player passed can't be null");
                     }
-                    if (player.getBankAccount().isPaymentAllowed(amount)) {
-                        player.getBankAccount().payPlayer(null, amount);
+                    if (!player.getBankAccount().isPaymentAllowed(amount)) {
+                        return () -> Optional.empty();
                     }
-                    return Optional.empty();
+                    player.getBankAccount().payPlayer(null, amount);
+                    return () -> Optional.of("Player has paid");
                 };
             }
             case "movePlayer" -> {
@@ -176,7 +177,7 @@ public final class CardFactoryImpl implements CardFactory {
                         throw new IllegalArgumentException("Player passed can't be null");
                     }
                     player.setPosition(amount);
-                    return Optional.empty();
+                    return () -> Optional.of("Player has moved");
                 };
             }
             case "unforseen" -> {
@@ -185,11 +186,11 @@ public final class CardFactoryImpl implements CardFactory {
                     final var extraction = ThreadLocalRandom.current().nextInt(unforseenSize);
                     final var myUnforseen = Unforseen.valueOf((String) "U" + extraction);
                     myUnforseen.getCard().makeAction(player);
-                    return Optional.of(myUnforseen);
+                    return () -> Optional.of(myUnforseen.getDescription());
                 };
             }
             case "" -> { 
-                staticAction = (player) -> Optional.empty();
+                staticAction = (player) -> () -> Optional.empty();
             }
             default -> throw new IllegalArgumentException("The action read isn't an action of the game: " + action);
         }
