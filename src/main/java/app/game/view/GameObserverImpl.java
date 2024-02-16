@@ -68,9 +68,9 @@ public class GameObserverImpl implements GameObserver {
 
                 var card = tablePanel.getCardList().get(player.getCurrentPosition());
 
-                panelView.getLogic().setPlayer(player, card);
+                panelView.setPlayer(player, card);
 
-                panelView.getLogic().setCurrentBox(card);
+                panelView.setCurrentBox(card);
 
                 break;
 

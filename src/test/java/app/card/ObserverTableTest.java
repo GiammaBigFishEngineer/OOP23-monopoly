@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import app.card.apii.Observer;
+import app.card.impl.CardFactoryImpl;
 import app.card.view.BoxPanelView;
 import app.card.view.TableView;
 import app.player.apii.Player;
@@ -27,7 +28,7 @@ class ObserverTableTest {
      */
     @BeforeEach
     void init() throws IOException {
-        this.table = new TableView(SIZE);
+        this.table = new TableView(new CardFactoryImpl().cardsInitializer(), SIZE);
     }
 
     /**

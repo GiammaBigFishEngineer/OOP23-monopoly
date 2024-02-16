@@ -21,7 +21,6 @@ public final class BankAccountImpl implements BankAccount {
     public BankAccountImpl(final int balance) {
         this.balance = balance;
     }
-
     /**
      * Constructor with 0-argument.
      */

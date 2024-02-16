@@ -20,9 +20,10 @@ public final class BailView {
      * between paying an amount of money to go out of jail or not.
      * 
      * @param player
+     * @param gameV  the frame on which the menuBail is displayed.
      * @return true if bail was successfully payed, otherwise false.
      */
-    public boolean showMenuBail(final Player player, GameView gameV) {
+    public boolean showMenuBail(final Player player, final GameView gameV) {
         final String message = "Would you like to pay " + BailLogicImpl.DEFAULT_PAYMENT
                 + "$ to go out of prison? You have " + player.getBankAccount().getBalance() + "$ on your BankAccount.";
         final int choice = JOptionPane.showConfirmDialog(gameV, message, "YOU ARE IN PRISON!",
@@ -33,14 +34,12 @@ public final class BailView {
                         "FREE TO GO", JOptionPane.INFORMATION_MESSAGE);
                 bailResult = true;
             } else {
-                JOptionPane.showMessageDialog(gameV, "Not enough money for paying the bail. STAYING IN PRISON!",
+                JOptionPane.showMessageDialog(gameV, "Not enough money for paying the bail. TRY YOUR LUCK!",
                         "STILL IN PRISON", JOptionPane.ERROR_MESSAGE);
                 bailResult = false;
             }
         } else {
-            logic.notPayed(player);
-            JOptionPane.showMessageDialog(gameV,
-                    "You have decided not to pay the bail. STAYING IN PRISON FOR ONE SHIFT!",
+            JOptionPane.showMessageDialog(gameV, "You have decided not to pay the bail. TRY YOUR LUCK!",
                     "STILL IN PRISON", JOptionPane.ERROR_MESSAGE);
             bailResult = false;
         }

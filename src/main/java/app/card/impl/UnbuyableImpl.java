@@ -1,9 +1,8 @@
 package app.card.impl;
 
-import java.util.Optional;
-
 import app.card.apii.Card;
 import app.card.apii.StaticActionStrategy;
+import app.card.apii.StaticActionStrategy.TriggeredEvent;
 import app.card.apii.Unbuyable;
 import app.player.apii.Player;
 
@@ -31,12 +30,12 @@ public final class UnbuyableImpl implements Unbuyable {
     }
 
     @Override
-    public int getId() {
-        return card.getId();
+    public int getCardId() {
+        return card.getCardId();
     }
 
     @Override
-    public Optional<Unforseen> makeAction(final Player myPlayer) {
+    public TriggeredEvent makeAction(final Player myPlayer) {
         return this.action.myAction(myPlayer);
     }
 

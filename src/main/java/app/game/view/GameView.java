@@ -49,7 +49,7 @@ public class GameView extends JFrame {
          * TableView
          */
 
-        tablePanel = new TableView(7);
+        tablePanel = new TableView(btnPanel.getLogic().getTableList(), 7);
 
         this.add(tablePanel, BorderLayout.CENTER);
 

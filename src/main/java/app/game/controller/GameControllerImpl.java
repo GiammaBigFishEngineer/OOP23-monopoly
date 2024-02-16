@@ -41,7 +41,7 @@ public class GameControllerImpl implements GameController {
 
         this.tableList = new CardFactoryImpl().cardsInitializer();
         this.cardsList = tableList.stream()
-                .sorted(Comparator.comparingInt(Card::getId))
+                .sorted(Comparator.comparingInt(Card::getCardId))
                 .collect(Collectors.toList());
 
         this.playersName = new ArrayList<>();
@@ -185,7 +185,7 @@ public class GameControllerImpl implements GameController {
 
     public void handleUnbuyable() {
 
-        if (currentCard.getId() != 0) {
+        if (currentCard.getCardId() != 0) {
             CardAdapter.unbuyableAdapter(currentCard).makeAction(currentPlayer);
         }
 

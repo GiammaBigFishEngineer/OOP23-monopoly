@@ -27,7 +27,7 @@ import java.io.ObjectInputStream;
 public class TableView extends ObservableImpl<Player> {
 
     private static final long serialVersionUID = 3L;
-    private transient List<Card> cardList = new CardFactoryImpl().cardsInitializer();
+    private transient List<Card> cardList;
     private transient Map<Card, BoxPanelView> cells = new HashMap<>();
     private static final int IMAGESIZE = 70;
     private final int size;
@@ -46,10 +46,12 @@ public class TableView extends ObservableImpl<Player> {
 
     /**
      * @param size is the number of cards for a side in table
+     * @param list is the list of card in table.
      * @throws IOException
      */
-    public TableView(final int size) throws IOException {
+    public TableView(final List<Card> list, final int size) throws IOException {
         this.size = size;
+        this.cardList = List.of(list.stream().toArray(Card[]::new));
         this.setLayout(new GridLayout(size, size));
         this.setBackground(Color.decode("#7FFFD4"));
 
@@ -80,7 +82,7 @@ public class TableView extends ObservableImpl<Player> {
             throw new IllegalArgumentException("Position passed is not a position in table size");
         }
         for (final var i: this.cells.keySet()) {
-            if (i.getId() == position) {
+            if (i.getCardId() == position) {
                 this.getCells().get(i).drawCircle(color);
             }
         }
@@ -97,7 +99,7 @@ public class TableView extends ObservableImpl<Player> {
             throw new IllegalArgumentException("Position passed is not a position in table size");
         }
         for (final var i: this.cells.keySet()) {
-            if (i.getId() == position) {
+            if (i.getCardId() == position) {
                 this.getCells().get(i).removeCircle(color);
             }
         }
@@ -148,7 +150,7 @@ public class TableView extends ObservableImpl<Player> {
         } else if (card.isUnbuyable()) {
             price = "";
         }
-        final BoxPanelView jp = new BoxPanelView(card.getName(), price, card.getId());
+        final BoxPanelView jp = new BoxPanelView(card.getName(), price, card.getCardId());
         if (card.isUnbuyable()) {
             switch (card.getName()) {
                 case "Imprevisti" -> jp.add(renderImage("unforseen.png"), BorderLayout.CENTER);

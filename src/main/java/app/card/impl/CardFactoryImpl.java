@@ -3,8 +3,7 @@ package app.card.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 import java.io.IOException;
 import java.net.URL;
 
@@ -14,6 +13,7 @@ import app.card.apii.Card;
 import app.card.apii.CardFactory;
 import app.card.apii.StaticActionStrategy;
 import app.card.apii.Unbuyable;
+import app.card.apii.StaticActionStrategy.TriggeredEvent;
 import app.card.utils.JsonReader;
 import app.card.utils.UseGetResource;
 import app.player.apii.Player;
@@ -117,8 +117,8 @@ public final class CardFactoryImpl implements CardFactory {
             }
 
             @Override
-            public int getId() {
-                return this.buyable.getId();
+            public int getCardId() {
+                return this.buyable.getCardId();
             }
 
             @Override
@@ -152,43 +152,49 @@ public final class CardFactoryImpl implements CardFactory {
         switch (action) {
             case "giveMoneyPlayer" -> {
                 staticAction = (player) -> {
-                    if (player != null) {
-                        player.getBankAccount().receivePayment(amount);
+                    if (player == null) {
+                        throw new IllegalArgumentException("Player passed can't be null");
                     }
-                    return Optional.empty();
+                    player.receivePayment(amount);
+                    return TriggeredEvent.PERFORMED.update(player + " ha ricevuto " + amount);
                 };
             }
             case "payPlayer" -> {
                 staticAction = (player) -> {
-                    if (player != null) {
-                        player.getBankAccount().payPlayer(null, amount);
+                    if (player == null) {
+                        throw new IllegalArgumentException("Player passed can't be null");
                     }
-                    return Optional.empty();
+                    if (!player.getBankAccount().isPaymentAllowed(amount)) {
+                        return TriggeredEvent.UNPERFORMED.update("Il giocatore non ha abbasta denaro");
+                    }
+                    player.getBankAccount().payPlayer(null, amount);
+                    return TriggeredEvent.PERFORMED.update(player + " ha pagato " + amount);
                 };
             }
             case "movePlayer" -> {
                 staticAction = (player) -> {
-                    if (player != null) {
-                        player.setPosition(amount);
+                    if (player == null) {
+                        throw new IllegalArgumentException("Player passed can't be null");
                     }
-                    return Optional.empty();
+                    player.setPosition(amount);
+                    return TriggeredEvent.PERFORMED.update(player + " si sposta");
                 };
             }
             case "unforseen" -> {
                 staticAction = (player) -> {
-                    final Random random = new Random();
                     final int unforseenSize = 14;
-                    final var extraction = random.nextInt(unforseenSize);
+                    final var extraction = ThreadLocalRandom.current().nextInt(unforseenSize);
                     final var myUnforseen = Unforseen.valueOf((String) "U" + extraction);
                     myUnforseen.getCard().makeAction(player);
-                    return Optional.of(myUnforseen);
+                    return TriggeredEvent.PERFORMED.update(myUnforseen.getDescription());
                 };
             }
             case "" -> { 
-                staticAction = (player) -> Optional.empty();
+                staticAction = (player) -> TriggeredEvent.UNPERFORMED;
             }
             default -> throw new IllegalArgumentException("The action read isn't an action of the game: " + action);
         }
+        TriggeredEvent.clearMessages();
         return new UnbuyableImpl(card, staticAction);
     }
 

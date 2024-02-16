@@ -49,7 +49,7 @@ class CardTest {
     void testEmptyProperty() {
         final Buildable buildable = this.factory.createProperty(this.factory.createCard(ID_TEST, null), 0, 0, 0);
         assertEquals(buildable.getHousePrice(), 0);
-        assertEquals(buildable.getId(), ID_TEST);
+        assertEquals(buildable.getCardId(), ID_TEST);
         assertEquals(buildable.getName(), null);
         assertEquals(buildable.getPrice(), 0);
     }
@@ -63,7 +63,7 @@ class CardTest {
             this.factory.createCard(ID_TEST, "prova"),
             AMOUNT_TEST_PRICE, AMOUNT_TEST_PRICE, 0);
         assertEquals(buildable.getHousePrice(), AMOUNT_TEST_PRICE);
-        assertEquals(buildable.getId(), ID_TEST);
+        assertEquals(buildable.getCardId(), ID_TEST);
         assertEquals(buildable.getName(), "prova");
         assertEquals(buildable.getPrice(), 10);
     }
@@ -87,7 +87,7 @@ class CardTest {
         final Buyable station = this.factory.createStation(
             this.factory.createCard(ID_TEST, "North"),
             AMOUNT_TEST_PRICE, AMOUNT_TEST_PRICE);
-        assertEquals(station.getId(), ID_TEST);
+        assertEquals(station.getCardId(), ID_TEST);
         assertEquals(station.getName(), "North");
         assertEquals(station.getPrice(), AMOUNT_TEST_PRICE);
     }
@@ -113,7 +113,7 @@ class CardTest {
             this.factory.createCard(ID_TEST_PRISON, "prison"),
             "movePlayer", ID_TEST_PRISON);
         staticCard.makeAction(newPlayer);
-        assertEquals(staticCard.getId(), newPlayer.getCurrentPosition()); 
+        assertEquals(staticCard.getCardId(), newPlayer.getCurrentPosition()); 
     }
 
     /**
@@ -132,7 +132,7 @@ class CardTest {
 
     private Boolean listContains(final int i, final List<Card> list) throws IOException {
         for (final var l: list) {
-            if (l.getId() == i) {
+            if (l.getCardId() == i) {
                 return true;
             }
         }

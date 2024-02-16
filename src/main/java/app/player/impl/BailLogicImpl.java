@@ -11,6 +11,7 @@ public final class BailLogicImpl implements BailLogic {
 
     /**
      * Constant value for a default payment.
+     * It is public as it has to be used in BailView.
      */
     public static final int DEFAULT_PAYMENT = 100;
 
@@ -20,20 +21,11 @@ public final class BailLogicImpl implements BailLogic {
     @Override
     public boolean hasPayed(final Player player) {
         if (!(player.getBankAccount().isPaymentAllowed(DEFAULT_PAYMENT))) {
-            notPayed(player);
             return false;
         } else {
             player.getBankAccount().payPlayer(null, DEFAULT_PAYMENT);
             player.setInJail(false);
             return true;
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void notPayed(final Player player) {
-        player.setInJail(true);
     }
 }

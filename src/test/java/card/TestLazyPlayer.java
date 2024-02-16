@@ -110,4 +110,10 @@ final class TestLazyPlayer implements Player {
         throw new UnsupportedOperationException("Unimplemented method 'sellBuyable'");
     }
 
+    @Override
+    public void receivePayment(int amount) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'receivePayment'");
+    }
+
 }

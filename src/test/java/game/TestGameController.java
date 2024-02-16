@@ -50,7 +50,7 @@ class TestGameController {
         var i = 0;
 
         for (Card card : sortedList) {
-            assertEquals(i, card.getId());
+            assertEquals(i, card.getCardId());
             i++;
         }
     }
