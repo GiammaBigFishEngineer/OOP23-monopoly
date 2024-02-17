@@ -1,6 +1,5 @@
 package app.card.view;
 
-import app.game.controller.DiceController;
 import app.game.utils.Dice;
 
 import javax.swing.JLabel;
@@ -41,21 +40,14 @@ public class DiceView extends JPanel {
     private static final int MIN_WIDTH = 750;
     private static final int MIN_HEIGHT = 750;
 
-    private final transient Dice dice;
-    private final transient DiceController diceController;
     private final JLabel resultLabel;
     private final DicePanel dicePanel1;
     private final DicePanel dicePanel2;
 
     /**
      * Constructor of DiceView.
-     * 
-     * @param dice the model
-     * @param diceController the controller
      */
-    public DiceView(final Dice dice, final DiceController diceController) {
-        this.dice = dice;
-        this.diceController = diceController;
+    public DiceView() {
         this.setLayout(new BorderLayout());
         this.setMinimumSize(new Dimension(MIN_WIDTH, MIN_HEIGHT));
 
@@ -67,6 +59,7 @@ public class DiceView extends JPanel {
         topPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         topPanel.setBorder(BorderFactory.createEmptyBorder(TOP_PADDING, 0, 0, 0));
         topPanel.add(resultLabel);
+        topPanel.setBackground(Color.LIGHT_GRAY);
         this.add(topPanel, BorderLayout.NORTH);
 
         dicePanel1 = new DicePanel();
@@ -83,6 +76,7 @@ public class DiceView extends JPanel {
         gbc.gridy = 0;
         gbc.insets = new Insets(GENERAL_INSETS, LEFT_INSETS, GENERAL_INSETS, GENERAL_INSETS);
         centerPanel.add(dicePanel2, gbc);
+        centerPanel.setBackground(Color.LIGHT_GRAY);
         this.add(centerPanel, BorderLayout.CENTER);
         this.setVisible(true);
     }
@@ -92,9 +86,10 @@ public class DiceView extends JPanel {
      * Sets the result of the first die in the firs die panel, and
      * the result of the second die in the second die panel.
      * Then displays the total result printed.
+     * 
+     * @param dice the model representing the state of the dice after the roll.
      */
-    public void updateView() {
-        diceController.rollDiceAction();
+    public void updateView(final Dice dice) {
         dicePanel1.setResult(dice.getDie1Result());
         dicePanel2.setResult(dice.getDie2Result());
         resultLabel.setText("Risultato: " + dice.getDiceResult());

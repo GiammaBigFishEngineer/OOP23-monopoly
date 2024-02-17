@@ -24,7 +24,7 @@ final class DiceViewTest {
         SwingUtilities.invokeLater(() -> {
             final Dice diceModel = new Dice();
             final DiceController diceController = new DiceController(diceModel);
-            final DiceView diceView = new DiceView(diceModel, diceController);
+            final DiceView diceView = new DiceView();
 
             final JFrame frame = new JFrame();
             frame.setContentPane(diceView);
@@ -34,7 +34,8 @@ final class DiceViewTest {
             frame.setResizable(false);
             frame.setVisible(true);
 
-            diceView.updateView();
+            diceController.rollDiceAction();
+            diceView.updateView(diceModel);
         });
     }
 }
