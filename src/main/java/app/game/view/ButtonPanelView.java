@@ -52,6 +52,9 @@ public class ButtonPanelView extends GameObservableImpl {
 
             updateObserver(Optional.of(dice), "RollDice");
 
+            refreshPanelView();
+            refreshPositionView();
+
             if (logic.isCurrentPlayerOnUnforseen()) {
                 updateObserver(Optional.of(logic.getUnforseenMessage()), "UnbuyableAction");
             }
@@ -74,12 +77,12 @@ public class ButtonPanelView extends GameObservableImpl {
 
                 }
 
-            } else {
-
-                refreshPositionView();
-                // refreshPanelView();
-                changeButtonVisibility();
             }
+
+            refreshPanelView();
+            refreshPositionView();
+
+            changeButtonVisibility();
 
             rollDice.setEnabled(false);
 

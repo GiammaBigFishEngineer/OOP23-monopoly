@@ -15,6 +15,7 @@ public class GameView extends JFrame {
     final private PlayerPanelView playerPanel;
     final private ButtonPanelView btnPanel;
     final private TableView tablePanel;
+    final private DiceView dicePanel;
 
     private static final int PROPORTION = 2;
 
@@ -52,17 +53,8 @@ public class GameView extends JFrame {
 
         this.add(tablePanel, BorderLayout.CENTER);
 
-        /*
-         * Board Panels
-         */
-
-        final JPanel bar1 = new JPanel();
-        bar1.setBackground(Color.lightGray);
-        this.add(bar1, BorderLayout.EAST);
-
-        final JPanel bar2 = new JPanel();
-        bar2.setBackground(Color.lightGray);
-        this.add(bar2, BorderLayout.WEST);
+        dicePanel = new DiceView();
+        this.add(dicePanel, BorderLayout.EAST);
 
         /*
          * PlayerPanelView
@@ -91,6 +83,10 @@ public class GameView extends JFrame {
 
     public ButtonPanelView getButtonView() {
         return this.btnPanel;
+    }
+
+    public DiceView getDiceView() {
+        return this.dicePanel;
     }
 
 }

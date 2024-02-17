@@ -57,7 +57,27 @@ public final class PlayerImpl implements Player {
         }
         this.account = new BankAccountImpl(initialAmount);
 
-        this.color = "#555555";
+        switch (this.getID()) {
+            case 1:
+                color = "#E52B50";
+                break;
+
+            case 2:
+                color = "#884DA7";
+                break;
+
+            case 3:
+                color = "#FF6600";
+                break;
+
+            case 4:
+                color = "#E52B50";
+                break;
+
+            default:
+                color = "#E52B50";
+                break;
+        }
     }
 
     /**

@@ -83,7 +83,7 @@ public class GameObserverImpl implements GameObserver {
             case "RollDice":
 
                 final Dice dice = (Dice) obj.get();
-                System.out.println("dice : " + dice.getDiceResult());
+                gameV.getDiceView().updateView(dice);
 
                 // call gio method
                 break;

@@ -384,12 +384,8 @@ public final class GameControllerImpl implements GameController {
 
     @Override
     public Player getCurrentPlayer() {
-        final Player copyPlayer = new PlayerImpl(currentPlayer.getName(),
-                currentPlayer.getID(),
-                cardsList,
-                500);
 
-        return copyPlayer;
+        return currentPlayer;
     }
 
     @Override
