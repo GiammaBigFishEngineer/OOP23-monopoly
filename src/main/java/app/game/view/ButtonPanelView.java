@@ -2,6 +2,7 @@ package app.game.view;
 
 import javax.swing.*;
 
+import app.game.apii.GameController;
 import app.game.controller.GameControllerImpl;
 import app.game.utils.Dice;
 import app.player.apii.Player;
@@ -16,7 +17,7 @@ import java.util.*;
  */
 public class ButtonPanelView extends GameObservableImpl {
 
-    final private GameControllerImpl logic;
+    final private GameController logic;
 
     final private Map<BtnCodeEnum, Boolean> btnCodeList = new HashMap<>();
     final private Map<BtnCodeEnum, JButton> btnList = new HashMap<>();
@@ -55,32 +56,7 @@ public class ButtonPanelView extends GameObservableImpl {
             refreshPanelView();
             refreshPositionView();
 
-            if (logic.isCurrentPlayerOnUnforseen()) {
-                updateObserver(Optional.of(logic.getUnforseenMessage()), "UnbuyableAction");
-            }
-
-            if (logic.isCurrentPlayerDefeated()) {
-
-                final String currentPlayerName = logic.getCurrentPlayer().getName();
-
-                updateObserver(Optional.of(currentPlayerName), "Eliminate");
-
-                if (logic.isOver()) {
-
-                    updateObserver(Optional.of(currentPlayerName), "Win");
-
-                    logic.endGame();
-
-                } else {
-
-                    this.newTurn();
-
-                }
-
-            }
-
-            refreshPanelView();
-            refreshPositionView();
+            this.turnViewControl();
 
             changeButtonVisibility();
 
@@ -226,6 +202,40 @@ public class ButtonPanelView extends GameObservableImpl {
         }
     }
 
+    public void turnViewControl() {
+
+        if (logic.isCurrentPlayerOnUnforseen()) {
+            updateObserver(Optional.of(logic.getUnforseenMessage()), "UnbuyableAction");
+        }
+
+        if (logic.isCurrentPlayerOnOwnedPropriety()) {
+            updateObserver(Optional.of(logic.getOwner()), "Fees");
+        }
+
+        if (logic.isCurrentPlayerDefeated()) {
+
+            final String currentPlayerName = logic.getCurrentPlayer().getName();
+
+            updateObserver(Optional.of(currentPlayerName), "Eliminate");
+
+            if (logic.isOver()) {
+
+                updateObserver(Optional.of(currentPlayerName), "Win");
+
+                logic.endGame();
+
+            } else {
+
+                this.newTurn();
+
+            }
+
+        }
+
+        refreshPanelView();
+        refreshPositionView();
+    }
+
     public void initializeView() {
 
         final int nPlayers = logic.getPlayerList().size();
@@ -246,7 +256,7 @@ public class ButtonPanelView extends GameObservableImpl {
         updateObserver(Optional.of(currentPlayer), "refreshPlayerPosition");
     }
 
-    public GameControllerImpl getLogic() {
+    public GameController getLogic() {
         return this.logic;
     }
 

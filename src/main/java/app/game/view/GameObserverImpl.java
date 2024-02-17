@@ -1,5 +1,6 @@
 package app.game.view;
 
+import app.card.apii.Card;
 import app.card.apii.Observer;
 import app.card.view.TableView;
 import app.card.view.UnforseenView;
@@ -11,6 +12,8 @@ import app.player.view.PlayerPanelView;
 
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.Comparator;
 import java.util.HashMap;
 
 public class GameObserverImpl implements GameObserver {
@@ -63,7 +66,11 @@ public class GameObserverImpl implements GameObserver {
 
                 final Player player = (Player) obj.get();
 
-                final var card = tablePanel.getCardList().get(player.getCurrentPosition());
+                final var card = tablePanel.getCardList()
+                        .stream()
+                        .sorted(Comparator.comparingInt(Card::getCardId))
+                        .collect(Collectors.toList())
+                        .get(player.getCurrentPosition());
 
                 panelView.setPlayer(player, card);
 
@@ -134,6 +141,11 @@ public class GameObserverImpl implements GameObserver {
                 new UnforseenView(message);
 
                 break;
+
+            case "Fees":
+                final String owner = (String) obj.get();
+
+                popUp.fees(owner);
 
             default:
 

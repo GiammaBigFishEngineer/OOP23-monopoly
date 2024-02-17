@@ -137,4 +137,16 @@ public interface GameController {
      */
     void setDiceValue(int value);
 
+    boolean isCurrentPlayerDefeated();
+
+    boolean isCurrentPlayerOnUnforseen();
+
+    String getUnforseenMessage();
+
+    boolean isCurrentPlayerOnOwnedPropriety();
+
+    String getOwner();
+
+    void endGame();
+
 }

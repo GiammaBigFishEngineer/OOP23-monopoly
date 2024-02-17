@@ -37,4 +37,8 @@ public class GameMessage {
         JOptionPane.showMessageDialog(null, "You can't build a house!");
     }
 
+    public void fees(final String name) {
+        JOptionPane.showMessageDialog(null, "You landed on " + name + "'propriety, you must pay!");
+    }
+
 }

@@ -33,8 +33,11 @@ public final class GameControllerImpl implements GameController {
     private final List<Card> cardsList;
     private Card currentCard;
     private int currentCardIndex;
+
     private boolean landedOnUnforseen;
     private String unforseenMessage;
+    private boolean landedOnOwned;
+    private String ownerName;
 
     private final Dice currentDice;
     private boolean doubleDice;
@@ -85,6 +88,7 @@ public final class GameControllerImpl implements GameController {
         this.disableAllBtn();
         this.nextPlayer();
         this.landedOnUnforseen = false;
+        this.landedOnOwned = false;
 
     }
 
@@ -210,20 +214,28 @@ public final class GameControllerImpl implements GameController {
             this.unforseenMessage = e.getMessage();
             this.landedOnUnforseen = true;
 
+            var balance = currentPlayer.getBankAccount().getBalance();
+
             if (currentCardIndex != currentPlayer.getCurrentPosition()) {
-                System.out.println("movimento");
+                System.out.println("imprevisto movimento");
                 currentCardIndex = currentPlayer.getCurrentPosition();
 
                 currentCard = cardsList.get(currentCardIndex);
 
                 handleCard();
-            } else if (e.equals(TriggeredEvent.UNPERFORMED)) {
-                System.out.println("pagamento");
-                this.defeatPlayer();
+            } else if (balance != currentPlayer.getBankAccount().getBalance()) {
+
+                if (e.equals(TriggeredEvent.UNPERFORMED)) {
+                    System.out.println("imprevisto pagamento non riuscito !!");
+                    this.defeatPlayer();
+                }
+
+                System.out.println("imprevisto pagamento riuscito");
+
             }
 
         } else {
-            System.out.println("prigione/transito");
+            System.out.println("parcheggio/transito/start");
         }
 
     }
@@ -308,6 +320,8 @@ public final class GameControllerImpl implements GameController {
 
     @Override
     public void payFees(final Player owner) {
+        landedOnOwned = true;
+        ownerName = CardAdapter.buyableAdapter(currentCard).getOwner().getName();
 
         final int fees = CardAdapter.buyableAdapter(currentCard).getTransitFees();
 
@@ -441,6 +455,14 @@ public final class GameControllerImpl implements GameController {
 
     public String getUnforseenMessage() {
         return this.unforseenMessage;
+    }
+
+    public boolean isCurrentPlayerOnOwnedPropriety() {
+        return this.landedOnOwned;
+    }
+
+    public String getOwner() {
+        return this.ownerName;
     }
 
 }
