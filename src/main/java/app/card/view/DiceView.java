@@ -1,11 +1,11 @@
 package app.card.view;
 
+import app.game.controller.DiceController;
 import app.game.utils.Dice;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.BorderFactory;
-import javax.swing.JFrame;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -24,7 +24,6 @@ public class DiceView extends JPanel {
 
     private static final long serialVersionUID = 1L;
 
-    private static final String TITLE = "Lancio dei due dadi";
     private static final int DICE_SIZE = 175;
     private static final int FONT_SIZE = 24;
     private static final int TOP_PADDING = 50;
@@ -39,18 +38,26 @@ public class DiceView extends JPanel {
     private static final int FOUR_DOT = 4;
     private static final int FIVE_DOT = 5;
     private static final int SIX_DOT = 6;
+    private static final int MIN_WIDTH = 750;
+    private static final int MIN_HEIGHT = 750;
 
     private final transient Dice dice;
+    private final transient DiceController diceController;
     private final JLabel resultLabel;
     private final DicePanel dicePanel1;
     private final DicePanel dicePanel2;
 
     /**
      * Constructor of DiceView.
+     * 
+     * @param dice the model
+     * @param diceController the controller
      */
-    public DiceView() {
-        dice = new Dice();
+    public DiceView(final Dice dice, final DiceController diceController) {
+        this.dice = dice;
+        this.diceController = diceController;
         this.setLayout(new BorderLayout());
+        this.setMinimumSize(new Dimension(MIN_WIDTH, MIN_HEIGHT));
 
         resultLabel = new JLabel("Risultato:  ");
         final Font resultFont = new Font("Verdana", Font.PLAIN, FONT_SIZE);
@@ -81,21 +88,16 @@ public class DiceView extends JPanel {
     }
 
     /**
-     * Rolls the dice, generating random numbers for each die and updating the result label.
+     * Updates the view with the results of the latest dice roll.
+     * Sets the result of the first die in the firs die panel, and
+     * the result of the second die in the second die panel.
+     * Then displays the total result printed.
      */
-    public void rollAction() {
-        dice.rollDice();
-
+    public void updateView() {
+        diceController.rollDice();
         dicePanel1.setResult(dice.getDie1Result());
         dicePanel2.setResult(dice.getDie2Result());
         resultLabel.setText("Risultato: " + dice.getDiceResult());
-    }
-
-    /**
-     * @return the result of the roll
-     */
-    public int getLastDiceResult() {
-        return dice.getDiceResult();
     }
 
     /**
@@ -167,18 +169,5 @@ public class DiceView extends JPanel {
             g.setColor(Color.BLACK);
             g.fillOval(x - DOT_SIZE / 2, y - DOT_SIZE / 2, DOT_SIZE, DOT_SIZE);
         }
-    }
-
-    /**
-     * Initializes and displays the window for the DiceView.
-     */
-    public void initAndShow() {
-        final JFrame frame = new JFrame();
-        frame.setResizable(false);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setContentPane(this);
-        frame.setTitle(TITLE);
-        frame.pack();
-        frame.setVisible(true);
     }
 }

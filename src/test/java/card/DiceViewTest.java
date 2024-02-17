@@ -1,6 +1,8 @@
 package card;
 
 import app.card.view.DiceView;
+import app.game.controller.DiceController;
+import app.game.utils.Dice;
 
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
@@ -20,17 +22,19 @@ final class DiceViewTest {
      */
     public static void main(final String[] args) throws java.io.IOException {
         SwingUtilities.invokeLater(() -> {
-            final var diceView = new DiceView();
-            final var frame = new JFrame();
+            final Dice diceModel = new Dice();
+            final DiceController diceController = new DiceController(diceModel);
+            final DiceView diceView = new DiceView(diceModel, diceController);
 
-            diceView.rollAction();
-
+            final JFrame frame = new JFrame();
             frame.setContentPane(diceView);
             frame.setTitle(TITLE);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.pack();
             frame.setResizable(false);
             frame.setVisible(true);
+
+            diceView.updateView();
         });
     }
 }
