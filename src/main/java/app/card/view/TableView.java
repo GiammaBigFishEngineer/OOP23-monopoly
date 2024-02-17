@@ -5,7 +5,7 @@ import javax.swing.ImageIcon;
 
 import app.card.apii.Card;
 import app.card.apii.CardAdapter;
-import app.card.impl.CardFactoryImpl;
+
 import app.card.utils.UseGetResource;
 import app.player.apii.Player;
 

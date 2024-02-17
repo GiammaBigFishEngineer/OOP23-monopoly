@@ -1,8 +1,12 @@
 package app.game.controller;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
 import java.util.stream.Collectors;
+import java.util.Comparator;
 
 import app.card.apii.Card;
 import app.card.apii.CardAdapter;
@@ -17,27 +21,33 @@ import app.player.apii.Player;
 import app.player.impl.PlayerImpl;
 import app.game.view.BtnCodeEnum;
 
-public class GameControllerImpl implements GameController {
-    final private List<Player> players;
-    final private List<Player> defeated;
+public final class GameControllerImpl implements GameController {
+    private final List<Player> players;
+    private final List<Player> defeated;
     private Player currentPlayer;
     private int currentPlayerIndex = -1;
 
-    final private List<String> playersName;
+    private final List<String> playersName;
 
-    final private List<Card> tableList;
-    final private List<Card> cardsList;
+    private final List<Card> tableList;
+    private final List<Card> cardsList;
     private Card currentCard;
     private int currentCardIndex;
     private boolean landedOnUnforseen;
     private String unforseenMessage;
 
-    final private Dice currentDice;
+    private final Dice currentDice;
     private boolean doubleDice;
 
     private int totalResult;
 
-    final private Map<BtnCodeEnum, Boolean> btnList;
+    private final Map<BtnCodeEnum, Boolean> btnList;
+
+    /**
+     * 
+     * @param names is a list that contains all the player names
+     * @throws IOException
+     */
 
     public GameControllerImpl(final List<String> names) throws IOException {
 
@@ -111,6 +121,10 @@ public class GameControllerImpl implements GameController {
         }
 
     }
+
+    /**
+     * 
+     */
 
     @Override
     public void rollDice(final Boolean b) {
@@ -370,7 +384,12 @@ public class GameControllerImpl implements GameController {
 
     @Override
     public Player getCurrentPlayer() {
-        return this.currentPlayer;
+        final Player copyPlayer = new PlayerImpl(currentPlayer.getName(),
+                currentPlayer.getID(),
+                cardsList,
+                500);
+
+        return copyPlayer;
     }
 
     @Override
@@ -385,22 +404,30 @@ public class GameControllerImpl implements GameController {
 
     @Override
     public List<Card> getTableList() {
-        return this.tableList;
+        List<Card> copyList = new ArrayList<>();
+        copyList.addAll(tableList);
+        return copyList;
     }
 
     @Override
     public List<Card> getCardList() {
-        return this.cardsList;
+        List<Card> copyList = new ArrayList<>();
+        copyList.addAll(cardsList);
+        return copyList;
     }
 
     @Override
     public List<Player> getPlayerList() {
-        return this.players;
+        List<Player> copyList = new ArrayList<>();
+        copyList.addAll(players);
+        return copyList;
     }
 
     @Override
     public List<Player> getDefeatedList() {
-        return this.defeated;
+        List<Player> copyList = new ArrayList<>();
+        copyList.addAll(defeated);
+        return copyList;
     }
 
     public Boolean isCurrentPlayerInJail() {
