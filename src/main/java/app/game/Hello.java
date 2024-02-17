@@ -2,8 +2,15 @@ package app.game;
 
 import app.game.view.MenuView;
 
+/*
+ * MonopolyGame Rimini-Edition
+ */
 public class Hello {
-    public static void main(String[] args) {
+    /**
+     * 
+     * @param args
+     */
+    static void main(final String[] args) {
         new MenuView();
     }
 }

@@ -56,7 +56,7 @@ public interface GameController {
     void handleCard();
 
     /**
-     * 
+     * @return true if current player is in jail
      */
     Boolean isCurrentPlayerInJail();
 
@@ -66,7 +66,9 @@ public interface GameController {
     void tryLuckyBail();
 
     /**
-     * 
+     * @return a map where the key is a code that identifies a button and
+     *         value can be true if the button it corrisponds to is enabled, false
+     *         otherwhise
      */
     Map<BtnCodeEnum, Boolean> getBtnStatus();
 
@@ -81,7 +83,12 @@ public interface GameController {
     void disableSingleButton(BtnCodeEnum code);
 
     /**
-     * this method check if the player list contains only one player
+     * 
+     */
+    void disableAllBtn();
+
+    /**
+     * @return true if the player list contains only one player, false otherwise
      */
     boolean isOver();
 
@@ -137,18 +144,42 @@ public interface GameController {
      */
     void setDiceValue(int value);
 
+    /**
+     * @return true if the current player has been eliminated, false otherwise
+     */
     boolean isCurrentPlayerDefeated();
 
+    /**
+     * @return true if the current player has landed on an unforseen, false
+     *         otherwise
+     */
     boolean isCurrentPlayerOnUnforseen();
 
+    /**
+     * @return the message corresponding to the unforseen
+     */
     String getUnforseenMessage();
 
+    /**
+     * @return true if the current player has landed on an owned propriety, false
+     *         otherwise
+     */
     boolean isCurrentPlayerOnOwnedPropriety();
 
+    /**
+     * @return the name of the owner of the propriety on which the current player
+     *         landed
+     */
     String getOwner();
 
+    /**
+     * 
+     */
     void endGame();
 
+    /**
+     * 
+     */
     void saveGame();
 
 }

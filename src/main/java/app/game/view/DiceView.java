@@ -47,8 +47,7 @@ public class DiceView extends JPanel {
     /**
      * Constructor of DiceView.
      * 
-     * @param dice           the model
-     * @param diceController the controller
+     * 
      */
     public DiceView() {
 
@@ -88,8 +87,10 @@ public class DiceView extends JPanel {
      * Sets the result of the first die in the firs die panel, and
      * the result of the second die in the second die panel.
      * Then displays the total result printed.
+     * 
+     * @param dice
      */
-    public void updateView(Dice dice) {
+    public void updateView(final Dice dice) {
 
         dicePanel1.setResult(dice.getDie1Result());
         dicePanel2.setResult(dice.getDie2Result());

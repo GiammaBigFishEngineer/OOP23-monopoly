@@ -10,7 +10,7 @@ import app.player.view.PlayerPanelView;
 /**
  * Gameview.
  */
-public class GameView extends JFrame {
+public final class GameView extends JFrame {
 
     final private PlayerPanelView playerPanel;
     final private ButtonPanelView btnPanel;
@@ -40,6 +40,7 @@ public class GameView extends JFrame {
          */
 
         btnPanel = new ButtonPanelView(playerNames, new GameObserverImpl(this));
+        btnPanel.newTurn();
 
         this.add(btnPanel, BorderLayout.SOUTH);
 
@@ -60,7 +61,6 @@ public class GameView extends JFrame {
          * PlayerPanelView
          */
 
-        this.pack();
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         screen = Toolkit.getDefaultToolkit().getScreenSize();

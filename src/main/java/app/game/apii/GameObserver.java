@@ -14,6 +14,6 @@ public interface GameObserver {
      * @return true if the action was successful, false otherwise
      */
 
-    public boolean update(Optional<Object> obj, String str);
+    boolean update(Optional<Object> obj, String str);
 
 }

@@ -148,7 +148,7 @@ public class GameObserverImpl implements GameObserver {
                 popUp.fees(owner);
 
             default:
-
+                bool = false;
                 break;
 
         }

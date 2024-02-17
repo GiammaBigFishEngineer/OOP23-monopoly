@@ -22,6 +22,10 @@ import app.player.impl.PlayerImpl;
 import app.game.view.BtnCodeEnum;
 
 public final class GameControllerImpl implements GameController {
+    private static final int GO_ID = 0;
+    private static final int TRANSIT_ID = 6;
+    private static final int PARK_ID = 12;
+    private static final int INITIAL_AMOUNT = 500;
     private final List<Player> players;
     private final List<Player> defeated;
     private Player currentPlayer;
@@ -103,8 +107,9 @@ public final class GameControllerImpl implements GameController {
 
     }
 
-    // prima di iniziare il turno se il player è in prigione può decidere se pagare
-    // o provare ad uscire con un doppio dado
+    /**
+     * {@inheritDoc}
+     */
 
     @Override
     public void tryLuckyBail() {
@@ -131,7 +136,7 @@ public final class GameControllerImpl implements GameController {
     }
 
     /**
-     * 
+     * {@inheritDoc}
      */
 
     @Override
@@ -160,6 +165,10 @@ public final class GameControllerImpl implements GameController {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
+
     @Override
 
     public void startTurn() {
@@ -170,7 +179,7 @@ public final class GameControllerImpl implements GameController {
 
         if (finalPosition >= cardsList.size()) {
 
-            final int new_position = finalPosition - cardsList.size();
+            final int new_position = finalPosition - (int) cardsList.size();
             currentPlayer.setPosition(new_position);
             Unforseen.U0.getCard().makeAction(currentPlayer);
 
@@ -186,8 +195,9 @@ public final class GameControllerImpl implements GameController {
 
     }
 
-    // serve per attivare/disattivare certi bottoni in base alla carta su cui si è
-    // finiti
+    /**
+     * {@inheritDoc}
+     */
 
     @Override
     public void handleCard() {
@@ -212,34 +222,29 @@ public final class GameControllerImpl implements GameController {
 
     public void handleUnbuyable() {
 
-        if (currentCard.getCardId() != 0 && currentCard.getCardId() != 12 && currentCard.getCardId() != 6) {
+        if (currentCard.getCardId() != GO_ID && currentCard.getCardId() != TRANSIT_ID
+                && currentCard.getCardId() != PARK_ID) {
 
             final TriggeredEvent e = CardAdapter.unbuyableAdapter(currentCard).makeAction(currentPlayer);
             this.unforseenMessage = e.getMessage();
             this.landedOnUnforseen = true;
 
-            var balance = currentPlayer.getBankAccount().getBalance();
+            final var balance = currentPlayer.getBankAccount().getBalance();
 
             if (currentCardIndex != currentPlayer.getCurrentPosition()) {
-                System.out.println("imprevisto movimento");
+
                 currentCardIndex = currentPlayer.getCurrentPosition();
 
                 currentCard = cardsList.get(currentCardIndex);
 
                 handleCard();
-            } else if (balance != currentPlayer.getBankAccount().getBalance()) {
+            } else if (balance != currentPlayer.getBankAccount().getBalance()
+                    && e.equals(TriggeredEvent.UNPERFORMED)) {
 
-                if (e.equals(TriggeredEvent.UNPERFORMED)) {
-                    System.out.println("imprevisto pagamento non riuscito !!");
-                    this.defeatPlayer();
-                }
-
-                System.out.println("imprevisto pagamento riuscito");
+                this.defeatPlayer();
 
             }
 
-        } else {
-            System.out.println("parcheggio/transito/start");
         }
 
     }
@@ -287,33 +292,35 @@ public final class GameControllerImpl implements GameController {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+
     @Override
     public boolean buyPropriety() {
 
         disableSingleButton(BtnCodeEnum.buyPropriety);
 
-        if (!currentPlayer.buyBox(CardAdapter.buyableAdapter(currentCard))) {
-
-            return false;
-        }
-
-        return true;
+        return !currentPlayer.buyBox(CardAdapter.buyableAdapter(currentCard));
 
     }
+
+    /**
+     * {@inheritDoc}
+     */
 
     @Override
     public boolean buildHouse() {
 
         disableSingleButton(BtnCodeEnum.buyHouse);
 
-        if (!currentPlayer.buildHouse(CardAdapter.buildableAdapter(currentCard))) {
-
-            return false;
-        }
-
-        return true;
+        return !currentPlayer.buildHouse(CardAdapter.buildableAdapter(currentCard));
 
     }
+
+    /**
+     * {@inheritDoc}
+     */
 
     @Override
     public void sellPropriety() {
@@ -321,6 +328,10 @@ public final class GameControllerImpl implements GameController {
         disableSingleButton(BtnCodeEnum.sellPropriety);
         currentPlayer.sellBuyable(CardAdapter.buyableAdapter(currentCard));
     }
+
+    /**
+     * {@inheritDoc}
+     */
 
     @Override
     public void payFees(final Player owner) {
@@ -335,6 +346,10 @@ public final class GameControllerImpl implements GameController {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
+
     @Override
     public void defeatPlayer() {
 
@@ -345,15 +360,29 @@ public final class GameControllerImpl implements GameController {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
+
     @Override
     public boolean isOver() {
         return players.size() == 1;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+
+    @Override
     public void endGame() {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
+
+    @Override
     public boolean isCurrentPlayerDefeated() {
         return defeated.contains(currentPlayer);
     }
@@ -362,6 +391,10 @@ public final class GameControllerImpl implements GameController {
         this.currentPlayerIndex--;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+
     @Override
     public void enableSingleButton(final BtnCodeEnum code) {
 
@@ -369,12 +402,22 @@ public final class GameControllerImpl implements GameController {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
+
     @Override
     public void disableSingleButton(final BtnCodeEnum code) {
 
         btnList.put(code, false);
 
     }
+
+    /**
+     * {@inheritDoc}
+     */
+
+    @Override
 
     public void disableAllBtn() {
 
@@ -384,21 +427,35 @@ public final class GameControllerImpl implements GameController {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
+
     @Override
     public void initializePlayer() {
         var id = 1;
         for (final String name : playersName) {
 
-            this.players.add(new PlayerImpl(name, id, cardsList, 500));
+            this.players.add(new PlayerImpl(name, id, cardsList, INITIAL_AMOUNT));
             id++;
 
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+
     @Override
     public Map<BtnCodeEnum, Boolean> getBtnStatus() {
-        return btnList;
+        final Map<BtnCodeEnum, Boolean> copyMap = new HashMap<>();
+        copyMap.putAll(btnList);
+        return copyMap;
     }
+
+    /**
+     * {@inheritDoc}
+     */
 
     @Override
     public Player getCurrentPlayer() {
@@ -406,69 +463,127 @@ public final class GameControllerImpl implements GameController {
         return currentPlayer;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+
     @Override
     public Dice getDice() {
         return this.currentDice;
     }
+
+    /**
+     * {@inheritDoc}
+     */
 
     @Override
     public Card getCurrentCard() {
         return currentCard;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+
     @Override
     public List<Card> getTableList() {
-        List<Card> copyList = new ArrayList<>();
+        final List<Card> copyList = new ArrayList<>();
         copyList.addAll(tableList);
         return copyList;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+
     @Override
     public List<Card> getCardList() {
-        List<Card> copyList = new ArrayList<>();
+        final List<Card> copyList = new ArrayList<>();
         copyList.addAll(cardsList);
         return copyList;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+
     @Override
     public List<Player> getPlayerList() {
-        List<Player> copyList = new ArrayList<>();
+        final List<Player> copyList = new ArrayList<>();
         copyList.addAll(players);
         return copyList;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+
     @Override
     public List<Player> getDefeatedList() {
-        List<Player> copyList = new ArrayList<>();
+        final List<Player> copyList = new ArrayList<>();
         copyList.addAll(defeated);
         return copyList;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+
+    @Override
     public Boolean isCurrentPlayerInJail() {
         return currentPlayer.isInJail();
     }
+
+    /**
+     * {@inheritDoc}
+     */
 
     @Override
     public void setDiceValue(final int value) {
         this.totalResult = value;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+
+    @Override
     public boolean isCurrentPlayerOnUnforseen() {
         return this.landedOnUnforseen;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+
+    @Override
     public String getUnforseenMessage() {
         return this.unforseenMessage;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+
+    @Override
     public boolean isCurrentPlayerOnOwnedPropriety() {
         return this.landedOnOwned;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+
+    @Override
     public String getOwner() {
         return this.ownerName;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+
+    @Override
     public void saveGame() {
         saveLogic.saveGame(players);
     }

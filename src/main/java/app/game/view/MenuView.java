@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
 
-public class MenuView extends JFrame {
+public final class MenuView extends JFrame {
 
     private static final int PROPORTION = 2;
 

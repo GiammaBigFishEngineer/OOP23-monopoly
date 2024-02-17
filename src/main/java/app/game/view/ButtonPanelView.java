@@ -1,6 +1,6 @@
 package app.game.view;
 
-import javax.swing.*;
+import javax.swing.JButton;
 
 import app.game.apii.GameController;
 import app.game.controller.GameControllerImpl;
@@ -10,28 +10,31 @@ import app.player.apii.Player;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.io.IOException;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Optional;
 
 /**
  * ButtonsView.
  */
-public class ButtonPanelView extends GameObservableImpl {
+public final class ButtonPanelView extends GameObservableImpl {
 
-    final private GameController logic;
+    private GameController gameLogic;
 
-    final private Map<BtnCodeEnum, Boolean> btnCodeList = new HashMap<>();
-    final private Map<BtnCodeEnum, JButton> btnList = new HashMap<>();
+    private final Map<BtnCodeEnum, Boolean> btnCodeList = new HashMap<>();
+    private final Map<BtnCodeEnum, JButton> btnList = new HashMap<>();
 
-    final private JButton rollDice;
-    final private JButton buyPropriety;
-    final private JButton sellPropriety;
-    final private JButton buyHouse;
-    final private JButton endTurn;
-    final private JButton saveGame;
+    private final JButton rollDice;
+    private final JButton buyPropriety;
+    private final JButton sellPropriety;
+    private final JButton buyHouse;
+    private final JButton endTurn;
+    private final JButton saveGame;
 
     public ButtonPanelView(final List<String> playersNames, final GameObserverImpl obs) throws IOException {
 
-        this.logic = new GameControllerImpl(playersNames);
+        this.gameLogic = new GameControllerImpl(playersNames);
         this.registerObserver(obs);
 
         this.setLayout(new GridLayout(2, 3));
@@ -47,9 +50,9 @@ public class ButtonPanelView extends GameObservableImpl {
 
         rollDice.addActionListener(e -> {
 
-            logic.rollDice(true);
+            gameLogic.rollDice(true);
 
-            final Dice dice = logic.getDice();
+            final Dice dice = gameLogic.getDice();
 
             updateObserver(Optional.of(dice), "RollDice");
 
@@ -72,7 +75,7 @@ public class ButtonPanelView extends GameObservableImpl {
 
         buyPropriety.addActionListener(e -> {
 
-            if (!logic.buyPropriety()) {
+            if (!gameLogic.buyPropriety()) {
                 updateObserver(Optional.empty(), "NoBuy");
             }
 
@@ -92,7 +95,7 @@ public class ButtonPanelView extends GameObservableImpl {
 
         sellPropriety.addActionListener(e -> {
 
-            logic.sellPropriety();
+            gameLogic.sellPropriety();
 
             refreshPanelView();
 
@@ -110,7 +113,7 @@ public class ButtonPanelView extends GameObservableImpl {
 
         buyHouse.addActionListener(e -> {
 
-            if (!logic.buildHouse()) {
+            if (!gameLogic.buildHouse()) {
                 updateObserver(Optional.empty(), "NoBuild");
             }
 
@@ -143,7 +146,7 @@ public class ButtonPanelView extends GameObservableImpl {
 
         saveGame.addActionListener(e -> {
 
-            logic.saveGame();
+            gameLogic.saveGame();
 
             updateObserver(Optional.empty(), "Save");
 
@@ -151,44 +154,50 @@ public class ButtonPanelView extends GameObservableImpl {
 
         });
 
-        this.newTurn();
-
     }
+
+    /**
+     * 
+     */
 
     public void newTurn() {
 
-        logic.newTurn();
+        gameLogic.newTurn();
 
-        if (logic.isCurrentPlayerInJail()) {
+        if (gameLogic.isCurrentPlayerInJail()) {
 
-            final Player currentPlayer = logic.getCurrentPlayer();
+            final Player currentPlayer = gameLogic.getCurrentPlayer();
 
             if (updateObserver(Optional.of(currentPlayer), "bail")) {
 
-                logic.enableSingleButton(BtnCodeEnum.rollDice);
+                gameLogic.enableSingleButton(BtnCodeEnum.rollDice);
 
             } else {
 
-                logic.tryLuckyBail();
+                gameLogic.tryLuckyBail();
 
-                if (logic.isCurrentPlayerInJail()) {
+                if (gameLogic.isCurrentPlayerInJail()) {
                     updateObserver(Optional.empty(), "NotDoubleDice");
                 } else {
                     updateObserver(Optional.empty(), "DoubleDice");
-                    logic.enableSingleButton(BtnCodeEnum.rollDice);
+                    gameLogic.enableSingleButton(BtnCodeEnum.rollDice);
                 }
             }
 
         } else {
-            logic.enableSingleButton(BtnCodeEnum.rollDice);
+            gameLogic.enableSingleButton(BtnCodeEnum.rollDice);
         }
 
         changeButtonVisibility();
     }
 
+    /**
+     * 
+     */
+
     public void changeButtonVisibility() {
 
-        this.btnCodeList.putAll(logic.getBtnStatus());
+        this.btnCodeList.putAll(gameLogic.getBtnStatus());
 
         for (final var entry : btnCodeList.entrySet()) {
 
@@ -200,27 +209,31 @@ public class ButtonPanelView extends GameObservableImpl {
         }
     }
 
+    /**
+     * 
+     */
+
     public void turnViewControl() {
 
-        if (logic.isCurrentPlayerOnUnforseen()) {
-            updateObserver(Optional.of(logic.getUnforseenMessage()), "UnbuyableAction");
+        if (gameLogic.isCurrentPlayerOnUnforseen()) {
+            updateObserver(Optional.of(gameLogic.getUnforseenMessage()), "UnbuyableAction");
         }
 
-        if (logic.isCurrentPlayerOnOwnedPropriety()) {
-            updateObserver(Optional.of(logic.getOwner()), "Fees");
+        if (gameLogic.isCurrentPlayerOnOwnedPropriety()) {
+            updateObserver(Optional.of(gameLogic.getOwner()), "Fees");
         }
 
-        if (logic.isCurrentPlayerDefeated()) {
+        if (gameLogic.isCurrentPlayerDefeated()) {
 
-            final String currentPlayerName = logic.getCurrentPlayer().getName();
+            final String currentPlayerName = gameLogic.getCurrentPlayer().getName();
 
             updateObserver(Optional.of(currentPlayerName), "Eliminate");
 
-            if (logic.isOver()) {
+            if (gameLogic.isOver()) {
 
                 updateObserver(Optional.of(currentPlayerName), "Win");
 
-                logic.endGame();
+                gameLogic.endGame();
 
             } else {
 
@@ -236,28 +249,44 @@ public class ButtonPanelView extends GameObservableImpl {
         changeButtonVisibility();
     }
 
+    /**
+     * 
+     */
+
     public void initializeView() {
 
-        final int nPlayers = logic.getPlayerList().size();
+        final int nPlayers = gameLogic.getPlayerList().size();
         for (int i = 0; i < nPlayers; i++) {
-            logic.newTurn();
+            gameLogic.newTurn();
             refreshPositionView();
         }
         refreshPanelView();
     }
 
+    /**
+     * 
+     */
+
     public void refreshPanelView() {
-        final Player currentPlayer = logic.getCurrentPlayer();
+        final Player currentPlayer = gameLogic.getCurrentPlayer();
         updateObserver(Optional.of(currentPlayer), "refreshPlayerPanel");
     }
 
+    /**
+     * 
+     */
+
     public void refreshPositionView() {
-        final Player currentPlayer = logic.getCurrentPlayer();
+        final Player currentPlayer = gameLogic.getCurrentPlayer();
         updateObserver(Optional.of(currentPlayer), "refreshPlayerPosition");
     }
 
+    /**
+     * this method returns gameLogic
+     */
+
     public GameController getLogic() {
-        return this.logic;
+        return this.gameLogic;
     }
 
 }
