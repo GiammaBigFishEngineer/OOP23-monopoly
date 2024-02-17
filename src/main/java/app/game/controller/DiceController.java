@@ -22,7 +22,7 @@ public class DiceController {
     /**
      * Start rolling the dice by calling the rollDice method in dice model.
      */
-    public void rollDice() {
+    public void rollDiceAction() {
         dice.rollDice();
     }
 }

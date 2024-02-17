@@ -94,7 +94,7 @@ public class DiceView extends JPanel {
      * Then displays the total result printed.
      */
     public void updateView() {
-        diceController.rollDice();
+        diceController.rollDiceAction();
         dicePanel1.setResult(dice.getDie1Result());
         dicePanel2.setResult(dice.getDie2Result());
         resultLabel.setText("Risultato: " + dice.getDiceResult());

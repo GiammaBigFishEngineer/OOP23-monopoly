@@ -33,11 +33,6 @@ public class MenuControllerImpl implements MenuController {
                             .map(String::toLowerCase)
                             .collect(Collectors.toSet()));
 
-        /*for (final String name : playerNames) {
-            final String normalizedName = name.trim(); //.toLowerCase;   es: 'Gio' e 'gio' sarebbero uguali
-            uniqueNames.add(normalizedName);
-        }*/
-
         return !(uniqueNames.size() != playerNames.size() || playerNames.contains(null) || playerNames.contains(""));
     }
 
