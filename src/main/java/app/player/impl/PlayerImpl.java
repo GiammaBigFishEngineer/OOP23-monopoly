@@ -246,19 +246,24 @@ public final class PlayerImpl implements Player {
      * only the player can modify this object. 
      * Who uses the method getBankAccount() would modify the copy of the account:
      * as a result, I have created the following methods which effectively modify the player's account.
-     * @param amount
+     * {@inheritDoc}
      */
     @Override
     public void receivePayment(final int amount) {
         this.account.receivePayment(amount);
     }
     /**
-     * @param player
-     * @param amount
-     * @return boolean
+     * {@inheritDoc}
      */
     @Override
     public boolean payPlayer(final Player player, final int amount) {
         return this.account.payPlayer(player, amount);
+    }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setBalance(final int balance) {
+        this.account.setBalance(balance);
     }
 }

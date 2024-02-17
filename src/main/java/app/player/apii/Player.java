@@ -96,4 +96,8 @@ public interface Player {
      * @return boolean
      */
     boolean payPlayer(Player player, int amount);
+    /**
+     * @param balance
+     */
+    void setBalance(int balance);
 }
