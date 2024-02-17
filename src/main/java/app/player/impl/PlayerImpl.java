@@ -21,6 +21,11 @@ public final class PlayerImpl implements Player {
      * Maximum number of houses a player can build on a box.
      */
     private static final int MAX_NUMBER_HOUSES = 3;
+    private static final int ID_1 = 1;
+    private static final int ID_2 = 2;
+    private static final int ID_3 = 3;
+    private static final int ID_4 = 4;
+    private static final int ID_5 = 5;
     /**
      * Map which associates each Card box with an Optional that indicates
      * if that box is already owned by the current player 
@@ -53,7 +58,26 @@ public final class PlayerImpl implements Player {
             this.map.put(box, Optional.empty());
         }
         this.account = new BankAccountImpl(initialAmount);
-        this.color = "#12" + Integer.toString(id);
+        switch (this.getID()) {
+            case ID_1:
+                this.color = "#E52B50"; // red
+                break;
+            case ID_2: 
+                this.color = "#884DA7"; // blu-magenta
+                break;
+            case ID_3: 
+                this.color = "#FF6600"; // orange
+                break;
+            case ID_4: 
+                this.color = "#2F4F4F"; // dark-grey
+                break;
+            case ID_5: 
+                this.color = "000000"; // black
+                break;
+            default: 
+                this.color = "#E52B50"; 
+                break;
+        }
     }
 
     /**
