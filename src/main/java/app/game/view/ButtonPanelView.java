@@ -3,6 +3,7 @@ package app.game.view;
 import javax.swing.*;
 
 import app.game.controller.GameControllerImpl;
+import app.game.utils.Dice;
 import app.player.apii.Player;
 
 import java.awt.Color;
@@ -45,9 +46,11 @@ public class ButtonPanelView extends GameObservableImpl {
 
         rollDice.addActionListener(e -> {
 
-            int diceValue = logic.rollDice(true);
+            logic.rollDice(true);
 
-            updateObserver(Optional.of(diceValue), "RollDice");
+            Dice dice = logic.getDice();
+
+            updateObserver(Optional.of(dice), "RollDice");
 
             if (logic.isCurrentPlayerOnUnforseen()) {
                 updateObserver(Optional.of(logic.getUnforseenMessage()), "UnbuyableAction");
@@ -73,8 +76,8 @@ public class ButtonPanelView extends GameObservableImpl {
 
             } else {
 
-                refreshPanelView();
                 refreshPositionView();
+                // refreshPanelView();
                 changeButtonVisibility();
             }
 
@@ -150,6 +153,7 @@ public class ButtonPanelView extends GameObservableImpl {
         endTurn.addActionListener(e -> {
 
             this.newTurn();
+            refreshPanelView();
 
         });
 
@@ -168,7 +172,6 @@ public class ButtonPanelView extends GameObservableImpl {
 
         });
 
-        this.initializePosition();
         this.newTurn();
 
     }
@@ -177,7 +180,7 @@ public class ButtonPanelView extends GameObservableImpl {
 
         logic.newTurn();
 
-        refreshPanelView();
+        // refreshPanelView();
 
         if (logic.isCurrentPlayerInJail()) {
 
@@ -220,12 +223,14 @@ public class ButtonPanelView extends GameObservableImpl {
         }
     }
 
-    public void initializePosition() {
+    public void initializeView() {
+
         int nPlayers = logic.getPlayerList().size();
         for (int i = 0; i < nPlayers; i++) {
             logic.newTurn();
             refreshPositionView();
         }
+        refreshPanelView();
     }
 
     public void refreshPanelView() {

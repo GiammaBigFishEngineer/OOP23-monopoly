@@ -4,6 +4,7 @@ import app.card.apii.Observer;
 import app.card.view.TableView;
 import app.card.view.UnforseenView;
 import app.game.apii.GameObserver;
+import app.game.utils.Dice;
 import app.player.apii.Player;
 import app.player.view.BailView;
 import app.player.view.PlayerPanelView;
@@ -16,9 +17,6 @@ public class GameObserverImpl implements GameObserver {
 
     GameView gameV;
 
-    PlayerPanelView panelView;
-    TableView tablePanel;
-
     GameMessage popUp;
 
     Map<Player, Integer> map;
@@ -27,13 +25,13 @@ public class GameObserverImpl implements GameObserver {
         this.gameV = gameV;
         popUp = new GameMessage();
         map = new HashMap<>();
-        panelView = gameV.getPlayerPanelView();
-        tablePanel = gameV.getTableView();
 
     }
 
     @Override
     public boolean update(Optional<Object> obj, String str) {
+        PlayerPanelView panelView = gameV.getPlayerPanelView();
+        TableView tablePanel = gameV.getTableView();
         Boolean bool = true;
 
         switch (str) {
@@ -84,9 +82,9 @@ public class GameObserverImpl implements GameObserver {
 
             case "RollDice":
 
-                int diceValue = (int) obj.get();
+                Dice dice = (Dice) obj.get();
 
-                popUp.rollDice(diceValue);
+                // call gio method
                 break;
 
             case "NotDoubleDice":
@@ -143,11 +141,11 @@ public class GameObserverImpl implements GameObserver {
 
     public void useObs(Observer<Player> obs) {
 
-        tablePanel.addObserver(obs);
+        gameV.getTableView().addObserver(obs);
 
         obs.update();
 
-        tablePanel.deleteObserver(obs);
+        gameV.getTableView().deleteObserver(obs);
     }
 
 }

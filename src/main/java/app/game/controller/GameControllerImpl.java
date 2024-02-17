@@ -114,7 +114,7 @@ public class GameControllerImpl implements GameController {
     }
 
     @Override
-    public Integer rollDice(Boolean b) {
+    public void rollDice(Boolean b) {
 
         currentDice.roll();
 
@@ -133,8 +133,6 @@ public class GameControllerImpl implements GameController {
             startTurn();
 
         }
-
-        return totalResult;
 
     }
 
@@ -187,24 +185,26 @@ public class GameControllerImpl implements GameController {
 
     public void handleUnbuyable() {
 
-        if (currentCard.getCardId() != 0) {
+        if (currentCard.getCardId() != 0 && currentCard.getCardId() != 12 && currentCard.getCardId() != 6) {
+
             TriggeredEvent e = CardAdapter.unbuyableAdapter(currentCard).makeAction(currentPlayer);
-            if (e != null) {
-                this.unforseenMessage = e.getMessage();
-                this.landedOnUnforseen = true;
+            this.unforseenMessage = e.getMessage();
+            this.landedOnUnforseen = true;
+
+            if (currentCardIndex != currentPlayer.getCurrentPosition()) {
+                System.out.println("movimento");
+                currentCardIndex = currentPlayer.getCurrentPosition();
+
+                currentCard = cardsList.get(currentCardIndex);
+
+                handleCard();
+            } else if (e.equals(TriggeredEvent.UNPERFORMED)) {
+                System.out.println("pagamento");
+                this.defeatPlayer();
             }
 
-            /*
-             * if (e.equals(TriggeredEvent.PERFORMED)) {
-             * String s = e.getMessage();
-             * System.out.println(s);
-             * }
-             * currentCardIndex = currentPlayer.getCurrentPosition();
-             * 
-             * currentCard = cardsList.get(currentCardIndex);
-             * 
-             * handleCard();
-             */
+        } else {
+            System.out.println("prigione/transito");
         }
 
     }
@@ -362,8 +362,8 @@ public class GameControllerImpl implements GameController {
     }
 
     @Override
-    public Integer getDiceValue() {
-        return totalResult;
+    public Dice getDice() {
+        return this.currentDice;
     }
 
     @Override

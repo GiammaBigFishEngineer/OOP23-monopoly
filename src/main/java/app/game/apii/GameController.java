@@ -1,6 +1,7 @@
 package app.game.apii;
 
 import app.card.apii.Card;
+import app.game.utils.Dice;
 import app.game.view.BtnCodeEnum;
 import app.player.apii.Player;
 
@@ -14,7 +15,7 @@ public interface GameController {
     /**
      * Roll dice.
      */
-    Integer rollDice(Boolean b);
+    void rollDice(Boolean b);
 
     /**
      * @param currentPlayer that want to buy the propriety.
@@ -62,7 +63,7 @@ public interface GameController {
 
     Player getCurrentPlayer();
 
-    Integer getDiceValue();
+    Dice getDice();
 
     Card getCurrentCard();
 
