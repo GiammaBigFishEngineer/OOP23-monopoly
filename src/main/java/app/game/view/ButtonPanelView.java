@@ -16,19 +16,19 @@ import java.util.*;
  */
 public class ButtonPanelView extends GameObservableImpl {
 
-    private GameControllerImpl logic;
+    final private GameControllerImpl logic;
 
-    private Map<BtnCodeEnum, Boolean> btnCodeList = new HashMap<>();
-    private Map<BtnCodeEnum, JButton> btnList = new HashMap<>();
+    final private Map<BtnCodeEnum, Boolean> btnCodeList = new HashMap<>();
+    final private Map<BtnCodeEnum, JButton> btnList = new HashMap<>();
 
-    private JButton rollDice;
-    private JButton buyPropriety;
-    private JButton sellPropriety;
-    private JButton buyHouse;
-    private JButton endTurn;
-    private JButton saveGame;
+    final private JButton rollDice;
+    final private JButton buyPropriety;
+    final private JButton sellPropriety;
+    final private JButton buyHouse;
+    final private JButton endTurn;
+    final private JButton saveGame;
 
-    public ButtonPanelView(List<String> playersNames, GameObserverImpl obs) throws IOException {
+    public ButtonPanelView(final List<String> playersNames, final GameObserverImpl obs) throws IOException {
 
         this.logic = new GameControllerImpl(playersNames);
         this.registerObserver(obs);
@@ -48,7 +48,7 @@ public class ButtonPanelView extends GameObservableImpl {
 
             logic.rollDice(true);
 
-            Dice dice = logic.getDice();
+            final Dice dice = logic.getDice();
 
             updateObserver(Optional.of(dice), "RollDice");
 
@@ -58,7 +58,7 @@ public class ButtonPanelView extends GameObservableImpl {
 
             if (logic.isCurrentPlayerDefeated()) {
 
-                String currentPlayerName = logic.getCurrentPlayer().getName();
+                final String currentPlayerName = logic.getCurrentPlayer().getName();
 
                 updateObserver(Optional.of(currentPlayerName), "Eliminate");
 
@@ -184,7 +184,7 @@ public class ButtonPanelView extends GameObservableImpl {
 
         if (logic.isCurrentPlayerInJail()) {
 
-            Player currentPlayer = logic.getCurrentPlayer();
+            final Player currentPlayer = logic.getCurrentPlayer();
 
             if (updateObserver(Optional.of(currentPlayer), "bail")) {
 
@@ -213,10 +213,10 @@ public class ButtonPanelView extends GameObservableImpl {
 
         this.btnCodeList.putAll(logic.getBtnStatus());
 
-        for (var entry : btnCodeList.entrySet()) {
+        for (final var entry : btnCodeList.entrySet()) {
 
-            var code = entry.getKey();
-            var bool = entry.getValue();
+            final var code = entry.getKey();
+            final var bool = entry.getValue();
 
             btnList.get(code).setEnabled(bool);
 
@@ -225,7 +225,7 @@ public class ButtonPanelView extends GameObservableImpl {
 
     public void initializeView() {
 
-        int nPlayers = logic.getPlayerList().size();
+        final int nPlayers = logic.getPlayerList().size();
         for (int i = 0; i < nPlayers; i++) {
             logic.newTurn();
             refreshPositionView();
@@ -234,12 +234,12 @@ public class ButtonPanelView extends GameObservableImpl {
     }
 
     public void refreshPanelView() {
-        Player currentPlayer = logic.getCurrentPlayer();
+        final Player currentPlayer = logic.getCurrentPlayer();
         updateObserver(Optional.of(currentPlayer), "refreshPlayerPanel");
     }
 
     public void refreshPositionView() {
-        Player currentPlayer = logic.getCurrentPlayer();
+        final Player currentPlayer = logic.getCurrentPlayer();
         updateObserver(Optional.of(currentPlayer), "refreshPlayerPosition");
     }
 

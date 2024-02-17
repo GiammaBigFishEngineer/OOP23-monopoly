@@ -12,22 +12,24 @@ import java.util.ArrayList;
 
 public class MenuView extends JFrame {
 
-    private JPanel buttonPanel;
-    private JButton startButton;
-    private JButton quitButton;
-    private JButton optionButton;
-    private JLabel titleLabel;
-    private JLabel subtitleLabel;
+    private static final int PROPORTION = 2;
 
-    private final Dimension screen;
-    private final int screenWidth;
-    private final int screenHeight;
-    private final int PROPORTION = 2;
-
-    private MenuController controller;
+    final private MenuController controller;
 
     public MenuView() {
         super("GameMenu");
+
+        final JPanel buttonPanel;
+        final JButton startButton;
+        final JButton quitButton;
+        final JButton optionButton;
+        final JLabel titleLabel;
+        final JLabel subtitleLabel;
+
+        final Dimension screen;
+        final int screenWidth;
+        final int screenHeight;
+
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.getContentPane().setBackground(Color.white);
 
@@ -40,7 +42,7 @@ public class MenuView extends JFrame {
         buttonPanel = new JPanel(new GridLayout(3, 1));
         buttonPanel.setBackground(Color.white);
 
-        Font boldFont = new Font("Arial", Font.BOLD, 25);
+        final Font boldFont = new Font("Arial", Font.BOLD, 25);
 
         /*
          * Start Button
@@ -51,10 +53,10 @@ public class MenuView extends JFrame {
 
         startButton.addActionListener(e -> {
 
-            SpinnerNumberModel spinnerModel = new SpinnerNumberModel(3, 2, 5, 1);
-            JSpinner numPlayerSpinner = new JSpinner(spinnerModel);
+            final SpinnerNumberModel spinnerModel = new SpinnerNumberModel(3, 2, 5, 1);
+            final JSpinner numPlayerSpinner = new JSpinner(spinnerModel);
 
-            int choice = JOptionPane.showOptionDialog(this,
+            final int choice = JOptionPane.showOptionDialog(this,
                     numPlayerSpinner,
                     "Select player number",
                     JOptionPane.OK_OPTION, JOptionPane.NO_OPTION,
@@ -64,12 +66,12 @@ public class MenuView extends JFrame {
 
             if (choice == JOptionPane.OK_OPTION) {
 
-                int numPlayers = (int) numPlayerSpinner.getValue();
+                final int numPlayers = (int) numPlayerSpinner.getValue();
 
-                List<String> playerNames = new ArrayList<>();
+                final List<String> playerNames = new ArrayList<>();
 
                 for (int i = 0; i < numPlayers; i++) {
-                    String playerName = JOptionPane.showInputDialog("Insert player Name : ");
+                    final String playerName = JOptionPane.showInputDialog("Insert player Name : ");
                     playerNames.add(playerName);
                 }
 
@@ -98,11 +100,11 @@ public class MenuView extends JFrame {
          * Options button
          */
 
-        optionButton = new JButton("Options");
+        optionButton = new JButton("Saved Games");
         optionButton.setFont(boldFont);
 
         optionButton.addActionListener(e -> {
-            throw new UnsupportedOperationException("Unimplemented method");
+            controller.viewSavedGames();
         });
 
         buttonPanel.add(optionButton);
@@ -115,7 +117,7 @@ public class MenuView extends JFrame {
         quitButton.setFont(boldFont);
 
         quitButton.addActionListener(e -> {
-            System.exit(1);
+            controller.quitGame();
         });
 
         buttonPanel.add(quitButton);
@@ -126,7 +128,7 @@ public class MenuView extends JFrame {
 
         setLayout(new GridBagLayout());
 
-        GridBagConstraints gbc = new GridBagConstraints();
+        final GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(40, 10, 10, 10);
         gbc.gridx = 0;
         gbc.gridy = 2;

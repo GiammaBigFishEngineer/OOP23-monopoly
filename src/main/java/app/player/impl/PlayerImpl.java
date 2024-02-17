@@ -1,6 +1,5 @@
 package app.player.impl;
 
-import java.awt.Color;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,10 +21,7 @@ public final class PlayerImpl implements Player {
      * Maximum number of houses a player can build on a box.
      */
     private static final int MAX_NUMBER_HOUSES = 3;
-    private static final int RANGE_COLOR = 256;
-    private static final int RED_MULTIPLICATIVE_CONSTANT = 10;
-    private static final int GREEN_MULTIPLICATIVE_CONSTANT = 25;
-    private static final int BLUE_MULTIPLICATIVE_CONSTANT = 70;
+
     /**
      * Map which associates each Card box with an Optional that indicates
      * if that box is already owned by the current player
@@ -60,9 +56,7 @@ public final class PlayerImpl implements Player {
             this.map.put(box, Optional.empty());
         }
         this.account = new BankAccountImpl(initialAmount);
-        final int r = Math.abs((id * RED_MULTIPLICATIVE_CONSTANT) % RANGE_COLOR);
-        final int g = Math.abs((id * BLUE_MULTIPLICATIVE_CONSTANT) % RANGE_COLOR);
-        final int b = Math.abs((id * GREEN_MULTIPLICATIVE_CONSTANT) % RANGE_COLOR);
+
         this.color = "#555555";
     }
 

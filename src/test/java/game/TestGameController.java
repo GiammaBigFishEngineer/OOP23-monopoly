@@ -1,7 +1,6 @@
 package game;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -23,7 +22,25 @@ import java.util.HashMap;
 class TestGameController {
 
     private GameController logic;
-    private Map<BtnCodeEnum, Boolean> btnList;
+
+    private static final int VISERBA_ID = 4;
+    private static final int VISERBA_PRICE = 100;
+    private static final int GO_PAYMENT = 100;
+    private static final int GO_ID = 0;
+    private static final int VISERBA_TO_GO_DISTANCE = 0;
+    private static final int STAZIONE_NORD_ID = 16;
+    private static final int GO_TO_STAZIONE_NORD_DISTANCE = 0;
+    private static final int TABLE_LENGHT = 24;
+    private static final int TABLE_LENGHT_UP = 25;
+    private static final int START_BALANCE = 500;
+    private static final int LOW_BALANCE = -495;
+    private static final int JAIL_ID = 6;
+    private static final int GO_TO_JAIL_ID = 18;
+    private static final int THIS = 0;
+    private static final int START_PLAYER_SIZE = 2;
+    private static final int START_DEFEAT_SIZE = 0;
+    private static final int FINAL_PLAYER_SIZE = 1;
+    private static final int FINAL_DEFEAT_SIZE = 1;
 
     @BeforeEach
     void start() throws IOException {
@@ -46,10 +63,10 @@ class TestGameController {
     @Test
 
     void sortedListTest() {
-        var sortedList = logic.getCardList();
+        final List<Card> sortedList = logic.getCardList();
         var i = 0;
 
-        for (Card card : sortedList) {
+        for (final Card card : sortedList) {
             assertEquals(i, card.getCardId());
             i++;
         }
@@ -61,24 +78,24 @@ class TestGameController {
 
         logic.newTurn();
 
-        logic.setDiceValue(4);
+        logic.setDiceValue(VISERBA_ID);
         logic.startTurn();
 
-        assertEquals(4, logic.getCurrentPlayer().getCurrentPosition());
+        assertEquals(VISERBA_ID, logic.getCurrentPlayer().getCurrentPosition());
         assertEquals("Viserba", logic.getCurrentCard().getName());
 
-        logic.setDiceValue(20);
+        logic.setDiceValue(VISERBA_TO_GO_DISTANCE);
         logic.startTurn();
 
-        assertEquals(0, logic.getCurrentPlayer().getCurrentPosition());
+        assertEquals(GO_ID, logic.getCurrentPlayer().getCurrentPosition());
         assertEquals("GO", logic.getCurrentCard().getName());
 
         logic.newTurn();
 
-        logic.setDiceValue(40);
+        logic.setDiceValue(GO_TO_STAZIONE_NORD_DISTANCE);
         logic.startTurn();
 
-        assertEquals(16, logic.getCurrentPlayer().getCurrentPosition());
+        assertEquals(STAZIONE_NORD_ID, logic.getCurrentPlayer().getCurrentPosition());
         assertEquals("Stazione Nord", logic.getCurrentCard().getName());
 
     }
@@ -89,23 +106,23 @@ class TestGameController {
 
         logic.newTurn();
 
-        logic.setDiceValue(24);
+        logic.setDiceValue(TABLE_LENGHT);
         logic.startTurn();
 
-        assertEquals(600, logic.getCurrentPlayer().getBankAccount().getBalance());
+        assertEquals(START_BALANCE + GO_PAYMENT, logic.getCurrentPlayer().getBankAccount().getBalance());
 
         logic.newTurn();
 
-        logic.setDiceValue(25);
+        logic.setDiceValue(TABLE_LENGHT_UP);
         logic.startTurn();
 
-        assertEquals(600, logic.getCurrentPlayer().getBankAccount().getBalance());
+        assertEquals(START_BALANCE + GO_PAYMENT, logic.getCurrentPlayer().getBankAccount().getBalance());
 
         logic.newTurn();
-        logic.setDiceValue(18);
+        logic.setDiceValue(GO_TO_JAIL_ID);
         logic.startTurn();
 
-        assertEquals(6, logic.getCurrentPlayer().getCurrentPosition());
+        assertEquals(JAIL_ID, logic.getCurrentPlayer().getCurrentPosition());
         assertTrue(logic.isCurrentPlayerInJail());
 
     }
@@ -114,9 +131,11 @@ class TestGameController {
 
     void testEnabledButtons() {
 
+        Map<BtnCodeEnum, Boolean> btnList;
+
         logic.newTurn();
 
-        this.btnList = new HashMap<>();
+        btnList = new HashMap<>();
         btnList.put(BtnCodeEnum.buyHouse, false);
         btnList.put(BtnCodeEnum.buyPropriety, false);
         btnList.put(BtnCodeEnum.endTurn, false);
@@ -125,7 +144,7 @@ class TestGameController {
 
         assertEquals(btnList, logic.getBtnStatus());
 
-        logic.setDiceValue(4);
+        logic.setDiceValue(VISERBA_ID);
         logic.startTurn();
 
         btnList.put(BtnCodeEnum.buyHouse, false);
@@ -140,7 +159,7 @@ class TestGameController {
 
         logic.newTurn();
         logic.newTurn();
-        logic.setDiceValue(0);
+        logic.setDiceValue(THIS);
         logic.startTurn();
 
         btnList.put(BtnCodeEnum.buyHouse, true);
@@ -159,17 +178,17 @@ class TestGameController {
 
         logic.newTurn();
 
-        assertEquals(500, logic.getCurrentPlayer().getBankAccount().getBalance());
+        assertEquals(START_BALANCE, logic.getCurrentPlayer().getBankAccount().getBalance());
 
-        logic.setDiceValue(4);
+        logic.setDiceValue(VISERBA_ID);
         logic.startTurn();
         logic.buyPropriety();
 
-        Player owner = CardAdapter.buildableAdapter(logic.getCurrentCard()).getOwner();
+        final Player owner = CardAdapter.buildableAdapter(logic.getCurrentCard()).getOwner();
 
         assertEquals(owner, logic.getCurrentPlayer());
 
-        assertEquals(400, logic.getCurrentPlayer().getBankAccount().getBalance());
+        assertEquals(START_BALANCE - VISERBA_PRICE, logic.getCurrentPlayer().getBankAccount().getBalance());
 
     }
 
@@ -178,14 +197,14 @@ class TestGameController {
 
         logic.newTurn();
 
-        logic.setDiceValue(4);
+        logic.setDiceValue(VISERBA_ID);
         logic.startTurn();
 
-        int cardPrice = CardAdapter.buildableAdapter(logic.getCurrentCard()).getPrice();
+        final int cardPrice = CardAdapter.buildableAdapter(logic.getCurrentCard()).getPrice();
 
-        int housePrice = CardAdapter.buildableAdapter(logic.getCurrentCard()).getHousePrice();
+        final int housePrice = CardAdapter.buildableAdapter(logic.getCurrentCard()).getHousePrice();
 
-        int total = cardPrice + housePrice;
+        final int total = cardPrice + housePrice;
 
         logic.buyPropriety();
 
@@ -194,7 +213,7 @@ class TestGameController {
 
         logic.buildHouse();
 
-        assertEquals(500 - total, logic.getCurrentPlayer().getBankAccount().getBalance());
+        assertEquals(START_BALANCE - total, logic.getCurrentPlayer().getBankAccount().getBalance());
 
     }
 
@@ -202,22 +221,22 @@ class TestGameController {
 
     void payFeesTest() {
         logic.newTurn();
-        logic.setDiceValue(4);
+        logic.setDiceValue(VISERBA_ID);
         logic.startTurn();
         logic.buyPropriety();
 
-        Player owner = CardAdapter.buyableAdapter(logic.getCurrentCard()).getOwner();
+        final Player owner = CardAdapter.buyableAdapter(logic.getCurrentCard()).getOwner();
 
         logic.newTurn();
-        assertEquals(500, logic.getCurrentPlayer().getBankAccount().getBalance());
+        assertEquals(START_BALANCE, logic.getCurrentPlayer().getBankAccount().getBalance());
 
-        logic.setDiceValue(4);
+        logic.setDiceValue(VISERBA_ID);
         logic.startTurn();
 
-        int fees = CardAdapter.buyableAdapter(logic.getCurrentCard()).getTransitFees();
+        final int fees = CardAdapter.buyableAdapter(logic.getCurrentCard()).getTransitFees();
 
-        assertEquals(500 - fees, logic.getCurrentPlayer().getBankAccount().getBalance());
-        assertEquals(400 + fees, owner.getBankAccount().getBalance());
+        assertEquals(START_BALANCE - fees, logic.getCurrentPlayer().getBankAccount().getBalance());
+        assertEquals(START_BALANCE - VISERBA_PRICE + fees, owner.getBankAccount().getBalance());
 
     }
 
@@ -225,21 +244,21 @@ class TestGameController {
 
     void defeatTest() {
 
-        assertEquals(2, logic.getPlayerList().size());
-        assertEquals(0, logic.getDefeatedList().size());
+        assertEquals(START_PLAYER_SIZE, logic.getPlayerList().size());
+        assertEquals(START_DEFEAT_SIZE, logic.getDefeatedList().size());
 
         logic.newTurn();
-        logic.setDiceValue(4);
+        logic.setDiceValue(VISERBA_ID);
         logic.startTurn();
         logic.buyPropriety();
 
         logic.newTurn();
-        logic.getCurrentPlayer().receivePayment(-495);
-        logic.setDiceValue(4);
+        logic.getCurrentPlayer().receivePayment(LOW_BALANCE);
+        logic.setDiceValue(VISERBA_ID);
         logic.startTurn();
 
-        assertEquals(1, logic.getPlayerList().size());
-        assertEquals(1, logic.getDefeatedList().size());
+        assertEquals(FINAL_PLAYER_SIZE, logic.getPlayerList().size());
+        assertEquals(FINAL_DEFEAT_SIZE, logic.getDefeatedList().size());
     }
 
     @Test

@@ -11,12 +11,12 @@ public class GameObservableImpl extends JPanel implements GameObservable {
     private GameObserverImpl obs;
 
     @Override
-    public boolean updateObserver(Optional<Object> obj, String code) {
+    public boolean updateObserver(final Optional<Object> obj, final String code) {
         return this.obs.update(obj, code);
     }
 
     @Override
-    public void registerObserver(GameObserverImpl obs) {
+    public void registerObserver(final GameObserverImpl obs) {
         this.obs = obs;
     }
 

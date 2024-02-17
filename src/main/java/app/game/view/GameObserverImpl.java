@@ -21,7 +21,7 @@ public class GameObserverImpl implements GameObserver {
 
     Map<Player, Integer> map;
 
-    public GameObserverImpl(GameView gameV) {
+    public GameObserverImpl(final GameView gameV) {
         this.gameV = gameV;
         popUp = new GameMessage();
         map = new HashMap<>();
@@ -29,20 +29,20 @@ public class GameObserverImpl implements GameObserver {
     }
 
     @Override
-    public boolean update(Optional<Object> obj, String str) {
-        PlayerPanelView panelView = gameV.getPlayerPanelView();
-        TableView tablePanel = gameV.getTableView();
+    public boolean update(final Optional<Object> obj, final String str) {
+        final PlayerPanelView panelView = gameV.getPlayerPanelView();
+        final TableView tablePanel = gameV.getTableView();
         Boolean bool = true;
 
         switch (str) {
 
             case "refreshPlayerPosition":
 
-                Player currentPlayer = (Player) obj.get();
+                final Player currentPlayer = (Player) obj.get();
 
                 if (map.containsKey(currentPlayer)) {
 
-                    Observer<Player> removeObs = () -> tablePanel.removePlayer(currentPlayer.getColor(),
+                    final Observer<Player> removeObs = () -> tablePanel.removePlayer(currentPlayer.getColor(),
                             map.get(currentPlayer));
 
                     useObs(removeObs);
@@ -50,7 +50,7 @@ public class GameObserverImpl implements GameObserver {
                     map.remove(currentPlayer);
                 }
 
-                Observer<Player> addObs = () -> tablePanel.redrawPlayer(currentPlayer.getColor(),
+                final Observer<Player> addObs = () -> tablePanel.redrawPlayer(currentPlayer.getColor(),
                         currentPlayer.getCurrentPosition());
 
                 useObs(addObs);
@@ -61,9 +61,9 @@ public class GameObserverImpl implements GameObserver {
 
             case "refreshPlayerPanel":
 
-                Player player = (Player) obj.get();
+                final Player player = (Player) obj.get();
 
-                var card = tablePanel.getCardList().get(player.getCurrentPosition());
+                final var card = tablePanel.getCardList().get(player.getCurrentPosition());
 
                 panelView.setPlayer(player, card);
 
@@ -73,16 +73,17 @@ public class GameObserverImpl implements GameObserver {
 
             case "bail":
 
-                Player crntPlayer = (Player) obj.get();
+                final Player crntPlayer = (Player) obj.get();
 
-                BailView bailMessage = new BailView();
+                final BailView bailMessage = new BailView();
                 bool = bailMessage.showMenuBail(crntPlayer, gameV);
 
                 break;
 
             case "RollDice":
 
-                Dice dice = (Dice) obj.get();
+                final Dice dice = (Dice) obj.get();
+                System.out.println("dice : " + dice.getDiceResult());
 
                 // call gio method
                 break;
@@ -109,14 +110,14 @@ public class GameObserverImpl implements GameObserver {
 
             case "Eliminate":
 
-                String EliminatedName = (String) obj.get();
+                final String EliminatedName = (String) obj.get();
 
                 popUp.eliminatePlayer(EliminatedName);
                 break;
 
             case "Win":
 
-                String WinnerName = (String) obj.get();
+                final String WinnerName = (String) obj.get();
 
                 popUp.winnerPlayer(WinnerName);
                 break;
@@ -129,8 +130,12 @@ public class GameObserverImpl implements GameObserver {
 
             case "UnbuyableAction":
 
-                String message = (String) obj.get();
+                final String message = (String) obj.get();
                 new UnforseenView(message);
+
+                break;
+
+            default:
 
                 break;
 
@@ -139,7 +144,7 @@ public class GameObserverImpl implements GameObserver {
         return bool;
     }
 
-    public void useObs(Observer<Player> obs) {
+    public void useObs(final Observer<Player> obs) {
 
         gameV.getTableView().addObserver(obs);
 

@@ -12,7 +12,7 @@ public class GameMessage {
         JOptionPane.showMessageDialog(null, "You didn' t roll the same numbers ,you are'nt free to go !");
     }
 
-    public void rollDice(Integer diceValue) {
+    public void rollDice(final Integer diceValue) {
         JOptionPane.showMessageDialog(null, "You roll " + diceValue + "!");
 
     }
@@ -21,11 +21,11 @@ public class GameMessage {
         JOptionPane.showMessageDialog(null, "You saved the game correctly!");
     }
 
-    public void eliminatePlayer(String name) {
+    public void eliminatePlayer(final String name) {
         JOptionPane.showMessageDialog(null, name + ", you have been eliminated!");
     }
 
-    public void winnerPlayer(String name) {
+    public void winnerPlayer(final String name) {
         JOptionPane.showMessageDialog(null, name + ", you are the winner!");
     }
 

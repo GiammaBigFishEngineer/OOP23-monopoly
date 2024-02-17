@@ -18,29 +18,28 @@ import app.player.impl.PlayerImpl;
 import app.game.view.BtnCodeEnum;
 
 public class GameControllerImpl implements GameController {
-    private List<Player> players;
-    private List<Player> defeated;
+    final private List<Player> players;
+    final private List<Player> defeated;
     private Player currentPlayer;
     private int currentPlayerIndex = -1;
 
-    private List<String> playersName;
+    final private List<String> playersName;
 
-    private List<Card> tableList;
-    private List<Card> cardsList;
+    final private List<Card> tableList;
+    final private List<Card> cardsList;
     private Card currentCard;
     private int currentCardIndex;
     private boolean landedOnUnforseen;
     private String unforseenMessage;
 
-    private Dice currentDice;
+    final private Dice currentDice;
     private boolean doubleDice;
-    private int res1;
-    private int res2;
+
     private int totalResult;
 
-    private Map<BtnCodeEnum, Boolean> btnList;
+    final private Map<BtnCodeEnum, Boolean> btnList;
 
-    public GameControllerImpl(List<String> names) throws IOException {
+    public GameControllerImpl(final List<String> names) throws IOException {
 
         this.tableList = new CardFactoryImpl().cardsInitializer();
         this.cardsList = tableList.stream()
@@ -52,8 +51,6 @@ public class GameControllerImpl implements GameController {
 
         this.players = new ArrayList<>();
         this.initializePlayer();
-
-        System.out.println(players);
 
         currentDice = new Dice();
 
@@ -72,6 +69,7 @@ public class GameControllerImpl implements GameController {
      * turn
      */
 
+    @Override
     public void newTurn() {
 
         this.disableAllBtn();
@@ -90,6 +88,7 @@ public class GameControllerImpl implements GameController {
     // prima di iniziare il turno se il player è in prigione può decidere se pagare
     // o provare ad uscire con un doppio dado
 
+    @Override
     public void tryLuckyBail() {
 
         // se non paga la cauzione prova a tirare il dado
@@ -114,7 +113,10 @@ public class GameControllerImpl implements GameController {
     }
 
     @Override
-    public void rollDice(Boolean b) {
+    public void rollDice(final Boolean b) {
+
+        int res1;
+        int res2;
 
         currentDice.roll();
 
@@ -136,15 +138,17 @@ public class GameControllerImpl implements GameController {
 
     }
 
+    @Override
+
     public void startTurn() {
 
-        int position = currentPlayer.getCurrentPosition();
+        final int position = currentPlayer.getCurrentPosition();
 
-        int finalPosition = position + totalResult;
+        final int finalPosition = position + totalResult;
 
         if (finalPosition >= cardsList.size()) {
 
-            var new_position = finalPosition - cardsList.size();
+            final int new_position = finalPosition - cardsList.size();
             currentPlayer.setPosition(new_position);
             Unforseen.U0.getCard().makeAction(currentPlayer);
 
@@ -163,6 +167,7 @@ public class GameControllerImpl implements GameController {
     // serve per attivare/disattivare certi bottoni in base alla carta su cui si è
     // finiti
 
+    @Override
     public void handleCard() {
 
         if (currentCard.isUnbuyable()) {
@@ -187,7 +192,7 @@ public class GameControllerImpl implements GameController {
 
         if (currentCard.getCardId() != 0 && currentCard.getCardId() != 12 && currentCard.getCardId() != 6) {
 
-            TriggeredEvent e = CardAdapter.unbuyableAdapter(currentCard).makeAction(currentPlayer);
+            final TriggeredEvent e = CardAdapter.unbuyableAdapter(currentCard).makeAction(currentPlayer);
             this.unforseenMessage = e.getMessage();
             this.landedOnUnforseen = true;
 
@@ -211,11 +216,11 @@ public class GameControllerImpl implements GameController {
 
     public void handleBuildable() {
 
-        Boolean owned = CardAdapter.buildableAdapter(currentCard).isOwned();
+        final Boolean owned = CardAdapter.buildableAdapter(currentCard).isOwned();
 
         if (owned) {
 
-            Player owner = CardAdapter.buildableAdapter(currentCard).getOwner();
+            final Player owner = CardAdapter.buildableAdapter(currentCard).getOwner();
 
             if (currentPlayer.equals(owner)) {
 
@@ -234,11 +239,11 @@ public class GameControllerImpl implements GameController {
     }
 
     public void handleBuyable() {
-        Boolean owned = CardAdapter.buyableAdapter(currentCard).isOwned();
+        final Boolean owned = CardAdapter.buyableAdapter(currentCard).isOwned();
 
         if (owned) {
 
-            Player owner = CardAdapter.buyableAdapter(currentCard).getOwner();
+            final Player owner = CardAdapter.buyableAdapter(currentCard).getOwner();
 
             if (!currentPlayer.equals(owner)) {
                 payFees(owner);
@@ -288,9 +293,9 @@ public class GameControllerImpl implements GameController {
     }
 
     @Override
-    public void payFees(Player owner) {
+    public void payFees(final Player owner) {
 
-        int fees = CardAdapter.buyableAdapter(currentCard).getTransitFees();
+        final int fees = CardAdapter.buyableAdapter(currentCard).getTransitFees();
 
         if (!currentPlayer.payPlayer(owner, fees)) {
             this.defeatPlayer();
@@ -298,6 +303,7 @@ public class GameControllerImpl implements GameController {
 
     }
 
+    @Override
     public void defeatPlayer() {
 
         defeated.add(currentPlayer);
@@ -307,12 +313,13 @@ public class GameControllerImpl implements GameController {
 
     }
 
+    @Override
     public boolean isOver() {
         return players.size() == 1;
     }
 
     public void endGame() {
-        System.out.println("EndGame");
+
     }
 
     public boolean isCurrentPlayerDefeated() {
@@ -323,13 +330,15 @@ public class GameControllerImpl implements GameController {
         this.currentPlayerIndex--;
     }
 
-    public void enableSingleButton(BtnCodeEnum code) {
+    @Override
+    public void enableSingleButton(final BtnCodeEnum code) {
 
         btnList.put(code, true);
 
     }
 
-    public void disableSingleButton(BtnCodeEnum code) {
+    @Override
+    public void disableSingleButton(final BtnCodeEnum code) {
 
         btnList.put(code, false);
 
@@ -337,15 +346,16 @@ public class GameControllerImpl implements GameController {
 
     public void disableAllBtn() {
 
-        for (var entry : btnList.entrySet()) {
+        for (final var entry : btnList.entrySet()) {
             entry.setValue(false);
         }
 
     }
 
+    @Override
     public void initializePlayer() {
         var id = 1;
-        for (String name : playersName) {
+        for (final String name : playersName) {
 
             this.players.add(new PlayerImpl(name, id, cardsList, 500));
             id++;
@@ -353,10 +363,12 @@ public class GameControllerImpl implements GameController {
         }
     }
 
+    @Override
     public Map<BtnCodeEnum, Boolean> getBtnStatus() {
         return btnList;
     }
 
+    @Override
     public Player getCurrentPlayer() {
         return this.currentPlayer;
     }
@@ -371,10 +383,12 @@ public class GameControllerImpl implements GameController {
         return currentCard;
     }
 
+    @Override
     public List<Card> getTableList() {
         return this.tableList;
     }
 
+    @Override
     public List<Card> getCardList() {
         return this.cardsList;
     }
@@ -393,7 +407,8 @@ public class GameControllerImpl implements GameController {
         return currentPlayer.isInJail();
     }
 
-    public void setDiceValue(int value) {
+    @Override
+    public void setDiceValue(final int value) {
         this.totalResult = value;
     }
 

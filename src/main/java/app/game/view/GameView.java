@@ -2,16 +2,9 @@ package app.game.view;
 
 import java.io.IOException;
 import java.awt.*;
-
 import java.util.List;
-
-import app.card.apii.Card;
-
 import javax.swing.*;
-
-import app.card.impl.CardFactoryImpl;
 import app.card.view.TableView;
-
 import app.player.view.PlayerPanelView;
 
 /**
@@ -19,16 +12,17 @@ import app.player.view.PlayerPanelView;
  */
 public class GameView extends JFrame {
 
-    private PlayerPanelView playerPanel;
-    private ButtonPanelView btnPanel;
-    private TableView tablePanel;
+    final private PlayerPanelView playerPanel;
+    final private ButtonPanelView btnPanel;
+    final private TableView tablePanel;
 
-    private final Dimension screen;
-    private final int screenWidth;
-    private final int screenHeight;
-    private final int PROPORTION = 2;
+    private static final int PROPORTION = 2;
 
-    public GameView(List<String> playerNames) throws IOException {
+    public GameView(final List<String> playerNames) throws IOException {
+
+        final Dimension screen;
+        final int screenWidth;
+        final int screenHeight;
 
         setLayout(new BorderLayout());
 
@@ -62,11 +56,11 @@ public class GameView extends JFrame {
          * Board Panels
          */
 
-        JPanel bar1 = new JPanel();
+        final JPanel bar1 = new JPanel();
         bar1.setBackground(Color.lightGray);
         this.add(bar1, BorderLayout.EAST);
 
-        JPanel bar2 = new JPanel();
+        final JPanel bar2 = new JPanel();
         bar2.setBackground(Color.lightGray);
         this.add(bar2, BorderLayout.WEST);
 
