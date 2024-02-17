@@ -14,7 +14,7 @@ import app.card.apii.StaticActionStrategy.TriggeredEvent;
 import app.card.impl.CardFactoryImpl;
 import app.card.impl.Unforseen;
 import app.game.apii.GameController;
-
+import app.game.apii.SaveController;
 import app.game.utils.Dice;
 
 import app.player.apii.Player;
@@ -46,6 +46,8 @@ public final class GameControllerImpl implements GameController {
 
     private final Map<BtnCodeEnum, Boolean> btnList;
 
+    private final SaveController saveLogic;
+
     /**
      * 
      * @param names is a list that contains all the player names
@@ -75,6 +77,8 @@ public final class GameControllerImpl implements GameController {
         btnList.put(BtnCodeEnum.endTurn, false);
         btnList.put(BtnCodeEnum.rollDice, false);
         btnList.put(BtnCodeEnum.sellPropriety, false);
+
+        saveLogic = new SaveControllerImpl();
     }
 
     /*
@@ -463,6 +467,10 @@ public final class GameControllerImpl implements GameController {
 
     public String getOwner() {
         return this.ownerName;
+    }
+
+    public void saveGame() {
+        saveLogic.saveGame(players);
     }
 
 }

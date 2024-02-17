@@ -3,6 +3,8 @@ package app.game.view;
 import javax.swing.*;
 
 import app.game.apii.MenuController;
+import app.game.apii.SaveController;
+import app.game.controller.SaveControllerImpl;
 import app.game.model.MenuControllerImpl;
 
 import java.awt.*;
@@ -14,7 +16,8 @@ public class MenuView extends JFrame {
 
     private static final int PROPORTION = 2;
 
-    final private MenuController controller;
+    final private MenuController menuController;
+    final private SaveController saveLogic;
 
     public MenuView() {
         super("GameMenu");
@@ -33,7 +36,8 @@ public class MenuView extends JFrame {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.getContentPane().setBackground(Color.white);
 
-        controller = new MenuControllerImpl();
+        menuController = new MenuControllerImpl();
+        saveLogic = new SaveControllerImpl();
 
         /*
          * Creating a panel with all the buttons
@@ -75,7 +79,7 @@ public class MenuView extends JFrame {
                     playerNames.add(playerName);
                 }
 
-                if (controller.startGame(playerNames)) {
+                if (menuController.startGame(playerNames)) {
                     JOptionPane.showMessageDialog(this, "Game loading success");
 
                     try {
@@ -104,7 +108,7 @@ public class MenuView extends JFrame {
         optionButton.setFont(boldFont);
 
         optionButton.addActionListener(e -> {
-            controller.viewSavedGames();
+            saveLogic.viewSavedGames();
         });
 
         buttonPanel.add(optionButton);
@@ -117,7 +121,7 @@ public class MenuView extends JFrame {
         quitButton.setFont(boldFont);
 
         quitButton.addActionListener(e -> {
-            controller.quitGame();
+            menuController.quitGame();
         });
 
         buttonPanel.add(quitButton);

@@ -149,4 +149,6 @@ public interface GameController {
 
     void endGame();
 
+    void saveGame();
+
 }

@@ -143,6 +143,8 @@ public class ButtonPanelView extends GameObservableImpl {
 
         saveGame.addActionListener(e -> {
 
+            logic.saveGame();
+
             updateObserver(Optional.empty(), "Save");
 
             saveGame.setEnabled(false);
