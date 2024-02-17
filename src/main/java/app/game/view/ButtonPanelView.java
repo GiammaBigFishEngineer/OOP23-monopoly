@@ -58,8 +58,6 @@ public class ButtonPanelView extends GameObservableImpl {
 
             this.turnViewControl();
 
-            changeButtonVisibility();
-
             rollDice.setEnabled(false);
 
         });
@@ -159,8 +157,6 @@ public class ButtonPanelView extends GameObservableImpl {
 
         logic.newTurn();
 
-        // refreshPanelView();
-
         if (logic.isCurrentPlayerInJail()) {
 
             final Player currentPlayer = logic.getCurrentPlayer();
@@ -234,6 +230,8 @@ public class ButtonPanelView extends GameObservableImpl {
 
         refreshPanelView();
         refreshPositionView();
+
+        changeButtonVisibility();
     }
 
     public void initializeView() {
