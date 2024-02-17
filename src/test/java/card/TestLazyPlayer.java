@@ -125,7 +125,7 @@ final class TestLazyPlayer implements Player {
     }
 
     @Override
-    public Color getColor() {
+    public String getColor() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getColor'");
     }

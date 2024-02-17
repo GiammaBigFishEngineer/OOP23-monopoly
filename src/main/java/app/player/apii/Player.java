@@ -114,6 +114,6 @@ public interface Player {
 
     boolean payPlayer(final Player player, final int amount);
 
-    Color getColor();
+    String getColor();
 
 }

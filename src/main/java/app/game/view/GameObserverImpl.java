@@ -42,7 +42,7 @@ public class GameObserverImpl implements GameObserver {
 
                 if (map.containsKey(currentPlayer)) {
 
-                    Observer<Player> removeObs = () -> tablePanel.removePlayer("#fff",
+                    Observer<Player> removeObs = () -> tablePanel.removePlayer(currentPlayer.getColor(),
                             map.get(currentPlayer));
 
                     useObs(removeObs);
@@ -50,7 +50,7 @@ public class GameObserverImpl implements GameObserver {
                     map.remove(currentPlayer);
                 }
 
-                Observer<Player> addObs = () -> tablePanel.redrawPlayer("#fff",
+                Observer<Player> addObs = () -> tablePanel.redrawPlayer(currentPlayer.getColor(),
                         currentPlayer.getCurrentPosition());
 
                 useObs(addObs);

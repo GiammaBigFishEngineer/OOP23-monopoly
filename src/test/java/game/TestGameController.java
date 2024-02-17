@@ -234,7 +234,7 @@ class TestGameController {
         logic.buyPropriety();
 
         logic.newTurn();
-        logic.getCurrentPlayer().getBankAccount().setBalance(5);
+        logic.getCurrentPlayer().receivePayment(-495);
         logic.setDiceValue(4);
         logic.startTurn();
 

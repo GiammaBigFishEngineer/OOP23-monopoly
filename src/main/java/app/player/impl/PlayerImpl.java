@@ -38,7 +38,7 @@ public final class PlayerImpl implements Player {
     private final BankAccount account;
     private boolean isInJail;
     private boolean positionChanged;
-    private final Color color;
+    private final String color;
 
     /**
      * @param name
@@ -63,7 +63,7 @@ public final class PlayerImpl implements Player {
         final int r = Math.abs((id * RED_MULTIPLICATIVE_CONSTANT) % RANGE_COLOR);
         final int g = Math.abs((id * BLUE_MULTIPLICATIVE_CONSTANT) % RANGE_COLOR);
         final int b = Math.abs((id * GREEN_MULTIPLICATIVE_CONSTANT) % RANGE_COLOR);
-        this.color = new Color(r, g, b);
+        this.color = "#555555";
     }
 
     /**
@@ -112,7 +112,7 @@ public final class PlayerImpl implements Player {
      * 
      * @return color
      */
-    public Color getColor() {
+    public String getColor() {
         return this.color;
     }
 

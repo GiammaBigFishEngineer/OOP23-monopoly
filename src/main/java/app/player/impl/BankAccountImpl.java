@@ -21,6 +21,7 @@ public final class BankAccountImpl implements BankAccount {
     public BankAccountImpl(final int balance) {
         this.balance = balance;
     }
+
     /**
      * Constructor with 0-argument.
      */
@@ -63,7 +64,7 @@ public final class BankAccountImpl implements BankAccount {
         }
         this.balance -= amount;
         if (player != null) {
-            player.getBankAccount().receivePayment(amount);
+            player.receivePayment(amount);
         } // if (player == null) pago la banca, quindi non accade nulla
         return true;
     }
