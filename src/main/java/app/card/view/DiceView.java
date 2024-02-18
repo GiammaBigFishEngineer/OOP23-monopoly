@@ -25,10 +25,8 @@ public class DiceView extends JPanel {
 
     private static final int DICE_SIZE = 175;
     private static final int FONT_SIZE = 24;
-    private static final int TOP_PADDING = 50;
-    private static final int GENERAL_INSETS = 50;
-    private static final int RIGHT_INSETS = 10;
-    private static final int LEFT_INSETS = 10;
+    private static final int BORDER = 50;
+    private static final int INSETS = 50;
     private static final int DOT_SIZE = 20;
     private static final int SPACING = 40;
     private static final int ONE_DOT = 1;
@@ -37,8 +35,8 @@ public class DiceView extends JPanel {
     private static final int FOUR_DOT = 4;
     private static final int FIVE_DOT = 5;
     private static final int SIX_DOT = 6;
-    private static final int MIN_WIDTH = 750;
-    private static final int MIN_HEIGHT = 750;
+    private static final int MIN_WIDTH = 150;
+    private static final int MIN_HEIGHT = 270;
 
     private final JLabel resultLabel;
     private final DicePanel dicePanel1;
@@ -57,7 +55,7 @@ public class DiceView extends JPanel {
 
         final JPanel topPanel = new JPanel();
         topPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-        topPanel.setBorder(BorderFactory.createEmptyBorder(TOP_PADDING, 0, 0, 0));
+        topPanel.setBorder(BorderFactory.createEmptyBorder(BORDER, 0, 0, 0));
         topPanel.add(resultLabel);
         topPanel.setBackground(Color.LIGHT_GRAY);
         this.add(topPanel, BorderLayout.NORTH);
@@ -66,15 +64,16 @@ public class DiceView extends JPanel {
         dicePanel2 = new DicePanel();
         final JPanel centerPanel = new JPanel();
         centerPanel.setLayout(new GridBagLayout());
+        centerPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, BORDER, 0));
         final GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.insets = new Insets(GENERAL_INSETS, GENERAL_INSETS, GENERAL_INSETS, RIGHT_INSETS);
+        gbc.insets = new Insets(INSETS, INSETS, INSETS, INSETS);
         centerPanel.add(dicePanel1, gbc);
 
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        gbc.insets = new Insets(GENERAL_INSETS, LEFT_INSETS, GENERAL_INSETS, GENERAL_INSETS);
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.insets = new Insets(0, INSETS, INSETS, INSETS);
         centerPanel.add(dicePanel2, gbc);
         centerPanel.setBackground(Color.LIGHT_GRAY);
         this.add(centerPanel, BorderLayout.CENTER);
