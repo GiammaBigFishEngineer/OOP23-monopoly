@@ -12,64 +12,56 @@ public final class GameMessage {
     * 
     */
     public void exitPrison() {
-        JOptionPane.showMessageDialog(null, "You rolled the same numbers, you are free to go !");
+        JOptionPane.showMessageDialog(null, "Hai ottenuto lo stesso valore, sei libero di andare!");
     }
 
     /**
     * 
     */
     public void remainPrison() {
-        JOptionPane.showMessageDialog(null, "You didn' t roll the same numbers ,you are'nt free to go !");
-    }
-
-    /**
-     * @param diceValue
-     */
-    public void rollDice(final Integer diceValue) {
-        JOptionPane.showMessageDialog(null, "You roll " + diceValue + "!");
-
+        JOptionPane.showMessageDialog(null, "Non hai ottenuto lo stesso valore, rimani in prigione!");
     }
 
     /**
     * 
     */
     public void saveGame() {
-        JOptionPane.showMessageDialog(null, "You saved the game correctly!");
+        JOptionPane.showMessageDialog(null, "Gioco salvato correttamente!");
     }
 
     /**
      * @param name
      */
     public void eliminatePlayer(final String name) {
-        JOptionPane.showMessageDialog(null, name + ", you have been eliminated!");
+        JOptionPane.showMessageDialog(null, name + ", non hai più soldi e vieni eliminato!");
     }
 
     /**
      * @param name
      */
     public void winnerPlayer(final String name) {
-        JOptionPane.showMessageDialog(null, name + ", you are the winner!");
+        JOptionPane.showMessageDialog(null, "Congratulazioni " + name + ", hai vinto !!");
     }
 
     /**
     * 
     */
     public void noBuyPropriety() {
-        JOptionPane.showMessageDialog(null, "You can't afford this propriety!");
+        JOptionPane.showMessageDialog(null, "Non ti puoi permettere questa proprietà!");
     }
 
     /**
     * 
     */
     public void noBuilHouse() {
-        JOptionPane.showMessageDialog(null, "You can't build a house!");
+        JOptionPane.showMessageDialog(null, "Non puoi costruire una casa!");
     }
 
     /**
      * @param name
      */
     public void fees(final String name) {
-        JOptionPane.showMessageDialog(null, "You landed on " + name + "'propriety, you must pay!");
+        JOptionPane.showMessageDialog(null, "Sei atterrato su una proprietà di " + name + ", devi pagare!");
     }
 
 }

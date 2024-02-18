@@ -3,7 +3,7 @@ package app.game;
 import app.game.view.MenuView;
 
 /**
- * MonopolyGame Rimini-Edition
+ * MonopolyGame Rimini-Edition.
  */
 public class Hello {
     /**

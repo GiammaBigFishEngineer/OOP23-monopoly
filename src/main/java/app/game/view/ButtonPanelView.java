@@ -53,7 +53,7 @@ public final class ButtonPanelView extends GameObservableImpl {
          * RollDice button
          */
 
-        rollDice = new JButton("Roll Dice");
+        rollDice = new JButton("Lancia i Dadi!");
         this.add(rollDice);
         btnList.put(BtnCodeEnum.ROLL_DICE, rollDice);
 
@@ -70,15 +70,13 @@ public final class ButtonPanelView extends GameObservableImpl {
 
             this.updateMidTurnView();
 
-            rollDice.setEnabled(false);
-
         });
 
         /*
          * buyPropriety button
          */
 
-        buyPropriety = new JButton("Buy Propriety");
+        buyPropriety = new JButton("Compra Proprietà");
         this.add(buyPropriety);
         btnList.put(BtnCodeEnum.BUY_PROPRIETY, buyPropriety);
 
@@ -90,7 +88,7 @@ public final class ButtonPanelView extends GameObservableImpl {
 
             refreshPanelView();
 
-            buyPropriety.setEnabled(false);
+            changeButtonVisibility();
 
         });
 
@@ -98,7 +96,7 @@ public final class ButtonPanelView extends GameObservableImpl {
          * SellPropriety button
          */
 
-        sellPropriety = new JButton("Sell Propriety");
+        sellPropriety = new JButton("Vendi Proprietà");
         this.add(sellPropriety);
         btnList.put(BtnCodeEnum.SELL_PROPRIETY, sellPropriety);
 
@@ -108,7 +106,7 @@ public final class ButtonPanelView extends GameObservableImpl {
 
             refreshPanelView();
 
-            sellPropriety.setEnabled(false);
+            changeButtonVisibility();
 
         });
 
@@ -116,7 +114,7 @@ public final class ButtonPanelView extends GameObservableImpl {
          * BuyHouse button
          */
 
-        buyHouse = new JButton("Buy House");
+        buyHouse = new JButton("Costruisci Casa");
         this.add(buyHouse);
         btnList.put(BtnCodeEnum.BUY_HOUSE, buyHouse);
 
@@ -127,7 +125,8 @@ public final class ButtonPanelView extends GameObservableImpl {
             }
 
             refreshPanelView();
-            buyHouse.setEnabled(false);
+
+            changeButtonVisibility();
 
         });
 
@@ -135,7 +134,7 @@ public final class ButtonPanelView extends GameObservableImpl {
          * EndTurn button
          */
 
-        endTurn = new JButton("End Turn");
+        endTurn = new JButton("Fine Turno");
         this.add(endTurn);
         btnList.put(BtnCodeEnum.END_TURN, endTurn);
 
@@ -149,7 +148,7 @@ public final class ButtonPanelView extends GameObservableImpl {
          * Unforseen
          */
 
-        pickUnforseen = new JButton("Pick Unforseen");
+        pickUnforseen = new JButton("Pesca Imprevisto");
         this.add(pickUnforseen);
         btnList.put(BtnCodeEnum.UNFORSEEN, pickUnforseen);
 
@@ -169,7 +168,7 @@ public final class ButtonPanelView extends GameObservableImpl {
          * SaveGame button
          */
 
-        saveGame = new JButton("Save Game");
+        saveGame = new JButton("Salva Gioco");
         this.add(saveGame);
 
         saveGame.addActionListener(e -> {
@@ -207,6 +206,7 @@ public final class ButtonPanelView extends GameObservableImpl {
             if (updateObserver(Optional.of(currentPlayer), "bail")) {
 
                 gameLogic.enableSingleButton(BtnCodeEnum.ROLL_DICE);
+                System.out.println("fuori!");
 
             } else {
 
@@ -216,7 +216,7 @@ public final class ButtonPanelView extends GameObservableImpl {
                     updateObserver(Optional.empty(), "NotDoubleDice");
                 } else {
                     updateObserver(Optional.empty(), "DoubleDice");
-                    gameLogic.enableSingleButton(BtnCodeEnum.ROLL_DICE);
+
                 }
             }
 
@@ -225,7 +225,6 @@ public final class ButtonPanelView extends GameObservableImpl {
         }
 
         refreshPanelView();
-
         changeButtonVisibility();
     }
 
@@ -320,7 +319,7 @@ public final class ButtonPanelView extends GameObservableImpl {
     }
 
     /**
-     * @returns GameController
+     * @return card list
      */
 
     public List<Card> getLogicCardList() {

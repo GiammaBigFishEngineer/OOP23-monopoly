@@ -103,7 +103,7 @@ public final class GameView extends JFrame {
      * @param obj
      */
 
-    public void updateTableView(Optional<Object> obj) {
+    public void updateTableView(final Optional<Object> obj) {
 
         final Player currentPlayer = (Player) obj.get();
         final String name = currentPlayer.getName();
@@ -146,7 +146,7 @@ public final class GameView extends JFrame {
      * @param obj
      */
 
-    public void updatePlayerPanelView(Optional<Object> obj) {
+    public void updatePlayerPanelView(final Optional<Object> obj) {
 
         final Player player = (Player) obj.get();
 
@@ -167,7 +167,7 @@ public final class GameView extends JFrame {
      * @param obj
      */
 
-    public void updateDiceView(Optional<Object> obj) {
+    public void updateDiceView(final Optional<Object> obj) {
 
         final Dice dice = (Dice) obj.get();
         dicePanel.updateView(dice);

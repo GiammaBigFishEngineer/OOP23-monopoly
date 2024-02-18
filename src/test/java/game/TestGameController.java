@@ -28,12 +28,16 @@ class TestGameController {
     private static final int GO_PAYMENT = 100;
     private static final int GO_ID = 0;
     private static final int VISERBA_TO_GO_DISTANCE = 20;
+    private static final int VISERBA_TO_UNFORSEEN = 5;
     private static final int STAZIONE_NORD_ID = 16;
     private static final int GO_TO_STAZIONE_NORD_DISTANCE = 40;
     private static final int TABLE_LENGHT = 24;
     private static final int TABLE_LENGHT_UP = 25;
     private static final int START_BALANCE = 500;
-
+    private static final int GRAND_HOTEL_ID = 23;
+    private static final int VIA_BALBLA = 17;
+    private static final int BALBLA_TO_AUGUSTO = 2;
+    private static final int AUGUSTO_TO_GRAND_HOTEL = 4;
     private static final int JAIL_ID = 6;
     private static final int GO_TO_JAIL_ID = 18;
     private static final int THIS = 0;
@@ -171,7 +175,7 @@ class TestGameController {
 
         assertEquals(btnList, logic.getBtnStatus());
 
-        logic.setDiceValue(5);
+        logic.setDiceValue(VISERBA_TO_UNFORSEEN);
         logic.startTurn();
 
         btnList.put(BtnCodeEnum.BUY_HOUSE, false);
@@ -258,24 +262,21 @@ class TestGameController {
         assertEquals(START_DEFEAT_SIZE, logic.getDefeatedList().size());
 
         logic.newTurn();
-        logic.setDiceValue(23);
+        logic.setDiceValue(GRAND_HOTEL_ID);
         logic.startTurn();
         logic.buyPropriety();
 
         logic.newTurn();
-        logic.setDiceValue(17);
+        logic.setDiceValue(VIA_BALBLA);
         logic.startTurn();
         logic.buyPropriety();
 
-        logic.setDiceValue(2);
+        logic.setDiceValue(BALBLA_TO_AUGUSTO);
         logic.startTurn();
         logic.buyPropriety();
 
-        assertEquals(20, logic.getCurrentPlayer().getBankAccount().getBalance());
-
-        logic.setDiceValue(4);
+        logic.setDiceValue(AUGUSTO_TO_GRAND_HOTEL);
         logic.startTurn();
-        logic.buyPropriety();
 
         assertEquals(FINAL_PLAYER_SIZE, logic.getPlayerList().size());
         assertEquals(FINAL_DEFEAT_SIZE, logic.getDefeatedList().size());

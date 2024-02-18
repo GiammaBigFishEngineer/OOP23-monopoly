@@ -30,7 +30,7 @@ public interface GameController {
     boolean buildHouse();
 
     /**
-     * this method is used to sell the propriety on which the owner is positioned
+     * this method is used to sell the propriety on which the owner is positioned.
      */
     void sellPropriety();
 
@@ -98,7 +98,7 @@ public interface GameController {
     boolean isOver();
 
     /**
-     * this method remove one player from the player list and add him in the
+     * this method remove one player from the player list and add him in the.
      * defeated player list
      */
     void defeatPlayer();

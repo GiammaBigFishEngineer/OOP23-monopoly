@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Optional;
 import java.util.HashMap;
 import java.util.stream.Collectors;
 import java.util.Comparator;
@@ -29,6 +30,10 @@ public final class GameControllerImpl implements GameController {
 
     private static final int GO_TO_JAIL_ID = 18;
     private static final int INITIAL_AMOUNT = 500;
+    private static final int UNFORSEEN1_ID = 2;
+    private static final int UNFORSEEN2_ID = 9;
+    private static final int UNFORSEEN3_ID = 15;
+
     private final List<Player> players;
     private final List<Player> defeated;
     private Player currentPlayer;
@@ -98,6 +103,7 @@ public final class GameControllerImpl implements GameController {
     public void newTurn() {
 
         this.disableAllBtn();
+
         this.nextPlayer();
         this.landedOnUnforseen = false;
         this.landedOnOwned = false;
@@ -122,20 +128,16 @@ public final class GameControllerImpl implements GameController {
     @Override
     public void tryLuckyBail() {
 
-        // se non paga la cauzione prova a tirare il dado
-
         rollDice(false);
 
         if (doubleDice) {
-
-            // inizia il turno del player corrente
 
             currentPlayer.setInJail(false);
             enableSingleButton(BtnCodeEnum.ROLL_DICE);
 
         } else {
 
-            // finisce qui il suo turno
+            disableAllBtn();
 
             enableSingleButton(BtnCodeEnum.END_TURN);
 
@@ -234,7 +236,9 @@ public final class GameControllerImpl implements GameController {
 
     public void handleUnbuyable() {
 
-        if (currentCard.getCardId() == 2 || currentCard.getCardId() == 9 || currentCard.getCardId() == 15) {
+        if (currentCard.getCardId() == UNFORSEEN1_ID || currentCard.getCardId() == UNFORSEEN2_ID
+                || currentCard.getCardId() == UNFORSEEN3_ID) {
+
             disableAllBtn();
             enableSingleButton(BtnCodeEnum.UNFORSEEN);
 
