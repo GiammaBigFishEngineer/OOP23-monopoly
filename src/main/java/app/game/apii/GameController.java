@@ -187,4 +187,10 @@ public interface GameController {
      */
     void saveGame();
 
+    /**
+     * 
+     */
+
+    void hasPayedBail();
+
 }

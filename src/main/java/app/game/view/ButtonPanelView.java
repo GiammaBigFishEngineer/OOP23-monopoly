@@ -206,7 +206,7 @@ public final class ButtonPanelView extends GameObservableImpl {
             if (updateObserver(Optional.of(currentPlayer), "bail")) {
 
                 gameLogic.enableSingleButton(BtnCodeEnum.ROLL_DICE);
-                System.out.println("fuori!");
+                gameLogic.hasPayedBail();
 
             } else {
 

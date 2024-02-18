@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.Optional;
+
 import java.util.HashMap;
 import java.util.stream.Collectors;
 import java.util.Comparator;
@@ -20,6 +20,7 @@ import app.game.utils.Dice;
 
 import app.player.apii.Player;
 import app.player.impl.PlayerImpl;
+
 import app.game.view.BtnCodeEnum;
 
 /**
@@ -33,6 +34,8 @@ public final class GameControllerImpl implements GameController {
     private static final int UNFORSEEN1_ID = 2;
     private static final int UNFORSEEN2_ID = 9;
     private static final int UNFORSEEN3_ID = 15;
+
+    private static final int BAIL = 100;
 
     private final List<Player> players;
     private final List<Player> defeated;
@@ -636,6 +639,16 @@ public final class GameControllerImpl implements GameController {
     @Override
     public void saveGame() {
         saveLogic.saveGame(players);
+    }
+
+    /**
+     * 
+     */
+    @Override
+
+    public void hasPayedBail() {
+        currentPlayer.setInJail(false);
+        currentPlayer.payPlayer(null, BAIL);
     }
 
 }
