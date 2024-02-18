@@ -23,6 +23,8 @@ import app.player.impl.PlayerImpl;
 
 import app.game.view.BtnCodeEnum;
 
+import java.awt.Window;
+
 /**
  * 
  */
@@ -421,15 +423,6 @@ public final class GameControllerImpl implements GameController {
      */
 
     @Override
-    public void endGame() {
-
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-
-    @Override
     public boolean isCurrentPlayerDefeated() {
         return defeated.contains(currentPlayer);
     }
@@ -648,6 +641,14 @@ public final class GameControllerImpl implements GameController {
     public void hasPayedBail() {
         currentPlayer.setInJail(false);
         currentPlayer.payPlayer(null, BAIL);
+    }
+
+    @Override
+    public void quitGame() {
+        final Window[] windows = Window.getWindows();
+        for (Window window : windows) {
+            window.dispose();
+        }
     }
 
 }

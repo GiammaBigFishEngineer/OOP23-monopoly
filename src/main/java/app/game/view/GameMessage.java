@@ -64,4 +64,14 @@ public final class GameMessage {
         JOptionPane.showMessageDialog(null, "Sei atterrato su una proprietà di " + name + ", devi pagare!");
     }
 
+    /**
+     * 
+     */
+    public boolean quitGame() {
+        final int res = JOptionPane.showConfirmDialog(null, "Confermi di voler uscire?", "exit",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+        return res == JOptionPane.YES_OPTION;
+    }
+
 }

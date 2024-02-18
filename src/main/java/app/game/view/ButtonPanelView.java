@@ -44,7 +44,7 @@ public final class ButtonPanelView extends GameObservableImpl {
         final JButton endTurn;
         final JButton saveGame;
         final JButton pickUnforseen;
-        final JButton goodLuck;
+        final JButton quitGame;
 
         this.gameLogic = new GameControllerImpl(playersNames);
         this.registerObserver(obs);
@@ -184,8 +184,15 @@ public final class ButtonPanelView extends GameObservableImpl {
 
         });
 
-        goodLuck = new JButton("Buona Fortuna !");
-        this.add(goodLuck);
+        quitGame = new JButton("Esci Dal Gioco");
+        this.add(quitGame);
+
+        quitGame.addActionListener(e -> {
+            if (updateObserver(Optional.empty(), "Quit")) {
+                gameLogic.quitGame();
+
+            }
+        });
 
     }
 
@@ -258,7 +265,7 @@ public final class ButtonPanelView extends GameObservableImpl {
 
                 updateObserver(Optional.of(currentPlayerName), "Win");
 
-                gameLogic.endGame();
+                gameLogic.quitGame();
 
             } else {
 

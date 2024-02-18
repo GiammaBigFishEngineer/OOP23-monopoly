@@ -180,12 +180,12 @@ public interface GameController {
     /**
      * 
      */
-    void endGame();
+    void saveGame();
 
-    /**
+    /*
      * 
      */
-    void saveGame();
+    void quitGame();
 
     /**
      * 

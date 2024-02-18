@@ -119,6 +119,12 @@ public final class GameObserverImpl implements GameObserver {
 
                 popUp.fees(owner);
 
+            case "Quit":
+
+                bool = popUp.quitGame();
+
+                break;
+
             default:
                 bool = false;
                 break;
