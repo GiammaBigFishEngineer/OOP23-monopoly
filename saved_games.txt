@@ -1,0 +1,5 @@
+*** Partita del: 18-02-2024  18:13:53 ***
+Player: Poz, Id: 1, Posizione: 6, Denaro: 580
+Player: cxvxcvxcv, Id: 3, Posizione: 8, Denaro: 770
+
+

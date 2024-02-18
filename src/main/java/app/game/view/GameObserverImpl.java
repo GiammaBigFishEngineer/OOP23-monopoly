@@ -4,6 +4,8 @@ import app.card.view.UnforseenView;
 import app.game.apii.GameObserver;
 import app.player.apii.Player;
 import app.player.view.BailView;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.util.Optional;
 
 /**
@@ -20,6 +22,10 @@ public final class GameObserverImpl implements GameObserver {
      * 
      * @param gameV
      */
+
+    @SuppressFBWarnings(value = {
+            "EI_EXPOSE_REP2" }, justification = "Ho bisogno del frame di gioco e non di una copia difensiva."
+                    + "Infatti devo chiamare dei metodi che andranno a modificare i pannelli presenti sul frame stesso.")
 
     public GameObserverImpl(final GameView gameV) {
         this.gameV = gameV;

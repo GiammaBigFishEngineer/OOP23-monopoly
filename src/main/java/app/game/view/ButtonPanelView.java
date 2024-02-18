@@ -21,18 +21,12 @@ import java.util.Optional;
  */
 public final class ButtonPanelView extends GameObservableImpl {
 
+    private static final long serialVersionUID = 1L;
+
     private final transient GameController gameLogic;
 
     private final Map<BtnCodeEnum, Boolean> btnCodeList = new HashMap<>();
     private final Map<BtnCodeEnum, JButton> btnList = new HashMap<>();
-
-    private final JButton rollDice;
-    private final JButton buyPropriety;
-    private final JButton sellPropriety;
-    private final JButton buyHouse;
-    private final JButton endTurn;
-    private final JButton saveGame;
-    private final JButton pickUnforseen;
 
     /**
      * 
@@ -42,6 +36,15 @@ public final class ButtonPanelView extends GameObservableImpl {
      */
 
     public ButtonPanelView(final List<String> playersNames, final GameObserverImpl obs) throws IOException {
+
+        final JButton rollDice;
+        final JButton buyPropriety;
+        final JButton sellPropriety;
+        final JButton buyHouse;
+        final JButton endTurn;
+        final JButton saveGame;
+        final JButton pickUnforseen;
+        final JButton goodLuck;
 
         this.gameLogic = new GameControllerImpl(playersNames);
         this.registerObserver(obs);
@@ -76,7 +79,7 @@ public final class ButtonPanelView extends GameObservableImpl {
          * buyPropriety button
          */
 
-        buyPropriety = new JButton("Compra Proprietà");
+        buyPropriety = new JButton("Compra Proprieta'");
         this.add(buyPropriety);
         btnList.put(BtnCodeEnum.BUY_PROPRIETY, buyPropriety);
 
@@ -96,7 +99,7 @@ public final class ButtonPanelView extends GameObservableImpl {
          * SellPropriety button
          */
 
-        sellPropriety = new JButton("Vendi Proprietà");
+        sellPropriety = new JButton("Vendi Proprieta'");
         this.add(sellPropriety);
         btnList.put(BtnCodeEnum.SELL_PROPRIETY, sellPropriety);
 
@@ -111,22 +114,19 @@ public final class ButtonPanelView extends GameObservableImpl {
         });
 
         /*
-         * BuyHouse button
+         * SaveGame button
          */
 
-        buyHouse = new JButton("Costruisci Casa");
-        this.add(buyHouse);
-        btnList.put(BtnCodeEnum.BUY_HOUSE, buyHouse);
+        saveGame = new JButton("Salva Gioco");
+        this.add(saveGame);
 
-        buyHouse.addActionListener(e -> {
+        saveGame.addActionListener(e -> {
 
-            if (!gameLogic.buildHouse()) {
-                updateObserver(Optional.empty(), "NoBuild");
-            }
+            gameLogic.saveGame();
 
-            refreshPanelView();
+            updateObserver(Optional.empty(), "Save");
 
-            changeButtonVisibility();
+            saveGame.setEnabled(false);
 
         });
 
@@ -165,21 +165,27 @@ public final class ButtonPanelView extends GameObservableImpl {
         });
 
         /*
-         * SaveGame button
+         * BuyHouse button
          */
 
-        saveGame = new JButton("Salva Gioco");
-        this.add(saveGame);
+        buyHouse = new JButton("Costruisci Casa");
+        this.add(buyHouse);
+        btnList.put(BtnCodeEnum.BUY_HOUSE, buyHouse);
 
-        saveGame.addActionListener(e -> {
+        buyHouse.addActionListener(e -> {
 
-            gameLogic.saveGame();
+            if (!gameLogic.buildHouse()) {
+                updateObserver(Optional.empty(), "NoBuild");
+            }
 
-            updateObserver(Optional.empty(), "Save");
+            refreshPanelView();
 
-            saveGame.setEnabled(false);
+            changeButtonVisibility();
 
         });
+
+        goodLuck = new JButton("Buona Fortuna !");
+        this.add(goodLuck);
 
     }
 

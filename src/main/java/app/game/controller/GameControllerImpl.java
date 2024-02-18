@@ -509,13 +509,12 @@ public final class GameControllerImpl implements GameController {
 
     @Override
     public Player getCurrentPlayer() {
-        Player copyPlayer = new PlayerImpl(currentPlayer.getName(),
+        final Player copyPlayer = new PlayerImpl(currentPlayer.getName(),
                 currentPlayer.getID(),
                 cardsList,
                 currentPlayer.getBankAccount().getBalance());
 
-        var map = currentPlayer.getMap();
-        copyPlayer.setMap(map);
+        copyPlayer.setMap(currentPlayer.getMap());
         copyPlayer.setPosition(currentPlayer.getCurrentPosition());
         copyPlayer.setInJail(isCurrentPlayerInJail());
         return copyPlayer;

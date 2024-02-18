@@ -16,6 +16,7 @@ import javax.swing.JFrame;
 import app.card.apii.Card;
 import app.card.apii.Observer;
 import app.card.view.TableView;
+
 import app.game.utils.Dice;
 import app.player.apii.Player;
 import app.player.view.PlayerPanelView;
@@ -25,8 +26,10 @@ import app.player.view.PlayerPanelView;
  */
 public final class GameView extends JFrame {
 
+    private static final long serialVersionUID = 1L;
+
     private final PlayerPanelView playerPanel;
-    private final ButtonPanelView btnPanel;
+
     private final TableView tablePanel;
     private final DiceView dicePanel;
 
@@ -46,6 +49,8 @@ public final class GameView extends JFrame {
         final Dimension screen;
         final int screenWidth;
         final int screenHeight;
+
+        final ButtonPanelView btnPanel;
 
         map = new HashMap<>();
 

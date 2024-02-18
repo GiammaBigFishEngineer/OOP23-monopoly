@@ -12,6 +12,8 @@ import javax.swing.JPanel;
 
 public class GameObservableImpl extends JPanel implements GameObservable {
 
+    private static final long serialVersionUID = 1L;
+
     private transient GameObserverImpl obs;
 
     /**
@@ -29,7 +31,8 @@ public class GameObservableImpl extends JPanel implements GameObservable {
 
     @Override
     public boolean updateObserver(final Optional<Object> obj, final String code) {
-        return this.obs.update(obj, code);
+
+        return (obs != null ? this.obs.update(obj, code) : false);
     }
 
 }
