@@ -12,16 +12,7 @@ import javax.swing.JPanel;
 
 public class GameObservableImpl extends JPanel implements GameObservable {
 
-    private GameObserverImpl obs;
-
-    /**
-    * 
-    */
-
-    @Override
-    public boolean updateObserver(final Optional<Object> obj, final String code) {
-        return this.obs.update(obj, code);
-    }
+    private transient GameObserverImpl obs;
 
     /**
     * 
@@ -30,6 +21,15 @@ public class GameObservableImpl extends JPanel implements GameObservable {
     @Override
     public void registerObserver(final GameObserverImpl obs) {
         this.obs = obs;
+    }
+
+    /**
+    * 
+    */
+
+    @Override
+    public boolean updateObserver(final Optional<Object> obj, final String code) {
+        return this.obs.update(obj, code);
     }
 
 }

@@ -21,7 +21,7 @@ import java.util.Optional;
  */
 public final class ButtonPanelView extends GameObservableImpl {
 
-    private final GameController gameLogic;
+    private final transient GameController gameLogic;
 
     private final Map<BtnCodeEnum, Boolean> btnCodeList = new HashMap<>();
     private final Map<BtnCodeEnum, JButton> btnList = new HashMap<>();

@@ -36,8 +36,8 @@ public final class MenuView extends JFrame {
 
     private static final int VERTICAL_SPACE = 40;
 
-    private final MenuController menuController;
-    private final SaveController saveLogic;
+    private final transient MenuController menuController;
+    private final transient SaveController saveLogic;
 
     /**
      * 
