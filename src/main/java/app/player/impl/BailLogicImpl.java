@@ -23,8 +23,8 @@ public final class BailLogicImpl implements BailLogic {
         if (!(player.getBankAccount().isPaymentAllowed(DEFAULT_PAYMENT))) {
             return false; 
         } else {
-            player.getBankAccount().payPlayer(null, DEFAULT_PAYMENT);
-            player.setInJail(false); 
+            player.payPlayer(null, DEFAULT_PAYMENT);
+            player.setInJail(false);
             return true;
         }
     }
