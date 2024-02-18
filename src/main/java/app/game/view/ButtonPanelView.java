@@ -20,7 +20,7 @@ import java.util.Optional;
  */
 public final class ButtonPanelView extends GameObservableImpl {
 
-    private GameController gameLogic;
+    private final GameController gameLogic;
 
     private final Map<BtnCodeEnum, Boolean> btnCodeList = new HashMap<>();
     private final Map<BtnCodeEnum, JButton> btnList = new HashMap<>();
@@ -31,6 +31,13 @@ public final class ButtonPanelView extends GameObservableImpl {
     private final JButton buyHouse;
     private final JButton endTurn;
     private final JButton saveGame;
+
+    /**
+     * 
+     * @param playersNames
+     * @param obs
+     * @throws IOException
+     */
 
     public ButtonPanelView(final List<String> playersNames, final GameObserverImpl obs) throws IOException {
 
@@ -282,7 +289,7 @@ public final class ButtonPanelView extends GameObservableImpl {
     }
 
     /**
-     * this method returns gameLogic
+     * @returns gameLogic
      */
 
     public GameController getLogic() {

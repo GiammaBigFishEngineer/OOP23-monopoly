@@ -21,6 +21,10 @@ import app.player.apii.Player;
 import app.player.impl.PlayerImpl;
 import app.game.view.BtnCodeEnum;
 
+/**
+ * 
+ */
+
 public final class GameControllerImpl implements GameController {
     private static final int GO_ID = 0;
     private static final int TRANSIT_ID = 6;
@@ -99,6 +103,10 @@ public final class GameControllerImpl implements GameController {
         this.landedOnOwned = false;
 
     }
+
+    /**
+     * 
+     */
 
     public void nextPlayer() {
 
@@ -220,6 +228,10 @@ public final class GameControllerImpl implements GameController {
 
     }
 
+    /**
+     * 
+     */
+
     public void handleUnbuyable() {
 
         if (currentCard.getCardId() != GO_ID && currentCard.getCardId() != TRANSIT_ID
@@ -249,6 +261,10 @@ public final class GameControllerImpl implements GameController {
 
     }
 
+    /**
+     * 
+     */
+
     public void handleBuildable() {
 
         final Boolean owned = CardAdapter.buildableAdapter(currentCard).isOwned();
@@ -272,6 +288,10 @@ public final class GameControllerImpl implements GameController {
         }
 
     }
+
+    /**
+     * 
+     */
 
     public void handleBuyable() {
         final Boolean owned = CardAdapter.buyableAdapter(currentCard).isOwned();
@@ -301,7 +321,7 @@ public final class GameControllerImpl implements GameController {
 
         disableSingleButton(BtnCodeEnum.buyPropriety);
 
-        return !currentPlayer.buyBox(CardAdapter.buyableAdapter(currentCard));
+        return currentPlayer.buyBox(CardAdapter.buyableAdapter(currentCard));
 
     }
 
@@ -314,7 +334,7 @@ public final class GameControllerImpl implements GameController {
 
         disableSingleButton(BtnCodeEnum.buyHouse);
 
-        return !currentPlayer.buildHouse(CardAdapter.buildableAdapter(currentCard));
+        return currentPlayer.buildHouse(CardAdapter.buildableAdapter(currentCard));
 
     }
 
@@ -386,6 +406,10 @@ public final class GameControllerImpl implements GameController {
     public boolean isCurrentPlayerDefeated() {
         return defeated.contains(currentPlayer);
     }
+
+    /**
+     * 
+     */
 
     public void newIndex() {
         this.currentPlayerIndex--;
