@@ -172,12 +172,16 @@ class TestGameController {
         assertEquals(btnList, logic.getBtnStatus());
 
         logic.setDiceValue(5);
+        logic.startTurn();
+
         btnList.put(BtnCodeEnum.BUY_HOUSE, false);
         btnList.put(BtnCodeEnum.BUY_PROPRIETY, false);
         btnList.put(BtnCodeEnum.END_TURN, false);
         btnList.put(BtnCodeEnum.ROLL_DICE, false);
         btnList.put(BtnCodeEnum.SELL_PROPRIETY, false);
         btnList.put(BtnCodeEnum.UNFORSEEN, true);
+
+        assertEquals(btnList, logic.getBtnStatus());
 
     }
 

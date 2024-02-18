@@ -217,14 +217,14 @@ public final class GameControllerImpl implements GameController {
         } else if (currentCard.isBuildable()) {
 
             handleBuildable();
+            enableSingleButton(BtnCodeEnum.END_TURN);
 
         } else if (currentCard.isBuyable() && !currentCard.isBuildable()) {
 
             handleBuyable();
+            enableSingleButton(BtnCodeEnum.END_TURN);
 
         }
-
-        enableSingleButton(BtnCodeEnum.END_TURN);
 
     }
 
@@ -238,12 +238,15 @@ public final class GameControllerImpl implements GameController {
             disableAllBtn();
             enableSingleButton(BtnCodeEnum.UNFORSEEN);
 
+        } else {
+            enableSingleButton(BtnCodeEnum.END_TURN);
         }
 
         if (currentCard.getCardId() == GO_TO_JAIL_ID) {
             final TriggeredEvent e = CardAdapter.unbuyableAdapter(currentCard).makeAction(currentPlayer);
             this.unforseenMessage = e.getMessage();
             this.landedOnUnforseen = true;
+            enableSingleButton(BtnCodeEnum.END_TURN);
         }
 
     }
@@ -326,6 +329,7 @@ public final class GameControllerImpl implements GameController {
         }
 
         disableSingleButton(BtnCodeEnum.UNFORSEEN);
+        enableSingleButton(BtnCodeEnum.END_TURN);
     }
 
     /**
