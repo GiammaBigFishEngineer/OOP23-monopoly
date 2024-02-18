@@ -157,8 +157,6 @@ class TestGameController {
 
         logic.buyPropriety();
 
-        logic.newTurn();
-        logic.newTurn();
         logic.setDiceValue(THIS);
         logic.startTurn();
 
@@ -186,7 +184,7 @@ class TestGameController {
 
         final Player owner = CardAdapter.buildableAdapter(logic.getCurrentCard()).getOwner();
 
-        assertEquals(owner, logic.getCurrentPlayer());
+        assertEquals(owner.getName(), logic.getCurrentPlayer().getName());
 
         assertEquals(START_BALANCE - VISERBA_PRICE, logic.getCurrentPlayer().getBankAccount().getBalance());
 
@@ -207,9 +205,6 @@ class TestGameController {
         final int total = cardPrice + housePrice;
 
         logic.buyPropriety();
-
-        logic.newTurn();
-        logic.newTurn();
 
         logic.buildHouse();
 
@@ -248,14 +243,24 @@ class TestGameController {
         assertEquals(START_DEFEAT_SIZE, logic.getDefeatedList().size());
 
         logic.newTurn();
-        logic.setDiceValue(VISERBA_ID);
+        logic.setDiceValue(23);
         logic.startTurn();
         logic.buyPropriety();
 
         logic.newTurn();
-        logic.getCurrentPlayer().receivePayment(LOW_BALANCE);
-        logic.setDiceValue(VISERBA_ID);
+        logic.setDiceValue(17);
         logic.startTurn();
+        logic.buyPropriety();
+
+        logic.setDiceValue(2);
+        logic.startTurn();
+        logic.buyPropriety();
+
+        assertEquals(20, logic.getCurrentPlayer().getBankAccount().getBalance());
+
+        logic.setDiceValue(4);
+        logic.startTurn();
+        logic.buyPropriety();
 
         assertEquals(FINAL_PLAYER_SIZE, logic.getPlayerList().size());
         assertEquals(FINAL_DEFEAT_SIZE, logic.getDefeatedList().size());

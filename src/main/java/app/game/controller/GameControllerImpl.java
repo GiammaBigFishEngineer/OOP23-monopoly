@@ -472,9 +472,8 @@ public final class GameControllerImpl implements GameController {
 
     @Override
     public Map<BtnCodeEnum, Boolean> getBtnStatus() {
-        final Map<BtnCodeEnum, Boolean> copyMap = new HashMap<>();
-        copyMap.putAll(btnList);
-        return copyMap;
+
+        return new HashMap<>(btnList);
     }
 
     /**
@@ -483,8 +482,16 @@ public final class GameControllerImpl implements GameController {
 
     @Override
     public Player getCurrentPlayer() {
+        Player copyPlayer = new PlayerImpl(currentPlayer.getName(),
+                currentPlayer.getID(),
+                cardsList,
+                currentPlayer.getBankAccount().getBalance());
 
-        return currentPlayer;
+        var map = currentPlayer.getMap();
+        copyPlayer.setMap(map);
+        copyPlayer.setPosition(currentPlayer.getCurrentPosition());
+        copyPlayer.setInJail(isCurrentPlayerInJail());
+        return copyPlayer;
     }
 
     /**
@@ -511,9 +518,8 @@ public final class GameControllerImpl implements GameController {
 
     @Override
     public List<Card> getTableList() {
-        final List<Card> copyList = new ArrayList<>();
-        copyList.addAll(tableList);
-        return copyList;
+
+        return new ArrayList<>(tableList);
     }
 
     /**
@@ -522,9 +528,8 @@ public final class GameControllerImpl implements GameController {
 
     @Override
     public List<Card> getCardList() {
-        final List<Card> copyList = new ArrayList<>();
-        copyList.addAll(cardsList);
-        return copyList;
+
+        return new ArrayList<>(cardsList);
     }
 
     /**
@@ -533,9 +538,8 @@ public final class GameControllerImpl implements GameController {
 
     @Override
     public List<Player> getPlayerList() {
-        final List<Player> copyList = new ArrayList<>();
-        copyList.addAll(players);
-        return copyList;
+
+        return new ArrayList<>(players);
     }
 
     /**
@@ -544,9 +548,7 @@ public final class GameControllerImpl implements GameController {
 
     @Override
     public List<Player> getDefeatedList() {
-        final List<Player> copyList = new ArrayList<>();
-        copyList.addAll(defeated);
-        return copyList;
+        return new ArrayList<>(defeated);
     }
 
     /**

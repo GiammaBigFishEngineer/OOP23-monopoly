@@ -27,7 +27,7 @@ public final class PlayerImpl implements Player {
      * if that box is already owned by the current player
      * and the number of houses built on that box.
      */
-    private final Map<Card, Optional<Integer>> map;
+    private Map<Card, Optional<Integer>> map;
     private int currentPosition;
     private final String name;
     private final int id;
@@ -297,5 +297,9 @@ public final class PlayerImpl implements Player {
     @Override
     public boolean payPlayer(final Player player, final int amount) {
         return this.account.payPlayer(player, amount);
+    }
+
+    public void setMap(final Map<Card, Optional<Integer>> map) {
+        this.map = new HashMap<>(map);
     }
 }

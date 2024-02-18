@@ -115,4 +115,6 @@ public interface Player {
 
     String getColor();
 
+    void setMap(final Map<Card, Optional<Integer>> map);
+
 }
