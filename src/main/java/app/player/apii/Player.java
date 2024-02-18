@@ -44,6 +44,11 @@ public interface Player {
      */
     Map<Card, Optional<Integer>> getMap();
     /**
+     * It sets the value of the map of the player.
+     * @param map
+     */
+    void setMap(Map<Card, Optional<Integer>> map);
+    /**
      * @return a boolean which indicates if a player is in jail
      */
     boolean isInJail();
