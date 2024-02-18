@@ -51,7 +51,7 @@ public final class GameObserverImpl implements GameObserver {
                 final Player crntPlayer = (Player) obj.get();
 
                 final BailView bailMessage = new BailView();
-                bool = bailMessage.showMenuBail(crntPlayer, gameV);
+                bool = bailMessage.showMenuBail(crntPlayer);
 
                 break;
 

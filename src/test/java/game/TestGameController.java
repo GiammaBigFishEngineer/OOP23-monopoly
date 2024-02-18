@@ -33,7 +33,7 @@ class TestGameController {
     private static final int TABLE_LENGHT = 24;
     private static final int TABLE_LENGHT_UP = 25;
     private static final int START_BALANCE = 500;
-    private static final int LOW_BALANCE = -495;
+
     private static final int JAIL_ID = 6;
     private static final int GO_TO_JAIL_ID = 18;
     private static final int THIS = 0;
@@ -123,7 +123,7 @@ class TestGameController {
         logic.startTurn();
 
         assertEquals(JAIL_ID, logic.getCurrentPlayer().getCurrentPosition());
-        // assertTrue(logic.isCurrentPlayerInJail());
+        assertTrue(logic.isCurrentPlayerInJail());
 
     }
 
@@ -141,6 +141,7 @@ class TestGameController {
         btnList.put(BtnCodeEnum.END_TURN, false);
         btnList.put(BtnCodeEnum.ROLL_DICE, false);
         btnList.put(BtnCodeEnum.SELL_PROPRIETY, false);
+        btnList.put(BtnCodeEnum.UNFORSEEN, false);
 
         assertEquals(btnList, logic.getBtnStatus());
 
@@ -152,6 +153,7 @@ class TestGameController {
         btnList.put(BtnCodeEnum.END_TURN, true);
         btnList.put(BtnCodeEnum.ROLL_DICE, false);
         btnList.put(BtnCodeEnum.SELL_PROPRIETY, false);
+        btnList.put(BtnCodeEnum.UNFORSEEN, false);
 
         assertEquals(btnList, logic.getBtnStatus());
 
@@ -165,8 +167,17 @@ class TestGameController {
         btnList.put(BtnCodeEnum.END_TURN, true);
         btnList.put(BtnCodeEnum.ROLL_DICE, false);
         btnList.put(BtnCodeEnum.SELL_PROPRIETY, true);
+        btnList.put(BtnCodeEnum.UNFORSEEN, false);
 
         assertEquals(btnList, logic.getBtnStatus());
+
+        logic.setDiceValue(5);
+        btnList.put(BtnCodeEnum.BUY_HOUSE, false);
+        btnList.put(BtnCodeEnum.BUY_PROPRIETY, false);
+        btnList.put(BtnCodeEnum.END_TURN, false);
+        btnList.put(BtnCodeEnum.ROLL_DICE, false);
+        btnList.put(BtnCodeEnum.SELL_PROPRIETY, false);
+        btnList.put(BtnCodeEnum.UNFORSEEN, true);
 
     }
 

@@ -41,6 +41,11 @@ public interface GameController {
     void payFees(Player owner);
 
     /**
+     *
+     */
+    void pickUnforseen();
+
+    /**
      * 
      */
     void newTurn();

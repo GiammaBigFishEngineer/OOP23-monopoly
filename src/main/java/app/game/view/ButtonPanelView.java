@@ -32,6 +32,7 @@ public final class ButtonPanelView extends GameObservableImpl {
     private final JButton buyHouse;
     private final JButton endTurn;
     private final JButton saveGame;
+    private final JButton pickUnforseen;
 
     /**
      * 
@@ -145,6 +146,26 @@ public final class ButtonPanelView extends GameObservableImpl {
         });
 
         /*
+         * Unforseen
+         */
+
+        pickUnforseen = new JButton("Pick Unforseen");
+        this.add(pickUnforseen);
+        btnList.put(BtnCodeEnum.UNFORSEEN, pickUnforseen);
+
+        pickUnforseen.addActionListener(e -> {
+
+            gameLogic.pickUnforseen();
+            updateObserver(Optional.of(gameLogic.getUnforseenMessage()), "UnbuyableAction");
+
+            refreshPanelView();
+            refreshPositionView();
+
+            changeButtonVisibility();
+
+        });
+
+        /*
          * SaveGame button
          */
 
@@ -169,6 +190,7 @@ public final class ButtonPanelView extends GameObservableImpl {
 
     public void newTurn() {
         gameLogic.newTurn();
+        refreshPanelView();
         this.updateStartTurnView();
     }
 

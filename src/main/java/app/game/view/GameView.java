@@ -30,7 +30,7 @@ public final class GameView extends JFrame {
     private final TableView tablePanel;
     private final DiceView dicePanel;
 
-    private final Map<Player, Integer> map;
+    private final Map<String, Integer> map;
 
     private static final int PROPORTION = 2;
     private static final int TABLE_SIZE = 7;
@@ -106,15 +106,16 @@ public final class GameView extends JFrame {
     public void updateTableView(Optional<Object> obj) {
 
         final Player currentPlayer = (Player) obj.get();
+        final String name = currentPlayer.getName();
 
-        if (map.containsKey(currentPlayer)) {
+        if (map.containsKey(name)) {
 
             final Observer<Player> removeObs = () -> tablePanel.removePlayer(currentPlayer.getColor(),
-                    map.get(currentPlayer));
+                    map.get(name));
 
             useObs(removeObs);
 
-            map.remove(currentPlayer);
+            map.remove(name);
         }
 
         final Observer<Player> addObs = () -> tablePanel.redrawPlayer(currentPlayer.getColor(),
@@ -122,7 +123,7 @@ public final class GameView extends JFrame {
 
         useObs(addObs);
 
-        map.put(currentPlayer, currentPlayer.getCurrentPosition());
+        map.put(name, currentPlayer.getCurrentPosition());
 
     }
 

@@ -28,6 +28,11 @@ public enum BtnCodeEnum {
     /**
     * 
     */
-    END_TURN;
+    END_TURN,
+
+    /**
+    * 
+    */
+    UNFORSEEN;
 
 }

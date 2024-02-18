@@ -26,9 +26,8 @@ import app.game.view.BtnCodeEnum;
  */
 
 public final class GameControllerImpl implements GameController {
-    private static final int GO_ID = 0;
-    private static final int TRANSIT_ID = 6;
-    private static final int PARK_ID = 12;
+
+    private static final int GO_TO_JAIL_ID = 18;
     private static final int INITIAL_AMOUNT = 500;
     private final List<Player> players;
     private final List<Player> defeated;
@@ -85,6 +84,7 @@ public final class GameControllerImpl implements GameController {
         btnList.put(BtnCodeEnum.END_TURN, false);
         btnList.put(BtnCodeEnum.ROLL_DICE, false);
         btnList.put(BtnCodeEnum.SELL_PROPRIETY, false);
+        btnList.put(BtnCodeEnum.UNFORSEEN, false);
 
         saveLogic = new SaveControllerImpl();
     }
@@ -234,29 +234,16 @@ public final class GameControllerImpl implements GameController {
 
     public void handleUnbuyable() {
 
-        if (currentCard.getCardId() != GO_ID && currentCard.getCardId() != TRANSIT_ID
-                && currentCard.getCardId() != PARK_ID) {
+        if (currentCard.getCardId() == 2 || currentCard.getCardId() == 9 || currentCard.getCardId() == 15) {
+            disableAllBtn();
+            enableSingleButton(BtnCodeEnum.UNFORSEEN);
 
+        }
+
+        if (currentCard.getCardId() == GO_TO_JAIL_ID) {
             final TriggeredEvent e = CardAdapter.unbuyableAdapter(currentCard).makeAction(currentPlayer);
             this.unforseenMessage = e.getMessage();
             this.landedOnUnforseen = true;
-
-            final var balance = currentPlayer.getBankAccount().getBalance();
-
-            if (currentCardIndex != currentPlayer.getCurrentPosition()) {
-
-                currentCardIndex = currentPlayer.getCurrentPosition();
-
-                currentCard = cardsList.get(currentCardIndex);
-
-                handleCard();
-            } else if (balance != currentPlayer.getBankAccount().getBalance()
-                    && e.equals(TriggeredEvent.UNPERFORMED)) {
-
-                this.defeatPlayer();
-
-            }
-
         }
 
     }
@@ -310,6 +297,35 @@ public final class GameControllerImpl implements GameController {
             enableSingleButton(BtnCodeEnum.BUY_PROPRIETY);
 
         }
+    }
+
+    /**
+     * 
+     */
+
+    @Override
+    public void pickUnforseen() {
+        final TriggeredEvent e = CardAdapter.unbuyableAdapter(currentCard).makeAction(currentPlayer);
+        this.unforseenMessage = e.getMessage();
+        this.landedOnUnforseen = true;
+
+        final var balance = currentPlayer.getBankAccount().getBalance();
+
+        if (currentCardIndex != currentPlayer.getCurrentPosition()) {
+
+            currentCardIndex = currentPlayer.getCurrentPosition();
+
+            currentCard = cardsList.get(currentCardIndex);
+
+            handleCard();
+        } else if (balance != currentPlayer.getBankAccount().getBalance()
+                && e.equals(TriggeredEvent.UNPERFORMED)) {
+
+            this.defeatPlayer();
+
+        }
+
+        disableSingleButton(BtnCodeEnum.UNFORSEEN);
     }
 
     /**
