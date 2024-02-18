@@ -41,4 +41,9 @@ public interface Buyable extends Card {
      * @param player who buy property
      */
     void setOwner(Player player);
+
+    /**
+     * Make the card available for players.
+     */
+    void clearOwner();
 }

@@ -126,6 +126,11 @@ public final class CardFactoryImpl implements CardFactory {
                 return housePrice;
             }
 
+            @Override
+            public void clearOwner() {
+                this.buyable.clearOwner();
+            }
+
         };
     }
 

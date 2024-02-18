@@ -82,4 +82,9 @@ public final class BuyableImpl implements Buyable {
     public int hashCode() {
         return this.card.hashCode();
     }
+
+    @Override
+    public void clearOwner() {
+        this.owner = Optional.empty();
+    }
 }
