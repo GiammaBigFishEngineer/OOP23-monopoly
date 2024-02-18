@@ -26,7 +26,7 @@ import app.game.view.BtnCodeEnum;
 import java.awt.Window;
 
 /**
- * 
+ * this class represent the implementation of the game logic.
  */
 
 public final class GameControllerImpl implements GameController {
@@ -99,9 +99,8 @@ public final class GameControllerImpl implements GameController {
         saveLogic = new SaveControllerImpl();
     }
 
-    /*
-     * run method will be called at the start of the game and at the end of every
-     * turn
+    /**
+     * {@inheritDoc}
      */
 
     @Override
@@ -116,7 +115,8 @@ public final class GameControllerImpl implements GameController {
     }
 
     /**
-     * 
+     * this method is called in newTurn and it is used to set the next player in the
+     * players list as the current player
      */
 
     public void nextPlayer() {
@@ -236,7 +236,9 @@ public final class GameControllerImpl implements GameController {
     }
 
     /**
-     * 
+     * this method is called if the current player has landed on an unbuyable card.
+     * it acts differently based on what sottotype of card the player has landed on
+     * (Unforseen or goToJail card)
      */
 
     public void handleUnbuyable() {
@@ -261,7 +263,8 @@ public final class GameControllerImpl implements GameController {
     }
 
     /**
-     * 
+     * this method is called if the current player has landed on a buildable card.
+     * It checks whether the card is owned and, if so, who is it
      */
 
     public void handleBuildable() {
@@ -289,7 +292,9 @@ public final class GameControllerImpl implements GameController {
     }
 
     /**
-     * 
+     * this method is called if the current player has landed on a buyable card.
+     * It checks whether the card is owned and, if so, who is it.
+     * Unlike handleBuildable it activates different buttons
      */
 
     public void handleBuyable() {
@@ -312,7 +317,10 @@ public final class GameControllerImpl implements GameController {
     }
 
     /**
-     * 
+     * this method is called if the current player has landed on an unbuyable card
+     * and in particular if he is on an unforseen.
+     * It acts differently by checking whether the unforseen concerns movement or
+     * payment.
      */
 
     @Override
@@ -428,7 +436,8 @@ public final class GameControllerImpl implements GameController {
     }
 
     /**
-     * 
+     * this method is used when a player got defeated and is useful for calculating
+     * the next current player
      */
 
     public void newIndex() {
@@ -634,7 +643,7 @@ public final class GameControllerImpl implements GameController {
     }
 
     /**
-     * 
+     * {@inheritDoc}
      */
     @Override
 
@@ -643,6 +652,9 @@ public final class GameControllerImpl implements GameController {
         currentPlayer.payPlayer(null, BAIL);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void quitGame() {
         final Window[] windows = Window.getWindows();

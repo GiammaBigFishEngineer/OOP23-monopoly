@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * An interface that rapresent the logic of the player actions.
+ * An interface that rapresent the logic of the game.
  */
 
 public interface GameController {
@@ -41,22 +41,26 @@ public interface GameController {
     void payFees(Player owner);
 
     /**
-     *
+     * this method is called only when the current player has landed on an unforseen
      */
     void pickUnforseen();
 
     /**
-     * 
+     * this method is used at the end of every turn and at the start of the game, in
+     * fact it serve to move on to the next player in the players list
      */
     void newTurn();
 
     /**
-     * 
+     * this method is used to calculate the new player position and the card he has
+     * landed on.
+     * If the player passes over the GO card, he earns an amount of money
      */
     void startTurn();
 
     /**
-     * 
+     * this method is used to handle the buttons that will be activated based on the
+     * type of the card the current player landed on
      */
     void handleCard();
 
@@ -66,7 +70,15 @@ public interface GameController {
     Boolean isCurrentPlayerInJail();
 
     /**
-     * 
+     * this method is called if the current player decides to pay the bail
+     */
+
+    void hasPayedBail();
+
+    /**
+     * this method is called when the current player is in jail and he refuses to
+     * pay the bail, in fact he can try his luck and in case two dice returnthha
+     * same value he can get out of jail
      */
     void tryLuckyBail();
 
@@ -88,7 +100,7 @@ public interface GameController {
     void disableSingleButton(BtnCodeEnum code);
 
     /**
-     * 
+     * this method is used to set every value in the button list to false
      */
     void disableAllBtn();
 
@@ -104,7 +116,8 @@ public interface GameController {
     void defeatPlayer();
 
     /**
-     * 
+     * this method is used to create the players list starting from the list of
+     * their names
      */
     void initializePlayer();
 
@@ -178,19 +191,13 @@ public interface GameController {
     String getOwner();
 
     /**
-     * 
+     * this method is used to save the game
      */
     void saveGame();
 
     /*
-     * 
+     * this method is used to quit the game
      */
     void quitGame();
-
-    /**
-     * 
-     */
-
-    void hasPayedBail();
 
 }
