@@ -8,26 +8,26 @@ public enum BtnCodeEnum {
     /**
     * 
     */
-    rollDice,
+    ROLL_DICE,
 
     /**
     * 
     */
-    buyPropriety,
+    BUY_PROPRIETY,
 
     /**
     * 
     */
-    sellPropriety,
+    SELL_PROPRIETY,
 
     /**
     * 
     */
-    buyHouse,
+    BUY_HOUSE,
 
     /**
     * 
     */
-    endTurn;
+    END_TURN;
 
 }

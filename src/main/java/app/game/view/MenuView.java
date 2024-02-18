@@ -1,24 +1,47 @@
 package app.game.view;
 
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import app.game.apii.MenuController;
 import app.game.apii.SaveController;
 import app.game.controller.SaveControllerImpl;
 import app.game.model.MenuControllerImpl;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Insets;
+import java.awt.Toolkit;
 import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
 
+/**
+ * 
+ */
 public final class MenuView extends JFrame {
 
     private static final int PROPORTION = 2;
+    private static final int TITLE_FONT = 100;
+    private static final int SUBTITLE_FONT = 30;
 
-    final private MenuController menuController;
-    final private SaveController saveLogic;
+    private static final int VERTICAL_SPACE = 40;
 
+    private final MenuController menuController;
+    private final SaveController saveLogic;
+
+    /**
+     * 
+     */
     public MenuView() {
         super("GameMenu");
 
@@ -133,14 +156,14 @@ public final class MenuView extends JFrame {
         setLayout(new GridBagLayout());
 
         final GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(40, 10, 10, 10);
+        gbc.insets = new Insets(VERTICAL_SPACE, 0, 0, 0);
         gbc.gridx = 0;
         gbc.gridy = 2;
 
         this.add(buttonPanel, gbc);
 
         titleLabel = new JLabel("<html> MONOPOLY <html>");
-        titleLabel.setFont(new Font("", Font.BOLD, 100));
+        titleLabel.setFont(new Font("", Font.BOLD, TITLE_FONT));
         titleLabel.setForeground(Color.red);
 
         gbc.gridx = 0;
@@ -149,7 +172,7 @@ public final class MenuView extends JFrame {
         this.add(titleLabel, gbc);
 
         subtitleLabel = new JLabel("<html> 'Rimini Edition' <html>");
-        subtitleLabel.setFont(new Font("", Font.BOLD, 30));
+        subtitleLabel.setFont(new Font("", Font.BOLD, SUBTITLE_FONT));
         subtitleLabel.setForeground(Color.red);
 
         gbc.gridx = 0;
@@ -158,7 +181,7 @@ public final class MenuView extends JFrame {
         this.add(subtitleLabel, gbc);
 
         /*
-         * Setting the timension of the frame
+         * Setting the dimension of the frame
          */
 
         screen = Toolkit.getDefaultToolkit().getScreenSize();

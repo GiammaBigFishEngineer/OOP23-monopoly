@@ -80,11 +80,11 @@ public final class GameControllerImpl implements GameController {
         defeated = new ArrayList<>();
 
         btnList = new HashMap<>();
-        btnList.put(BtnCodeEnum.buyHouse, false);
-        btnList.put(BtnCodeEnum.buyPropriety, false);
-        btnList.put(BtnCodeEnum.endTurn, false);
-        btnList.put(BtnCodeEnum.rollDice, false);
-        btnList.put(BtnCodeEnum.sellPropriety, false);
+        btnList.put(BtnCodeEnum.BUY_HOUSE, false);
+        btnList.put(BtnCodeEnum.BUY_PROPRIETY, false);
+        btnList.put(BtnCodeEnum.END_TURN, false);
+        btnList.put(BtnCodeEnum.ROLL_DICE, false);
+        btnList.put(BtnCodeEnum.SELL_PROPRIETY, false);
 
         saveLogic = new SaveControllerImpl();
     }
@@ -131,13 +131,13 @@ public final class GameControllerImpl implements GameController {
             // inizia il turno del player corrente
 
             currentPlayer.setInJail(false);
-            enableSingleButton(BtnCodeEnum.rollDice);
+            enableSingleButton(BtnCodeEnum.ROLL_DICE);
 
         } else {
 
             // finisce qui il suo turno
 
-            enableSingleButton(BtnCodeEnum.endTurn);
+            enableSingleButton(BtnCodeEnum.END_TURN);
 
         }
 
@@ -166,7 +166,7 @@ public final class GameControllerImpl implements GameController {
         }
 
         if (b) {
-            disableSingleButton(BtnCodeEnum.rollDice);
+            disableSingleButton(BtnCodeEnum.ROLL_DICE);
             startTurn();
 
         }
@@ -187,8 +187,8 @@ public final class GameControllerImpl implements GameController {
 
         if (finalPosition >= cardsList.size()) {
 
-            final int new_position = finalPosition - (int) cardsList.size();
-            currentPlayer.setPosition(new_position);
+            final int newPosition = finalPosition - (int) cardsList.size();
+            currentPlayer.setPosition(newPosition);
             Unforseen.U0.getCard().makeAction(currentPlayer);
 
         } else {
@@ -224,7 +224,7 @@ public final class GameControllerImpl implements GameController {
 
         }
 
-        enableSingleButton(BtnCodeEnum.endTurn);
+        enableSingleButton(BtnCodeEnum.END_TURN);
 
     }
 
@@ -275,15 +275,15 @@ public final class GameControllerImpl implements GameController {
 
             if (currentPlayer.equals(owner)) {
 
-                enableSingleButton(BtnCodeEnum.buyHouse);
-                enableSingleButton(BtnCodeEnum.sellPropriety);
+                enableSingleButton(BtnCodeEnum.BUY_HOUSE);
+                enableSingleButton(BtnCodeEnum.SELL_PROPRIETY);
 
             } else {
                 payFees(owner);
             }
 
         } else {
-            enableSingleButton(BtnCodeEnum.buyPropriety);
+            enableSingleButton(BtnCodeEnum.BUY_PROPRIETY);
 
         }
 
@@ -303,11 +303,11 @@ public final class GameControllerImpl implements GameController {
             if (!currentPlayer.equals(owner)) {
                 payFees(owner);
             } else {
-                enableSingleButton(BtnCodeEnum.sellPropriety);
+                enableSingleButton(BtnCodeEnum.SELL_PROPRIETY);
             }
 
         } else {
-            enableSingleButton(BtnCodeEnum.buyPropriety);
+            enableSingleButton(BtnCodeEnum.BUY_PROPRIETY);
 
         }
     }
@@ -319,7 +319,7 @@ public final class GameControllerImpl implements GameController {
     @Override
     public boolean buyPropriety() {
 
-        disableSingleButton(BtnCodeEnum.buyPropriety);
+        disableSingleButton(BtnCodeEnum.BUY_PROPRIETY);
 
         return currentPlayer.buyBox(CardAdapter.buyableAdapter(currentCard));
 
@@ -332,7 +332,7 @@ public final class GameControllerImpl implements GameController {
     @Override
     public boolean buildHouse() {
 
-        disableSingleButton(BtnCodeEnum.buyHouse);
+        disableSingleButton(BtnCodeEnum.BUY_HOUSE);
 
         return currentPlayer.buildHouse(CardAdapter.buildableAdapter(currentCard));
 
@@ -345,7 +345,7 @@ public final class GameControllerImpl implements GameController {
     @Override
     public void sellPropriety() {
 
-        disableSingleButton(BtnCodeEnum.sellPropriety);
+        disableSingleButton(BtnCodeEnum.SELL_PROPRIETY);
         currentPlayer.sellBuyable(CardAdapter.buyableAdapter(currentCard));
     }
 

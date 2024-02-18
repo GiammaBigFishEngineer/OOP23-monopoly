@@ -136,22 +136,22 @@ class TestGameController {
         logic.newTurn();
 
         btnList = new HashMap<>();
-        btnList.put(BtnCodeEnum.buyHouse, false);
-        btnList.put(BtnCodeEnum.buyPropriety, false);
-        btnList.put(BtnCodeEnum.endTurn, false);
-        btnList.put(BtnCodeEnum.rollDice, false);
-        btnList.put(BtnCodeEnum.sellPropriety, false);
+        btnList.put(BtnCodeEnum.BUY_HOUSE, false);
+        btnList.put(BtnCodeEnum.BUY_PROPRIETY, false);
+        btnList.put(BtnCodeEnum.END_TURN, false);
+        btnList.put(BtnCodeEnum.ROLL_DICE, false);
+        btnList.put(BtnCodeEnum.SELL_PROPRIETY, false);
 
         assertEquals(btnList, logic.getBtnStatus());
 
         logic.setDiceValue(VISERBA_ID);
         logic.startTurn();
 
-        btnList.put(BtnCodeEnum.buyHouse, false);
-        btnList.put(BtnCodeEnum.buyPropriety, true);
-        btnList.put(BtnCodeEnum.endTurn, true);
-        btnList.put(BtnCodeEnum.rollDice, false);
-        btnList.put(BtnCodeEnum.sellPropriety, false);
+        btnList.put(BtnCodeEnum.BUY_HOUSE, false);
+        btnList.put(BtnCodeEnum.BUY_PROPRIETY, true);
+        btnList.put(BtnCodeEnum.END_TURN, true);
+        btnList.put(BtnCodeEnum.ROLL_DICE, false);
+        btnList.put(BtnCodeEnum.SELL_PROPRIETY, false);
 
         assertEquals(btnList, logic.getBtnStatus());
 
@@ -162,11 +162,11 @@ class TestGameController {
         logic.setDiceValue(THIS);
         logic.startTurn();
 
-        btnList.put(BtnCodeEnum.buyHouse, true);
-        btnList.put(BtnCodeEnum.buyPropriety, false);
-        btnList.put(BtnCodeEnum.endTurn, true);
-        btnList.put(BtnCodeEnum.rollDice, false);
-        btnList.put(BtnCodeEnum.sellPropriety, true);
+        btnList.put(BtnCodeEnum.BUY_HOUSE, true);
+        btnList.put(BtnCodeEnum.BUY_PROPRIETY, false);
+        btnList.put(BtnCodeEnum.END_TURN, true);
+        btnList.put(BtnCodeEnum.ROLL_DICE, false);
+        btnList.put(BtnCodeEnum.SELL_PROPRIETY, true);
 
         assertEquals(btnList, logic.getBtnStatus());
 

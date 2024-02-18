@@ -1,80 +1,48 @@
 package app.game.view;
 
-import app.card.apii.Card;
-import app.card.apii.Observer;
-import app.card.view.TableView;
 import app.card.view.UnforseenView;
 import app.game.apii.GameObserver;
-import app.game.utils.Dice;
 import app.player.apii.Player;
 import app.player.view.BailView;
-import app.player.view.PlayerPanelView;
-
-import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.Comparator;
-import java.util.HashMap;
 
-public class GameObserverImpl implements GameObserver {
+/**
+ * 
+ */
 
-    GameView gameV;
+public final class GameObserverImpl implements GameObserver {
 
-    GameMessage popUp;
+    private final GameView gameV;
 
-    Map<Player, Integer> map;
+    private final GameMessage popUp;
+
+    /**
+     * 
+     * @param gameV
+     */
 
     public GameObserverImpl(final GameView gameV) {
         this.gameV = gameV;
         popUp = new GameMessage();
-        map = new HashMap<>();
 
     }
 
     @Override
     public boolean update(final Optional<Object> obj, final String str) {
-        final PlayerPanelView panelView = gameV.getPlayerPanelView();
-        final TableView tablePanel = gameV.getTableView();
+
         Boolean bool = true;
 
         switch (str) {
 
             case "refreshPlayerPosition":
 
-                final Player currentPlayer = (Player) obj.get();
-
-                if (map.containsKey(currentPlayer)) {
-
-                    final Observer<Player> removeObs = () -> tablePanel.removePlayer(currentPlayer.getColor(),
-                            map.get(currentPlayer));
-
-                    useObs(removeObs);
-
-                    map.remove(currentPlayer);
-                }
-
-                final Observer<Player> addObs = () -> tablePanel.redrawPlayer(currentPlayer.getColor(),
-                        currentPlayer.getCurrentPosition());
-
-                useObs(addObs);
-
-                map.put(currentPlayer, currentPlayer.getCurrentPosition());
+                gameV.updateTableView(obj);
 
                 break;
 
             case "refreshPlayerPanel":
 
-                final Player player = (Player) obj.get();
-
-                final var card = tablePanel.getCardList()
-                        .stream()
-                        .sorted(Comparator.comparingInt(Card::getCardId))
-                        .collect(Collectors.toList())
-                        .get(player.getCurrentPosition());
-
-                panelView.setPlayer(player, card);
-
-                panelView.setCurrentBox(card);
+                gameV.updatePlayerPanelView(obj);
 
                 break;
 
@@ -89,10 +57,8 @@ public class GameObserverImpl implements GameObserver {
 
             case "RollDice":
 
-                final Dice dice = (Dice) obj.get();
-                gameV.getDiceView().updateView(dice);
+                gameV.updateDiceView(obj);
 
-                // call gio method
                 break;
 
             case "NotDoubleDice":
@@ -117,16 +83,16 @@ public class GameObserverImpl implements GameObserver {
 
             case "Eliminate":
 
-                final String EliminatedName = (String) obj.get();
+                final String eliminatedName = (String) obj.get();
 
-                popUp.eliminatePlayer(EliminatedName);
+                popUp.eliminatePlayer(eliminatedName);
                 break;
 
             case "Win":
 
-                final String WinnerName = (String) obj.get();
+                final String winnerName = (String) obj.get();
 
-                popUp.winnerPlayer(WinnerName);
+                popUp.winnerPlayer(winnerName);
                 break;
 
             case "Save":
@@ -154,15 +120,6 @@ public class GameObserverImpl implements GameObserver {
         }
 
         return bool;
-    }
-
-    public void useObs(final Observer<Player> obs) {
-
-        gameV.getTableView().addObserver(obs);
-
-        obs.update();
-
-        gameV.getTableView().deleteObserver(obs);
     }
 
 }

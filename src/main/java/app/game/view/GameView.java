@@ -1,10 +1,23 @@
 package app.game.view;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.io.IOException;
-import java.awt.*;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
-import javax.swing.*;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import javax.swing.JFrame;
+
+import app.card.apii.Card;
+import app.card.apii.Observer;
 import app.card.view.TableView;
+import app.game.utils.Dice;
+import app.player.apii.Player;
 import app.player.view.PlayerPanelView;
 
 /**
@@ -12,18 +25,29 @@ import app.player.view.PlayerPanelView;
  */
 public final class GameView extends JFrame {
 
-    final private PlayerPanelView playerPanel;
-    final private ButtonPanelView btnPanel;
-    final private TableView tablePanel;
-    final private DiceView dicePanel;
+    private final PlayerPanelView playerPanel;
+    private final ButtonPanelView btnPanel;
+    private final TableView tablePanel;
+    private final DiceView dicePanel;
+
+    private final Map<Player, Integer> map;
 
     private static final int PROPORTION = 2;
+    private static final int TABLE_SIZE = 7;
+
+    /**
+     * 
+     * @param playerNames
+     * @throws IOException
+     */
 
     public GameView(final List<String> playerNames) throws IOException {
 
         final Dimension screen;
         final int screenWidth;
         final int screenHeight;
+
+        map = new HashMap<>();
 
         setLayout(new BorderLayout());
 
@@ -40,7 +64,6 @@ public final class GameView extends JFrame {
          */
 
         btnPanel = new ButtonPanelView(playerNames, new GameObserverImpl(this));
-        btnPanel.newTurn();
 
         this.add(btnPanel, BorderLayout.SOUTH);
 
@@ -48,7 +71,9 @@ public final class GameView extends JFrame {
          * TableView
          */
 
-        tablePanel = new TableView(btnPanel.getLogic().getTableList(), 7);
+        tablePanel = new TableView(btnPanel.getLogicCardList(), TABLE_SIZE);
+
+        btnPanel.newTurn();
 
         btnPanel.initializeView();
 
@@ -73,20 +98,79 @@ public final class GameView extends JFrame {
 
     }
 
-    public PlayerPanelView getPlayerPanelView() {
-        return this.playerPanel;
+    /**
+     * 
+     * @param obj
+     */
+
+    public void updateTableView(Optional<Object> obj) {
+
+        final Player currentPlayer = (Player) obj.get();
+
+        if (map.containsKey(currentPlayer)) {
+
+            final Observer<Player> removeObs = () -> tablePanel.removePlayer(currentPlayer.getColor(),
+                    map.get(currentPlayer));
+
+            useObs(removeObs);
+
+            map.remove(currentPlayer);
+        }
+
+        final Observer<Player> addObs = () -> tablePanel.redrawPlayer(currentPlayer.getColor(),
+                currentPlayer.getCurrentPosition());
+
+        useObs(addObs);
+
+        map.put(currentPlayer, currentPlayer.getCurrentPosition());
+
     }
 
-    public TableView getTableView() {
-        return this.tablePanel;
+    /**
+     * 
+     * @param obs
+     */
+
+    public void useObs(final Observer<Player> obs) {
+
+        tablePanel.addObserver(obs);
+
+        obs.update();
+
+        tablePanel.deleteObserver(obs);
     }
 
-    public ButtonPanelView getButtonView() {
-        return this.btnPanel;
+    /**
+     * 
+     * @param obj
+     */
+
+    public void updatePlayerPanelView(Optional<Object> obj) {
+
+        final Player player = (Player) obj.get();
+
+        final var card = tablePanel.getCardList()
+                .stream()
+                .sorted(Comparator.comparingInt(Card::getCardId))
+                .collect(Collectors.toList())
+                .get(player.getCurrentPosition());
+
+        playerPanel.setPlayer(player, card);
+
+        playerPanel.setCurrentBox(card);
+
     }
 
-    public DiceView getDiceView() {
-        return this.dicePanel;
+    /**
+     * 
+     * @param obj
+     */
+
+    public void updateDiceView(Optional<Object> obj) {
+
+        final Dice dice = (Dice) obj.get();
+        dicePanel.updateView(dice);
+
     }
 
 }
