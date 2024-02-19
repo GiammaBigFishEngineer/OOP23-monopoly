@@ -30,6 +30,8 @@ import java.util.ArrayList;
  */
 public final class MenuView extends JFrame {
 
+    private static final long serialVersionUID = 1L;
+
     private static final int PROPORTION = 2;
     private static final int TITLE_FONT = 100;
     private static final int SUBTITLE_FONT = 30;

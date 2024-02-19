@@ -34,7 +34,7 @@ public class ViewObservableImpl extends JPanel implements ViewObservable {
     @Override
     public boolean updateObserver(final Optional<Object> obj, final ObserverCodeEnum code) {
 
-        return (obs != null ? this.obs.update(obj, code) : false);
+        return obs != null && this.obs.update(obj, code);
     }
 
 }

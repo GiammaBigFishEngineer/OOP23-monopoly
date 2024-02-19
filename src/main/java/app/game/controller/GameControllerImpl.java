@@ -114,7 +114,8 @@ public final class GameControllerImpl implements GameController {
     }
 
     /**
-     * this method is called in newTurn and it is used to set the next player in the
+     * this method is called in newTurn and it is used to set the next player in
+     * the.
      * players list as the current player
      */
 
@@ -414,7 +415,7 @@ public final class GameControllerImpl implements GameController {
 
         final var map = currentPlayer.getMap();
 
-        for (var entry : map.entrySet()) {
+        for (final var entry : map.entrySet()) {
             if (entry.getValue().isPresent()) {
                 CardAdapter.buyableAdapter(entry.getKey()).clearOwner();
             }
@@ -443,7 +444,7 @@ public final class GameControllerImpl implements GameController {
     }
 
     /**
-     * this method is used when a player got defeated and is useful for calculating
+     * this method is used when a player got defeated and is useful for calculating.
      * the next current player
      */
 
@@ -665,7 +666,7 @@ public final class GameControllerImpl implements GameController {
     @Override
     public void quitGame() {
         final Window[] windows = Window.getWindows();
-        for (Window window : windows) {
+        for (final Window window : windows) {
             window.dispose();
         }
     }

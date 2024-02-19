@@ -13,8 +13,8 @@ import app.game.utils.ObserverCodeEnum;
 public interface ViewObserver {
 
     /**
-     * @param obj is an optional of a generic object
-     * @param str is a code that rapresent the action that this method will do
+     * @param obj  is an optional of a generic object
+     * @param code is a code that rapresent the action that this method will do
      * @return true if the action was successful, false otherwise
      */
 

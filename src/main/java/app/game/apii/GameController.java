@@ -14,7 +14,7 @@ import java.util.Map;
 
 public interface GameController {
     /**
-     * @param b is true if we want to start the turn after rolling the dice, false
+     * @param b is true if we want to start the turn after rolling the dice, false.
      *          otherwise
      */
     void rollDice(Boolean b);
@@ -46,20 +46,22 @@ public interface GameController {
     void pickUnforseen();
 
     /**
-     * this method is used at the end of every turn and at the start of the game, in
+     * this method is used at the end of every turn and at the start of the game,
+     * in.
      * fact it serve to move on to the next player in the players list
      */
     void newTurn();
 
     /**
-     * this method is used to calculate the new player position and the card he has
+     * this method is used to calculate the new player position and the card he has.
      * landed on.
      * If the player passes over the GO card, he earns an amount of money
      */
     void startTurn();
 
     /**
-     * this method is used to handle the buttons that will be activated based on the
+     * this method is used to handle the buttons that will be activated based on.
+     * the.
      * type of the card the current player landed on
      */
     void handleCard();
@@ -76,14 +78,14 @@ public interface GameController {
     void hasPayedBail();
 
     /**
-     * this method is called when the current player is in jail and he refuses to
+     * this method is called when the current player is in jail and he refuses to.
      * pay the bail, in fact he can try his luck and in case two dice returnthha
      * same value he can get out of jail
      */
     void tryLuckyBail();
 
     /**
-     * @return a map where the key is a code that identifies a button and
+     * @return a map where the key is a code that identifies a button and.
      *         value can be true if the button it corrisponds to is enabled, false
      *         otherwhise
      */
@@ -116,7 +118,7 @@ public interface GameController {
     void defeatPlayer();
 
     /**
-     * this method is used to create the players list starting from the list of
+     * this method is used to create the players list starting from the list of.
      * their names
      */
     void initializePlayer();
@@ -142,7 +144,7 @@ public interface GameController {
     List<Card> getTableList();
 
     /**
-     * @return a defensive copy of the sorted list, which is the same of table list
+     * @return a defensive copy of the sorted list, which is the same of table list.
      *         but sortet by card id
      */
     List<Card> getCardList();
@@ -168,7 +170,7 @@ public interface GameController {
     boolean isCurrentPlayerDefeated();
 
     /**
-     * @return true if the current player has landed on an unforseen, false
+     * @return true if the current player has landed on an unforseen, false.
      *         otherwise
      */
     boolean isCurrentPlayerOnUnforseen();
@@ -179,24 +181,24 @@ public interface GameController {
     String getUnforseenMessage();
 
     /**
-     * @return true if the current player has landed on an owned propriety, false
+     * @return true if the current player has landed on an owned propriety, false.
      *         otherwise
      */
     boolean isCurrentPlayerOnOwnedPropriety();
 
     /**
-     * @return the name of the owner of the propriety on which the current player
+     * @return the name of the owner of the propriety on which the current player.
      *         landed
      */
     String getOwner();
 
     /**
-     * this method is used to save the game
+     * this method is used to save the game.
      */
     void saveGame();
 
     /*
-     * this method is used to quit the game
+     * this method is used to quit the game.
      */
     void quitGame();
 
