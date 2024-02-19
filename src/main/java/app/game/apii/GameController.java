@@ -1,8 +1,8 @@
 package app.game.apii;
 
 import app.card.apii.Card;
+import app.game.utils.BtnCodeEnum;
 import app.game.utils.Dice;
-import app.game.view.BtnCodeEnum;
 import app.player.apii.Player;
 
 import java.util.List;

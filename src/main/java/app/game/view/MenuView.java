@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 /**
- * 
+ * This class represent the view of the game menu
  */
 public final class MenuView extends JFrame {
 
@@ -40,7 +40,7 @@ public final class MenuView extends JFrame {
     private final transient SaveController saveLogic;
 
     /**
-     * 
+     * Constructor.
      */
     public MenuView() {
         super("GameMenu");
@@ -63,9 +63,8 @@ public final class MenuView extends JFrame {
         saveLogic = new SaveControllerImpl();
 
         /*
-         * Creating a panel with all the buttons
+         * Button Panel, it will contains all the buttons
          */
-
         buttonPanel = new JPanel(new GridLayout(3, 1));
         buttonPanel.setBackground(Color.white);
 
@@ -109,7 +108,7 @@ public final class MenuView extends JFrame {
                         new GameView(playerNames);
                         dispose();
                     } catch (IOException e1) {
-                        // TODO Auto-generated catch block
+
                         e1.printStackTrace();
                     }
 
@@ -124,7 +123,7 @@ public final class MenuView extends JFrame {
         buttonPanel.add(startButton);
 
         /*
-         * Options button
+         * Option Button
          */
 
         optionButton = new JButton("Saved Games");
@@ -137,7 +136,7 @@ public final class MenuView extends JFrame {
         buttonPanel.add(optionButton);
 
         /*
-         * Quit button
+         * Quit Button
          */
 
         quitButton = new JButton("Quit");
@@ -150,7 +149,7 @@ public final class MenuView extends JFrame {
         buttonPanel.add(quitButton);
 
         /*
-         * adding every component to the frame
+         * Menu Layout
          */
 
         setLayout(new GridBagLayout());
@@ -171,7 +170,7 @@ public final class MenuView extends JFrame {
 
         this.add(titleLabel, gbc);
 
-        subtitleLabel = new JLabel("<html> 'Rimini Edition' <html>");
+        subtitleLabel = new JLabel("<html> 'Edizione Rimini' <html>");
         subtitleLabel.setFont(new Font("", Font.BOLD, SUBTITLE_FONT));
         subtitleLabel.setForeground(Color.red);
 
@@ -181,7 +180,7 @@ public final class MenuView extends JFrame {
         this.add(subtitleLabel, gbc);
 
         /*
-         * Setting the dimension of the frame
+         * Setting the Menu dimension
          */
 
         screen = Toolkit.getDefaultToolkit().getScreenSize();

@@ -71,11 +71,11 @@ public final class PlayerImpl implements Player {
                 break;
 
             case 4:
-                color = "#E52B50";
+                color = "#666666";
                 break;
 
             default:
-                color = "#E52B50";
+                color = "#999999";
                 break;
         }
     }

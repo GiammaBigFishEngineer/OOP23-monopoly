@@ -16,12 +16,11 @@ import app.card.impl.CardFactoryImpl;
 import app.card.impl.Unforseen;
 import app.game.apii.GameController;
 import app.game.apii.SaveController;
+import app.game.utils.BtnCodeEnum;
 import app.game.utils.Dice;
 
 import app.player.apii.Player;
 import app.player.impl.PlayerImpl;
-
-import app.game.view.BtnCodeEnum;
 
 import java.awt.Window;
 
@@ -412,6 +411,14 @@ public final class GameControllerImpl implements GameController {
 
         defeated.add(currentPlayer);
         players.remove(currentPlayer);
+
+        final var map = currentPlayer.getMap();
+
+        for (var entry : map.entrySet()) {
+            if (entry.getValue().isPresent()) {
+                CardAdapter.buyableAdapter(entry.getKey()).clearOwner();
+            }
+        }
 
         newIndex();
 

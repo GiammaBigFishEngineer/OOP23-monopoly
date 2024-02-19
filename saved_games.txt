@@ -3,3 +3,15 @@ Player: Poz, Id: 1, Posizione: 6, Denaro: 580
 Player: cxvxcvxcv, Id: 3, Posizione: 8, Denaro: 770
 
 
+*** Partita del: 19-02-2024  15:43:03 ***
+Player: bao, Id: 1, Posizione: 20, Denaro: 160
+Player: miao, Id: 2, Posizione: 21, Denaro: 290
+Player: shish, Id: 3, Posizione: 19, Denaro: 350
+
+
+*** Partita del: 19-02-2024  17:04:49 ***
+Player: poz, Id: 1, Posizione: 0, Denaro: 500
+Player: alle, Id: 2, Posizione: 0, Denaro: 500
+Player: lisa, Id: 3, Posizione: 0, Denaro: 500
+
+

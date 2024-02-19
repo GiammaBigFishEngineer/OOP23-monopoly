@@ -123,6 +123,12 @@ public final class CardFactoryImpl implements CardFactory {
                 return housePrice;
             }
 
+            @Override
+            public void clearOwner() {
+                // TODO Auto-generated method stub
+                throw new UnsupportedOperationException("Unimplemented method 'clearOwner'");
+            }
+
         };
     }
 

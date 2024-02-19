@@ -10,7 +10,7 @@ import app.card.apii.Card;
 import app.card.apii.CardAdapter;
 import app.game.apii.GameController;
 import app.game.controller.GameControllerImpl;
-import app.game.view.BtnCodeEnum;
+import app.game.utils.BtnCodeEnum;
 import app.player.apii.Player;
 
 import java.io.IOException;

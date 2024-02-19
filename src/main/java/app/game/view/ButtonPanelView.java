@@ -5,7 +5,9 @@ import javax.swing.JButton;
 import app.card.apii.Card;
 import app.game.apii.GameController;
 import app.game.controller.GameControllerImpl;
+import app.game.utils.BtnCodeEnum;
 import app.game.utils.Dice;
+import app.game.utils.ObserverCodeEnum;
 import app.player.apii.Player;
 
 import java.awt.Color;
@@ -17,9 +19,9 @@ import java.util.HashMap;
 import java.util.Optional;
 
 /**
- * ButtonsView.
+ * This class represent the buttons panel view.
  */
-public final class ButtonPanelView extends GameObservableImpl {
+public final class ButtonPanelView extends ViewObservableImpl {
 
     private static final long serialVersionUID = 1L;
 
@@ -29,13 +31,14 @@ public final class ButtonPanelView extends GameObservableImpl {
     private final Map<BtnCodeEnum, JButton> btnList = new HashMap<>();
 
     /**
+     * Constructor
      * 
      * @param playersNames
      * @param obs
      * @throws IOException
      */
 
-    public ButtonPanelView(final List<String> playersNames, final GameObserverImpl obs) throws IOException {
+    public ButtonPanelView(final List<String> playersNames, final ViewObserverImpl obs) throws IOException {
 
         final JButton rollDice;
         final JButton buyPropriety;
@@ -53,7 +56,12 @@ public final class ButtonPanelView extends GameObservableImpl {
         this.setBackground(Color.lightGray);
 
         /*
-         * RollDice button
+         * In each action listeners the corresponding method is called and the views are
+         * updated accordingly
+         */
+
+        /*
+         * rollDice button
          */
 
         rollDice = new JButton("Lancia i Dadi!");
@@ -66,7 +74,7 @@ public final class ButtonPanelView extends GameObservableImpl {
 
             final Dice dice = gameLogic.getDice();
 
-            updateObserver(Optional.of(dice), "RollDice");
+            updateObserver(Optional.of(dice), ObserverCodeEnum.ROLL_DICE);
 
             refreshPanelView();
             refreshPositionView();
@@ -86,7 +94,7 @@ public final class ButtonPanelView extends GameObservableImpl {
         buyPropriety.addActionListener(e -> {
 
             if (!gameLogic.buyPropriety()) {
-                updateObserver(Optional.empty(), "NoBuy");
+                updateObserver(Optional.empty(), ObserverCodeEnum.NO_BUY);
             }
 
             refreshPanelView();
@@ -96,7 +104,7 @@ public final class ButtonPanelView extends GameObservableImpl {
         });
 
         /*
-         * SellPropriety button
+         * sellPropriety button
          */
 
         sellPropriety = new JButton("Vendi Proprieta'");
@@ -114,7 +122,7 @@ public final class ButtonPanelView extends GameObservableImpl {
         });
 
         /*
-         * SaveGame button
+         * saveGame button
          */
 
         saveGame = new JButton("Salva Gioco");
@@ -124,14 +132,14 @@ public final class ButtonPanelView extends GameObservableImpl {
 
             gameLogic.saveGame();
 
-            updateObserver(Optional.empty(), "Save");
+            updateObserver(Optional.empty(), ObserverCodeEnum.SAVE);
 
             saveGame.setEnabled(false);
 
         });
 
         /*
-         * EndTurn button
+         * endTurn button
          */
 
         endTurn = new JButton("Fine Turno");
@@ -145,7 +153,7 @@ public final class ButtonPanelView extends GameObservableImpl {
         });
 
         /*
-         * Unforseen
+         * pickUnforseen button
          */
 
         pickUnforseen = new JButton("Pesca Imprevisto");
@@ -155,7 +163,7 @@ public final class ButtonPanelView extends GameObservableImpl {
         pickUnforseen.addActionListener(e -> {
 
             gameLogic.pickUnforseen();
-            updateObserver(Optional.of(gameLogic.getUnforseenMessage()), "UnbuyableAction");
+            updateObserver(Optional.of(gameLogic.getUnforseenMessage()), ObserverCodeEnum.UNBUYABLE_ACTION);
 
             refreshPanelView();
             refreshPositionView();
@@ -165,7 +173,7 @@ public final class ButtonPanelView extends GameObservableImpl {
         });
 
         /*
-         * BuyHouse button
+         * buyHouse button
          */
 
         buyHouse = new JButton("Costruisci Casa");
@@ -175,7 +183,7 @@ public final class ButtonPanelView extends GameObservableImpl {
         buyHouse.addActionListener(e -> {
 
             if (!gameLogic.buildHouse()) {
-                updateObserver(Optional.empty(), "NoBuild");
+                updateObserver(Optional.empty(), ObserverCodeEnum.NO_BUILD);
             }
 
             refreshPanelView();
@@ -184,11 +192,15 @@ public final class ButtonPanelView extends GameObservableImpl {
 
         });
 
+        /*
+         * quitGame button
+         */
+
         quitGame = new JButton("Esci Dal Gioco");
         this.add(quitGame);
 
         quitGame.addActionListener(e -> {
-            if (updateObserver(Optional.empty(), "Quit")) {
+            if (updateObserver(Optional.empty(), ObserverCodeEnum.QUIT)) {
                 gameLogic.quitGame();
 
             }
@@ -197,7 +209,8 @@ public final class ButtonPanelView extends GameObservableImpl {
     }
 
     /**
-     * 
+     * This method is called to start the game and at the end of every turn
+     * to move on to the next turn
      */
 
     public void newTurn() {
@@ -207,7 +220,9 @@ public final class ButtonPanelView extends GameObservableImpl {
     }
 
     /**
-     * 
+     * This methods is used to update the view at the start of every turn.
+     * It cheks whether the player ended up in jail he previous turn and if so,
+     * displays the relevant pop-ups
      */
 
     public void updateStartTurnView() {
@@ -216,7 +231,7 @@ public final class ButtonPanelView extends GameObservableImpl {
 
             final Player currentPlayer = gameLogic.getCurrentPlayer();
 
-            if (updateObserver(Optional.of(currentPlayer), "bail")) {
+            if (updateObserver(Optional.of(currentPlayer), ObserverCodeEnum.BAIL)) {
 
                 gameLogic.enableSingleButton(BtnCodeEnum.ROLL_DICE);
                 gameLogic.hasPayedBail();
@@ -226,9 +241,9 @@ public final class ButtonPanelView extends GameObservableImpl {
                 gameLogic.tryLuckyBail();
 
                 if (gameLogic.isCurrentPlayerInJail()) {
-                    updateObserver(Optional.empty(), "NotDoubleDice");
+                    updateObserver(Optional.empty(), ObserverCodeEnum.NOT_DOUBLE_DICE);
                 } else {
-                    updateObserver(Optional.empty(), "DoubleDice");
+                    updateObserver(Optional.empty(), ObserverCodeEnum.DOUBLE_DICE);
 
                 }
             }
@@ -242,28 +257,30 @@ public final class ButtonPanelView extends GameObservableImpl {
     }
 
     /**
-     * 
+     * This methods is used to update the view after the player lands on a square.
+     * It checks if the player has landed on an unforseen or on a propriety already
+     * owned and displays the relevant pop-ups
      */
 
     public void updateMidTurnView() {
 
         if (gameLogic.isCurrentPlayerOnUnforseen()) {
-            updateObserver(Optional.of(gameLogic.getUnforseenMessage()), "UnbuyableAction");
+            updateObserver(Optional.of(gameLogic.getUnforseenMessage()), ObserverCodeEnum.UNBUYABLE_ACTION);
         }
 
         if (gameLogic.isCurrentPlayerOnOwnedPropriety()) {
-            updateObserver(Optional.of(gameLogic.getOwner()), "Fees");
+            updateObserver(Optional.of(gameLogic.getOwner()), ObserverCodeEnum.FEES);
         }
 
         if (gameLogic.isCurrentPlayerDefeated()) {
 
             final String currentPlayerName = gameLogic.getCurrentPlayer().getName();
 
-            updateObserver(Optional.of(currentPlayerName), "Eliminate");
+            updateObserver(Optional.of(currentPlayerName), ObserverCodeEnum.ELIMINATE);
 
             if (gameLogic.isOver()) {
 
-                updateObserver(Optional.of(currentPlayerName), "Win");
+                updateObserver(Optional.of(currentPlayerName), ObserverCodeEnum.WIN);
 
                 gameLogic.quitGame();
 
@@ -282,7 +299,8 @@ public final class ButtonPanelView extends GameObservableImpl {
     }
 
     /**
-     * 
+     * This method is used to update the state of the buttons based on how their
+     * corresponding codes in the logic have been updated
      */
 
     public void changeButtonVisibility() {
@@ -300,7 +318,9 @@ public final class ButtonPanelView extends GameObservableImpl {
     }
 
     /**
-     * 
+     * This method is called at the start of the game to initialize the players
+     * position on the start box and to refresh te player panel with the first
+     * player
      */
 
     public void initializeView() {
@@ -314,21 +334,23 @@ public final class ButtonPanelView extends GameObservableImpl {
     }
 
     /**
-     * 
+     * This method is used to refresh the player panel when the player data has been
+     * modified
      */
 
     public void refreshPanelView() {
         final Player currentPlayer = gameLogic.getCurrentPlayer();
-        updateObserver(Optional.of(currentPlayer), "refreshPlayerPanel");
+        updateObserver(Optional.of(currentPlayer), ObserverCodeEnum.REFRESH_PLAYER_PANEL);
     }
 
     /**
-     * 
+     * This method is used to refresh the table panel when the player position has
+     * been changed
      */
 
     public void refreshPositionView() {
         final Player currentPlayer = gameLogic.getCurrentPlayer();
-        updateObserver(Optional.of(currentPlayer), "refreshPlayerPosition");
+        updateObserver(Optional.of(currentPlayer), ObserverCodeEnum.REFRESH_PLAYER_POSITION);
     }
 
     /**

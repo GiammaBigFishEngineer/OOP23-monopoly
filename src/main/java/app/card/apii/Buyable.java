@@ -7,13 +7,13 @@ import app.player.apii.Player;
  */
 public interface Buyable extends Card {
     /**
-     * @param 
+     * @param
      * @return price for buy one house
      */
     int getPrice();
 
     /**
-     * @param 
+     * @param
      * @return if is owned
      */
     boolean isOwned();
@@ -25,20 +25,21 @@ public interface Buyable extends Card {
     boolean isOwnedByPlayer(Player player);
 
     /**
-     * @param 
+     * @param
      * @return player who has got the property
      */
     Player getOwner();
 
     /**
-     * @param 
+     * @param
      * @return price to pay to the owner
      */
     int getTransitFees();
-
 
     /**
      * @param player who buy property
      */
     void setOwner(Player player);
+
+    void clearOwner();
 }

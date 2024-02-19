@@ -22,7 +22,7 @@ import app.player.apii.Player;
 import app.player.view.PlayerPanelView;
 
 /**
- * Gameview.
+ * this class represent the game view.
  */
 public final class GameView extends JFrame {
 
@@ -33,12 +33,13 @@ public final class GameView extends JFrame {
     private final TableView tablePanel;
     private final DiceView dicePanel;
 
-    private final Map<String, Integer> map;
+    private final Map<String, Integer> playerMapView;
 
     private static final int PROPORTION = 2;
     private static final int TABLE_SIZE = 7;
 
     /**
+     * Constructor
      * 
      * @param playerNames
      * @throws IOException
@@ -52,12 +53,12 @@ public final class GameView extends JFrame {
 
         final ButtonPanelView btnPanel;
 
-        map = new HashMap<>();
+        playerMapView = new HashMap<>();
 
         setLayout(new BorderLayout());
 
         /*
-         * PlayerPanelView
+         * PlayerPanel
          */
 
         playerPanel = new PlayerPanelView(null, null);
@@ -68,7 +69,7 @@ public final class GameView extends JFrame {
          * ButtonPanelView
          */
 
-        btnPanel = new ButtonPanelView(playerNames, new GameObserverImpl(this));
+        btnPanel = new ButtonPanelView(playerNames, new ViewObserverImpl(this));
 
         this.add(btnPanel, BorderLayout.SOUTH);
 
@@ -78,20 +79,26 @@ public final class GameView extends JFrame {
 
         tablePanel = new TableView(btnPanel.getLogicCardList(), TABLE_SIZE);
 
+        this.add(tablePanel, BorderLayout.CENTER);
+
+        /*
+         * these methods are called to start the game and the view
+         */
+
         btnPanel.newTurn();
 
         btnPanel.initializeView();
 
-        this.add(tablePanel, BorderLayout.CENTER);
+        /*
+         * DiceView
+         */
 
         dicePanel = new DiceView();
         this.add(dicePanel, BorderLayout.EAST);
 
         /*
-         * PlayerPanelView
+         * Setting frame size
          */
-
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         screen = Toolkit.getDefaultToolkit().getScreenSize();
         screenHeight = (int) screen.getHeight();
@@ -99,13 +106,18 @@ public final class GameView extends JFrame {
 
         this.setSize(screen);
         this.setMinimumSize(new Dimension(screenWidth / PROPORTION, screenHeight / PROPORTION));
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setVisible(true);
 
     }
 
     /**
+     * This method is used to update player position in tablePanel.
+     * The map playerMapView is used to check if a player is already present on the
+     * table and if this is the case, before adding a new position the previous one
+     * is removed
      * 
-     * @param obj
+     * @param obj is the player
      */
 
     public void updateTableView(final Optional<Object> obj) {
@@ -113,14 +125,14 @@ public final class GameView extends JFrame {
         final Player currentPlayer = (Player) obj.get();
         final String name = currentPlayer.getName();
 
-        if (map.containsKey(name)) {
+        if (playerMapView.containsKey(name)) {
 
             final Observer<Player> removeObs = () -> tablePanel.removePlayer(currentPlayer.getColor(),
-                    map.get(name));
+                    playerMapView.get(name));
 
             useObs(removeObs);
 
-            map.remove(name);
+            playerMapView.remove(name);
         }
 
         final Observer<Player> addObs = () -> tablePanel.redrawPlayer(currentPlayer.getColor(),
@@ -128,11 +140,13 @@ public final class GameView extends JFrame {
 
         useObs(addObs);
 
-        map.put(name, currentPlayer.getCurrentPosition());
+        playerMapView.put(name, currentPlayer.getCurrentPosition());
 
     }
 
     /**
+     * This method is used to add the observer to tableView, update it, and then
+     * remove it
      * 
      * @param obs
      */
@@ -147,8 +161,9 @@ public final class GameView extends JFrame {
     }
 
     /**
+     * This method is used to update player stats in playerPanel
      * 
-     * @param obj
+     * @param obj is the player
      */
 
     public void updatePlayerPanelView(final Optional<Object> obj) {
@@ -168,8 +183,9 @@ public final class GameView extends JFrame {
     }
 
     /**
+     * This method is used to update the dice values dicePanel
      * 
-     * @param obj
+     * @param obj is the dice
      */
 
     public void updateDiceView(final Optional<Object> obj) {
