@@ -183,9 +183,11 @@ public final class CardFactoryImpl implements CardFactory {
                     }
                     if ("Vai in Prigione".equals(card.getName())) {
                         player.setInJail(true);
+                        player.setPosition(amount);
+                        return TriggeredEvent.PERFORMED.update(player.getName() + " va in prigione");
                     }
                     player.setPosition(amount);
-                    return TriggeredEvent.PERFORMED.update(player + " si sposta");
+                    return TriggeredEvent.PERFORMED.update(player.getName() + " si sposta");
                 };
             }
             case "unforseen" -> {

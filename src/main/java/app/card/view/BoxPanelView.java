@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import java.awt.Graphics2D;
+import java.awt.Graphics;
 /**
  * Class who rappreset a Box in table.
  * Use the concept every player has a unique color.
@@ -24,7 +26,6 @@ public class BoxPanelView extends JPanel {
     private JPanel players;
     private List<String> playerList;
     private static final int FONTSIZE = 15;
-    private static final String PLAYER_SYMBOL = "◉";
     private static final long serialVersionUID = 1L;
 
     /**
@@ -59,9 +60,8 @@ public class BoxPanelView extends JPanel {
      * @param color
      */
     public void drawCircle(final String color) {
-        final var player = new JLabel(PLAYER_SYMBOL);
-        player.setForeground(Color.decode(color));
-        this.players.add(player);
+        final var circle = new CirclePanel(color);
+        this.players.add(circle);
         this.playerList.add(color);
     }
 
@@ -71,7 +71,7 @@ public class BoxPanelView extends JPanel {
      */
     public void removeCircle(final String color) {
         for (final Component component : this.players.getComponents()) {
-            if (((JLabel) component).getForeground().equals(Color.decode(color))) {
+            if (((CirclePanel) component).getColor().equals(color)) {
                 this.players.remove(component);
             }
         }
@@ -114,6 +114,34 @@ public class BoxPanelView extends JPanel {
     @Override
     public String toString() {
         return this.name.getText() + " " + this.getPlayerList() + " " + this.getIndex();
+    }
+
+    private static final class CirclePanel extends JPanel {
+
+        private final String color;
+        private static final long serialVersionUID = 10L;
+
+        private CirclePanel(final String color) {
+            this.color = color;
+        }
+
+        private String getColor() {
+            return this.color;
+        }
+
+        @Override
+        protected void paintComponent(final Graphics g) {
+            super.paintComponent(g);
+            final Graphics2D g2d = (Graphics2D) g;
+
+            final int diameter = Math.min(getWidth(), getHeight());
+            final int x = (getWidth() - diameter) / 2;
+            final int y = (getHeight() - diameter) / 2;
+
+            g2d.setColor(Color.decode(this.color));
+            g2d.fillOval(x, y, diameter, diameter);
+        }
+
     }
 
 }

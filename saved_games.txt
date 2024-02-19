@@ -232,3 +232,185 @@ Player: Player0, Id: 1, Posizione: 22, Denaro: 0
 Player: Player1, Id: 2, Posizione: 0, Denaro: 0
 
 
+*** Partita del: 18-02-2024  23:37:20 ***
+Player: Player0, Id: 1, Posizione: 0, Denaro: 0
+Player: Player1, Id: 2, Posizione: 0, Denaro: 0
+
+
+*** Partita del: 18-02-2024  23:37:20 ***
+Player: Player0, Id: 1, Posizione: 0, Denaro: 0
+Player: Player1, Id: 2, Posizione: 0, Denaro: 0
+Player: Player2, Id: 3, Posizione: 0, Denaro: 0
+
+
+*** Partita del: 18-02-2024  23:37:20 ***
+Player: Player0, Id: 1, Posizione: 0, Denaro: 0
+Player: Player1, Id: 2, Posizione: 0, Denaro: 0
+
+
+*** Partita del: 18-02-2024  23:37:20 ***
+Player: Player0, Id: 1, Posizione: 22, Denaro: 0
+Player: Player1, Id: 2, Posizione: 0, Denaro: 0
+
+
+*** Partita del: 18-02-2024  23:37:20 ***
+Player: Player0, Id: 1, Posizione: 22, Denaro: 0
+Player: Player1, Id: 2, Posizione: 0, Denaro: 0
+
+
+*** Partita del: 19-02-2024  22:27:47 ***
+Player: Player0, Id: 1, Posizione: 0, Denaro: 0
+Player: Player1, Id: 2, Posizione: 0, Denaro: 0
+
+
+*** Partita del: 19-02-2024  22:27:47 ***
+Player: Player0, Id: 1, Posizione: 0, Denaro: 0
+Player: Player1, Id: 2, Posizione: 0, Denaro: 0
+Player: Player2, Id: 3, Posizione: 0, Denaro: 0
+
+
+*** Partita del: 19-02-2024  22:27:47 ***
+Player: Player0, Id: 1, Posizione: 0, Denaro: 0
+Player: Player1, Id: 2, Posizione: 0, Denaro: 0
+
+
+*** Partita del: 19-02-2024  22:27:47 ***
+Player: Player0, Id: 1, Posizione: 22, Denaro: 0
+Player: Player1, Id: 2, Posizione: 0, Denaro: 0
+
+
+*** Partita del: 19-02-2024  22:27:47 ***
+Player: Player0, Id: 1, Posizione: 22, Denaro: 0
+Player: Player1, Id: 2, Posizione: 0, Denaro: 0
+
+
+*** Partita del: 19-02-2024  22:29:36 ***
+Player: Player0, Id: 1, Posizione: 0, Denaro: 0
+Player: Player1, Id: 2, Posizione: 0, Denaro: 0
+
+
+*** Partita del: 19-02-2024  22:29:36 ***
+Player: Player0, Id: 1, Posizione: 0, Denaro: 0
+Player: Player1, Id: 2, Posizione: 0, Denaro: 0
+Player: Player2, Id: 3, Posizione: 0, Denaro: 0
+
+
+*** Partita del: 19-02-2024  22:29:36 ***
+Player: Player0, Id: 1, Posizione: 0, Denaro: 0
+Player: Player1, Id: 2, Posizione: 0, Denaro: 0
+
+
+*** Partita del: 19-02-2024  22:29:36 ***
+Player: Player0, Id: 1, Posizione: 22, Denaro: 0
+Player: Player1, Id: 2, Posizione: 0, Denaro: 0
+
+
+*** Partita del: 19-02-2024  22:29:36 ***
+Player: Player0, Id: 1, Posizione: 22, Denaro: 0
+Player: Player1, Id: 2, Posizione: 0, Denaro: 0
+
+
+*** Partita del: 19-02-2024  22:30:12 ***
+Player: Player0, Id: 1, Posizione: 0, Denaro: 0
+Player: Player1, Id: 2, Posizione: 0, Denaro: 0
+
+
+*** Partita del: 19-02-2024  22:30:12 ***
+Player: Player0, Id: 1, Posizione: 0, Denaro: 0
+Player: Player1, Id: 2, Posizione: 0, Denaro: 0
+Player: Player2, Id: 3, Posizione: 0, Denaro: 0
+
+
+*** Partita del: 19-02-2024  22:30:12 ***
+Player: Player0, Id: 1, Posizione: 0, Denaro: 0
+Player: Player1, Id: 2, Posizione: 0, Denaro: 0
+
+
+*** Partita del: 19-02-2024  22:30:12 ***
+Player: Player0, Id: 1, Posizione: 22, Denaro: 0
+Player: Player1, Id: 2, Posizione: 0, Denaro: 0
+
+
+*** Partita del: 19-02-2024  22:30:12 ***
+Player: Player0, Id: 1, Posizione: 22, Denaro: 0
+Player: Player1, Id: 2, Posizione: 0, Denaro: 0
+
+
+*** Partita del: 19-02-2024  22:31:52 ***
+Player: Player0, Id: 1, Posizione: 0, Denaro: 0
+Player: Player1, Id: 2, Posizione: 0, Denaro: 0
+
+
+*** Partita del: 19-02-2024  22:31:52 ***
+Player: Player0, Id: 1, Posizione: 0, Denaro: 0
+Player: Player1, Id: 2, Posizione: 0, Denaro: 0
+Player: Player2, Id: 3, Posizione: 0, Denaro: 0
+
+
+*** Partita del: 19-02-2024  22:31:52 ***
+Player: Player0, Id: 1, Posizione: 0, Denaro: 0
+Player: Player1, Id: 2, Posizione: 0, Denaro: 0
+
+
+*** Partita del: 19-02-2024  22:31:52 ***
+Player: Player0, Id: 1, Posizione: 22, Denaro: 0
+Player: Player1, Id: 2, Posizione: 0, Denaro: 0
+
+
+*** Partita del: 19-02-2024  22:31:52 ***
+Player: Player0, Id: 1, Posizione: 22, Denaro: 0
+Player: Player1, Id: 2, Posizione: 0, Denaro: 0
+
+
+*** Partita del: 19-02-2024  22:32:51 ***
+Player: Player0, Id: 1, Posizione: 0, Denaro: 0
+Player: Player1, Id: 2, Posizione: 0, Denaro: 0
+
+
+*** Partita del: 19-02-2024  22:32:51 ***
+Player: Player0, Id: 1, Posizione: 0, Denaro: 0
+Player: Player1, Id: 2, Posizione: 0, Denaro: 0
+Player: Player2, Id: 3, Posizione: 0, Denaro: 0
+
+
+*** Partita del: 19-02-2024  22:32:51 ***
+Player: Player0, Id: 1, Posizione: 0, Denaro: 0
+Player: Player1, Id: 2, Posizione: 0, Denaro: 0
+
+
+*** Partita del: 19-02-2024  22:32:51 ***
+Player: Player0, Id: 1, Posizione: 22, Denaro: 0
+Player: Player1, Id: 2, Posizione: 0, Denaro: 0
+
+
+*** Partita del: 19-02-2024  22:32:51 ***
+Player: Player0, Id: 1, Posizione: 22, Denaro: 0
+Player: Player1, Id: 2, Posizione: 0, Denaro: 0
+
+
+*** Partita del: 19-02-2024  22:33:14 ***
+Player: Player0, Id: 1, Posizione: 0, Denaro: 0
+Player: Player1, Id: 2, Posizione: 0, Denaro: 0
+
+
+*** Partita del: 19-02-2024  22:33:14 ***
+Player: Player0, Id: 1, Posizione: 0, Denaro: 0
+Player: Player1, Id: 2, Posizione: 0, Denaro: 0
+Player: Player2, Id: 3, Posizione: 0, Denaro: 0
+
+
+*** Partita del: 19-02-2024  22:33:14 ***
+Player: Player0, Id: 1, Posizione: 0, Denaro: 0
+Player: Player1, Id: 2, Posizione: 0, Denaro: 0
+
+
+*** Partita del: 19-02-2024  22:33:14 ***
+Player: Player0, Id: 1, Posizione: 22, Denaro: 0
+Player: Player1, Id: 2, Posizione: 0, Denaro: 0
+
+
+*** Partita del: 19-02-2024  22:33:14 ***
+Player: Player0, Id: 1, Posizione: 22, Denaro: 0
+Player: Player1, Id: 2, Posizione: 0, Denaro: 0
+
+
