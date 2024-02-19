@@ -74,6 +74,7 @@ public final class GameControllerImpl implements GameController {
     public GameControllerImpl(final List<String> names) throws IOException {
 
         this.tableList = new CardFactoryImpl().cardsInitializer();
+
         this.cardsList = tableList.stream()
                 .sorted(Comparator.comparingInt(Card::getCardId))
                 .collect(Collectors.toList());

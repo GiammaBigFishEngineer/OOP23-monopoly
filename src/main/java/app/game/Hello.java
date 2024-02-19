@@ -5,7 +5,14 @@ import app.game.view.MenuView;
 /**
  * MonopolyGame Rimini-Edition.
  */
-public class Hello {
+public final class Hello {
+    /**
+     * Constructor.
+     */
+    private Hello() {
+        throw new IllegalStateException("Main Class");
+    }
+
     /**
      * 
      * @param args

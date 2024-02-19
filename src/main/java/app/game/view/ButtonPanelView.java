@@ -313,7 +313,7 @@ public final class ButtonPanelView extends ViewObservableImpl {
             final var code = entry.getKey();
             final BtnCodeState state = entry.getValue();
 
-            btnList.get(code).setEnabled(state.getValue());
+            btnList.get(code).setEnabled(state.isActivated());
 
         }
     }

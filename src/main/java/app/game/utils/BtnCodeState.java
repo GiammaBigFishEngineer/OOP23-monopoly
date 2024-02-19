@@ -1,25 +1,29 @@
 package app.game.utils;
 
 /**
- * This enum specifies wheether a code button is enabled or disabled
+ * This enum specifies wheether a code button is enabled or disabled.
  */
 public enum BtnCodeState {
     /**
-     * Code button is enabled
+     * Code button is enabled.
      */
     ENABLED(true),
     /**
-     * Code button is disabled
+     * Code button is disabled.
      */
     DISABLED(false);
 
-    private boolean value;
+    private final boolean activated;
 
-    BtnCodeState(boolean value) {
-        this.value = value;
+    BtnCodeState(final boolean value) {
+        this.activated = value;
     }
 
-    public boolean getValue() {
-        return this.value;
+    /**
+     * @return state value.
+     */
+
+    public boolean isActivated() {
+        return this.activated;
     }
 }
