@@ -1,65 +1,65 @@
 package app.game.utils;
 
 /**
- * This enum contains all the codes that are used to identify a specific action
+ * This enum contains all the codes that are used to identify a specific action.
  * that the update method of the view observer will perform
  */
 public enum ObserverCodeEnum {
 
     /**
-     * Roll Dice code
+     * Roll Dice code.
      */
     ROLL_DICE,
     /**
-     * No Buy code
+     * No Buy code.
      */
     NO_BUY,
     /**
-     * Save code
+     * Save code.
      */
     SAVE,
     /**
-     * Unbuyable Action code
+     * Unbuyable Action code.
      */
     UNBUYABLE_ACTION,
     /**
-     * No Build code
+     * No Build code.
      */
     NO_BUILD,
     /**
-     * Quit code
+     * Quit code.
      */
     QUIT,
     /**
-     * Bail code
+     * Bail code.
      */
     BAIL,
     /**
-     * Not Double Dice code
+     * Not Double Dice code.
      */
     NOT_DOUBLE_DICE,
     /**
-     * Double Dice code
+     * Double Dice code.
      */
     DOUBLE_DICE,
     /**
-     * Fees code
+     * Fees code.
      */
     FEES,
     /**
-     * Eliminate code
+     * Eliminate code.
      */
     ELIMINATE,
     /**
-     * Win code
+     * Win code.
      */
     WIN,
     /**
-     * Refresh Player Panel code
+     * Refresh Player Panel code.
      */
     REFRESH_PLAYER_PANEL,
     /**
-     * Refresh Player Position code
+     * Refresh Player Position code.
      */
     REFRESH_PLAYER_POSITION;
 

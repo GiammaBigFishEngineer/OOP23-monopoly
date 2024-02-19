@@ -17,6 +17,7 @@ import app.card.impl.Unforseen;
 import app.game.apii.GameController;
 import app.game.apii.SaveController;
 import app.game.utils.BtnCodeEnum;
+import app.game.utils.BtnCodeState;
 import app.game.utils.Dice;
 
 import app.player.apii.Player;
@@ -60,7 +61,7 @@ public final class GameControllerImpl implements GameController {
 
     private int totalResult;
 
-    private final Map<BtnCodeEnum, Boolean> btnList;
+    private final Map<BtnCodeEnum, BtnCodeState> btnList;
 
     private final SaveController saveLogic;
 
@@ -88,12 +89,12 @@ public final class GameControllerImpl implements GameController {
         defeated = new ArrayList<>();
 
         btnList = new HashMap<>();
-        btnList.put(BtnCodeEnum.BUY_HOUSE, false);
-        btnList.put(BtnCodeEnum.BUY_PROPRIETY, false);
-        btnList.put(BtnCodeEnum.END_TURN, false);
-        btnList.put(BtnCodeEnum.ROLL_DICE, false);
-        btnList.put(BtnCodeEnum.SELL_PROPRIETY, false);
-        btnList.put(BtnCodeEnum.UNFORSEEN, false);
+        btnList.put(BtnCodeEnum.BUY_HOUSE, BtnCodeState.DISABLED);
+        btnList.put(BtnCodeEnum.BUY_PROPRIETY, BtnCodeState.DISABLED);
+        btnList.put(BtnCodeEnum.END_TURN, BtnCodeState.DISABLED);
+        btnList.put(BtnCodeEnum.ROLL_DICE, BtnCodeState.DISABLED);
+        btnList.put(BtnCodeEnum.SELL_PROPRIETY, BtnCodeState.DISABLED);
+        btnList.put(BtnCodeEnum.UNFORSEEN, BtnCodeState.DISABLED);
 
         saveLogic = new SaveControllerImpl();
     }
@@ -459,7 +460,7 @@ public final class GameControllerImpl implements GameController {
     @Override
     public void enableSingleButton(final BtnCodeEnum code) {
 
-        btnList.put(code, true);
+        btnList.put(code, BtnCodeState.ENABLED);
 
     }
 
@@ -470,7 +471,7 @@ public final class GameControllerImpl implements GameController {
     @Override
     public void disableSingleButton(final BtnCodeEnum code) {
 
-        btnList.put(code, false);
+        btnList.put(code, BtnCodeState.DISABLED);
 
     }
 
@@ -483,7 +484,7 @@ public final class GameControllerImpl implements GameController {
     public void disableAllBtn() {
 
         for (final var entry : btnList.entrySet()) {
-            entry.setValue(false);
+            entry.setValue(BtnCodeState.DISABLED);
         }
 
     }
@@ -508,7 +509,7 @@ public final class GameControllerImpl implements GameController {
      */
 
     @Override
-    public Map<BtnCodeEnum, Boolean> getBtnStatus() {
+    public Map<BtnCodeEnum, BtnCodeState> getBtnStatus() {
 
         return new HashMap<>(btnList);
     }

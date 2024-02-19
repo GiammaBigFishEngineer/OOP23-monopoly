@@ -125,8 +125,7 @@ public final class CardFactoryImpl implements CardFactory {
 
             @Override
             public void clearOwner() {
-                // TODO Auto-generated method stub
-                throw new UnsupportedOperationException("Unimplemented method 'clearOwner'");
+
             }
 
         };

@@ -26,7 +26,7 @@ import app.player.view.PlayerPanelView;
  */
 public final class GameView extends JFrame {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 11L;
 
     private final PlayerPanelView playerPanel;
 
@@ -39,7 +39,7 @@ public final class GameView extends JFrame {
     private static final int TABLE_SIZE = 7;
 
     /**
-     * Constructor
+     * Constructor.
      * 
      * @param playerNames
      * @throws IOException
@@ -145,7 +145,7 @@ public final class GameView extends JFrame {
     }
 
     /**
-     * This method is used to add the observer to tableView, update it, and then
+     * This method is used to add the observer to tableView, update it, and then.
      * remove it
      * 
      * @param obs
@@ -161,7 +161,7 @@ public final class GameView extends JFrame {
     }
 
     /**
-     * This method is used to update player stats in playerPanel
+     * This method is used to update player stats in playerPanel.
      * 
      * @param obj is the player
      */
@@ -183,7 +183,7 @@ public final class GameView extends JFrame {
     }
 
     /**
-     * This method is used to update the dice values dicePanel
+     * This method is used to update the dice values dicePanel.
      * 
      * @param obj is the dice
      */

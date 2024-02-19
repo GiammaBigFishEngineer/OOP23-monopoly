@@ -10,7 +10,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Optional;
 
 /**
- * This class is the implementation of ViewObserver
+ * This class is the implementation of ViewObserver.
  */
 
 public final class ViewObserverImpl implements ViewObserver {

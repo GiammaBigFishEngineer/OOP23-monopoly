@@ -11,6 +11,7 @@ import app.card.apii.CardAdapter;
 import app.game.apii.GameController;
 import app.game.controller.GameControllerImpl;
 import app.game.utils.BtnCodeEnum;
+import app.game.utils.BtnCodeState;
 import app.player.apii.Player;
 
 import java.io.IOException;
@@ -135,29 +136,29 @@ class TestGameController {
 
     void testEnabledButtons() {
 
-        Map<BtnCodeEnum, Boolean> btnList;
+        Map<BtnCodeEnum, BtnCodeState> btnList;
 
         logic.newTurn();
 
         btnList = new HashMap<>();
-        btnList.put(BtnCodeEnum.BUY_HOUSE, false);
-        btnList.put(BtnCodeEnum.BUY_PROPRIETY, false);
-        btnList.put(BtnCodeEnum.END_TURN, false);
-        btnList.put(BtnCodeEnum.ROLL_DICE, false);
-        btnList.put(BtnCodeEnum.SELL_PROPRIETY, false);
-        btnList.put(BtnCodeEnum.UNFORSEEN, false);
+        btnList.put(BtnCodeEnum.BUY_HOUSE, BtnCodeState.DISABLED);
+        btnList.put(BtnCodeEnum.BUY_PROPRIETY, BtnCodeState.DISABLED);
+        btnList.put(BtnCodeEnum.END_TURN, BtnCodeState.DISABLED);
+        btnList.put(BtnCodeEnum.ROLL_DICE, BtnCodeState.DISABLED);
+        btnList.put(BtnCodeEnum.SELL_PROPRIETY, BtnCodeState.DISABLED);
+        btnList.put(BtnCodeEnum.UNFORSEEN, BtnCodeState.DISABLED);
 
         assertEquals(btnList, logic.getBtnStatus());
 
         logic.setDiceValue(VISERBA_ID);
         logic.startTurn();
 
-        btnList.put(BtnCodeEnum.BUY_HOUSE, false);
-        btnList.put(BtnCodeEnum.BUY_PROPRIETY, true);
-        btnList.put(BtnCodeEnum.END_TURN, true);
-        btnList.put(BtnCodeEnum.ROLL_DICE, false);
-        btnList.put(BtnCodeEnum.SELL_PROPRIETY, false);
-        btnList.put(BtnCodeEnum.UNFORSEEN, false);
+        btnList.put(BtnCodeEnum.BUY_HOUSE, BtnCodeState.DISABLED);
+        btnList.put(BtnCodeEnum.BUY_PROPRIETY, BtnCodeState.ENABLED);
+        btnList.put(BtnCodeEnum.END_TURN, BtnCodeState.ENABLED);
+        btnList.put(BtnCodeEnum.ROLL_DICE, BtnCodeState.DISABLED);
+        btnList.put(BtnCodeEnum.SELL_PROPRIETY, BtnCodeState.DISABLED);
+        btnList.put(BtnCodeEnum.UNFORSEEN, BtnCodeState.DISABLED);
 
         assertEquals(btnList, logic.getBtnStatus());
 
@@ -166,24 +167,24 @@ class TestGameController {
         logic.setDiceValue(THIS);
         logic.startTurn();
 
-        btnList.put(BtnCodeEnum.BUY_HOUSE, true);
-        btnList.put(BtnCodeEnum.BUY_PROPRIETY, false);
-        btnList.put(BtnCodeEnum.END_TURN, true);
-        btnList.put(BtnCodeEnum.ROLL_DICE, false);
-        btnList.put(BtnCodeEnum.SELL_PROPRIETY, true);
-        btnList.put(BtnCodeEnum.UNFORSEEN, false);
+        btnList.put(BtnCodeEnum.BUY_HOUSE, BtnCodeState.ENABLED);
+        btnList.put(BtnCodeEnum.BUY_PROPRIETY, BtnCodeState.DISABLED);
+        btnList.put(BtnCodeEnum.END_TURN, BtnCodeState.ENABLED);
+        btnList.put(BtnCodeEnum.ROLL_DICE, BtnCodeState.DISABLED);
+        btnList.put(BtnCodeEnum.SELL_PROPRIETY, BtnCodeState.ENABLED);
+        btnList.put(BtnCodeEnum.UNFORSEEN, BtnCodeState.DISABLED);
 
         assertEquals(btnList, logic.getBtnStatus());
 
         logic.setDiceValue(VISERBA_TO_UNFORSEEN);
         logic.startTurn();
 
-        btnList.put(BtnCodeEnum.BUY_HOUSE, false);
-        btnList.put(BtnCodeEnum.BUY_PROPRIETY, false);
-        btnList.put(BtnCodeEnum.END_TURN, false);
-        btnList.put(BtnCodeEnum.ROLL_DICE, false);
-        btnList.put(BtnCodeEnum.SELL_PROPRIETY, false);
-        btnList.put(BtnCodeEnum.UNFORSEEN, true);
+        btnList.put(BtnCodeEnum.BUY_HOUSE, BtnCodeState.DISABLED);
+        btnList.put(BtnCodeEnum.BUY_PROPRIETY, BtnCodeState.DISABLED);
+        btnList.put(BtnCodeEnum.END_TURN, BtnCodeState.DISABLED);
+        btnList.put(BtnCodeEnum.ROLL_DICE, BtnCodeState.DISABLED);
+        btnList.put(BtnCodeEnum.SELL_PROPRIETY, BtnCodeState.DISABLED);
+        btnList.put(BtnCodeEnum.UNFORSEEN, BtnCodeState.ENABLED);
 
         assertEquals(btnList, logic.getBtnStatus());
 

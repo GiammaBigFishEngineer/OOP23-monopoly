@@ -14,7 +14,7 @@ import javax.swing.JPanel;
 
 public class ViewObservableImpl extends JPanel implements ViewObservable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 13L;
 
     private transient ViewObserverImpl obs;
 

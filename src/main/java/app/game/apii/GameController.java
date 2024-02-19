@@ -2,6 +2,7 @@ package app.game.apii;
 
 import app.card.apii.Card;
 import app.game.utils.BtnCodeEnum;
+import app.game.utils.BtnCodeState;
 import app.game.utils.Dice;
 import app.player.apii.Player;
 
@@ -41,7 +42,8 @@ public interface GameController {
     void payFees(Player owner);
 
     /**
-     * this method is called only when the current player has landed on an unforseen
+     * this method is called only when the current player has landed on an
+     * unforseen.
      */
     void pickUnforseen();
 
@@ -72,7 +74,7 @@ public interface GameController {
     Boolean isCurrentPlayerInJail();
 
     /**
-     * this method is called if the current player decides to pay the bail
+     * this method is called if the current player decides to pay the bail.
      */
 
     void hasPayedBail();
@@ -86,10 +88,10 @@ public interface GameController {
 
     /**
      * @return a map where the key is a code that identifies a button and.
-     *         value can be true if the button it corrisponds to is enabled, false
-     *         otherwhise
+     *         value can be ENABLED if the button it corrisponds to is enabled,
+     *         DISABLED otherwhise
      */
-    Map<BtnCodeEnum, Boolean> getBtnStatus();
+    Map<BtnCodeEnum, BtnCodeState> getBtnStatus();
 
     /**
      * @param code is the code of the button we want to enable
@@ -102,7 +104,7 @@ public interface GameController {
     void disableSingleButton(BtnCodeEnum code);
 
     /**
-     * this method is used to set every value in the button list to false
+     * this method is used to set every value in the button list to false.
      */
     void disableAllBtn();
 
@@ -197,7 +199,7 @@ public interface GameController {
      */
     void saveGame();
 
-    /*
+    /**
      * this method is used to quit the game.
      */
     void quitGame();

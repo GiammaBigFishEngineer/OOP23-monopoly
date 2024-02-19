@@ -24,13 +24,15 @@ import java.awt.Toolkit;
 import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 /**
- * This class represent the view of the game menu
+ * This class represent the view of the game menu.
  */
 public final class MenuView extends JFrame {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 12L;
+    private static final Logger LOGGER = Logger.getLogger(MenuView.class.getName());
 
     private static final int PROPORTION = 2;
     private static final int TITLE_FONT = 100;
@@ -76,7 +78,7 @@ public final class MenuView extends JFrame {
          * Start Button
          */
 
-        startButton = new JButton("Start");
+        startButton = new JButton("Avvia Partita");
         startButton.setFont(boldFont);
 
         startButton.addActionListener(e -> {
@@ -86,7 +88,7 @@ public final class MenuView extends JFrame {
 
             final int choice = JOptionPane.showOptionDialog(this,
                     numPlayerSpinner,
-                    "Select player number",
+                    "Seleziona numero giocatori",
                     JOptionPane.OK_OPTION, JOptionPane.NO_OPTION,
                     null,
                     null,
@@ -98,24 +100,24 @@ public final class MenuView extends JFrame {
 
                 final List<String> playerNames = new ArrayList<>();
 
-                for (int i = 0; i < numPlayers; i++) {
-                    final String playerName = JOptionPane.showInputDialog("Insert player Name : ");
+                for (int i = 1; i <= numPlayers; i++) {
+                    final String playerName = JOptionPane.showInputDialog("Inserisci nome giocatore " + i + " :");
                     playerNames.add(playerName);
                 }
 
                 if (menuController.startGame(playerNames)) {
-                    JOptionPane.showMessageDialog(this, "Game loading success");
+                    JOptionPane.showMessageDialog(this, "Caricamento Completato");
 
                     try {
                         new GameView(playerNames);
                         dispose();
                     } catch (IOException e1) {
 
-                        e1.printStackTrace();
+                        LOGGER.severe("Errore : " + e1.getMessage());
                     }
 
                 } else {
-                    JOptionPane.showMessageDialog(this, "Game loading error");
+                    JOptionPane.showMessageDialog(this, "Errore nel Caricamento");
                 }
 
             }
@@ -128,7 +130,7 @@ public final class MenuView extends JFrame {
          * Option Button
          */
 
-        optionButton = new JButton("Saved Games");
+        optionButton = new JButton("Visualizza Salvataggi");
         optionButton.setFont(boldFont);
 
         optionButton.addActionListener(e -> {
@@ -141,7 +143,7 @@ public final class MenuView extends JFrame {
          * Quit Button
          */
 
-        quitButton = new JButton("Quit");
+        quitButton = new JButton("Esci");
         quitButton.setFont(boldFont);
 
         quitButton.addActionListener(e -> {

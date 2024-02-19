@@ -3,20 +3,20 @@ package app.game.view;
 import javax.swing.JOptionPane;
 
 /**
- * This class contains all the game pop-ups
+ * This class contains all the game pop-ups.
  */
 
 public final class GameMessage {
 
     /**
-     * This pop up is called when the player leaves the jail
+     * This pop up is called when the player leaves the jail.
      */
     public void exitPrison() {
         JOptionPane.showMessageDialog(null, "Hai ottenuto lo stesso valore, sei libero di andare!");
     }
 
     /**
-     * This pop up is called when the player tries to leave the jail by getting the
+     * This pop up is called when the player tries to leave the jail by getting the.
      * same value on two dice rolls, but doesn't get a success
      */
     public void remainPrison() {
@@ -24,7 +24,7 @@ public final class GameMessage {
     }
 
     /**
-     * This pop up is called when the player tries to leave the jail by getting the
+     * This pop up is called when the player tries to leave the jail by getting the.
      * same value on two dice rolls, and gets a success
      */
     public void saveGame() {
@@ -32,7 +32,7 @@ public final class GameMessage {
     }
 
     /**
-     * This pop up is called when the player is eliminated
+     * This pop up is called when the player is eliminated.
      * 
      * @param name the player name
      */
@@ -41,7 +41,7 @@ public final class GameMessage {
     }
 
     /**
-     * This pop up is called when the player win the game
+     * This pop up is called when the player win the game.
      * 
      * @param name the player name
      */
@@ -50,14 +50,14 @@ public final class GameMessage {
     }
 
     /**
-     * This pop up is called when the player can't afford a propriety
+     * This pop up is called when the player can't afford a propriety.
      */
     public void noBuyPropriety() {
         JOptionPane.showMessageDialog(null, "Non ti puoi permettere questa proprietà!");
     }
 
     /**
-     * This pop up is called when the player can't afford an house or reached the
+     * This pop up is called when the player can't afford an house or reached the.
      * maximum number of houses built
      */
     public void noBuilHouse() {
@@ -65,7 +65,7 @@ public final class GameMessage {
     }
 
     /**
-     * This pop up is called when the player hash landed on someone else propriety
+     * This pop up is called when the player hash landed on someone else propriety.
      * 
      * @param name is the owner name
      */
@@ -74,7 +74,9 @@ public final class GameMessage {
     }
 
     /**
-     * This pop up is called when exit game button is pressed
+     * This pop up is called when exit game button is pressed.
+     * 
+     * @return true if anyone confirm to quit, false otherwise
      */
     public boolean quitGame() {
         final int res = JOptionPane.showConfirmDialog(null, "Confermi di voler uscire?", "exit",

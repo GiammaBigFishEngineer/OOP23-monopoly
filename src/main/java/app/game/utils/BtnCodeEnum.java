@@ -9,32 +9,32 @@ package app.game.utils;
 public enum BtnCodeEnum {
 
     /**
-     * The code that represent the Roll Dice button
+     * The code that represent the Roll Dice button.
      */
     ROLL_DICE,
 
     /**
-     * The code that represent Buy Propriety button
+     * The code that represent Buy Propriety button.
      */
     BUY_PROPRIETY,
 
     /**
-     * The code that represent Sell Propriety button
+     * The code that represent Sell Propriety button.
      */
     SELL_PROPRIETY,
 
     /**
-     * The code that represent Buy House button
+     * The code that represent Buy House button.
      */
     BUY_HOUSE,
 
     /**
-     * The code that represent End Turn button
+     * The code that represent End Turn button.
      */
     END_TURN,
 
     /**
-     * The code that represent Unforseen button
+     * The code that represent Unforseen button.
      */
     UNFORSEEN;
 

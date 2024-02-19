@@ -6,6 +6,7 @@ import app.card.apii.Card;
 import app.game.apii.GameController;
 import app.game.controller.GameControllerImpl;
 import app.game.utils.BtnCodeEnum;
+import app.game.utils.BtnCodeState;
 import app.game.utils.Dice;
 import app.game.utils.ObserverCodeEnum;
 import app.player.apii.Player;
@@ -23,15 +24,15 @@ import java.util.Optional;
  */
 public final class ButtonPanelView extends ViewObservableImpl {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 10L;
 
     private final transient GameController gameLogic;
 
-    private final Map<BtnCodeEnum, Boolean> btnCodeList = new HashMap<>();
+    private final Map<BtnCodeEnum, BtnCodeState> btnCodeList = new HashMap<>();
     private final Map<BtnCodeEnum, JButton> btnList = new HashMap<>();
 
     /**
-     * Constructor
+     * Constructor.
      * 
      * @param playersNames
      * @param obs
@@ -209,7 +210,7 @@ public final class ButtonPanelView extends ViewObservableImpl {
     }
 
     /**
-     * This method is called to start the game and at the end of every turn
+     * This method is called to start the game and at the end of every turn.
      * to move on to the next turn
      */
 
@@ -299,7 +300,7 @@ public final class ButtonPanelView extends ViewObservableImpl {
     }
 
     /**
-     * This method is used to update the state of the buttons based on how their
+     * This method is used to update the state of the buttons based on how their.
      * corresponding codes in the logic have been updated
      */
 
@@ -310,15 +311,15 @@ public final class ButtonPanelView extends ViewObservableImpl {
         for (final var entry : btnCodeList.entrySet()) {
 
             final var code = entry.getKey();
-            final var bool = entry.getValue();
+            final BtnCodeState state = entry.getValue();
 
-            btnList.get(code).setEnabled(bool);
+            btnList.get(code).setEnabled(state.getValue());
 
         }
     }
 
     /**
-     * This method is called at the start of the game to initialize the players
+     * This method is called at the start of the game to initialize the players.
      * position on the start box and to refresh te player panel with the first
      * player
      */
@@ -334,7 +335,8 @@ public final class ButtonPanelView extends ViewObservableImpl {
     }
 
     /**
-     * This method is used to refresh the player panel when the player data has been
+     * This method is used to refresh the player panel when the player data has
+     * been.
      * modified
      */
 
@@ -344,7 +346,7 @@ public final class ButtonPanelView extends ViewObservableImpl {
     }
 
     /**
-     * This method is used to refresh the table panel when the player position has
+     * This method is used to refresh the table panel when the player position has.
      * been changed
      */
 
