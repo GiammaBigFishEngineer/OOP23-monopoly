@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -35,10 +36,10 @@ public class SaveControllerImpl implements SaveController {
      */
     @Override
     public void saveGame(final List<Player> gamePlayerList) {
-        if (gamePlayerList == null
-                || gamePlayerList.size() < MIN_NUM_PLAYER
-                || gamePlayerList.size() > MAX_NUM_PLAYER) {
-            throw new IllegalStateException("Inserire un numero corretto di giocatori (da 2 a 5).");
+        if (gamePlayerList == null 
+            || gamePlayerList.size() < MIN_NUM_PLAYER 
+            || gamePlayerList.size() > MAX_NUM_PLAYER) {
+                throw new IllegalStateException("Inserire un numero corretto di giocatori (da 2 a 5).");
         }
         final List<Player> players = new ArrayList<>(gamePlayerList);
         try {
@@ -52,9 +53,8 @@ public class SaveControllerImpl implements SaveController {
     }
 
     /**
-     * Determines whether the game should be saved.
-     * This method is designed for extension. So the subclass should provide
-     * additional logic for
+     * Determines whether the game should be saved. 
+     * This method is designed for extension. So the subclass should provide additional logic for
      * deciding when the game should be saved.
      * 
      * @return {@code true} if the game should be saved, {@code false} otherwise
@@ -62,19 +62,18 @@ public class SaveControllerImpl implements SaveController {
     @Override
     public boolean shouldSaveGame(final List<Player> playersList) {
         return isFirstSave || checkForChanges(playersList);
-        // return checkForChanges(playersList);
+        //return checkForChanges(playersList);
     }
 
     /**
      * Checks for changes in the provided list of players.
      * 
      * @param players is the list of players to check
-     * @return {@code true} if there are changes in the player, {@code false}
-     *         otherwhise
+     * @return {@code true} if there are changes in the player, {@code false} otherwhise
      */
     private boolean checkForChanges(final List<Player> players) {
-        return players.stream()
-                .anyMatch(player -> player.hasPositionChanged() || player.getBankAccount().hasBalanceChanged());
+        return players.stream().anyMatch(player -> 
+                player.hasPositionChanged() || player.getBankAccount().hasBalanceChanged());
     }
 
     private void saveGameToFile(final List<Player> players) throws IOException {
@@ -95,15 +94,14 @@ public class SaveControllerImpl implements SaveController {
 
             players.forEach(currentPlayer -> {
                 writer.println("Player: " + currentPlayer.getName()
-                        + ", Id: " + currentPlayer.getID()
-                        + ", Posizione: " + currentPlayer.getCurrentPosition()
-                        + ", Denaro: " + currentPlayer.getBankAccount().getBalance());
+                               + ", Id: " + currentPlayer.getID()
+                               + ", Posizione: " + currentPlayer.getCurrentPosition()
+                               + ", Denaro: " + currentPlayer.getBankAccount().getBalance());
             });
             writer.println("\n");
 
             if (writer.checkError()) {
-                writeErrorToLogFile("Errore durante la scrittura nel file",
-                        new IOException("Errore di scrittura nel file"));
+                writeErrorToLogFile("Errore durante la scrittura nel file", new IOException("Errore di scrittura nel file"));
             }
         } catch (IOException e) {
             writeErrorToLogFile("Errore di I/O durante il salvataggio del gioco.", e);
@@ -113,8 +111,7 @@ public class SaveControllerImpl implements SaveController {
     /**
      * Displays the data of the saved games.
      * 
-     * @return a list of strings representing the data of the saved games with the
-     *         various data of the players of the game
+     * @return a list of strings representing the data of the saved games with the various data of the players of the game
      */
     @Override
     public List<String> viewSavedGames() {
@@ -138,6 +135,22 @@ public class SaveControllerImpl implements SaveController {
         }
 
         return savedGames;
+    }
+
+    /**
+     * Provides a formatted output of saved games for the view.
+     * 
+     * @return an {@code Optional} containing a formatted string representing the saved data
+     * or an empty {@code Optional} if there are no saved data
+     */
+    @Override
+    public Optional<String> getOutputSavedGames() {
+        final List<String> savedGames = viewSavedGames();
+        if (savedGames.isEmpty()) {
+            return Optional.empty();
+        }
+        final String formattedInfo = "Storico partite\n\n" + String.join("\n", savedGames);
+        return Optional.of(formattedInfo);
     }
 
     private void writeErrorToLogFile(final String message, final Exception exception) {

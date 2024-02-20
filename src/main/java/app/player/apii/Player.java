@@ -17,17 +17,14 @@ public interface Player {
      * @return currentPosition of the Player
      */
     int getCurrentPosition();
-
     /**
      * @param position of the Player on the table.
      */
     void setPosition(int position);
-
     /**
      * @return true if there are changes in position, false otherwise
      */
     boolean hasPositionChanged();
-
     /**
      * @return name of the Player
      */

@@ -17,7 +17,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  */
 public final class PlayerPanelLogicImpl implements PlayerPanelLogic {
 
-    private Player currentPlayer;
+    /*private Player currentPlayer;
     private Card currentBox;
     private final PlayerPanelView panel;
 

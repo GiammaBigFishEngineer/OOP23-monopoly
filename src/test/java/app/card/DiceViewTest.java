@@ -1,18 +1,18 @@
 package app.card;
 
 import app.card.view.DiceView;
+import app.game.controller.DiceController;
+import app.game.utils.Dice;
 
 import javax.swing.JFrame;
-import java.awt.Dimension;
 import javax.swing.SwingUtilities;
 
 /**
- * Test for dice gui.
+ * Test for dice gui {@link app.card.view.DiceView} with dice rolling.
  */
 final class DiceViewTest {
 
     private static final String TITLE = "Lancio dei due dadi";
-    private static final int MIN_DIM = 600;
 
     private DiceViewTest() { }
 
@@ -22,15 +22,20 @@ final class DiceViewTest {
      */
     public static void run(final String[] args) throws java.io.IOException {
         SwingUtilities.invokeLater(() -> {
-            final var diceView = new DiceView();
-            final var frame = new JFrame();
+            final Dice diceModel = new Dice();
+            final DiceController diceController = new DiceController(diceModel);
+            final DiceView diceView = new DiceView();
 
-            frame.setMinimumSize(new Dimension(MIN_DIM, MIN_DIM));
+            final JFrame frame = new JFrame();
             frame.setContentPane(diceView);
             frame.setTitle(TITLE);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.pack();
+            frame.setResizable(false);
             frame.setVisible(true);
+
+            diceController.rollDiceAction();
+            diceView.updateView(diceModel);
         });
     }
 }
