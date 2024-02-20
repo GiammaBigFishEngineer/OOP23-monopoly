@@ -41,11 +41,8 @@ public interface Buyable extends Card {
      */
     void setOwner(Player player);
 
-<<<<<<< HEAD
     /**
      * Make the card available for players.
      */
-=======
->>>>>>> origin/Polazzi
     void clearOwner();
 }
