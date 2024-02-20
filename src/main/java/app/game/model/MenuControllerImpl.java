@@ -17,7 +17,7 @@ public class MenuControllerImpl implements MenuController {
     private static final int MAX_NUM_PLAYER = 5;
 
     /**
-     * Start a new game with the provided list of players.
+     * Start a new game with the provided list of player names.
      * 
      * @param playerNames the list of player names participating in the game
      * @return {@code true} if the game is successfully started, {@code false} otherwise

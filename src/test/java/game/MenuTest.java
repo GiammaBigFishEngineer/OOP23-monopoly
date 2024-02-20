@@ -130,6 +130,7 @@ class MenuTest {
 
     /**
      * Utility method: it creates a list of dummy player names.
+     * 
      * @param numPlayers the number of dummy names to create
      * @return a list of dummy player names
      */

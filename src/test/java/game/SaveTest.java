@@ -120,6 +120,7 @@ class SaveTest {
 
     /**
      * Utility method: it creates a list of dummy players with a name, id, list of cards and initial amount.
+     * 
      * @param numPlayers the number of dummy players to create
      * @return a list of dummy players
      */

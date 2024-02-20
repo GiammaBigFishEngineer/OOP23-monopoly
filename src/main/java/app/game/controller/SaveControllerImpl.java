@@ -98,6 +98,7 @@ public class SaveControllerImpl implements SaveController {
                                + ", Posizione: " + currentPlayer.getCurrentPosition()
                                + ", Denaro: " + currentPlayer.getBankAccount().getBalance());
             });
+            // to do: add a method that prints informations about each player's properties
             writer.println("\n");
 
             if (writer.checkError()) {
