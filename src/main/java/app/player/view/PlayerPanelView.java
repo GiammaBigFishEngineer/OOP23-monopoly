@@ -62,12 +62,12 @@ public final class PlayerPanelView extends JPanel {
         this.setAlignmentX(Component.LEFT_ALIGNMENT);
         this.setSize(sw / PROPORTION, sh / PROPORTION);
 
-        addLabelWithText(new JLabel("Player's name: "), this.playerName);
-        addLabelWithText(new JLabel("Player's ID: "), this.playerID);
-        addLabelWithText(new JLabel("Money on BankAccount: "), this.playerMoney); 
-        addLabelWithText(new JLabel("Houses on this box: "), this.playerHouses);
-        addLabelWithText(new JLabel("Owned stations: "), this.playerStations);
-        addLabelWithText(new JLabel("Owned boxes: "), this.playerBoxes);
+        addLabelWithText(new JLabel("Nome del giocatore: "), this.playerName);
+        addLabelWithText(new JLabel("ID del giocatore: "), this.playerID);
+        addLabelWithText(new JLabel("Monete sul conto bancario: "), this.playerMoney); 
+        addLabelWithText(new JLabel("Case costruite su qulla casella corrente: "), this.playerHouses);
+        addLabelWithText(new JLabel("Numero di stazioni possedute: "), this.playerStations);
+        addLabelWithText(new JLabel("Caselle possedute: "), this.playerBoxes);
     }
 
     /**
