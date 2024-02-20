@@ -5,7 +5,7 @@ import app.player.apii.Player;
 
 /**
  * Class which implements the methods used for
- * managing the mechanism of bail for jail. 
+ * managing the mechanism of bail for jail.
  */
 public final class BailLogicImpl implements BailLogic {
 
@@ -21,11 +21,17 @@ public final class BailLogicImpl implements BailLogic {
     @Override
     public boolean hasPayed(final Player player) {
         if (!(player.getBankAccount().isPaymentAllowed(DEFAULT_PAYMENT))) {
-            return false; 
+            return false;
         } else {
-            player.getBankAccount().payPlayer(null, DEFAULT_PAYMENT);
-            player.setInJail(false); 
+            player.payPlayer(null, DEFAULT_PAYMENT);
+            player.setInJail(false);
             return true;
         }
+    }
+
+    @Override
+    public void notPayed(Player player) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'notPayed'");
     }
 }

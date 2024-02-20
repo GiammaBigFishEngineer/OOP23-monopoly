@@ -10,4 +10,12 @@ public interface BailLogic {
      * @return true if the player has payed the bail.
      */
     boolean hasPayed(Player player);
+
+    /**
+     * Method which indicates the Player hasn't payed to go out of prison.
+     * As a result, he stays in jail.
+     * 
+     * @param player who is currently in shift.
+     */
+    void notPayed(Player player);
 }

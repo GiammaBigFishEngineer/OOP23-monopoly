@@ -1,6 +1,5 @@
 package app.player.impl;
 
-import java.awt.Color;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,34 +21,33 @@ public final class PlayerImpl implements Player {
      * Maximum number of houses a player can build on a box.
      */
     private static final int MAX_NUMBER_HOUSES = 3;
-    private static final int RANGE_COLOR = 256;
-    private static final int RED_MULTIPLICATIVE_CONSTANT = 10; 
-    private static final int GREEN_MULTIPLICATIVE_CONSTANT = 25;
-    private static final int BLUE_MULTIPLICATIVE_CONSTANT = 70;
+
     /**
      * Map which associates each Card box with an Optional that indicates
-     * if that box is already owned by the current player 
+     * if that box is already owned by the current player
      * and the number of houses built on that box.
      */
-    private final Map<Card, Optional<Integer>> map;
+    private Map<Card, Optional<Integer>> map;
     private int currentPosition;
     private final String name;
     private final int id;
-    private final BankAccount account; 
+    private final BankAccount account;
     private boolean isInJail;
     private boolean positionChanged;
-    private final Color color; 
+    private final String color;
 
     /**
      * @param name
      * @param id
      * @param cards
      * @param initialAmount
-     * In order to avoid errors with the method map.get(), in case the map isn't initialized,
-     * this constructor sets the values of the map with Optional.empty().
+     *                      In order to avoid errors with the method map.get(), in
+     *                      case the map isn't initialized,
+     *                      this constructor sets the values of the map with
+     *                      Optional.empty().
      */
     public PlayerImpl(final String name, final int id, final List<Card> cards, final int initialAmount) {
-        this.name = name; 
+        this.name = name;
         this.id = id;
         this.map = new HashMap<>();
         this.currentPosition = 0;
@@ -58,10 +56,28 @@ public final class PlayerImpl implements Player {
             this.map.put(box, Optional.empty());
         }
         this.account = new BankAccountImpl(initialAmount);
-        final int r = Math.abs((id * RED_MULTIPLICATIVE_CONSTANT) % RANGE_COLOR);
-        final int g = Math.abs((id * BLUE_MULTIPLICATIVE_CONSTANT) % RANGE_COLOR);
-        final int b = Math.abs((id * GREEN_MULTIPLICATIVE_CONSTANT) % RANGE_COLOR);
-        this.color = new Color(r, g, b);
+
+        switch (this.getID()) {
+            case 1:
+                color = "#E52B50";
+                break;
+
+            case 2:
+                color = "#884DA7";
+                break;
+
+            case 3:
+                color = "#FF6600";
+                break;
+
+            case 4:
+                color = "#666666";
+                break;
+
+            default:
+                color = "#999999";
+                break;
+        }
     }
 
     /**
@@ -88,6 +104,7 @@ public final class PlayerImpl implements Player {
     public boolean hasPositionChanged() {
         return this.positionChanged;
     }
+
     /**
      * {@inheritDoc}
      */
@@ -106,9 +123,10 @@ public final class PlayerImpl implements Player {
 
     /**
      * Getter for player's color.
+     * 
      * @return color
      */
-    public Color getColor() {
+    public String getColor() {
         return this.color;
     }
 
@@ -119,6 +137,7 @@ public final class PlayerImpl implements Player {
     public Map<Card, Optional<Integer>> getMap() {
         return new HashMap<>(this.map);
     }
+
     /**
      * {@inheritDoc}
      */
@@ -132,8 +151,9 @@ public final class PlayerImpl implements Player {
      */
     @Override
     public void setInJail(final boolean isInJail) {
-        this.isInJail = isInJail; 
+        this.isInJail = isInJail;
     }
+
     /**
      * {@inheritDoc}
      */
@@ -148,19 +168,20 @@ public final class PlayerImpl implements Player {
     @Override
     public List<Buyable> getBuyableOwned() {
         return map.keySet().stream()
-            .filter(box -> map.get(box).isPresent() && box.isBuyable())
-            .map(CardAdapter::buyableAdapter)
-            .collect(Collectors.toList());
+                .filter(box -> map.get(box).isPresent() && box.isBuyable())
+                .map(CardAdapter::buyableAdapter)
+                .collect(Collectors.toList());
     }
+
     /**
      * {@inheritDoc}
      */
     @Override
     public List<Buildable> getBuildableOwned() {
         return map.keySet().stream()
-        .filter(box -> map.get(box).isPresent() && box.isBuildable())
-        .map(CardAdapter::buildableAdapter)
-        .collect(Collectors.toList());
+                .filter(box -> map.get(box).isPresent() && box.isBuildable())
+                .map(CardAdapter::buildableAdapter)
+                .collect(Collectors.toList());
     }
 
     /**
@@ -168,9 +189,11 @@ public final class PlayerImpl implements Player {
      */
     @Override
     public Optional<Integer> getHouseBuilt(final Buildable built) {
-        // chi usa questo metodo, si dovrà preoccupare di verificare che il player possieda la casella
+        // chi usa questo metodo, si dovrà preoccupare di verificare che il player
+        // possieda la casella
         return map.get(built);
     }
+
     /**
      * {@inheritDoc}
      */
@@ -180,17 +203,19 @@ public final class PlayerImpl implements Player {
                 .filter(box -> map.get(box).isPresent() && box.isBuyable() && !box.isBuildable())
                 .count();
     }
+
     /**
      * {@inheritDoc}
      */
     @Override
-    public boolean buyBox(final Buyable box) { 
+    public boolean buyBox(final Buyable box) {
         if (map.get(box).isPresent()) {
-            return false; 
+            return false;
         }
         if (account.payPlayer(null, box.getPrice())) {
             map.put(box, Optional.of(0)); // 0 perché possiedo la casella con 0 case costruite
-            return true; 
+            box.setOwner(this);
+            return true;
         } else {
             return false;
         }
@@ -202,15 +227,15 @@ public final class PlayerImpl implements Player {
     @Override
     public boolean buildHouse(final Buildable box) {
         if (map.get(box).isEmpty()) {
-            throw new IllegalArgumentException("You're trying to build a house on a box you don't own"); 
+            throw new IllegalArgumentException("You're trying to build a house on a box you don't own");
         }
         if (map.get(box).get() >= MAX_NUMBER_HOUSES) {
-            return false; 
+            return false;
         }
         if (this.account.payPlayer(null, box.getHousePrice())) {
             // Aggiungo alla casella acquistata il numero di case incrementato di 1
             map.put(box, Optional.of(map.get(box).get() + 1));
-            return true; 
+            return true;
         } else {
             return false;
         }
@@ -219,11 +244,12 @@ public final class PlayerImpl implements Player {
     /**
      * @param box current box
      * @return value of the current box, obtained by the sum of box's price
-     *          with the number of houses built by the player on that box
-     * This method is private, because it must not be used by anyone else.
-     * It throws an IllegalArgumentException if the player doesn't own the box:
-     * in fact, the map associates a box with an Optional<Integer>. 
-     * If it's empty, it means the player doesn't own the box.
+     *         with the number of houses built by the player on that box
+     *         This method is private, because it must not be used by anyone else.
+     *         It throws an IllegalArgumentException if the player doesn't own the
+     *         box:
+     *         in fact, the map associates a box with an Optional<Integer>.
+     *         If it's empty, it means the player doesn't own the box.
      */
     private int boxValue(final Buyable box) {
         if (!(box instanceof Buildable)) {
@@ -233,7 +259,7 @@ public final class PlayerImpl implements Player {
         if (numberHouses.isEmpty()) {
             throw new IllegalArgumentException("Player doesn't own the current box.");
         }
-        return CardAdapter.buildableAdapter(box).getPrice() 
+        return CardAdapter.buildableAdapter(box).getPrice()
                 + numberHouses.get() * CardAdapter.buildableAdapter(box).getHousePrice();
     }
 
@@ -243,27 +269,37 @@ public final class PlayerImpl implements Player {
     @Override
     public void sellBuyable(final Buyable box) {
         this.account.receivePayment(boxValue(box));
-        // lo eseguo dopo perché altrimenti rimuovo prima di contare quante case ho sopra
+        // lo eseguo dopo perché altrimenti rimuovo prima di contare quante case ho
+        // sopra
         map.put(box, Optional.empty());
     }
 
     /**
-     * As the method getBankAccount() returns a defensive copy of the bankAccount of the player, 
-     * only the player can modify this object. 
+     * As the method getBankAccount() returns a defensive copy of the bankAccount of
+     * the player,
+     * only the player can modify this object.
      * Who uses the method getBankAccount() would modify the copy of the account:
-     * as a result, I have created the following methods which effectively modify the player's account.
+     * as a result, I have created the following methods which effectively modify
+     * the player's account.
+     * 
      * @param amount
      */
     @Override
     public void receivePayment(final int amount) {
         this.account.receivePayment(amount);
     }
+
     /**
      * @param player
      * @param amount
      * @return boolean
      */
+    @Override
     public boolean payPlayer(final Player player, final int amount) {
         return this.account.payPlayer(player, amount);
+    }
+
+    public void setMap(final Map<Card, Optional<Integer>> map) {
+        this.map = new HashMap<>(map);
     }
 }

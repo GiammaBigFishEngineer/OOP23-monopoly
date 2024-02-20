@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-
 /**
  * Implementation of MenuController with its logic.
  */
@@ -39,7 +38,8 @@ public class MenuControllerImpl implements MenuController {
 
     /**
      * Constructs a new MenuControllerImpl.
-     * This constructor is responsible for initializing the list of players for the game.
+     * This constructor is responsible for initializing the list of players for the
+     * game.
      */
     public MenuControllerImpl() {
         this.players = new ArrayList<>();
@@ -67,7 +67,7 @@ public class MenuControllerImpl implements MenuController {
      */
     @Override
     public void quitGame() {
-        //System.exit(0); not used to resolve spotbug error
+        // System.exit(0); not used to resolve spotbug error
         final Window[] windows = Window.getWindows();
         for (final Window window : windows) {
             window.dispose();
@@ -78,7 +78,8 @@ public class MenuControllerImpl implements MenuController {
      * Inserts new players.
      * 
      * @param currentPlayerNames the list of the player names to be inserted
-     * @return a list of player objects representing the inserted players for the current game
+     * @return a list of player objects representing the inserted players for the
+     *         current game
      */
     @Override
     public List<Player> insertPlayers(final List<String> currentPlayerNames) {
@@ -122,8 +123,9 @@ public class MenuControllerImpl implements MenuController {
     }
 
     /**
-     * Determines whether the game should be saved. 
-     * This method is designed for extension. So the subclass should provide additional logic for
+     * Determines whether the game should be saved.
+     * This method is designed for extension. So the subclass should provide
+     * additional logic for
      * deciding when the game should be saved.
      * 
      * @return {@code true} if the game should be saved, otherwise {@code false}
@@ -137,7 +139,8 @@ public class MenuControllerImpl implements MenuController {
      * Checks for changes in the provided list of players.
      * 
      * @param players is the list of players to check
-     * @return {@code true} if there are changes in the player, otherwhise {@code false}
+     * @return {@code true} if there are changes in the player, otherwhise
+     *         {@code false}
      */
     private boolean checkForChanges(final List<Player> players) {
         for (final Player currentPlayer : players) {
@@ -166,14 +169,15 @@ public class MenuControllerImpl implements MenuController {
 
             for (final Player currentPlayer : players) {
                 writer.println("Player: " + currentPlayer.getName()
-                               + ", Id: " + currentPlayer.getID()
-                               + ", Posizione: " + currentPlayer.getCurrentPosition()
-                               + ", Denaro: " + currentPlayer.getBankAccount().getBalance());
+                        + ", Id: " + currentPlayer.getID()
+                        + ", Posizione: " + currentPlayer.getCurrentPosition()
+                        + ", Denaro: " + currentPlayer.getBankAccount().getBalance());
             }
             writer.println("\n");
 
             if (writer.checkError()) {
-                writeErrorToLogFile("Errore durante la scrittura nel file", new IOException("Errore di scrittura nel file"));
+                writeErrorToLogFile("Errore durante la scrittura nel file",
+                        new IOException("Errore di scrittura nel file"));
             }
         } catch (IOException e) {
             writeErrorToLogFile("Errore di I/O durante il salvataggio del gioco.", e);

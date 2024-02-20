@@ -1,16 +1,23 @@
 package app.game;
 
+import app.game.view.MenuView;
+
 /**
- * The main class for launching the game application.
+ * MonopolyGame Rimini-Edition.
  */
 public final class Hello {
-
-    private Hello() { }
     /**
-     * The main method to launch the game application.
+     * Constructor.
+     */
+    private Hello() {
+        throw new IllegalStateException("Main Class");
+    }
+
+    /**
+     * 
      * @param args
      */
     public static void main(final String[] args) {
-        //new GameView();
+        new MenuView();
     }
 }

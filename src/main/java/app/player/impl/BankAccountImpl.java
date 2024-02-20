@@ -12,34 +12,40 @@ public final class BankAccountImpl implements BankAccount {
      */
     private int balance;
     private boolean balanceChanged;
+
     /**
      * Constructor which requires a balance.
+     * 
      * @param balance
      */
     public BankAccountImpl(final int balance) {
-        this.balance = balance; 
+        this.balance = balance;
     }
+
     /**
      * Constructor with 0-argument.
      */
     public BankAccountImpl() {
         this(0);
     }
+
     /**
      * {@inheritDoc}
      */
     @Override
     public int getBalance() {
-        return this.balance; 
+        return this.balance;
     }
+
     /**
      * {@inheritDoc}
      */
     @Override
     public void setBalance(final int balance) {
         this.balance = balance;
-        this.balanceChanged = true; 
+        this.balanceChanged = true;
     }
+
     /**
      * {@inheritDoc}
      */
@@ -56,9 +62,9 @@ public final class BankAccountImpl implements BankAccount {
         if (!isPaymentAllowed(amount)) {
             return false;
         }
-        this.balance -= amount; 
+        this.balance -= amount;
         if (player != null) {
-            player.getBankAccount().receivePayment(amount);
+            player.receivePayment(amount);
         } // if (player == null) pago la banca, quindi non accade nulla
         return true;
     }
