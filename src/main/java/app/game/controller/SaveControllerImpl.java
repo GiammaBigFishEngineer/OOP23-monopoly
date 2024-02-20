@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -134,6 +135,22 @@ public class SaveControllerImpl implements SaveController {
         }
 
         return savedGames;
+    }
+
+    /**
+     * Provides a formatted output of saved games for the view.
+     * 
+     * @return an {@code Optional} containing a formatted string representing the saved data
+     * or an empty {@code Optional} if there are no saved data
+     */
+    @Override
+    public Optional<String> getOutputSavedGames() {
+        final List<String> savedGames = viewSavedGames();
+        if (savedGames.isEmpty()) {
+            return Optional.empty();
+        }
+        final String formattedInfo = "Storico partite\n\n" + String.join("\n", savedGames);
+        return Optional.of(formattedInfo);
     }
 
     private void writeErrorToLogFile(final String message, final Exception exception) {
