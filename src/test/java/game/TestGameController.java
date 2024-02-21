@@ -26,7 +26,7 @@ class TestGameController {
 
     private static final int VISERBA_ID = 4;
     private static final int VISERBA_PRICE = 100;
-    private static final int GO_PAYMENT = 100;
+    private static final int GO_PAYMENT = 50;
     private static final int GO_ID = 0;
     private static final int VISERBA_TO_GO_DISTANCE = 20;
     private static final int VISERBA_TO_UNFORSEEN = 5;

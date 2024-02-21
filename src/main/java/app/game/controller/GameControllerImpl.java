@@ -13,7 +13,6 @@ import app.card.apii.Card;
 import app.card.apii.CardAdapter;
 import app.card.apii.StaticActionStrategy.TriggeredEvent;
 import app.card.impl.CardFactoryImpl;
-import app.card.impl.Unforseen;
 import app.game.apii.GameController;
 import app.game.apii.SaveController;
 import app.game.utils.BtnCodeEnum;
@@ -32,6 +31,7 @@ import java.awt.Window;
 public final class GameControllerImpl implements GameController {
 
     private static final int GO_TO_JAIL_ID = 18;
+    private static final int GO_ID = 0;
     private static final int INITIAL_AMOUNT = 500;
     private static final int UNFORSEEN1_ID = 2;
     private static final int UNFORSEEN2_ID = 9;
@@ -198,7 +198,7 @@ public final class GameControllerImpl implements GameController {
 
             final int newPosition = finalPosition - (int) cardsList.size();
             currentPlayer.setPosition(newPosition);
-            Unforseen.U0.getCard().makeAction(currentPlayer);
+            CardAdapter.unbuyableAdapter(this.cardsList.get(GO_ID)).makeAction(currentPlayer);
 
         } else {
             currentPlayer.setPosition(finalPosition);

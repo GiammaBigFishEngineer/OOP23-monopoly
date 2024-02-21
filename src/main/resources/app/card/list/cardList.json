@@ -7,7 +7,7 @@
         "housePrice": "",
         "fees": "",
         "action": "giveMoneyPlayer",
-        "actionAmount": "200"
+        "actionAmount": "50"
     },
     {
         "id": "1",
