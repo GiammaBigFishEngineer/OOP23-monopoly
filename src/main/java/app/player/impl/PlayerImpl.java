@@ -126,6 +126,7 @@ public final class PlayerImpl implements Player {
      * 
      * @return color
      */
+    @Override
     public String getColor() {
         return this.color;
     }
@@ -299,6 +300,10 @@ public final class PlayerImpl implements Player {
         return this.account.payPlayer(player, amount);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void setMap(final Map<Card, Optional<Integer>> map) {
         this.map = new HashMap<>(map);
     }

@@ -19,7 +19,6 @@ public final class BailView {
      * between paying an amount of money to go out of jail or not.
      * 
      * @param player
-     * @param gameV  the frame on which the menuBail is displayed.
      * @return true if bail was successfully payed, otherwise false.
      */
     public boolean showMenuBail(final Player player) {

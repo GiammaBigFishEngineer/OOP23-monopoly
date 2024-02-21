@@ -14,12 +14,14 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Image;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import java.util.Collections;
 import java.io.ObjectInputStream;
 
 /**
@@ -30,12 +32,12 @@ import java.io.ObjectInputStream;
 public class TableView extends ObservableImpl<Player> {
 
     private static final long serialVersionUID = 3L;
-    private transient List<Card> cardList;
+    private final transient List<Card> cardList;
     private transient Map<Card, BoxPanelView> cells = new HashMap<>();
     private static final int IMAGESIZE = 70;
     private final int size;
 
-    private final List<Card> tableList;
+    private final transient List<Card> tableList;
 
     /**
      * Method of serialization.
@@ -60,7 +62,8 @@ public class TableView extends ObservableImpl<Player> {
         this.cardList = List.of(list.stream().toArray(Card[]::new));
         this.setLayout(new GridLayout(size, size));
         this.setBackground(Color.decode("#7FFFD4"));
-        this.tableList = list;
+        //this.tableList = list;
+        this.tableList = Collections.unmodifiableList(new ArrayList<>(list));
 
         int index = 0;
         for (int i = 0; i < size; i++) {

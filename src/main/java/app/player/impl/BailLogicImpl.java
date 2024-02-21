@@ -30,7 +30,7 @@ public final class BailLogicImpl implements BailLogic {
     }
 
     @Override
-    public void notPayed(Player player) {
+    public void notPayed(final Player player) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'notPayed'");
     }

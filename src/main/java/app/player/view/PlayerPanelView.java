@@ -81,7 +81,6 @@ public final class PlayerPanelView extends JPanel {
       * <<<<<<< HEAD
       * Getter for PlayerPanelLogic.
       * 
-      * @return object PlayerPanelLogic
       *         =======
       * @param text
       *             >>>>>>> origin/DiFronzo
@@ -94,7 +93,6 @@ public final class PlayerPanelView extends JPanel {
       * <<<<<<< HEAD
       * Getter for Player's name.
       * 
-      * @return JLabel
       *         =======
       * @param text
       *             >>>>>>> origin/DiFronzo
@@ -107,7 +105,6 @@ public final class PlayerPanelView extends JPanel {
       * <<<<<<< HEAD
       * Getter for Player's ID.
       * 
-      * @return JLabel
       *         =======
       * @param text
       *             >>>>>>> origin/DiFronzo
@@ -120,7 +117,6 @@ public final class PlayerPanelView extends JPanel {
       * <<<<<<< HEAD
       * Getter for Player's money.
       * 
-      * @return JLabel
       *         =======
       * @param text
       *             >>>>>>> origin/DiFronzo
@@ -140,7 +136,6 @@ public final class PlayerPanelView extends JPanel {
       * <<<<<<< HEAD
       * Getter for Player's owned boxes.
       * 
-      * @return object JLabel associated with Player's owned boxes.
       *         =======
       * @param text
       *             >>>>>>> origin/DiFronzo
@@ -162,7 +157,6 @@ public final class PlayerPanelView extends JPanel {
       * <<<<<<< HEAD
       * Getter for Player's houses built on the current box.
       * 
-      * @return JLabel
       *         =======
       * @param currentBox
       *                   >>>>>>> origin/DiFronzo
@@ -175,7 +169,6 @@ public final class PlayerPanelView extends JPanel {
       * <<<<<<< HEAD
       * Getter for Player's owned stations.
       * 
-      * @return JLabel
       *         =======
       * 
       *         >>>>>>> origin/DiFronzo

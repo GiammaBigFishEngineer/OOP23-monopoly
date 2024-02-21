@@ -162,7 +162,7 @@ public final class GameControllerImpl implements GameController {
         int res1;
         int res2;
 
-        currentDice.roll();
+        currentDice.rollDice();
 
         res1 = currentDice.getDie1Result();
         res2 = currentDice.getDie2Result();

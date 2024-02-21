@@ -74,7 +74,7 @@ public interface Player {
     Optional<Integer> getHouseBuilt(Buildable built);
 
     /**
-     * @param box
+     * @return number of Stations owned by the current player
      */
     int getNumberStationOwned();
 
@@ -107,10 +107,22 @@ public interface Player {
      */
     void receivePayment(int amount);
 
-    boolean payPlayer(final Player player, final int amount);
+    /**
+     * @param player
+     * @param amount
+     * @return boolean
+     */
+    boolean payPlayer(Player player, int amount);
 
+    /**
+     * @return the String with color associated with the Player.
+     */
     String getColor();
 
-    void setMap(final Map<Card, Optional<Integer>> map);
+    /**
+     * It sets the value of the map of the player.
+     * @param map
+     */
+    void setMap(Map<Card, Optional<Integer>> map);
 
 }
