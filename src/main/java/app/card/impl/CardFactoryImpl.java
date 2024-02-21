@@ -37,18 +37,21 @@ public final class CardFactoryImpl implements CardFactory {
             final var card = createCard(id, i.getString("name"));
             switch (type) {
                 case "static" -> allCards.add(createStaticCard(
-                        card,
-                        i.getString("action"),
-                        Integer.parseInt(i.getString("actionAmount"))));
+                    card,
+                    i.getString("action"),
+                    Integer.parseInt(i.getString("actionAmount"))
+                ));
                 case "property" -> allCards.add(createProperty(
-                        card,
-                        Integer.parseInt(i.getString("price")),
-                        Integer.parseInt(i.getString("housePrice")),
-                        Integer.parseInt(i.getString("fees"))));
+                    card,
+                    Integer.parseInt(i.getString("price")),
+                    Integer.parseInt(i.getString("housePrice")),
+                    Integer.parseInt(i.getString("fees"))
+                ));
                 case "station" -> allCards.add(createStation(
-                        card,
-                        Integer.parseInt(i.getString("price")),
-                        Integer.parseInt(i.getString("fees"))));
+                    card,
+                    Integer.parseInt(i.getString("price")),
+                    Integer.parseInt(i.getString("fees"))
+                ));
                 default -> throw new IllegalArgumentException("the type read isn't a type card of the game");
             }
         });
@@ -56,7 +59,7 @@ public final class CardFactoryImpl implements CardFactory {
     }
 
     /**
-     * @param id   is the id of card
+     * @param id is the id of card
      * @param name is the name of card
      * @return the card as object
      */
@@ -66,10 +69,10 @@ public final class CardFactoryImpl implements CardFactory {
     }
 
     /**
-     * @param card       is the Card base
-     * @param price      is the money price for buy property
+     * @param card is the Card base
+     * @param price is the money price for buy property
      * @param housePrice is the money for build an house on property
-     * @param fees       is the city tax
+     * @param fees is the city tax 
      * @return a Card buyable, with more property like price, housePrice
      */
     @Override
@@ -132,9 +135,9 @@ public final class CardFactoryImpl implements CardFactory {
     }
 
     /**
-     * @param card  is the Card base
+     * @param card is the Card base
      * @param price is the money price for buy property
-     * @param fees  is the city tax
+     * @param fees is the city tax 
      * @return a Card buyable but with no housePrice
      */
     @Override
@@ -143,11 +146,10 @@ public final class CardFactoryImpl implements CardFactory {
     }
 
     /**
-     * @param card   is the Card base
+     * @param card is the Card base
      * @param action is the name of action to call
      * @param amount is the amount passed to function called
-     * @return a Card unbuyable with no price but a with optional static action to
-     *         call on players
+     * @return a Card unbuyable with no price but a with optional static action to call on players
      */
     @Override
     public Unbuyable createStaticCard(final Card card, final String action, final int amount) {
@@ -170,7 +172,7 @@ public final class CardFactoryImpl implements CardFactory {
                     if (!player.getBankAccount().isPaymentAllowed(amount)) {
                         return TriggeredEvent.UNPERFORMED.update("Il giocatore non ha abbasta denaro");
                     }
-                    player.payPlayer(null, amount);
+                    player.getBankAccount().payPlayer(null, amount);
                     return TriggeredEvent.PERFORMED.update(player + " ha pagato " + amount);
                 };
             }
@@ -197,7 +199,7 @@ public final class CardFactoryImpl implements CardFactory {
                     return TriggeredEvent.PERFORMED.update(myUnforseen.getDescription());
                 };
             }
-            case "" -> {
+            case "" -> { 
                 staticAction = (player) -> TriggeredEvent.UNPERFORMED;
             }
             default -> throw new IllegalArgumentException("The action read isn't an action of the game: " + action);

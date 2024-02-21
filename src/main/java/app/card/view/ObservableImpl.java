@@ -11,7 +11,6 @@ import java.util.ArrayList;
 /**
  * An observable of a generic parameter T.
  * Observervable is an abstract class for be extended with implementation.
- * 
  * @param <T> is a generic class to be Observable
  */
 public abstract class ObservableImpl<T> extends JPanel implements Observable<T> {
@@ -45,3 +44,4 @@ public abstract class ObservableImpl<T> extends JPanel implements Observable<T> 
         }
     }
 }
+

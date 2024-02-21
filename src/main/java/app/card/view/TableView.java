@@ -5,7 +5,7 @@ import javax.swing.ImageIcon;
 
 import app.card.apii.Card;
 import app.card.apii.CardAdapter;
-
+import app.card.impl.CardFactoryImpl;
 import app.card.utils.UseGetResource;
 import app.player.apii.Player;
 
@@ -14,16 +14,11 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Image;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.Collections;
 import java.io.ObjectInputStream;
-
 /**
  * View of table in the game.
  * TableView extend the abstract class Observable who extende JPanel,
@@ -32,16 +27,13 @@ import java.io.ObjectInputStream;
 public class TableView extends ObservableImpl<Player> {
 
     private static final long serialVersionUID = 3L;
-    private final transient List<Card> cardList;
+    private transient List<Card> cardList;
     private transient Map<Card, BoxPanelView> cells = new HashMap<>();
     private static final int IMAGESIZE = 70;
     private final int size;
 
-    private final transient List<Card> tableList;
-
     /**
      * Method of serialization.
-     * 
      * @param in
      * @throws IOException
      * @throws ClassNotFoundException
@@ -49,7 +41,7 @@ public class TableView extends ObservableImpl<Player> {
     private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         this.cells = new HashMap<>();
-
+        this.cardList = new CardFactoryImpl().cardsInitializer();
     }
 
     /**
@@ -62,8 +54,6 @@ public class TableView extends ObservableImpl<Player> {
         this.cardList = List.of(list.stream().toArray(Card[]::new));
         this.setLayout(new GridLayout(size, size));
         this.setBackground(Color.decode("#7FFFD4"));
-        //this.tableList = list;
-        this.tableList = Collections.unmodifiableList(new ArrayList<>(list));
 
         int index = 0;
         for (int i = 0; i < size; i++) {
@@ -84,7 +74,6 @@ public class TableView extends ObservableImpl<Player> {
     /**
      * Redraw a player on the position passed.
      * this method takes advantage of the fact that each player has a unique color.
-     * 
      * @param color
      * @param position
      */
@@ -92,7 +81,7 @@ public class TableView extends ObservableImpl<Player> {
         if (position > (this.size * 4) - 1 || position < 0) {
             throw new IllegalArgumentException("Position passed is not a position in table size");
         }
-        for (final var i : this.cells.keySet()) {
+        for (final var i: this.cells.keySet()) {
             if (i.getCardId() == position) {
                 this.getCells().get(i).drawCircle(color);
             }
@@ -102,7 +91,6 @@ public class TableView extends ObservableImpl<Player> {
     /**
      * Remove a player on the position passed.
      * this method takes advantage of the fact that each player has a unique color.
-     * 
      * @param color
      * @param position
      */
@@ -110,7 +98,7 @@ public class TableView extends ObservableImpl<Player> {
         if (position > (this.size * 4) - 1 || position < 0) {
             throw new IllegalArgumentException("Position passed is not a position in table size");
         }
-        for (final var i : this.cells.keySet()) {
+        for (final var i: this.cells.keySet()) {
             if (i.getCardId() == position) {
                 this.getCells().get(i).removeCircle(color);
             }
@@ -128,22 +116,19 @@ public class TableView extends ObservableImpl<Player> {
      * @return a list of all Cards in table.
      */
     public List<Card> getCardList() {
-        return tableList.stream()
-                .sorted(Comparator.comparingInt(Card::getCardId))
-                .collect(Collectors.toList());
+        return List.of(this.cardList.stream().toArray(Card[]::new));
     }
 
     /**
      * Return the image loaded from UseGetResource utility class.
-     * 
      * @param fileName is the name of image.
      * @return the image loaded
      */
     private JLabel renderImage(final String fileName) {
         final Image icon = new ImageIcon(Objects.requireNonNull(
-                UseGetResource.loadResource("view/image/" + fileName)))
-                .getImage()
-                .getScaledInstance(IMAGESIZE, IMAGESIZE, Image.SCALE_SMOOTH);
+            UseGetResource.loadResource("view/image/" + fileName)))
+            .getImage()
+            .getScaledInstance(IMAGESIZE, IMAGESIZE, Image.SCALE_SMOOTH);
         final JLabel image = new JLabel();
         image.setIcon(new ImageIcon(icon));
         return image;
