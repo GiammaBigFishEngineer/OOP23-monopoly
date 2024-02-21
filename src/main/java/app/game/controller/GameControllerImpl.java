@@ -121,7 +121,7 @@ public final class GameControllerImpl implements GameController {
      * players list as the current player
      */
 
-    public void nextPlayer() {
+    private void nextPlayer() {
 
         currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
         currentPlayer = players.get(currentPlayerIndex);
@@ -213,11 +213,12 @@ public final class GameControllerImpl implements GameController {
     }
 
     /**
-     * {@inheritDoc}
+     * this method is used to handle the buttons that will be activated based on.
+     * the.
+     * type of the card the current player landed on
      */
 
-    @Override
-    public void handleCard() {
+    private void handleCard() {
 
         if (currentCard.isUnbuyable()) {
 
@@ -243,7 +244,7 @@ public final class GameControllerImpl implements GameController {
      * (Unforseen or goToJail card)
      */
 
-    public void handleUnbuyable() {
+    private void handleUnbuyable() {
 
         if (currentCard.getCardId() == UNFORSEEN1_ID || currentCard.getCardId() == UNFORSEEN2_ID
                 || currentCard.getCardId() == UNFORSEEN3_ID) {
@@ -269,7 +270,7 @@ public final class GameControllerImpl implements GameController {
      * It checks whether the card is owned and, if so, who is it
      */
 
-    public void handleBuildable() {
+    private void handleBuildable() {
 
         final Boolean owned = CardAdapter.buildableAdapter(currentCard).isOwned();
 
@@ -299,7 +300,7 @@ public final class GameControllerImpl implements GameController {
      * Unlike handleBuildable it activates different buttons
      */
 
-    public void handleBuyable() {
+    private void handleBuyable() {
         final Boolean owned = CardAdapter.buyableAdapter(currentCard).isOwned();
 
         if (owned) {
@@ -319,10 +320,7 @@ public final class GameControllerImpl implements GameController {
     }
 
     /**
-     * this method is called if the current player has landed on an unbuyable card
-     * and in particular if he is on an unforseen.
-     * It acts differently by checking whether the unforseen concerns movement or
-     * payment.
+     * {@inheritDoc}
      */
 
     @Override
@@ -389,11 +387,11 @@ public final class GameControllerImpl implements GameController {
     }
 
     /**
-     * {@inheritDoc}
+     * @param owner is the player who own the propriety and who will receive the
+     *              payment
      */
 
-    @Override
-    public void payFees(final Player owner) {
+    private void payFees(final Player owner) {
         landedOnOwned = true;
         ownerName = CardAdapter.buyableAdapter(currentCard).getOwner().getName();
 
@@ -406,11 +404,11 @@ public final class GameControllerImpl implements GameController {
     }
 
     /**
-     * {@inheritDoc}
+     * this method remove one player from the player list and add him in the.
+     * defeated player list
      */
 
-    @Override
-    public void defeatPlayer() {
+    private void defeatPlayer() {
 
         defeated.add(currentPlayer);
         players.remove(currentPlayer);
@@ -450,7 +448,7 @@ public final class GameControllerImpl implements GameController {
      * the next current player
      */
 
-    public void newIndex() {
+    private void newIndex() {
         this.currentPlayerIndex--;
     }
 
@@ -491,11 +489,11 @@ public final class GameControllerImpl implements GameController {
     }
 
     /**
-     * {@inheritDoc}
+     * this method is used to create the players list starting from the list of.
+     * their names
      */
 
-    @Override
-    public void initializePlayer() {
+    private void initializePlayer() {
         var id = 1;
         for (final String name : playersName) {
 

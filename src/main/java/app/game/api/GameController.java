@@ -36,14 +36,10 @@ public interface GameController {
     void sellPropriety();
 
     /**
-     * @param owner is the player who own the propriety and who will receive the
-     *              payment
-     */
-    void payFees(Player owner);
-
-    /**
-     * this method is called only when the current player has landed on an
-     * unforseen.
+     * this method is called if the current player has landed on an unbuyable card
+     * and in particular if he is on an unforseen.
+     * It acts differently by checking whether the unforseen concerns movement or
+     * payment.
      */
     void pickUnforseen();
 
@@ -60,13 +56,6 @@ public interface GameController {
      * If the player passes over the GO card, he earns an amount of money
      */
     void startTurn();
-
-    /**
-     * this method is used to handle the buttons that will be activated based on.
-     * the.
-     * type of the card the current player landed on
-     */
-    void handleCard();
 
     /**
      * @return true if current player is in jail
@@ -112,18 +101,6 @@ public interface GameController {
      * @return true if the player list contains only one player, false otherwise
      */
     boolean isOver();
-
-    /**
-     * this method remove one player from the player list and add him in the.
-     * defeated player list
-     */
-    void defeatPlayer();
-
-    /**
-     * this method is used to create the players list starting from the list of.
-     * their names
-     */
-    void initializePlayer();
 
     /**
      * @return a defensive copy of the current player in the game
