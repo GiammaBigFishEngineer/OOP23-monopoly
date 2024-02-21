@@ -1,12 +1,8 @@
 package app.player.impl;
 
-//import java.util.Optional;
-
-import app.card.apii.Card;
-//import app.card.apii.CardAdapter;
-import app.player.apii.Player;
-import app.player.apii.PlayerPanelLogic;
-//import app.player.view.PlayerPanelView;
+import app.card.api.Card;
+import app.player.api.Player;
+import app.player.api.PlayerPanelLogic;
 
 /**
  * Class which implements PlayerPanelLogic.

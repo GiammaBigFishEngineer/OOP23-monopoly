@@ -1,4 +1,4 @@
-package app.card.apii;
+package app.card.api;
 
 /**
  * Observer interface rappresent the obj to be observed.

@@ -1,4 +1,4 @@
-package app.card.apii;
+package app.card.api;
 
 import java.io.IOException;
 import java.util.List;

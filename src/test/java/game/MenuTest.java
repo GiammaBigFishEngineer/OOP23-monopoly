@@ -1,6 +1,6 @@
 package game;
 
-import app.game.apii.MenuController;
+import app.game.api.MenuController;
 import app.game.model.MenuControllerImpl;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

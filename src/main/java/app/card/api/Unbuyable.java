@@ -1,9 +1,9 @@
-package app.card.apii;
+package app.card.api;
 
 import java.util.Optional;
 
 import app.card.impl.Unforseen;
-import app.player.apii.Player;
+import app.player.api.Player;
 
 /**
  * An Interface representing static, non-purchasable boxes.

@@ -8,12 +8,12 @@ import java.util.stream.Collectors;
 
 import java.awt.Color;
 
-import app.card.apii.Buildable;
-import app.card.apii.Buyable;
-import app.card.apii.Card;
-import app.card.apii.CardAdapter;
-import app.player.apii.BankAccount;
-import app.player.apii.Player;
+import app.card.api.Buildable;
+import app.card.api.Buyable;
+import app.card.api.Card;
+import app.card.api.CardAdapter;
+import app.player.api.BankAccount;
+import app.player.api.Player;
 
 /**
  * Class which implements a Player.

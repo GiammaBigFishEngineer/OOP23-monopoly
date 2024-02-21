@@ -1,6 +1,6 @@
-package app.card.apii;
+package app.card.api;
 
-import app.player.apii.Player;
+import app.player.api.Player;
 
 /**
  * An interface that represents a purchasable box.

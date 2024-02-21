@@ -1,11 +1,11 @@
-package app.player.apii;
+package app.player.api;
 
 import java.util.List;
 import java.util.Optional;
 
-import app.card.apii.Buildable;
-import app.card.apii.Buyable;
-import app.card.apii.Card;
+import app.card.api.Buildable;
+import app.card.api.Buyable;
+import app.card.api.Card;
 
 import java.util.Map;
 

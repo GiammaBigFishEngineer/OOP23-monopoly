@@ -1,7 +1,7 @@
-package app.game.apii;
+package app.game.api;
 
-import app.card.apii.Card;
-import app.player.apii.Player;
+import app.card.api.Card;
+import app.player.api.Player;
 
 /**
  * An interface that rapresent the logic of the player actions.

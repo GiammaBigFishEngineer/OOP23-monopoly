@@ -1,12 +1,13 @@
 package app.game.model;
 
-import app.game.apii.MenuController;
 import java.awt.Window;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import app.game.api.MenuController;
 
 /**
  * Implementation of MenuController with its logic.

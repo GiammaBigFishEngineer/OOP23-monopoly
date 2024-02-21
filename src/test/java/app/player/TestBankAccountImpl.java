@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import app.player.apii.BankAccount;
+import app.player.api.BankAccount;
 import app.player.impl.BankAccountImpl;
 
 /**

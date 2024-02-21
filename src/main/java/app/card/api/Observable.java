@@ -1,4 +1,4 @@
-package app.card.apii;
+package app.card.api;
 
 /**
  * An observable of a generic parameter T.

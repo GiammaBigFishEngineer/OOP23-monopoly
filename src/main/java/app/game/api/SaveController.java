@@ -1,9 +1,9 @@
-package app.game.apii;
+package app.game.api;
 
 import java.util.List;
 import java.util.Optional;
 
-import app.player.apii.Player;
+import app.player.api.Player;
 
 /**
  * An interface that defines operations that can be used for saving data.
