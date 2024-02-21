@@ -6,35 +6,32 @@ package app.card.api;
 public interface CardAdapter {
 
     /**
-     * @param card is the card to adapt
      * @return buildable type card
      */
-    static Buildable buildableAdapter(Card card) {
-        if (!(card instanceof Buildable)) {
+    default Buildable asBuildable() {
+        if (!(this instanceof Buildable)) {
             throw new IllegalArgumentException("Card passed is not Buildable");
         }
-        return (Buildable) card;
+        return (Buildable) this;
     }
 
     /**
-     * @param card is the card to adapt
      * @return Buyable type card
      */
-    static Buyable buyableAdapter(Card card) {
-        if (!(card instanceof Buyable)) {
+    default Buyable asBuyable() {
+        if (!(this instanceof Buyable)) {
             throw new IllegalArgumentException("Card passed is not Buyable");
         }
-        return (Buyable) card;
+        return (Buyable) this;
     }
 
     /**
-     * @param card is the card to adapt
      * @return Unbuyable type card
      */
-    static Unbuyable unbuyableAdapter(Card card) {
-        if (!(card instanceof Unbuyable)) {
+    default Unbuyable asUnbuyable() {
+        if (!(this instanceof Unbuyable)) {
             throw new IllegalArgumentException("Card passed is not Unbuyable");
         }
-        return (Unbuyable) card;
+        return (Unbuyable) this;
     }
 }

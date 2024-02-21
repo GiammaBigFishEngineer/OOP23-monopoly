@@ -4,7 +4,6 @@ import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 
 import app.card.api.Card;
-import app.card.api.CardAdapter;
 import app.card.impl.CardFactoryImpl;
 import app.card.utils.UseGetResource;
 import app.player.api.Player;
@@ -147,10 +146,10 @@ public class TableView extends ObservableImpl<Player> {
         final Card card = this.cardList.get(index);
         String price = "";
         if (card.isBuildable()) {
-            final var buildable = CardAdapter.buildableAdapter(card);
+            final var buildable = card.asBuildable();
             price = String.valueOf(buildable.getPrice() + "$");
         } else if (card.isBuyable()) {
-            final var buyable = CardAdapter.buyableAdapter(card);
+            final var buyable = card.asBuyable();
             price = String.valueOf(buyable.getPrice() + "$");
         } else if (card.isUnbuyable()) {
             price = "";

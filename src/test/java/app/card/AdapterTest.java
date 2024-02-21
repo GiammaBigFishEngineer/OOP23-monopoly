@@ -7,7 +7,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import app.card.api.Card;
-import app.card.api.CardAdapter;
 import app.card.impl.CardFactoryImpl;
 
 import java.io.IOException;
@@ -34,7 +33,7 @@ class AdapterTest {
     @Test
     void testThrowsBuildableAdapter() {
         final var card = list.get(0); /* passo la prima cella del via */
-        assertThrows(IllegalArgumentException.class, () -> CardAdapter.buildableAdapter(card));
+        assertThrows(IllegalArgumentException.class, () -> card.asBuildable());
     }
 
     /**
@@ -43,7 +42,7 @@ class AdapterTest {
     @Test
     void testThrowsBuyableAdapter() {
         final var card = list.get(0); /* passo la prima cella del via */
-        assertThrows(IllegalArgumentException.class, () -> CardAdapter.buyableAdapter(card));
+        assertThrows(IllegalArgumentException.class, () -> card.asBuyable());
     }
 
     /**
@@ -52,7 +51,7 @@ class AdapterTest {
     @Test
     void testThrowsUnbuyableAdapter() {
         final var card = list.get(1); /* passo la prima proprieta' */
-        assertThrows(IllegalArgumentException.class, () -> CardAdapter.unbuyableAdapter(card));
+        assertThrows(IllegalArgumentException.class, () -> card.asUnbuyable());
     }
 
     /**
@@ -63,13 +62,13 @@ class AdapterTest {
     void testIteratorAdapter() {
         for (final var i : list) {
             if (i.isBuildable()) {
-                final var adapted = CardAdapter.buildableAdapter(i);
+                final var adapted = i.asBuildable();
                 assertTrue(adapted.isBuildable());
             } else if (i.isBuyable()) {
-                final var adapted = CardAdapter.buyableAdapter(i);
+                final var adapted = i.asBuyable();
                 assertTrue(adapted.isBuyable());
             } else if (i.isUnbuyable()) {
-                final var adapted = CardAdapter.unbuyableAdapter(i);
+                final var adapted = i.asUnbuyable();
                 assertTrue(adapted.isUnbuyable());
             }
         }

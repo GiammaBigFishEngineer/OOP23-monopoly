@@ -3,7 +3,7 @@ package app.card.api;
 /**
  * An interface that represents each individual box.
  */
-public interface Card {
+public interface Card extends CardAdapter {
     /**
      * @param
      * @return name of card

@@ -180,7 +180,7 @@ public final class PlayerImpl implements Player {
     public List<Buyable> getBuyableOwned() {
         return map.keySet().stream()
                 .filter(box -> map.get(box).isPresent() && box.isBuyable())
-                .map(CardAdapter::buyableAdapter)
+                .map(CardAdapter::asBuyable)
                 .collect(Collectors.toList());
     }
 
@@ -191,7 +191,7 @@ public final class PlayerImpl implements Player {
     public List<Buildable> getBuildableOwned() {
         return map.keySet().stream()
                 .filter(box -> map.get(box).isPresent() && box.isBuildable())
-                .map(CardAdapter::buildableAdapter)
+                .map(CardAdapter::asBuildable)
                 .collect(Collectors.toList());
     }
 
@@ -266,12 +266,12 @@ public final class PlayerImpl implements Player {
         if (!(box instanceof Buildable)) {
             return box.getPrice();
         }
-        final Optional<Integer> numberHouses = getHouseBuilt(CardAdapter.buildableAdapter(box));
+        final Optional<Integer> numberHouses = getHouseBuilt(box.asBuildable());
         if (numberHouses.isEmpty()) {
             throw new IllegalArgumentException("Player doesn't own the current box.");
         }
-        return CardAdapter.buildableAdapter(box).getPrice()
-                + numberHouses.get() * CardAdapter.buildableAdapter(box).getHousePrice();
+        return box.asBuildable().getPrice()
+                + numberHouses.get() * box.asBuildable().getHousePrice();
     }
 
     /**

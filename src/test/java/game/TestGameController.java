@@ -7,7 +7,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import app.card.api.Card;
-import app.card.api.CardAdapter;
 import app.game.api.GameController;
 import app.game.controller.GameControllerImpl;
 import app.game.utils.BtnCodeEnum;
@@ -202,7 +201,7 @@ class TestGameController {
         logic.startTurn();
         logic.buyPropriety();
 
-        final Player owner = CardAdapter.buildableAdapter(logic.getCurrentCard()).getOwner();
+        final Player owner = logic.getCurrentCard().asBuildable().getOwner();
 
         assertEquals(owner.getName(), logic.getCurrentPlayer().getName());
 
@@ -218,9 +217,9 @@ class TestGameController {
         logic.setDiceValue(VISERBA_ID);
         logic.startTurn();
 
-        final int cardPrice = CardAdapter.buildableAdapter(logic.getCurrentCard()).getPrice();
+        final int cardPrice = logic.getCurrentCard().asBuildable().getPrice();
 
-        final int housePrice = CardAdapter.buildableAdapter(logic.getCurrentCard()).getHousePrice();
+        final int housePrice = logic.getCurrentCard().asBuildable().getHousePrice();
 
         final int total = cardPrice + housePrice;
 
@@ -240,7 +239,7 @@ class TestGameController {
         logic.startTurn();
         logic.buyPropriety();
 
-        final Player owner = CardAdapter.buyableAdapter(logic.getCurrentCard()).getOwner();
+        final Player owner = logic.getCurrentCard().asBuyable().getOwner();
 
         logic.newTurn();
         assertEquals(START_BALANCE, logic.getCurrentPlayer().getBankAccount().getBalance());
@@ -248,7 +247,7 @@ class TestGameController {
         logic.setDiceValue(VISERBA_ID);
         logic.startTurn();
 
-        final int fees = CardAdapter.buyableAdapter(logic.getCurrentCard()).getTransitFees();
+        final int fees = logic.getCurrentCard().asBuyable().getTransitFees();
 
         assertEquals(START_BALANCE - fees, logic.getCurrentPlayer().getBankAccount().getBalance());
         assertEquals(START_BALANCE - VISERBA_PRICE + fees, owner.getBankAccount().getBalance());

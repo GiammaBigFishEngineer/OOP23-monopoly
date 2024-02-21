@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 import java.util.Comparator;
 
 import app.card.api.Card;
-import app.card.api.CardAdapter;
 import app.card.api.StaticActionStrategy.TriggeredEvent;
 import app.card.impl.CardFactoryImpl;
 import app.game.api.GameController;
@@ -198,7 +197,7 @@ public final class GameControllerImpl implements GameController {
 
             final int newPosition = finalPosition - (int) cardsList.size();
             currentPlayer.setPosition(newPosition);
-            CardAdapter.unbuyableAdapter(this.cardsList.get(GO_ID)).makeAction(currentPlayer);
+            this.cardsList.get(GO_ID).asUnbuyable().makeAction(currentPlayer);
 
         } else {
             currentPlayer.setPosition(finalPosition);
@@ -257,7 +256,7 @@ public final class GameControllerImpl implements GameController {
         }
 
         if (currentCard.getCardId() == GO_TO_JAIL_ID) {
-            final TriggeredEvent e = CardAdapter.unbuyableAdapter(currentCard).makeAction(currentPlayer);
+            final TriggeredEvent e = currentCard.asUnbuyable().makeAction(currentPlayer);
             this.unforseenMessage = e.getMessage();
             this.landedOnUnforseen = true;
             enableSingleButton(BtnCodeEnum.END_TURN);
@@ -272,11 +271,11 @@ public final class GameControllerImpl implements GameController {
 
     private void handleBuildable() {
 
-        final Boolean owned = CardAdapter.buildableAdapter(currentCard).isOwned();
+        final Boolean owned = currentCard.asBuildable().isOwned();
 
         if (owned) {
 
-            final Player owner = CardAdapter.buildableAdapter(currentCard).getOwner();
+            final Player owner = currentCard.asBuildable().getOwner();
 
             if (currentPlayer.equals(owner)) {
 
@@ -301,11 +300,11 @@ public final class GameControllerImpl implements GameController {
      */
 
     private void handleBuyable() {
-        final Boolean owned = CardAdapter.buyableAdapter(currentCard).isOwned();
+        final Boolean owned = currentCard.asBuyable().isOwned();
 
         if (owned) {
 
-            final Player owner = CardAdapter.buyableAdapter(currentCard).getOwner();
+            final Player owner = currentCard.asBuyable().getOwner();
 
             if (!currentPlayer.equals(owner)) {
                 payFees(owner);
@@ -325,7 +324,7 @@ public final class GameControllerImpl implements GameController {
 
     @Override
     public void pickUnforseen() {
-        final TriggeredEvent e = CardAdapter.unbuyableAdapter(currentCard).makeAction(currentPlayer);
+        final TriggeredEvent e = currentCard.asUnbuyable().makeAction(currentPlayer);
         this.unforseenMessage = e.getMessage();
         this.landedOnUnforseen = true;
 
@@ -358,7 +357,7 @@ public final class GameControllerImpl implements GameController {
 
         disableSingleButton(BtnCodeEnum.BUY_PROPRIETY);
 
-        return currentPlayer.buyBox(CardAdapter.buyableAdapter(currentCard));
+        return currentPlayer.buyBox(currentCard.asBuyable());
 
     }
 
@@ -371,7 +370,7 @@ public final class GameControllerImpl implements GameController {
 
         disableSingleButton(BtnCodeEnum.BUY_HOUSE);
 
-        return currentPlayer.buildHouse(CardAdapter.buildableAdapter(currentCard));
+        return currentPlayer.buildHouse(currentCard.asBuildable());
 
     }
 
@@ -383,7 +382,7 @@ public final class GameControllerImpl implements GameController {
     public void sellPropriety() {
 
         disableSingleButton(BtnCodeEnum.SELL_PROPRIETY);
-        currentPlayer.sellBuyable(CardAdapter.buyableAdapter(currentCard));
+        currentPlayer.sellBuyable(currentCard.asBuyable());
     }
 
     /**
@@ -393,9 +392,9 @@ public final class GameControllerImpl implements GameController {
 
     private void payFees(final Player owner) {
         landedOnOwned = true;
-        ownerName = CardAdapter.buyableAdapter(currentCard).getOwner().getName();
+        ownerName = currentCard.asBuyable().getOwner().getName();
 
-        final int fees = CardAdapter.buyableAdapter(currentCard).getTransitFees();
+        final int fees = currentCard.asBuyable().getTransitFees();
 
         if (!currentPlayer.payPlayer(owner, fees)) {
             this.defeatPlayer();
@@ -417,7 +416,7 @@ public final class GameControllerImpl implements GameController {
 
         for (final var entry : map.entrySet()) {
             if (entry.getValue().isPresent()) {
-                CardAdapter.buyableAdapter(entry.getKey()).clearOwner();
+                entry.getKey().asBuyable().clearOwner();
             }
         }
 

@@ -6,7 +6,6 @@ import java.util.LinkedList;
 
 import app.card.api.Buyable;
 import app.card.api.Card;
-import app.card.api.CardAdapter;
 import app.player.api.Player;
 import app.player.api.PlayerPanelLogic;
 import app.player.view.PlayerPanelView;
@@ -80,7 +79,7 @@ public final class PlayerPanelLogicImpl implements PlayerPanelLogic {
         }
         if (currentBox.isBuildable()) {
             final Optional<Integer> housesBuilt = this.currentPlayer
-                    .getHouseBuilt(CardAdapter.buildableAdapter(currentBox));
+                    .getHouseBuilt(currentBox.asBuildable());
             if (housesBuilt.isPresent()) {
                 panel.setPlayerHousesText(String.valueOf(housesBuilt.get()));
             } else {
