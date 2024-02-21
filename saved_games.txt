@@ -1,0 +1,26 @@
+*** Partita del: 21-02-2024  21:41:29 ***
+Player: poz, Id: 1, Posizione: 13, Denaro: 250
+Player: as, Id: 2, Posizione: 10, Denaro: 200
+Player: sasaffd, Id: 3, Posizione: 13, Denaro: 290
+
+
+*** Partita del: 21-02-2024  21:41:53 ***
+Player: sdffsdf, Id: 1, Posizione: 0, Denaro: 500
+Player: sdfsdfsdf, Id: 2, Posizione: 0, Denaro: 500
+Player: sdfsdfsdfsdfsdfsdfsdf, Id: 3, Posizione: 0, Denaro: 500
+
+
+*** Partita del: 21-02-2024  21:42:11 ***
+Player: ffff, Id: 1, Posizione: 5, Denaro: 380
+Player: dddd, Id: 2, Posizione: 0, Denaro: 500
+Player: sssss, Id: 3, Posizione: 0, Denaro: 500
+
+
+*** Partita del: 21-02-2024  21:42:32 ***
+Player: poz, Id: 1, Posizione: 0, Denaro: 500
+Player: giamma, Id: 2, Posizione: 0, Denaro: 500
+Player: lisa, Id: 3, Posizione: 0, Denaro: 500
+Player: gio, Id: 4, Posizione: 0, Denaro: 500
+Player: pianini, Id: 5, Posizione: 0, Denaro: 500
+
+

@@ -23,6 +23,7 @@ import java.awt.Insets;
 import java.awt.Toolkit;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
@@ -52,7 +53,7 @@ public final class MenuView extends JFrame {
         final JPanel buttonPanel;
         final JButton startButton;
         final JButton quitButton;
-        final JButton optionButton;
+        final JButton showSaveButton;
         final JLabel titleLabel;
         final JLabel subtitleLabel;
 
@@ -127,17 +128,30 @@ public final class MenuView extends JFrame {
         buttonPanel.add(startButton);
 
         /*
-         * Option Button
+         * showSaveButton Button
          */
 
-        optionButton = new JButton("Visualizza Salvataggi");
-        optionButton.setFont(boldFont);
+        showSaveButton = new JButton("Visualizza Salvataggi");
+        showSaveButton.setFont(boldFont);
 
-        optionButton.addActionListener(e -> {
+        showSaveButton.addActionListener(e -> {
+            final Optional<String> output = saveLogic.getOutputSavedGames();
+
+            if (output.isPresent()) {
+                final String dataContent = output.get();
+                if (dataContent.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Errore durante la lettura dei salvataggi");
+                } else {
+                    new SavedGamesView("Dati Savlvati", dataContent);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Nessuna partita è stata salvata");
+            }
+
             saveLogic.viewSavedGames();
         });
 
-        buttonPanel.add(optionButton);
+        buttonPanel.add(showSaveButton);
 
         /*
          * Quit Button
