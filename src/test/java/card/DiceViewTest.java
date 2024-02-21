@@ -1,14 +1,14 @@
 package card;
 
-import app.card.view.DiceView;
 import app.game.controller.DiceController;
 import app.game.utils.Dice;
+import app.game.view.DiceView;
 
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 /**
- * Test for dice gui {@link app.card.view.DiceView} with dice rolling.
+ * Test for dice gui {@link app.game.view.DiceView} with dice rolling.
  */
 final class DiceViewTest {
 

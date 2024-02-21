@@ -1,4 +1,4 @@
-package app.card.view;
+package app.game.view;
 
 import app.game.utils.Dice;
 
