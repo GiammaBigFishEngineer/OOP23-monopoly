@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import app.card.api.Card;
@@ -22,8 +23,14 @@ import app.player.impl.PlayerImpl;
 class UnforseenTest {
 
     private static final int ID_TEST = 5;
+    private static final int FIRST_BOX = 1;
     private final List<Card> cards = new LinkedList<>();
     private final Player player = new PlayerImpl("Player", ID_TEST, cards, 0);
+
+    @BeforeEach
+    void init() {
+        this.player.setPosition(FIRST_BOX);
+    }
 
     /**
      * Test first unforseen.
@@ -51,7 +58,7 @@ class UnforseenTest {
      */
     private boolean checkChanges(final Player player) {
         /* position and balance start from -1, i check the changes */
-        return player.getCurrentPosition() != 1 || player.getBankAccount().getBalance() != -1;
+        return player.getCurrentPosition() != FIRST_BOX || player.getBankAccount().getBalance() != 0;
     }
 
     /**
