@@ -112,7 +112,8 @@ public class SaveControllerImpl implements SaveController {
     /**
      * Displays the data of the saved games.
      * 
-     * @return a list of strings representing the data of the saved games with the various data of the players of the game
+     * @return a list of strings representing the data of the saved games 
+     *         with the various data of the players of the game
      */
     @Override
     public List<String> viewSavedGames() {
@@ -141,8 +142,8 @@ public class SaveControllerImpl implements SaveController {
     /**
      * Provides a formatted output of saved games for the view.
      * 
-     * @return an {@code Optional} containing a formatted string representing the saved data
-     * or an empty {@code Optional} if there are no saved data
+     * @return an {@code Optional} containing a formatted string representing the saved data or
+     *         an empty {@code Optional} if there are no saved data yet.
      */
     @Override
     public Optional<String> getOutputSavedGames() {

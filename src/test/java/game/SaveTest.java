@@ -25,11 +25,10 @@ import java.util.List;
  * Tests for save logic: {@link app.game.controller.SaveControllerImpl}.
  */
 class SaveTest {
-
+    private SaveController saveController;
     private static final String TEST_FILE_NAME = "saved_games.txt";
     private static final int DUMMY_POSITION = 22;
     private static final int DUMMY_BALANCE = 777;
-    private SaveController saveController;
 
     /**
      * The initialization: a new istance of the save controller is created.

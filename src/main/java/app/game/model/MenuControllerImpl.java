@@ -17,10 +17,12 @@ public class MenuControllerImpl implements MenuController {
     private static final int MAX_NUM_PLAYER = 5;
 
     /**
-     * Start a new game with the provided list of player names.
+     * Starts a new game with the provided list of player names.
      * 
      * @param playerNames the list of player names participating in the game
-     * @return {@code true} if the game is successfully started, {@code false} otherwise
+     * @return {@code true} if the game is successfully started, {@code false} otherwise.
+     *         The game can start only if the number of player names is between
+     *         2 and 5 and there are no duplicates in names, ignoring case sensitivity.
      */
     @Override
     public boolean startGame(final List<String> playerNames) {
@@ -37,7 +39,7 @@ public class MenuControllerImpl implements MenuController {
     }
 
     /**
-     * Quits the current game.
+     * Quits the current game by disposing of all active windows.
      */
     @Override
     public void quitGame() {
