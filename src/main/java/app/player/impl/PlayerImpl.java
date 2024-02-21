@@ -6,12 +6,12 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import app.card.apii.Buildable;
-import app.card.apii.Buyable;
-import app.card.apii.Card;
-import app.card.apii.CardAdapter;
-import app.player.apii.BankAccount;
-import app.player.apii.Player;
+import app.card.api.Buildable;
+import app.card.api.Buyable;
+import app.card.api.Card;
+import app.card.api.CardAdapter;
+import app.player.api.BankAccount;
+import app.player.api.Player;
 
 /**
  * Class which implements a Player.
@@ -64,20 +64,20 @@ public final class PlayerImpl implements Player {
             case ID_1:
                 this.color = "#E52B50"; // red
                 break;
-            case ID_2: 
+            case ID_2:
                 this.color = "#884DA7"; // blu-magenta
                 break;
-            case ID_3: 
+            case ID_3:
                 this.color = "#FF6600"; // orange
                 break;
-            case ID_4: 
+            case ID_4:
                 this.color = "#2F4F4F"; // dark-grey
                 break;
-            case ID_5: 
+            case ID_5:
                 this.color = "000000"; // black
                 break;
-            default: 
-                this.color = "#E52B50"; 
+            default:
+                this.color = "#E52B50";
                 break;
         }
     }
@@ -148,6 +148,7 @@ public final class PlayerImpl implements Player {
     public void setMap(final Map<Card, Optional<Integer>> map) {
         this.map = new HashMap<>(map);
     }
+
     /**
      * {@inheritDoc}
      */
@@ -199,7 +200,7 @@ public final class PlayerImpl implements Player {
      */
     @Override
     public Optional<Integer> getHouseBuilt(final Buildable built) {
-        // chi usa questo metodo, si dovrà preoccupare di verificare che il player
+        // chi usa questo metodo, si dovra' preoccupare di verificare che il player
         // possieda la casella
         return map.get(built);
     }
@@ -225,7 +226,7 @@ public final class PlayerImpl implements Player {
         if (account.payPlayer(null, box.getPrice())) {
             map.put(box, Optional.of(0)); // 0 perché possiedo la casella con 0 case costruite
             box.setOwner(this);
-            return true; 
+            return true;
         } else {
             return false;
         }
@@ -289,7 +290,8 @@ public final class PlayerImpl implements Player {
      * the player,
      * only the player can modify this object.
      * Who uses the method getBankAccount() would modify the copy of the account:
-     * as a result, I have created the following methods which effectively modify the player's account.
+     * as a result, I have created the following methods which effectively modify
+     * the player's account.
      * {@inheritDoc}
      */
     @Override
@@ -304,6 +306,7 @@ public final class PlayerImpl implements Player {
     public boolean payPlayer(final Player player, final int amount) {
         return this.account.payPlayer(player, amount);
     }
+
     /**
      * {@inheritDoc}
      */

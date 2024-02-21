@@ -1,7 +1,8 @@
-package app.card.apii;
+package app.card.api;
 
-import app.player.apii.Player;
+import app.player.api.Player;
 import java.util.Objects;
+
 /**
  * A functional interface for design actions of static cards.
  * This is a Strategy patterns with lamda expression
@@ -21,7 +22,7 @@ public interface StaticActionStrategy {
         /**
          * performed says the action is successfull.
          */
-        PERFORMED, 
+        PERFORMED,
         /**
          * unperformed says the action is not successfull.
          */
@@ -37,12 +38,14 @@ public interface StaticActionStrategy {
             this.message = Objects.requireNonNull(message, "Message can't be null");
             return this;
         }
+
         /**
          * @return the message of action.
          */
         public String getMessage() {
             return this.message;
         }
+
         /**
          * Clear message of each two enum.
          */

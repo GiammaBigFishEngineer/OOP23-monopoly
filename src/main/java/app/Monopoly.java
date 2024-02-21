@@ -1,16 +1,15 @@
-package app.game;
+package app;
 
 import app.game.view.MenuView;
 
 /**
  * MonopolyGame Rimini-Edition.
  */
-public final class Hello {
+public final class Monopoly {
     /**
      * Constructor.
      */
-    private Hello() {
-        throw new IllegalStateException("Main Class");
+    private Monopoly() {
     }
 
     /**

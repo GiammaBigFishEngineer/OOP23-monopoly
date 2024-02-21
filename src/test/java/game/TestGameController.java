@@ -6,13 +6,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import app.card.apii.Card;
-import app.card.apii.CardAdapter;
-import app.game.apii.GameController;
+import app.card.api.Card;
+import app.card.api.CardAdapter;
+import app.game.api.GameController;
 import app.game.controller.GameControllerImpl;
 import app.game.utils.BtnCodeEnum;
 import app.game.utils.BtnCodeState;
-import app.player.apii.Player;
+import app.player.api.Player;
 
 import java.io.IOException;
 import java.util.List;

@@ -1,9 +1,9 @@
-package app.game.apii;
+package app.game.api;
 
 import java.util.List;
 import java.util.Optional;
 
-import app.player.apii.Player;
+import app.player.api.Player;
 
 /**
  * An interface that defines operations that can be used for saving data.
@@ -19,10 +19,13 @@ public interface SaveController {
 
     /**
      * Determines whether the game should be saved.
-     * The game should be saved if it is the first save or if there are changes in player positions or balances.
-     * It is used to know when to save game data and, consequently, to create a summary of all game sessions.
+     * The game should be saved if it is the first save or if there are changes in
+     * player positions or balances.
+     * It is used to know when to save game data and, consequently, to create a
+     * summary of all game sessions.
      * 
-     * @param gamePlayerList the list of players that must be saved if there are changes
+     * @param gamePlayerList the list of players that must be saved if there are
+     *                       changes
      * @return {@code true} if the game should be saved, {@code false} otherwise.
      */
     boolean shouldSaveGame(List<Player> gamePlayerList);
@@ -37,7 +40,8 @@ public interface SaveController {
     /**
      * Provides a formatted output of saved games for the view.
      * 
-     * @return an {@code Optional} containing a formatted string representing the saved data.
+     * @return an {@code Optional} containing a formatted string representing the
+     *         saved data.
      */
     Optional<String> getOutputSavedGames();
 }

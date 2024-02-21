@@ -8,11 +8,11 @@ import java.io.IOException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import app.card.apii.Observer;
+import app.card.api.Observer;
 import app.card.impl.CardFactoryImpl;
 import app.card.view.BoxPanelView;
 import app.card.view.TableView;
-import app.player.apii.Player;
+import app.player.api.Player;
 
 /**
  * Test for ObserverImpl extended by TableView.
@@ -24,6 +24,7 @@ class ObserverTableTest {
 
     /**
      * Render Table.
+     * 
      * @throws IOException
      */
     @BeforeEach
@@ -42,7 +43,7 @@ class ObserverTableTest {
         this.table.deleteObserver(myObs);
         this.table.notifyObservers();
         BoxPanelView positionNotified = new BoxPanelView();
-        for (final var i: this.table.getCells().keySet()) {
+        for (final var i : this.table.getCells().keySet()) {
             if (this.table.getCells().get(i).getIndex() == newPosition) {
                 positionNotified = this.table.getCells().get(i);
                 break;
@@ -62,7 +63,7 @@ class ObserverTableTest {
         this.table.addObserver(() -> table.redrawPlayer("#ffff", newPosition));
         this.table.notifyObservers();
         BoxPanelView positionNotified = new BoxPanelView();
-        for (final var i: this.table.getCells().keySet()) {
+        for (final var i : this.table.getCells().keySet()) {
             if (this.table.getCells().get(i).getIndex() == newPosition) {
                 positionNotified = this.table.getCells().get(i);
                 break;

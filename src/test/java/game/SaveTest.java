@@ -10,10 +10,10 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import app.card.apii.Card;
-import app.game.apii.SaveController;
+import app.card.api.Card;
+import app.game.api.SaveController;
 import app.game.controller.SaveControllerImpl;
-import app.player.apii.Player;
+import app.player.api.Player;
 import app.player.impl.PlayerImpl;
 
 import java.io.File;
@@ -49,7 +49,7 @@ class SaveTest {
     void clean() throws IOException {
         final File testFile = new File(TEST_FILE_NAME);
         if (testFile.exists() && !testFile.delete()) {
-                throw new IOException("Unable to delete the test file.");
+            throw new IOException("Unable to delete the test file.");
         }
     }
 
@@ -66,10 +66,12 @@ class SaveTest {
     }
 
     /**
-     * Test that verifies the behavior of saveGame method when attempting to save a game with fewer players 
+     * Test that verifies the behavior of saveGame method when attempting to save a
+     * game with fewer players
      * than the required minimum (2 players).
      * 
-     * @throws IllegalStateException when attempting to save a game with an insufficient number of players
+     * @throws IllegalStateException when attempting to save a game with an
+     *                               insufficient number of players
      */
     @Test
     void testSaveGameWithLessThanRequiredPlayers() {
@@ -78,10 +80,12 @@ class SaveTest {
     }
 
     /**
-     * Test that verifies the behavior of saveGame method when attempting to save a game with more players 
+     * Test that verifies the behavior of saveGame method when attempting to save a
+     * game with more players
      * than the required maximum (5 players).
      * 
-     * @throws IllegalStateException when attempting to save a game with an excessive number of players
+     * @throws IllegalStateException when attempting to save a game with an
+     *                               excessive number of players
      */
     @Test
     void testSaveGameWithMoreThanRequiredPlayers() {
@@ -105,6 +109,7 @@ class SaveTest {
         assertTrue(saveController.shouldSaveGame(players));
         saveController.saveGame(players);
     }
+
     /**
      * Test that verifies that the saved data can be read.
      */
@@ -118,7 +123,8 @@ class SaveTest {
     }
 
     /**
-     * Utility method: it creates a list of dummy players with a name, id, list of cards and initial amount.
+     * Utility method: it creates a list of dummy players with a name, id, list of
+     * cards and initial amount.
      * 
      * @param numPlayers the number of dummy players to create
      * @return a list of dummy players

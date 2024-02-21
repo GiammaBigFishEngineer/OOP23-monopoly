@@ -3,11 +3,11 @@ package app.card.view;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 
-import app.card.apii.Card;
-import app.card.apii.CardAdapter;
+import app.card.api.Card;
+import app.card.api.CardAdapter;
 import app.card.impl.CardFactoryImpl;
 import app.card.utils.UseGetResource;
-import app.player.apii.Player;
+import app.player.api.Player;
 
 import java.awt.GridLayout;
 import java.awt.BorderLayout;
@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.io.ObjectInputStream;
+
 /**
  * View of table in the game.
  * TableView extend the abstract class Observable who extende JPanel,
@@ -34,6 +35,7 @@ public class TableView extends ObservableImpl<Player> {
 
     /**
      * Method of serialization.
+     * 
      * @param in
      * @throws IOException
      * @throws ClassNotFoundException
@@ -74,6 +76,7 @@ public class TableView extends ObservableImpl<Player> {
     /**
      * Redraw a player on the position passed.
      * this method takes advantage of the fact that each player has a unique color.
+     * 
      * @param color
      * @param position
      */
@@ -81,7 +84,7 @@ public class TableView extends ObservableImpl<Player> {
         if (position > (this.size * 4) - 1 || position < 0) {
             throw new IllegalArgumentException("Position passed is not a position in table size");
         }
-        for (final var i: this.cells.keySet()) {
+        for (final var i : this.cells.keySet()) {
             if (i.getCardId() == position) {
                 this.getCells().get(i).drawCircle(color);
             }
@@ -91,6 +94,7 @@ public class TableView extends ObservableImpl<Player> {
     /**
      * Remove a player on the position passed.
      * this method takes advantage of the fact that each player has a unique color.
+     * 
      * @param color
      * @param position
      */
@@ -98,7 +102,7 @@ public class TableView extends ObservableImpl<Player> {
         if (position > (this.size * 4) - 1 || position < 0) {
             throw new IllegalArgumentException("Position passed is not a position in table size");
         }
-        for (final var i: this.cells.keySet()) {
+        for (final var i : this.cells.keySet()) {
             if (i.getCardId() == position) {
                 this.getCells().get(i).removeCircle(color);
             }
@@ -121,14 +125,15 @@ public class TableView extends ObservableImpl<Player> {
 
     /**
      * Return the image loaded from UseGetResource utility class.
+     * 
      * @param fileName is the name of image.
      * @return the image loaded
      */
     private JLabel renderImage(final String fileName) {
         final Image icon = new ImageIcon(Objects.requireNonNull(
-            UseGetResource.loadResource("view/image/" + fileName)))
-            .getImage()
-            .getScaledInstance(IMAGESIZE, IMAGESIZE, Image.SCALE_SMOOTH);
+                UseGetResource.loadResource("view/image/" + fileName)))
+                .getImage()
+                .getScaledInstance(IMAGESIZE, IMAGESIZE, Image.SCALE_SMOOTH);
         final JLabel image = new JLabel();
         image.setIcon(new ImageIcon(icon));
         return image;

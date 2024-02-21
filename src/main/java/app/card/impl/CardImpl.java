@@ -1,6 +1,6 @@
 package app.card.impl;
 
-import app.card.apii.Card;
+import app.card.api.Card;
 
 /**
  * Implementation of Card.
@@ -12,7 +12,8 @@ public final class CardImpl implements Card {
 
     /**
      * protected for be used only in factory.
-     * @param id is the id in order on table
+     * 
+     * @param id   is the id in order on table
      * @param name is the name of box
      */
     protected CardImpl(final int id, final String name) {

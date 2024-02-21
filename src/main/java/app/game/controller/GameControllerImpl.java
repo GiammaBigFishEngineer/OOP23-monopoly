@@ -9,17 +9,17 @@ import java.util.HashMap;
 import java.util.stream.Collectors;
 import java.util.Comparator;
 
-import app.card.apii.Card;
-import app.card.apii.CardAdapter;
-import app.card.apii.StaticActionStrategy.TriggeredEvent;
+import app.card.api.Card;
+import app.card.api.CardAdapter;
+import app.card.api.StaticActionStrategy.TriggeredEvent;
 import app.card.impl.CardFactoryImpl;
-import app.game.apii.GameController;
-import app.game.apii.SaveController;
+import app.game.api.GameController;
+import app.game.api.SaveController;
 import app.game.utils.BtnCodeEnum;
 import app.game.utils.BtnCodeState;
 import app.game.utils.Dice;
 
-import app.player.apii.Player;
+import app.player.api.Player;
 import app.player.impl.PlayerImpl;
 
 import java.awt.Window;

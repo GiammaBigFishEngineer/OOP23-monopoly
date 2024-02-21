@@ -6,8 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import app.card.apii.Card;
-import app.card.apii.CardAdapter;
+import app.card.api.Card;
+import app.card.api.CardAdapter;
 import app.card.impl.CardFactoryImpl;
 
 import java.io.IOException;
@@ -51,16 +51,17 @@ class AdapterTest {
      */
     @Test
     void testThrowsUnbuyableAdapter() {
-        final var card = list.get(1); /* passo la prima proprietà */
+        final var card = list.get(1); /* passo la prima proprieta' */
         assertThrows(IllegalArgumentException.class, () -> CardAdapter.unbuyableAdapter(card));
     }
 
     /**
-     * test adapting all cards type Card to subinstance Buyable or Unbuyable or Buildable.
+     * test adapting all cards type Card to subinstance Buyable or Unbuyable or
+     * Buildable.
      */
     @Test
     void testIteratorAdapter() {
-        for (final var i: list) {
+        for (final var i : list) {
             if (i.isBuildable()) {
                 final var adapted = CardAdapter.buildableAdapter(i);
                 assertTrue(adapted.isBuildable());

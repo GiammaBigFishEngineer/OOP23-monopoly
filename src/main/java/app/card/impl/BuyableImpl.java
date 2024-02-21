@@ -2,9 +2,10 @@ package app.card.impl;
 
 import java.util.Optional;
 
-import app.card.apii.Buyable;
-import app.card.apii.Card;
-import app.player.apii.Player;
+import app.card.api.Buyable;
+import app.card.api.Card;
+import app.player.api.Player;
+
 /**
  * The implementation of Buildable.
  */
@@ -17,12 +18,13 @@ public final class BuyableImpl implements Buyable {
 
     /**
      * protected for be used only in factory.
+     * 
      * @param card
      * @param price
      * @param fees
      */
     protected BuyableImpl(final Card card,
-     final int price, final int fees) {
+            final int price, final int fees) {
         this.card = card;
         this.price = price;
         this.fees = fees;

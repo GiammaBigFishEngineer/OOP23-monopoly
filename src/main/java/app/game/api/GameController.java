@@ -1,10 +1,10 @@
-package app.game.apii;
+package app.game.api;
 
-import app.card.apii.Card;
+import app.card.api.Card;
 import app.game.utils.BtnCodeEnum;
 import app.game.utils.BtnCodeState;
 import app.game.utils.Dice;
-import app.player.apii.Player;
+import app.player.api.Player;
 
 import java.util.List;
 import java.util.Map;

@@ -1,7 +1,7 @@
-package app.card.apii;
+package app.card.api;
 
-import app.card.apii.StaticActionStrategy.TriggeredEvent;
-import app.player.apii.Player;
+import app.card.api.StaticActionStrategy.TriggeredEvent;
+import app.player.api.Player;
 
 /**
  * An Interface representing static, non-purchasable boxes.

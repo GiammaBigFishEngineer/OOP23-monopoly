@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.swing.JFrame;
 
-import app.card.apii.Unbuyable;
+import app.card.api.Unbuyable;
 import app.card.impl.CardFactoryImpl;
 import app.card.view.TableView;
 import app.card.view.UnforseenView;
@@ -15,7 +15,8 @@ import app.player.impl.PlayerImpl;
  */
 final class TestView {
 
-    private TestView() { }
+    private TestView() {
+    }
 
     /**
      * @param args
@@ -26,11 +27,12 @@ final class TestView {
         final int side = 7;
         final int buildable = 7;
         final var factory = new CardFactoryImpl();
-        final Unbuyable cardUnforseen = factory.createStaticCard(factory.createCard(buildable, "UnforseenTest"), "unforseen", 0);
+        final Unbuyable cardUnforseen = factory.createStaticCard(factory.createCard(buildable, "UnforseenTest"),
+                "unforseen", 0);
         final var table = new TableView(new CardFactoryImpl().cardsInitializer(), side);
         final var unforseenAllert = new UnforseenView(cardUnforseen.makeAction(
-            new PlayerImpl("pl", 0, List.of(), 0))
-            .getMessage());
+                new PlayerImpl("pl", 0, List.of(), 0))
+                .getMessage());
         final var frame = new JFrame();
         frame.setSize(size * side, side * side);
         frame.add(unforseenAllert);

@@ -1,11 +1,11 @@
-package app.player.apii;
+package app.player.api;
 
 import java.util.List;
 import java.util.Optional;
 
-import app.card.apii.Buildable;
-import app.card.apii.Buyable;
-import app.card.apii.Card;
+import app.card.api.Buildable;
+import app.card.api.Buyable;
+import app.card.api.Card;
 
 import java.util.Map;
 
@@ -17,14 +17,17 @@ public interface Player {
      * @return currentPosition of the Player
      */
     int getCurrentPosition();
+
     /**
      * @param position of the Player on the table.
      */
     void setPosition(int position);
+
     /**
      * @return true if there are changes in position, false otherwise
      */
     boolean hasPositionChanged();
+
     /**
      * @return name of the Player
      */
@@ -39,6 +42,7 @@ public interface Player {
      * @return the String with color associated with the Player.
      */
     String getColor();
+
     /**
      * @return player's map which indicates the proprieties he owns
      *         and the number of houses built on a Card.
@@ -47,9 +51,11 @@ public interface Player {
 
     /**
      * It sets the value of the map of the player.
+     * 
      * @param map
      */
     void setMap(Map<Card, Optional<Integer>> map);
+
     /**
      * @return a boolean which indicates if a player is in jail
      */
@@ -103,16 +109,19 @@ public interface Player {
      * @param box whose type is Buyable
      */
     void sellBuyable(Buyable box);
+
     /**
      * @param amount
      */
     void receivePayment(int amount);
+
     /**
      * @param player
      * @param amount
      * @return boolean
      */
     boolean payPlayer(Player player, int amount);
+
     /**
      * @param balance
      */

@@ -1,7 +1,7 @@
 package app.player.impl;
 
-import app.player.apii.BankAccount;
-import app.player.apii.Player;
+import app.player.api.BankAccount;
+import app.player.api.Player;
 
 /**
  * Class which implements a player's BankAccount.
@@ -12,6 +12,7 @@ public final class BankAccountImpl implements BankAccount {
      */
     private int balance;
     private boolean balanceChanged;
+
     /**
      * Constructor which requires a balance.
      * 
@@ -20,6 +21,7 @@ public final class BankAccountImpl implements BankAccount {
     public BankAccountImpl(final int balance) {
         this.balance = balance;
     }
+
     /**
      * Constructor with 0-argument.
      */
@@ -34,6 +36,7 @@ public final class BankAccountImpl implements BankAccount {
     public int getBalance() {
         return this.balance;
     }
+
     /**
      * {@inheritDoc}
      */

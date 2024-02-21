@@ -2,14 +2,14 @@ package app.game.view;
 
 import javax.swing.JButton;
 
-import app.card.apii.Card;
-import app.game.apii.GameController;
+import app.card.api.Card;
+import app.game.api.GameController;
 import app.game.controller.GameControllerImpl;
 import app.game.utils.BtnCodeEnum;
 import app.game.utils.BtnCodeState;
 import app.game.utils.Dice;
 import app.game.utils.ObserverCodeEnum;
-import app.player.apii.Player;
+import app.player.api.Player;
 
 import java.awt.Color;
 import java.awt.GridLayout;

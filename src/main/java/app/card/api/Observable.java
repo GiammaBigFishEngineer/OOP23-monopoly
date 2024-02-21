@@ -1,19 +1,22 @@
-package app.card.apii;
+package app.card.api;
 
 /**
  * An observable of a generic parameter T.
+ * 
  * @param <T> is the generic type of observer
  */
 public interface Observable<T> {
 
     /**
      * Add observer to a List or Set.
+     * 
      * @param observer
      */
     void addObserver(Observer<T> observer);
 
     /**
      * Delete ad oberver from List or Set.
+     * 
      * @param observer
      */
     void deleteObserver(Observer<T> observer);

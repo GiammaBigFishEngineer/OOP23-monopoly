@@ -1,23 +1,23 @@
-package app.card.apii;
+package app.card.api;
 
 /**
  * An interface that represents each individual box.
  */
 public interface Card {
     /**
-     * @param 
+     * @param
      * @return name of card
      */
     String getName();
 
     /**
-     * @param 
+     * @param
      * @return id of card on table
      */
     int getCardId();
 
     /**
-     * @param 
+     * @param
      * @return true if card object is type Buildable
      */
     default boolean isBuildable() {
@@ -25,7 +25,7 @@ public interface Card {
     }
 
     /**
-     * @param 
+     * @param
      * @return true if card object is type Buyable
      */
     default boolean isBuyable() {
@@ -33,7 +33,7 @@ public interface Card {
     }
 
     /**
-     * @param 
+     * @param
      * @return true if card object is type Unbuyable
      */
     default boolean isUnbuyable() {

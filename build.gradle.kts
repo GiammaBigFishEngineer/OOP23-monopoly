@@ -26,11 +26,11 @@ dependencies {
     compileOnly("com.github.spotbugs:spotbugs-annotations:4.7.3") 
 }
 
-val mainClass: String by project
+
 
 application {
     // The following allows to run with: ./gradlew -PmainClass=it.unibo.oop.MyMainClass run
-    mainClass.set(project.properties["mainClass"].toString())
+    mainClass.set("app.Monopoly")
 }
 
 val test by tasks.getting(Test::class) {

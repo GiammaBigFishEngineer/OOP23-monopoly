@@ -1,4 +1,4 @@
-package app.card.apii;
+package app.card.api;
 
 /**
  * this is an Adapter pattern for adapt Cards.

@@ -1,6 +1,6 @@
 package app.game.model;
 
-import app.game.apii.MenuController;
+import app.game.api.MenuController;
 import java.awt.Window;
 
 import java.util.HashSet;
@@ -20,9 +20,11 @@ public class MenuControllerImpl implements MenuController {
      * Starts a new game with the provided list of player names.
      * 
      * @param playerNames the list of player names participating in the game
-     * @return {@code true} if the game is successfully started, {@code false} otherwise.
+     * @return {@code true} if the game is successfully started, {@code false}
+     *         otherwise.
      *         The game can start only if the number of player names is between
-     *         2 and 5 and there are no duplicates in names, ignoring case sensitivity.
+     *         2 and 5 and there are no duplicates in names, ignoring case
+     *         sensitivity.
      */
     @Override
     public boolean startGame(final List<String> playerNames) {
@@ -31,9 +33,9 @@ public class MenuControllerImpl implements MenuController {
         }
         final Set<String> uniqueNames = new HashSet<>();
         uniqueNames.addAll(playerNames.stream()
-                            .map(String::trim)
-                            .map(String::toLowerCase)
-                            .collect(Collectors.toSet()));
+                .map(String::trim)
+                .map(String::toLowerCase)
+                .collect(Collectors.toSet()));
 
         return !(uniqueNames.size() != playerNames.size() || playerNames.contains(null) || playerNames.contains(""));
     }

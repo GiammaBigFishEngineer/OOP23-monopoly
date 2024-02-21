@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import app.player.apii.BankAccount;
+import app.player.api.BankAccount;
 import app.player.impl.BankAccountImpl;
 
 /**
@@ -24,7 +24,8 @@ class TestBankAccountImpl {
     }
 
     /**
-     * Check that the initialization of the BankAccount is created with the correct values.
+     * Check that the initialization of the BankAccount is created with the correct
+     * values.
      */
     @Test
     void testGetBalance() {
@@ -33,7 +34,8 @@ class TestBankAccountImpl {
     }
 
     /**
-     * Check that, if the balance changes, it is notified by the method hasBalanceChanged().
+     * Check that, if the balance changes, it is notified by the method
+     * hasBalanceChanged().
      */
     @Test
     void testHasBalanceChanged() {
@@ -44,9 +46,9 @@ class TestBankAccountImpl {
     }
 
     /**
-     * Check that the payment to another player is performed correctly. 
+     * Check that the payment to another player is performed correctly.
      */
-    @Test 
+    @Test
     void testPayPlayer() {
         final int expectedPlayerPayed = this.bankAccount2.getBalance() - DEFAULT_PAYMENT;
         this.bankAccount2.payPlayer(null, DEFAULT_PAYMENT);
@@ -56,7 +58,7 @@ class TestBankAccountImpl {
     /**
      * Check that the correct amount of money is received by the player.
      */
-    @Test 
+    @Test
     void testReceivePayment() {
         this.bankAccount1.receivePayment(DEFAULT_PAYMENT);
         Assertions.assertEquals(DEFAULT_PAYMENT * 2, bankAccount1.getBalance());
@@ -66,7 +68,7 @@ class TestBankAccountImpl {
 
     /**
      * Check if a payment is allowed.
-    */ 
+     */
     @Test
     void testIsPaymentAllowed() {
         final int amountToSpend = 100 * DEFAULT_PAYMENT;

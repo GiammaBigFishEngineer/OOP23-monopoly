@@ -1,19 +1,19 @@
-package app.card.apii;
+package app.card.api;
 
-import app.player.apii.Player;
+import app.player.api.Player;
 
 /**
  * An interface that represents a purchasable box.
  */
 public interface Buyable extends Card {
     /**
-     * @param 
+     * @param
      * @return price for buy one house
      */
     int getPrice();
 
     /**
-     * @param 
+     * @param
      * @return if is owned
      */
     boolean isOwned();
@@ -25,17 +25,16 @@ public interface Buyable extends Card {
     boolean isOwnedByPlayer(Player player);
 
     /**
-     * @param 
+     * @param
      * @return player who has got the property
      */
     Player getOwner();
 
     /**
-     * @param 
+     * @param
      * @return price to pay to the owner
      */
     int getTransitFees();
-
 
     /**
      * @param player who buy property

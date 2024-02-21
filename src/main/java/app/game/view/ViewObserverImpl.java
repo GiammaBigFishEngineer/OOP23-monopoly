@@ -1,9 +1,9 @@
 package app.game.view;
 
 import app.card.view.UnforseenView;
-import app.game.apii.ViewObserver;
+import app.game.api.ViewObserver;
 import app.game.utils.ObserverCodeEnum;
-import app.player.apii.Player;
+import app.player.api.Player;
 import app.player.view.BailView;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 

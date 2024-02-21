@@ -13,12 +13,12 @@ import java.util.stream.Collectors;
 
 import javax.swing.JFrame;
 
-import app.card.apii.Card;
-import app.card.apii.Observer;
+import app.card.api.Card;
+import app.card.api.Observer;
 import app.card.view.TableView;
 
 import app.game.utils.Dice;
-import app.player.apii.Player;
+import app.player.api.Player;
 import app.player.view.PlayerPanelView;
 
 /**
@@ -105,6 +105,7 @@ public final class GameView extends JFrame {
 
         this.setSize(screen);
         this.setMinimumSize(new Dimension(screenWidth / PROPORTION, screenHeight / PROPORTION));
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setVisible(true);
 

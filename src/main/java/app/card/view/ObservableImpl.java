@@ -2,8 +2,8 @@ package app.card.view;
 
 import java.util.List;
 
-import app.card.apii.Observable;
-import app.card.apii.Observer;
+import app.card.api.Observable;
+import app.card.api.Observer;
 import javax.swing.JPanel;
 
 import java.util.ArrayList;
@@ -11,6 +11,7 @@ import java.util.ArrayList;
 /**
  * An observable of a generic parameter T.
  * Observervable is an abstract class for be extended with implementation.
+ * 
  * @param <T> is a generic class to be Observable
  */
 public abstract class ObservableImpl<T> extends JPanel implements Observable<T> {
@@ -44,4 +45,3 @@ public abstract class ObservableImpl<T> extends JPanel implements Observable<T> 
         }
     }
 }
-

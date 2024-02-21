@@ -1,6 +1,6 @@
 package game;
 
-import app.game.apii.MenuController;
+import app.game.api.MenuController;
 import app.game.model.MenuControllerImpl;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -116,12 +116,12 @@ class MenuTest {
      */
     @Test
     void unsuccessfulStartGameWithSameNameDifferentCasing() {
-       final List<String> playerNames = List.of("Giovanni", "giovanni");
-       // Using 'Set' it consideres correctly 2 different elements
-       final Set<String> uniqueNames = new HashSet<>(playerNames);
-       assertEquals(2, uniqueNames.size(), "Expected two players becasuse elements are different.");
-       // Using my 'startGame' method it returns false because elements are the same
-       assertFalse(menuController.startGame(playerNames));
+        final List<String> playerNames = List.of("Giovanni", "giovanni");
+        // Using 'Set' it consideres correctly 2 different elements
+        final Set<String> uniqueNames = new HashSet<>(playerNames);
+        assertEquals(2, uniqueNames.size(), "Expected two players becasuse elements are different.");
+        // Using my 'startGame' method it returns false because elements are the same
+        assertFalse(menuController.startGame(playerNames));
     }
 
     /**

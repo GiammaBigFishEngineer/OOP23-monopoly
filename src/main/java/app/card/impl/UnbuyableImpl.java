@@ -1,10 +1,10 @@
 package app.card.impl;
 
-import app.card.apii.Card;
-import app.card.apii.StaticActionStrategy;
-import app.card.apii.StaticActionStrategy.TriggeredEvent;
-import app.card.apii.Unbuyable;
-import app.player.apii.Player;
+import app.card.api.Card;
+import app.card.api.StaticActionStrategy;
+import app.card.api.StaticActionStrategy.TriggeredEvent;
+import app.card.api.Unbuyable;
+import app.player.api.Player;
 
 /**
  * Implementation of Unbuyable.
@@ -16,6 +16,7 @@ public final class UnbuyableImpl implements Unbuyable {
 
     /**
      * protected for be used only in factory.
+     * 
      * @param card
      * @param staticAction
      */

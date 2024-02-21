@@ -37,7 +37,7 @@ public final class GameMessage {
      * @param name the player name
      */
     public void eliminatePlayer(final String name) {
-        JOptionPane.showMessageDialog(null, name + ", non hai più soldi e vieni eliminato!");
+        JOptionPane.showMessageDialog(null, name + ", non hai piu' soldi e vieni eliminato!");
     }
 
     /**
@@ -53,7 +53,7 @@ public final class GameMessage {
      * This pop up is called when the player can't afford a propriety.
      */
     public void noBuyPropriety() {
-        JOptionPane.showMessageDialog(null, "Non ti puoi permettere questa proprietà!");
+        JOptionPane.showMessageDialog(null, "Non ti puoi permettere questa proprieta'!");
     }
 
     /**
@@ -70,7 +70,7 @@ public final class GameMessage {
      * @param name is the owner name
      */
     public void fees(final String name) {
-        JOptionPane.showMessageDialog(null, "Sei atterrato su una proprietà di " + name + ", devi pagare!");
+        JOptionPane.showMessageDialog(null, "Sei atterrato su una proprieta' di " + name + ", devi pagare!");
     }
 
     /**

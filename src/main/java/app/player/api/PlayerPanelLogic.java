@@ -1,6 +1,6 @@
-package app.player.apii;
+package app.player.api;
 
-import app.card.apii.Card;
+import app.card.api.Card;
 
 /**
  * Interface which defines how the logic of PlayerPanelView works.

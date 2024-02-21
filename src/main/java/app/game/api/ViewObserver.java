@@ -1,4 +1,4 @@
-package app.game.apii;
+package app.game.api;
 
 import java.util.Optional;
 

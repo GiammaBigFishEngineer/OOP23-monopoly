@@ -1,4 +1,4 @@
-package app.card.apii;
+package app.card.api;
 
 /**
  * An interface that represents a tile that can be bought and built upon.

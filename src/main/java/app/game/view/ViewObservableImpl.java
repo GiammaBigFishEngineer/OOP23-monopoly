@@ -1,6 +1,6 @@
 package app.game.view;
 
-import app.game.apii.ViewObservable;
+import app.game.api.ViewObservable;
 import app.game.utils.ObserverCodeEnum;
 
 import java.util.Optional;
