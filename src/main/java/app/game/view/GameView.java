@@ -99,7 +99,6 @@ public final class GameView extends JFrame {
         /*
          * Setting frame size
          */
-
         screen = Toolkit.getDefaultToolkit().getScreenSize();
         screenHeight = (int) screen.getHeight();
         screenWidth = (int) screen.getWidth();

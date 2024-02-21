@@ -172,7 +172,7 @@ public final class CardFactoryImpl implements CardFactory {
                     if (!player.getBankAccount().isPaymentAllowed(amount)) {
                         return TriggeredEvent.UNPERFORMED.update("Il giocatore non ha abbasta denaro");
                     }
-                    player.getBankAccount().payPlayer(null, amount);
+                    player.payPlayer(null, amount);
                     return TriggeredEvent.PERFORMED.update(player + " ha pagato " + amount);
                 };
             }

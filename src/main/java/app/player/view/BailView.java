@@ -23,7 +23,7 @@ public final class BailView {
      */
     public boolean showMenuBail(final Player player) {
         final String message = player.getName() + ", vuoi pagare " + BailLogicImpl.DEFAULT_PAYMENT 
-            + "€ per uscire di prigione? Hai " + player.getBankAccount().getBalance() + "€ sul tuo conto bancario.";
+            + " per uscire di prigione? Hai " + player.getBankAccount().getBalance() + " sul tuo conto bancario.";
         final int choice = JOptionPane.showConfirmDialog(null, message, "SEI IN PRIGIONE!", 
             JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (choice == JOptionPane.YES_OPTION) {
