@@ -24,8 +24,9 @@ class UnforseenTest {
 
     private static final int ID_TEST = 5;
     private static final int FIRST_BOX = 1;
+    private static final int INITIAL = 500;
     private final List<Card> cards = new LinkedList<>();
-    private final Player player = new PlayerImpl("Player", ID_TEST, cards, 0);
+    private final Player player = new PlayerImpl("Player", ID_TEST, cards, INITIAL);
 
     @BeforeEach
     void init() {
@@ -39,7 +40,7 @@ class UnforseenTest {
     void testU1Action() {
         final int actual = 100;
         Unforseen.U0.getCard().makeAction(player);
-        assertEquals(player.getBankAccount().getBalance(), actual);
+        assertEquals(player.getBankAccount().getBalance(), INITIAL + actual);
     }
 
     /**
@@ -58,7 +59,7 @@ class UnforseenTest {
      */
     private boolean checkChanges(final Player player) {
         /* position and balance start from -1, i check the changes */
-        return player.getCurrentPosition() != FIRST_BOX || player.getBankAccount().getBalance() != 0;
+        return player.getCurrentPosition() != FIRST_BOX || player.getBankAccount().getBalance() != INITIAL;
     }
 
     /**
