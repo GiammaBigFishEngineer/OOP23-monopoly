@@ -12,7 +12,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -105,10 +104,24 @@ class MenuTest {
      */
     @Test
     void unsuccessfulStartGameWithDuplicatePlayerNames() {
-        final List<String> playerNames = Arrays.asList(DUMMY_PLAYER_PREFIX, DUMMY_PLAYER_PREFIX);
+        final List<String> playerNames = List.of(DUMMY_PLAYER_PREFIX, DUMMY_PLAYER_PREFIX);
         final Set<String> uniqueNames = new HashSet<>(playerNames);
         assertEquals(1, uniqueNames.size(), "Expected duplicate players, so there is only one player name.");
         assertFalse(menuController.startGame(playerNames));
+    }
+
+    /**
+     * Test that the game does not start with duplicate names, in particular even
+     * considering the distinction between case sensitivity.
+     */
+    @Test
+    void unsuccessfulStartGameWithSameNameDifferentCasing() {
+       final List<String> playerNames = List.of("Giovanni", "giovanni");
+       // Using 'Set' it consideres correctly 2 different elements
+       final Set<String> uniqueNames = new HashSet<>(playerNames);
+       assertEquals(2, uniqueNames.size(), "Expected two players becasuse elements are different.");
+       // Using my 'startGame' method it returns false because elements are the same
+       assertFalse(menuController.startGame(playerNames));
     }
 
     /**
@@ -116,7 +129,7 @@ class MenuTest {
      */
     @Test
     void unsuccessfulStartGameWithPlayerNameEmpty() {
-        final List<String> playerNames = Arrays.asList("Player1", "", "");
+        final List<String> playerNames = List.of("Player1", "", "");
         assertFalse(menuController.startGame(playerNames));
     }
 
@@ -130,8 +143,10 @@ class MenuTest {
 
     /**
      * Utility method: it creates a list of dummy player names.
+     * 
      * @param numPlayers the number of dummy names to create
-     * @return a list of dummy player names
+     * @return a list of dummy player names, each distinguished
+     *         by a numerical index (es: Player1, Player2, Player3, ...)
      */
     private List<String> createDummyPlayers(final int numPlayers) {
         final List<String> playerNames = new ArrayList<>();
