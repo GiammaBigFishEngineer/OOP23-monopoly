@@ -21,7 +21,11 @@ public final class PlayerImpl implements Player {
      * Maximum number of houses a player can build on a box.
      */
     private static final int MAX_NUMBER_HOUSES = 3;
-
+    private static final int ID_1 = 1;
+    private static final int ID_2 = 2;
+    private static final int ID_3 = 3;
+    private static final int ID_4 = 4;
+    private static final int ID_5 = 5;
     /**
      * Map which associates each Card box with an Optional that indicates
      * if that box is already owned by the current player
@@ -56,26 +60,24 @@ public final class PlayerImpl implements Player {
             this.map.put(box, Optional.empty());
         }
         this.account = new BankAccountImpl(initialAmount);
-
         switch (this.getID()) {
-            case 1:
-                color = "#E52B50";
+            case ID_1:
+                this.color = "#E52B50"; // red
                 break;
-
-            case 2:
-                color = "#884DA7";
+            case ID_2: 
+                this.color = "#884DA7"; // blu-magenta
                 break;
-
-            case 3:
-                color = "#FF6600";
+            case ID_3: 
+                this.color = "#FF6600"; // orange
                 break;
-
-            case 4:
-                color = "#666666";
+            case ID_4: 
+                this.color = "#2F4F4F"; // dark-grey
                 break;
-
-            default:
-                color = "#999999";
+            case ID_5: 
+                this.color = "000000"; // black
+                break;
+            default: 
+                this.color = "#E52B50"; 
                 break;
         }
     }
@@ -139,6 +141,13 @@ public final class PlayerImpl implements Player {
         return new HashMap<>(this.map);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setMap(final Map<Card, Optional<Integer>> map) {
+        this.map = new HashMap<>(map);
+    }
     /**
      * {@inheritDoc}
      */
@@ -216,7 +225,7 @@ public final class PlayerImpl implements Player {
         if (account.payPlayer(null, box.getPrice())) {
             map.put(box, Optional.of(0)); // 0 perché possiedo la casella con 0 case costruite
             box.setOwner(this);
-            return true;
+            return true; 
         } else {
             return false;
         }
@@ -280,10 +289,8 @@ public final class PlayerImpl implements Player {
      * the player,
      * only the player can modify this object.
      * Who uses the method getBankAccount() would modify the copy of the account:
-     * as a result, I have created the following methods which effectively modify
-     * the player's account.
-     * 
-     * @param amount
+     * as a result, I have created the following methods which effectively modify the player's account.
+     * {@inheritDoc}
      */
     @Override
     public void receivePayment(final int amount) {
@@ -291,20 +298,17 @@ public final class PlayerImpl implements Player {
     }
 
     /**
-     * @param player
-     * @param amount
-     * @return boolean
+     * {@inheritDoc}
      */
     @Override
     public boolean payPlayer(final Player player, final int amount) {
         return this.account.payPlayer(player, amount);
     }
-
     /**
      * {@inheritDoc}
      */
     @Override
-    public void setMap(final Map<Card, Optional<Integer>> map) {
-        this.map = new HashMap<>(map);
+    public void setBalance(final int balance) {
+        this.account.setBalance(balance);
     }
 }

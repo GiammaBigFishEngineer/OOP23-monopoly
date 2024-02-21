@@ -57,123 +57,101 @@ public final class PlayerPanelView extends JPanel {
 
           this.logic = new PlayerPanelLogicImpl(player, currentBox, this);
 
-          this.setBorder(border);
-          this.setLayout(new GridLayout(N_ROWS, N_COLS));
-          this.setBackground(Color.LIGHT_GRAY);
-          this.setFont(font);
-          this.setAlignmentX(Component.LEFT_ALIGNMENT);
-          this.setSize(sw / PROPORTION, sh / PROPORTION);
+        this.setBorder(border);
+        this.setLayout(new GridLayout(N_ROWS, N_COLS));
+        this.setBackground(Color.LIGHT_GRAY);
+        this.setFont(font);
+        this.setAlignmentX(Component.LEFT_ALIGNMENT);
+        this.setSize(sw / PROPORTION, sh / PROPORTION);
 
-          addLabelWithText(new JLabel("Player's name: "), this.playerName);
-          addLabelWithText(new JLabel("Player's ID: "), this.playerID);
-          addLabelWithText(new JLabel("Money on BankAccount: "), this.playerMoney);
-          addLabelWithText(new JLabel("Houses on this box: "), this.playerHouses);
-          addLabelWithText(new JLabel("Owned stations: "), this.playerStations);
-          addLabelWithText(new JLabel("Owned boxes: "), this.playerBoxes);
+          addLabelWithText(new JLabel("Nome del giocatore: "), this.playerName);
+          addLabelWithText(new JLabel("ID del giocatore: "), this.playerID);
+          addLabelWithText(new JLabel("Monete sul conto bancario: "), this.playerMoney);
+          addLabelWithText(new JLabel("Case costruite su qulla casella corrente: "), this.playerHouses);
+          addLabelWithText(new JLabel("Numero di stazioni possedute: "), this.playerStations);
+          addLabelWithText(new JLabel("Caselle possedute: "), this.playerBoxes);
      }
 
-     private void addLabelWithText(final JLabel jLabel, final JLabel text) {
-          this.add(jLabel);
-          this.add(text);
-     }
+
+    /**
+     * This method has been created to avoid doing for each JLabel the operation 
+     * of adding to the JPanel the JLabel with the string "Player's info" and
+     * the JLabel with the effective values. 
+     * @param label
+     * @param text
+     */
+    private void addLabelWithText(final JLabel label, final JLabel text) {
+        this.add(label);
+        this.add(text);
+    }
 
      /**
-      * <<<<<<< HEAD
       * Getter for PlayerPanelLogic.
-      * 
-      *         =======
       * @param text
-      *             >>>>>>> origin/DiFronzo
       */
      public void setPlayerNameText(final String text) {
           this.playerName.setText(text);
      }
 
      /**
-      * <<<<<<< HEAD
       * Getter for Player's name.
-      * 
-      *         =======
       * @param text
-      *             >>>>>>> origin/DiFronzo
       */
      public void setPlayerMoneyText(final String text) {
           this.playerMoney.setText(text);
      }
 
      /**
-      * <<<<<<< HEAD
       * Getter for Player's ID.
-      * 
-      *         =======
       * @param text
-      *             >>>>>>> origin/DiFronzo
       */
      public void setPlayerIDText(final String text) {
           this.playerID.setText(text);
      }
 
-     /**
-      * <<<<<<< HEAD
-      * Getter for Player's money.
-      * 
-      *         =======
-      * @param text
-      *             >>>>>>> origin/DiFronzo
-      */
-     public void setPlayerBoxesText(final String text) {
-          this.playerBoxes.setText(text);
-     }
+    /**
+     * @param text
+     */
+    public void setPlayerBoxesText(final String text) {
+        this.playerBoxes.setText(text);
+    }
+    /**
+     * @param text
+     */
+    public void setPlayerHousesText(final String text) {
+        this.playerHouses.setText(text);
+    }
 
-     /**
-      * @param text
-      */
-     public void setPlayerHousesText(final String text) {
-          this.playerHouses.setText(text);
-     }
+    /**
+     * @param text
+     */
+    public void setPlayerStationsText(final String text) {
+        this.playerStations.setText(text);
+    }
 
-     /**
-      * <<<<<<< HEAD
-      * Getter for Player's owned boxes.
-      * 
-      *         =======
-      * @param text
-      *             >>>>>>> origin/DiFronzo
-      */
-     public void setPlayerStationsText(final String text) {
-          this.playerStations.setText(text);
-     }
+    /**
+     * In order to avoid returning a defensive copy of PlayerPanelLogic logic, 
+     * the following methods invoke the methods of the logic (which need to be done to update
+     * the playerPanelView) directly on the object logic,
+     * without doing playerPanelView.getLogic().setPlayer(player, currentBox).
+     * @param player
+     * @param currentBox
+     */
+    public void setPlayer(final Player player, final Card currentBox) {
+        this.logic.setPlayer(player, currentBox);
+    }
 
-     // il controller deve richiamare questi metodi e non getLogic.refresh()
-     /**
-      * @param player
-      * @param currentBox
-      */
-     public void setPlayer(final Player player, final Card currentBox) {
-          this.logic.setPlayer(player, currentBox);
-     }
+    /**
+     * @param currentBox
+     */
+    public void setCurrentBox(final Card currentBox) {
+        this.logic.setCurrentBox(currentBox);
+    }
 
-     /**
-      * <<<<<<< HEAD
-      * Getter for Player's houses built on the current box.
-      * 
-      *         =======
-      * @param currentBox
-      *                   >>>>>>> origin/DiFronzo
-      */
-     public void setCurrentBox(final Card currentBox) {
-          this.logic.setCurrentBox(currentBox);
-     }
-
-     /**
-      * <<<<<<< HEAD
-      * Getter for Player's owned stations.
-      * 
-      *         =======
-      * 
-      *         >>>>>>> origin/DiFronzo
-      */
-     public void refresh() {
-          this.logic.refresh();
-     }
+    /**
+     * Method which updates values on the panel.
+     */
+    public void refresh() {
+        this.logic.refresh();
+    }
 }

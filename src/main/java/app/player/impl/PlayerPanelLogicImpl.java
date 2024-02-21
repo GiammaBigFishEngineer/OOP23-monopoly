@@ -41,12 +41,13 @@ public final class PlayerPanelLogicImpl implements PlayerPanelLogic {
      * {@inheritDoc}
      */
     @Override
-    @SuppressFBWarnings(value = {
-            "EI_EXPOSE_REP2" }, justification = "Voglio che l'oggetto Player sia modificabile da chi chiama questo metodo,"
-                    + "perché è finalizzato ad aggiornare i valori relativi al giocatore stesso."
-                    + "Infatti, se ritornassi una copia del Player, "
-                    + "il metodo refresh() non andrebbe ad aggiornare effettivamente i valori,ma la copia."
-                    + "Per cui, non succederebbe quanto voluto.")
+    @SuppressFBWarnings(
+        value = { "EI_EXPOSE_REP2" }, 
+        justification =  "Voglio che l'oggetto Player sia modificabile da chi chiama questo metodo,"
+            + "perché è finalizzato ad aggiornare i valori relativi al giocatore stesso."
+            + "Infatti, se ritornassi una copia del Player, "
+            + "il metodo refresh() non andrebbe ad aggiornare effettivamente i valori, ma la copia." 
+            + "Per cui, non succederebbe quanto voluto.")
     public void setPlayer(final Player player, final Card currentBox) {
         this.currentPlayer = player;
         setCurrentBox(currentBox);
@@ -90,8 +91,6 @@ public final class PlayerPanelLogicImpl implements PlayerPanelLogic {
             panel.setPlayerHousesText("Su questa casella non si possono costruire case");
         }
         panel.setPlayerMoneyText(String.valueOf(this.currentPlayer.getBankAccount().getBalance()));
-        // non ritorno il numero di stazioni possedute, ma il nome di quelle che
-        // possiede
         panel.setPlayerStationsText(String.valueOf(this.currentPlayer.getNumberStationOwned()));
     }
 }

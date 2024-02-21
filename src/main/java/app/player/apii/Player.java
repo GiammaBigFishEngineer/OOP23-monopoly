@@ -36,11 +36,20 @@ public interface Player {
     int getID();
 
     /**
+     * @return the String with color associated with the Player.
+     */
+    String getColor();
+    /**
      * @return player's map which indicates the proprieties he owns
      *         and the number of houses built on a Card.
      */
     Map<Card, Optional<Integer>> getMap();
 
+    /**
+     * It sets the value of the map of the player.
+     * @param map
+     */
+    void setMap(Map<Card, Optional<Integer>> map);
     /**
      * @return a boolean which indicates if a player is in jail
      */
@@ -94,35 +103,18 @@ public interface Player {
      * @param box whose type is Buyable
      */
     void sellBuyable(Buyable box);
-
     /**
-     * As the method getBankAccount() returns a defensive copy of the bankAccount of
-     * the player,
-     * only the player can modify this object.
-     * Who uses the method getBankAccount() would modify the copy of the account:
-     * as a result, I have created the following methods which effectively modify
-     * the player's account.
-     * 
      * @param amount
      */
     void receivePayment(int amount);
-
     /**
      * @param player
      * @param amount
      * @return boolean
      */
     boolean payPlayer(Player player, int amount);
-
     /**
-     * @return the String with color associated with the Player.
+     * @param balance
      */
-    String getColor();
-
-    /**
-     * It sets the value of the map of the player.
-     * @param map
-     */
-    void setMap(Map<Card, Optional<Integer>> map);
-
+    void setBalance(int balance);
 }
