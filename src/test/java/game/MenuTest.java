@@ -1,7 +1,7 @@
 package game;
 
 import app.game.api.MenuController;
-import app.game.model.MenuControllerImpl;
+import app.game.controller.MenuControllerImpl;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Tests for menu logic: {@link app.game.model.MenuControllerImpl}.
+ * Tests for menu logic: {@link app.game.controller.MenuControllerImpl}.
  */
 class MenuTest {
     private MenuController menuController;

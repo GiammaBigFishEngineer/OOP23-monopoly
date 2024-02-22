@@ -10,8 +10,8 @@ import javax.swing.JOptionPane;
 
 import app.game.api.MenuController;
 import app.game.api.SaveController;
+import app.game.controller.MenuControllerImpl;
 import app.game.controller.SaveControllerImpl;
-import app.game.model.MenuControllerImpl;
 
 import java.awt.Color;
 import java.awt.Dimension;

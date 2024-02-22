@@ -1,4 +1,4 @@
-package app.game.model;
+package app.game.controller;
 
 import java.awt.Window;
 
