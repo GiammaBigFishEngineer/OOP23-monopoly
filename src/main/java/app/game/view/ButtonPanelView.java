@@ -4,6 +4,7 @@ import javax.swing.JButton;
 
 import app.card.api.Card;
 import app.game.api.GameController;
+import app.game.api.ViewObserver;
 import app.game.controller.GameControllerImpl;
 import app.game.utils.BtnCodeEnum;
 import app.game.utils.BtnCodeState;
@@ -39,7 +40,7 @@ public final class ButtonPanelView extends ViewObservableImpl {
      * @throws IOException
      */
 
-    public ButtonPanelView(final List<String> playersNames, final ViewObserverImpl obs) throws IOException {
+    public ButtonPanelView(final List<String> playersNames, final ViewObserver obs) throws IOException {
 
         final JButton rollDice;
         final JButton buyPropriety;
@@ -226,7 +227,7 @@ public final class ButtonPanelView extends ViewObservableImpl {
      * displays the relevant pop-ups
      */
 
-    public void updateStartTurnView() {
+    private void updateStartTurnView() {
 
         if (gameLogic.isCurrentPlayerInJail()) {
 
@@ -263,7 +264,7 @@ public final class ButtonPanelView extends ViewObservableImpl {
      * owned and displays the relevant pop-ups
      */
 
-    public void updateMidTurnView() {
+    private void updateMidTurnView() {
 
         if (gameLogic.isCurrentPlayerOnUnforseen()) {
             updateObserver(Optional.of(gameLogic.getUnforseenMessage()), ObserverCodeEnum.UNBUYABLE_ACTION);
@@ -304,7 +305,7 @@ public final class ButtonPanelView extends ViewObservableImpl {
      * corresponding codes in the logic have been updated
      */
 
-    public void changeButtonVisibility() {
+    private void changeButtonVisibility() {
 
         this.btnCodeList.putAll(gameLogic.getBtnStatus());
 
@@ -340,7 +341,7 @@ public final class ButtonPanelView extends ViewObservableImpl {
      * modified
      */
 
-    public void refreshPanelView() {
+    private void refreshPanelView() {
         final Player currentPlayer = gameLogic.getCurrentPlayer();
         updateObserver(Optional.of(currentPlayer), ObserverCodeEnum.REFRESH_PLAYER_PANEL);
     }
@@ -350,7 +351,7 @@ public final class ButtonPanelView extends ViewObservableImpl {
      * been changed
      */
 
-    public void refreshPositionView() {
+    private void refreshPositionView() {
         final Player currentPlayer = gameLogic.getCurrentPlayer();
         updateObserver(Optional.of(currentPlayer), ObserverCodeEnum.REFRESH_PLAYER_POSITION);
     }

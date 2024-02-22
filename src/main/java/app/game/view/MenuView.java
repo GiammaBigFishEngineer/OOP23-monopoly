@@ -142,7 +142,7 @@ public final class MenuView extends JFrame {
                 if (dataContent.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Errore durante la lettura dei salvataggi");
                 } else {
-                    new SavedGamesView("Dati Savlvati", dataContent);
+                    new SavedGamesView("Dati Salvati", dataContent);
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "Nessuna partita e' stata salvata");

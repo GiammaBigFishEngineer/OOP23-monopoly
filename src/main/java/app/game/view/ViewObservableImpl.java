@@ -1,6 +1,7 @@
 package app.game.view;
 
 import app.game.api.ViewObservable;
+import app.game.api.ViewObserver;
 import app.game.utils.ObserverCodeEnum;
 
 import java.util.Optional;
@@ -16,14 +17,14 @@ public class ViewObservableImpl extends JPanel implements ViewObservable {
 
     private static final long serialVersionUID = 13L;
 
-    private transient ViewObserverImpl obs;
+    private transient ViewObserver obs;
 
     /**
      * {@inheritDoc}
      */
 
     @Override
-    public void registerObserver(final ViewObserverImpl obs) {
+    public void registerObserver(final ViewObserver obs) {
         this.obs = obs;
     }
 

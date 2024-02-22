@@ -16,13 +16,13 @@ public class SavedGamesView extends JDialog {
     private static final long serialVersionUID = 1L;
     private static final int FONT_SIZE = 14;
     private static final int BORDER = 10;
-    private static final int WIDTH = 500;
+    private static final int WIDTH = 600;
     private static final int HEIGHT = 300;
 
     /**
      * Constructor of SavedGamesView.
      * 
-     * @param title the title
+     * @param title       the title
      * @param dataContent the content to be displayed
      */
     public SavedGamesView(final String title, final String dataContent) {

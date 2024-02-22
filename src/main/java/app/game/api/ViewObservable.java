@@ -3,7 +3,6 @@ package app.game.api;
 import java.util.Optional;
 
 import app.game.utils.ObserverCodeEnum;
-import app.game.view.ViewObserverImpl;
 
 /**
  * An interface that rapresent the observable component.
@@ -17,7 +16,7 @@ public interface ViewObservable {
      * @param obs the observer we want to update, it will be only one
      */
 
-    void registerObserver(ViewObserverImpl obs);
+    void registerObserver(ViewObserver obs);
 
     /**
      * @param obj  is an optional of a generic object
