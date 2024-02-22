@@ -80,10 +80,10 @@ public final class PlayerPanelLogicImpl implements PlayerPanelLogic {
         if (currentBox.isBuildable()) {
             final Optional<Integer> housesBuilt = this.currentPlayer
                     .getHouseBuilt(currentBox.asBuildable());
-            if (housesBuilt.isPresent()) {
-                panel.setPlayerHousesText(String.valueOf(housesBuilt.get()));
-            } else {
+            if (housesBuilt.isEmpty()) { 
                 panel.setPlayerHousesText("Non possiedi questa casella");
+            } else {
+                panel.setPlayerHousesText(String.valueOf(housesBuilt.get()));
             }
         } else {
             panel.setPlayerHousesText("Su questa casella non si possono costruire case");
