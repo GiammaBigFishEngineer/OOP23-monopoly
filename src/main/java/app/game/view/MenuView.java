@@ -145,7 +145,7 @@ public final class MenuView extends JFrame {
                     new SavedGamesView("Dati Savlvati", dataContent);
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "Nessuna partita è stata salvata");
+                JOptionPane.showMessageDialog(null, "Nessuna partita e' stata salvata");
             }
 
             saveLogic.viewSavedGames();

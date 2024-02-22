@@ -2,7 +2,6 @@ package app.game.model;
 
 import java.awt.Window;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -21,24 +20,24 @@ public class MenuControllerImpl implements MenuController {
      * Starts a new game with the provided list of player names.
      * 
      * @param playerNames the list of player names participating in the game
-     * @return {@code true} if the game is successfully started, {@code false}
-     *         otherwise.
-     *         The game can start only if the number of player names is between
+     * @return {@code true} if the game is successfully started, 
+     *         {@code false} otherwise.
+     *         Th game can start only if the number of player names is between
      *         2 and 5 and there are no duplicates in names, ignoring case
      *         sensitivity.
      */
     @Override
     public boolean startGame(final List<String> playerNames) {
-        if (playerNames.size() < MIN_NUM_PLAYER || playerNames.size() > MAX_NUM_PLAYER) {
-            return false;
+        if (playerNames == null || playerNames.isEmpty() 
+            || playerNames.size() < MIN_NUM_PLAYER || playerNames.size() > MAX_NUM_PLAYER) {
+                return false;
         }
-        final Set<String> uniqueNames = new HashSet<>();
-        uniqueNames.addAll(playerNames.stream()
-                .map(String::trim)
-                .map(String::toLowerCase)
-                .collect(Collectors.toSet()));
+        final Set<String> uniqueNames = playerNames.stream()
+                            .filter(name -> name != null && !name.trim().isEmpty())
+                            .map(String::toLowerCase)
+                            .collect(Collectors.toSet());
 
-        return !(uniqueNames.size() != playerNames.size() || playerNames.contains(null) || playerNames.contains(""));
+        return uniqueNames.size() == playerNames.size();
     }
 
     /**

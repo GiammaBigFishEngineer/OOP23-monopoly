@@ -24,8 +24,8 @@ public class DiceView extends JPanel {
 
     private static final int DICE_SIZE = 175;
     private static final int FONT_SIZE = 24;
-    private static final int BORDER = 50;
-    private static final int INSETS = 50;
+    private static final int BORDER = 10;
+    private static final int INSETS = 20;
     private static final int DOT_SIZE = 20;
     private static final int SPACING = 40;
     private static final int ONE_DOT = 1;

@@ -134,6 +134,17 @@ class MenuTest {
     }
 
     /**
+     * Test that the game does not start with null player names.
+     */
+    @Test
+    void unsuccessfulStartGameWithNullPlayerNames() {
+        final List<String> playerNames = new ArrayList<>();
+        playerNames.add(DUMMY_PLAYER_PREFIX);
+        playerNames.add(null);
+        assertFalse(menuController.startGame(playerNames));
+    }
+
+    /**
      * Test the functionality of quitting the game without any exception.
      */
     @Test
