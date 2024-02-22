@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Tests for save logic: {@link app.game.controller.SaveControllerImpl}.
@@ -27,8 +28,6 @@ import java.util.List;
 class SaveTest {
     private SaveController saveController;
     private static final String TEST_FILE_NAME = "saved_games.txt";
-    private static final int DUMMY_POSITION = 22;
-    private static final int DUMMY_BALANCE = 777;
 
     /**
      * The initialization: a new istance of the save controller is created.
@@ -94,32 +93,29 @@ class SaveTest {
     }
 
     /**
-     * Test that verifies if the game should be saved or not.
-     */
-    @Test
-    void testShouldSaveGame() {
-        final List<Player> players = createDummyPlayers(2);
-        assertTrue(saveController.shouldSaveGame(players));
-        saveController.saveGame(players);
-        assertFalse(saveController.shouldSaveGame(players));
-        players.get(0).setPosition(DUMMY_POSITION);
-        assertTrue(saveController.shouldSaveGame(players));
-        saveController.saveGame(players);
-        players.get(0).getBankAccount().setBalance(DUMMY_BALANCE);
-        assertTrue(saveController.shouldSaveGame(players));
-        saveController.saveGame(players);
-    }
-
-    /**
      * Test that verifies that the saved data can be read.
      */
     @Test
-    void testViewSavedGames() {
+    void testViewSavedGames() throws IOException {
         final List<Player> players = createDummyPlayers(3);
         saveController.saveGame(players);
         final List<String> savedGames = saveController.viewSavedGames();
         assertNotNull(savedGames);
         assertFalse(savedGames.isEmpty());
+    }
+
+    /**
+     * Test that verifies if there is content to display.
+     */
+    @Test
+    void testGetOutputSavedGames() throws IOException {
+        final List<Player> players = createDummyPlayers(3);
+        saveController.saveGame(players);
+        final Optional<String> output = saveController.getOutputSavedGames();
+        assertTrue(output.isPresent());
+        final String test = output.get();
+        assertTrue(test.contains("Storico partite"));
+        assertTrue(test.contains("Player1"));
     }
 
     /**

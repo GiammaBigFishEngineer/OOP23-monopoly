@@ -16,6 +16,7 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import app.card.api.Buyable;
 import app.game.api.SaveController;
 import app.player.api.Player;
 
@@ -29,7 +30,6 @@ public class SaveControllerImpl implements SaveController {
     private static final int MIN_NUM_PLAYER = 2;
     private static final int MAX_NUM_PLAYER = 5;
     private static final Logger LOGGER = Logger.getLogger(SaveControllerImpl.class.getName());
-    private boolean isFirstSave = true;
 
     /**
      * Saves the current state of the game to a file.
@@ -43,27 +43,12 @@ public class SaveControllerImpl implements SaveController {
         }
         final List<Player> players = new ArrayList<>(gamePlayerList);
         try {
-            if (!players.isEmpty() && shouldSaveGame(players)) {
+            if (!players.isEmpty() || checkForChanges(players)) {
                 saveGameToFile(players);
-                isFirstSave = false;
             }
         } catch (IOException e) {
             writeErrorToLogFile("Errore di I/O durante il salvataggio del gioco.", e);
         }
-    }
-
-    /**
-     * Determines whether the game should be saved.
-     * This method is designed for extension. So the subclass should provide
-     * additional logic for
-     * deciding when the game should be saved.
-     * 
-     * @return {@code true} if the game should be saved, {@code false} otherwise
-     */
-    @Override
-    public boolean shouldSaveGame(final List<Player> playersList) {
-        return isFirstSave || checkForChanges(playersList);
-        // return checkForChanges(playersList);
     }
 
     /**
@@ -95,12 +80,16 @@ public class SaveControllerImpl implements SaveController {
             writer.println("*** Partita del: " + timestamp + " ***");
 
             players.forEach(currentPlayer -> {
+                final List<String> cardNames = new ArrayList<>();
+                for (final Buyable card : currentPlayer.getBuyableOwned()) {
+                    cardNames.add(card.getName());
+                }
                 writer.println("Player: " + currentPlayer.getName()
                         + ", Id: " + currentPlayer.getID()
                         + ", Posizione: " + currentPlayer.getCurrentPosition()
-                        + ", Denaro: " + currentPlayer.getBankAccount().getBalance());
+                        + ", Denaro: " + currentPlayer.getBankAccount().getBalance()
+                        + ", Proprieta' :" + cardNames);
             });
-            // to do: add a method that prints informations about each player's properties
             writer.println("\n");
 
             if (writer.checkError()) {

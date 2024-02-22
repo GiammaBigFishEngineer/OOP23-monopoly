@@ -18,19 +18,6 @@ public interface SaveController {
     void saveGame(List<Player> gamePlayerList);
 
     /**
-     * Determines whether the game should be saved.
-     * The game should be saved if it is the first save or if there are changes in
-     * player positions or balances.
-     * It is used to know when to save game data and, consequently, to create a
-     * summary of all game sessions.
-     * 
-     * @param gamePlayerList the list of players that must be saved if there are
-     *                       changes
-     * @return {@code true} if the game should be saved, {@code false} otherwise.
-     */
-    boolean shouldSaveGame(List<Player> gamePlayerList);
-
-    /**
      * Displays the data of the saved games.
      *
      * @return a list of strings representing the data of the saved games
