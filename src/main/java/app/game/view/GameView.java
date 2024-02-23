@@ -127,12 +127,7 @@ public final class GameView extends JFrame {
 
         if (playerMapView.containsKey(name)) {
 
-            final Observer<Player> removeObs = () -> tablePanel.removePlayer(currentPlayer.getColor(),
-                    playerMapView.get(name));
-
-            useObs(removeObs);
-
-            playerMapView.remove(name);
+            this.removeTablePlayer(currentPlayer);
         }
 
         final Observer<Player> addObs = () -> tablePanel.redrawPlayer(currentPlayer.getColor(),
@@ -142,6 +137,22 @@ public final class GameView extends JFrame {
 
         playerMapView.put(name, currentPlayer.getCurrentPosition());
 
+    }
+
+    /**
+     * This method is used to remove a player from tableView.
+     *
+     * @param currentPlayer
+     */
+
+    public void removeTablePlayer(final Player currentPlayer) {
+        final String name = currentPlayer.getName();
+        final Observer<Player> removeObs = () -> tablePanel.removePlayer(currentPlayer.getColor(),
+                playerMapView.get(name));
+
+        useObs(removeObs);
+
+        playerMapView.remove(name);
     }
 
     /**

@@ -328,8 +328,6 @@ public final class GameControllerImpl implements GameController {
         this.unforseenMessage = e.getMessage();
         this.landedOnUnforseen = true;
 
-        final var balance = currentPlayer.getBankAccount().getBalance();
-
         if (currentCardIndex != currentPlayer.getCurrentPosition()) {
 
             currentCardIndex = currentPlayer.getCurrentPosition();
@@ -337,8 +335,7 @@ public final class GameControllerImpl implements GameController {
             currentCard = cardsList.get(currentCardIndex);
 
             handleCard();
-        } else if (balance != currentPlayer.getBankAccount().getBalance()
-                && e.equals(TriggeredEvent.UNPERFORMED)) {
+        } else if (e.equals(TriggeredEvent.UNPERFORMED)) {
 
             this.defeatPlayer();
 

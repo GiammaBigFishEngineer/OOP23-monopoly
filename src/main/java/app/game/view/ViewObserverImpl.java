@@ -95,9 +95,11 @@ public final class ViewObserverImpl implements ViewObserver {
 
             case ELIMINATE:
 
-                final String eliminatedName = (String) obj.get();
+                final Player eliminated = (Player) obj.get();
 
-                popUp.eliminatePlayer(eliminatedName);
+                gameV.removeTablePlayer(eliminated);
+
+                popUp.eliminatePlayer(eliminated.getName());
                 break;
 
             case WIN:

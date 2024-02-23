@@ -276,19 +276,19 @@ public final class ButtonPanelView extends ViewObservableImpl {
 
         if (gameLogic.isCurrentPlayerDefeated()) {
 
-            final String currentPlayerName = gameLogic.getCurrentPlayer().getName();
+            final Player currentPlayer = gameLogic.getCurrentPlayer();
 
-            updateObserver(Optional.of(currentPlayerName), ObserverCodeEnum.ELIMINATE);
+            updateObserver(Optional.of(currentPlayer), ObserverCodeEnum.ELIMINATE);
+
+            this.newTurn();
 
             if (gameLogic.isOver()) {
 
-                updateObserver(Optional.of(currentPlayerName), ObserverCodeEnum.WIN);
+                final Player newPlayer = gameLogic.getCurrentPlayer();
+
+                updateObserver(Optional.of(newPlayer.getName()), ObserverCodeEnum.WIN);
 
                 gameLogic.quitGame();
-
-            } else {
-
-                this.newTurn();
 
             }
 
