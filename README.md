@@ -26,9 +26,14 @@ Un giocatore perderà quando non avrà la disponibilità economica per saldare u
 
 Il gruppo ha rispettato e realizzato i requisiti considerati obbligatori.
 
+## Avvio del gioco
+
+È possibile utilizzare l'applicazione tramite doppio click sul jar creato e fornito.  
+Altenativamente tramite comando `java -jar .\monopoly-all.jar`.
+
 ## Email dei partecipanti
 
-• gianmaria.difronzo@studio.unibo.it
+• gianmaria.difronzo@studio.unibo.it  
 • giovanni.muccioli@studio.unibo.it  
-• lisa.vandi2@studio.unibo.it
+• lisa.vandi2@studio.unibo.it  
 • riccardo.polazzi@studio.unibo.it
