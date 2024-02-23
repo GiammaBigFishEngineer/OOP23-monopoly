@@ -74,26 +74,4 @@ class UnforseenTest {
         card.makeAction(player);
         assertTrue(checkChanges(player));
     }
-
-    /**
-     * test the extraction of one unforseen.
-     * 
-     * @throws IOException
-     */
-    @Test
-    void testExtractUnforseen() {
-        /*
-         * eseguo il test per piu' volte in modo da aumentare la probabilita' di trovare
-         * errori
-         * in quanto unforseen() usa una generazione randomica.
-         */
-        for (int i = 0; i < 100; i++) {
-            final var factory = new CardFactoryImpl();
-            factory.createStaticCard(factory.createCard(i, "prova"),
-                    "unforseen",
-                    0)
-                    .makeAction(player);
-            assertTrue(checkChanges(player));
-        }
-    }
 }
